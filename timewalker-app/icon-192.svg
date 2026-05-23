@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" fill="#fdf9f9"/>
+  <circle cx="96" cy="90" r="40" fill="#FAF3F4" stroke="#C4919A" stroke-width="3"/>
+  <path d="M96 60 C83 60 72 70 72 82 C72 95 96 110 96 110 C96 110 120 95 120 82 C120 70 109 60 96 60 Z" fill="none" stroke="#C4919A" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="96" cy="82" r="5" fill="none" stroke="#C4919A" stroke-width="2"/>
+  <text x="96" y="140" text-anchor="middle" font-family="serif" font-size="24" fill="#C4919A" letter-spacing="4">TIMEWALKER</text>
+</svg>

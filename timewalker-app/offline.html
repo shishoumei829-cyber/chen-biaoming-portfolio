@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#C4919A" />
+  <title>离线 · 墨舟</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: system-ui, -apple-system, 'PingFang SC', sans-serif;
+      background: #fdf9f9;
+      color: #1a1517;
+    }
+    h1 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #A87078; }
+    p { font-size: 14px; color: #9e8a8e; text-align: center; max-width: 280px; line-height: 1.5; }
+    button {
+      margin-top: 24px;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 14px;
+      background: #C4919A;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>当前处于离线状态</h1>
+  <p>请连接网络后刷新页面，即可继续使用地图与景点解读。</p>
+  <button type="button" onclick="location.reload()">重新加载</button>
+</body>
+</html>
