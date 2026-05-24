@@ -148,7 +148,7 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 .mirage-poster-stage{
   position:relative;width:100%;max-width:min(680px,88vw);
   margin:0 auto clamp(56px,8vw,96px);
-  min-height:clamp(980px,158vh,1240px);
+  min-height:clamp(1080px,200vh,1400px);
   padding:clamp(32px,5vw,56px) 0 clamp(16px,3vw,28px);
 }
 .mirage-poster-scene{
@@ -2416,12 +2416,12 @@ body.eva-skin .ama-chapter-break__title{
     <div class="mirage-poster-stage" id="mirageLensPoster">
       <div class="mirage-poster-scene">
         <div class="mirage-poster-atmo" aria-hidden="true">
-          <div class="mirage-poster-atmo__sky" data-poster-parallax="0.16"></div>
-          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--1" data-poster-parallax="0.38"></div>
-          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--2" data-poster-parallax="0.26"></div>
-          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--3" data-poster-parallax="0.2"></div>
-          <div class="mirage-poster-atmo__mist" data-poster-parallax="0.32"></div>
-          <div class="mirage-poster-atmo__glow" data-poster-parallax="0.1"></div>
+          <div class="mirage-poster-atmo__sky" data-poster-parallax="0.28"></div>
+          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--1" data-poster-parallax="0.72"></div>
+          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--2" data-poster-parallax="0.52"></div>
+          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--3" data-poster-parallax="0.42"></div>
+          <div class="mirage-poster-atmo__mist" data-poster-parallax="0.58"></div>
+          <div class="mirage-poster-atmo__glow" data-poster-parallax="0.22"></div>
         </div>
         <div class="mirage-poster-plinth reveal" id="miragePosterPlinth">
           <div class="mirage-poster-mat">
@@ -3065,10 +3065,14 @@ const mirageReduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 if(mirageHero) mirageHero.classList.add('is-done');
 function getPosterParallax(){
   if(!mirageLensPoster) return {progress:0,shift:0};
-  const rect=mirageLensPoster.getBoundingClientRect();
-  const h=Math.max(mirageLensPoster.offsetHeight,innerHeight);
-  const progress=Math.min(1,Math.max(0,(innerHeight*.78-rect.top)/(h-innerHeight*.32)));
-  const shift=(progress-.5)*Math.min(h*.48,520);
+  const scene=mirageLensPoster.querySelector('.mirage-poster-scene');
+  const stageH=Math.max(mirageLensPoster.offsetHeight,innerHeight);
+  const sceneH=scene?scene.offsetHeight:innerHeight*.78;
+  const runway=Math.max(stageH-sceneH,innerHeight*.62);
+  const anchor=mirageLensPoster.offsetTop-innerHeight*.12;
+  const scrollIn=scrollY-anchor;
+  const progress=Math.min(1,Math.max(0,scrollIn/runway));
+  const shift=(progress-.5)*Math.min(runway*.92,760);
   return {progress,shift};
 }
 function updateMiragePosterParallax(){
@@ -3088,7 +3092,7 @@ function updateMiragePosterParallax(){
   mirageLensPoster.querySelectorAll('[data-poster-parallax]').forEach(el=>{
     const s=parseFloat(el.dataset.posterParallax||0);
     const y=shift*s;
-    const x=shift*s*.45;
+    const x=shift*s*.62;
     if(el.classList.contains('mirage-poster-atmo__cloud')){
       el.style.setProperty('--ppy',`${y}px`);
       el.style.setProperty('--ppx',`${x}px`);
@@ -3098,22 +3102,22 @@ function updateMiragePosterParallax(){
   });
   const plinth=document.getElementById('miragePosterPlinth');
   if(plinth){
-    const enter=Math.min(1,Math.max(0,(innerHeight*.86-mirageLensPoster.getBoundingClientRect().top)/(innerHeight*.72)));
-    const rotX=(1-enter)*8;
-    const rotY=(shift/innerHeight)*-9;
-    const lift=(1-enter)*40-shift*.38;
-    plinth.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(0,${lift}px,0) scale(${0.84+enter*.16})`;
-    plinth.style.opacity=String(0.48+enter*.52);
-    plinth.classList.toggle('is-lit',enter>=0.58);
+    const enter=Math.min(1,Math.max(0,progress*1.08));
+    const rotX=(1-enter)*11+shift*.012;
+    const rotY=(shift/innerHeight)*-16;
+    const lift=(1-enter)*56-shift*.52;
+    plinth.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(0,${lift}px,0) scale(${0.8+enter*.2})`;
+    plinth.style.opacity=String(0.42+enter*.58);
+    plinth.classList.toggle('is-lit',enter>=0.52);
   }
   const img=mirageLensPoster.querySelector('.mirage-poster-art img');
   if(img){
-    const iy=-shift*.14;
+    const iy=-shift*.26;
     img.style.setProperty('--img-y',`${iy}px`);
-    img.style.setProperty('--img-scale',String(1.02+Math.min(.06,Math.abs(iy)*.00015)));
+    img.style.setProperty('--img-scale',String(1.03+Math.min(.08,Math.abs(iy)*.00022)));
   }
   const shine=mirageLensPoster.querySelector('.mirage-poster-shine');
-  if(shine) shine.style.setProperty('--ppy-shine',`${-shift*.08}px`);
+  if(shine) shine.style.setProperty('--ppy-shine',`${-shift*.14}px`);
 }
 let posterAnimQueued=false;
 function queueMiragePosterParallax(){
