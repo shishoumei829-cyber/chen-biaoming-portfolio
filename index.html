@@ -110,12 +110,135 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 #mirage{padding:0 0 clamp(78px,10vw,140px)}
 .mirage-head{position:relative;min-height:100vh;margin:0 0 clamp(70px,9vw,120px);padding:120px clamp(22px,5vw,72px);display:grid;grid-template-columns:1fr;place-items:center;text-align:center;overflow:hidden}
 .mirage-head>div:nth-of-type(1){position:absolute;z-index:2;left:clamp(22px,5vw,72px);top:clamp(70px,8vw,110px)}
-.mirage-head>div:last-child{position:relative;z-index:2;display:grid;place-items:center}
+.mirage-head>div:last-child:not(.mirage-hero-stage){position:relative;z-index:2;display:grid;place-items:center}
+.mirage-head .mirage-hero-stage{display:flex!important;flex-direction:column!important;align-items:center!important;place-items:unset!important}
 .mirage-head .section-title{position:relative;z-index:2;font-size:clamp(64px,10vw,150px);text-shadow:0 8px 24px rgba(0,0,0,.42)}
 .mirage-head .section-desc{position:relative;z-index:2;max-width:720px;margin-top:24px;color:rgba(248,243,232,.92);text-shadow:0 4px 16px rgba(0,0,0,.46)}
-.mirage-title-art{position:absolute;z-index:0;inset:0;margin:0;border-radius:0;overflow:hidden;box-shadow:none;border:0}
-.mirage-title-art::after{display:none}
-.mirage-title-art img{width:100%;height:100%;object-fit:cover}
+.mirage-hero-stage{
+  position:relative;z-index:2;width:100%;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:clamp(8px,2vw,24px) 0 clamp(32px,5vw,56px);
+  margin-top:clamp(8px,2vw,20px);
+}
+.mirage-product-float{
+  position:relative;z-index:2;
+  width:clamp(360px,74vw,920px);max-width:960px;
+  margin:0 auto;pointer-events:none;
+}
+.mirage-product-float img{
+  width:100%;height:auto;display:block;object-fit:contain;
+  filter:drop-shadow(0 40px 80px rgba(0,0,0,.16));
+}
+.mirage-hero-stage .mirage-open-foot{
+  position:relative;z-index:3;width:100%;max-width:760px;
+  margin:clamp(18px,3vw,36px) auto 0;text-align:center;
+}
+.mirage-hero-stage.is-done .mirage-product-float img{
+  animation:mirageFloat 5.5s ease-in-out infinite;
+}
+@keyframes mirageFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .mirage-hero-stage.is-done .mirage-product-float img{animation:none!important}
+}
+
+/* MIRAGE 宣传海报 · 画廊式陈列 + 滚动视差 */
+.mirage-poster-stage{
+  position:relative;width:100%;max-width:min(680px,88vw);
+  margin:0 auto clamp(56px,8vw,96px);
+  min-height:clamp(980px,158vh,1240px);
+  padding:clamp(32px,5vw,56px) 0 clamp(16px,3vw,28px);
+}
+.mirage-poster-scene{
+  position:sticky;top:clamp(72px,11vh,112px);
+  width:100%;min-height:min(78vh,620px);
+  perspective:1400px;perspective-origin:50% 46%;
+}
+.mirage-poster-atmo{
+  position:absolute;inset:-32% -26% -22%;pointer-events:none;z-index:0;overflow:visible;
+}
+.mirage-poster-atmo__sky{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 50% 16%,rgba(196,224,255,.78),transparent 54%),
+    radial-gradient(ellipse at 18% 68%,rgba(255,255,255,.62),transparent 44%),
+    linear-gradient(180deg,#e8f0fc 0%,#f8f6f2 58%,#f3efe8 100%);
+  transform:translate3d(0,var(--ppy,0),0);
+  will-change:transform;
+}
+.mirage-poster-atmo__mist{
+  position:absolute;inset:8% -10% -8%;
+  background:
+    radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.88),transparent 60%),
+    radial-gradient(ellipse at 14% 38%,rgba(214,232,255,.48),transparent 38%);
+  filter:blur(20px);
+  transform:translate3d(0,var(--ppy,0),0);
+  will-change:transform;
+}
+.mirage-poster-atmo__glow{
+  position:absolute;left:50%;top:44%;width:min(92%,540px);aspect-ratio:1;border-radius:50%;
+  transform:translate3d(-50%,calc(-50% + var(--ppy,0px)),0);
+  background:radial-gradient(circle,rgba(120,168,255,.28),transparent 70%);
+  filter:blur(10px);will-change:transform;
+}
+.mirage-poster-atmo__cloud{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.82),transparent 72%);
+  filter:blur(14px);
+  transform:translate3d(var(--ppx,0),var(--ppy,0),0);
+  will-change:transform;
+}
+.mirage-poster-atmo__cloud--1{left:-8%;top:10%;width:48%;height:24%;opacity:.85}
+.mirage-poster-atmo__cloud--2{right:-10%;top:26%;width:42%;height:20%;opacity:.72}
+.mirage-poster-atmo__cloud--3{left:18%;bottom:6%;width:56%;height:22%;opacity:.58}
+.mirage-poster-plinth{
+  position:relative;z-index:2;width:100%;
+  transform-style:preserve-3d;
+  will-change:transform,opacity;
+}
+.mirage-poster-plinth::before{
+  content:"";position:absolute;left:8%;right:8%;bottom:-18px;height:28px;z-index:0;
+  background:radial-gradient(ellipse,rgba(0,40,120,.16),transparent 72%);
+  filter:blur(10px);transform:translateZ(-40px);
+}
+.mirage-poster-mat{
+  position:relative;padding:clamp(10px,2.2vw,16px);
+  background:linear-gradient(145deg,#fff,#f6f8fc);
+  border:1px solid rgba(0,40,176,.08);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 28px 64px rgba(0,40,120,.12),
+    0 8px 24px rgba(0,0,0,.06);
+  overflow:hidden;
+}
+.mirage-poster-art{margin:0;line-height:0;background:#eef2f8}
+.mirage-poster-art img{
+  display:block;width:100%;height:auto;
+  filter:saturate(1.02) contrast(1.01);
+  transform:translate3d(0,var(--img-y,0),0) scale(var(--img-scale,1));
+  will-change:transform;
+}
+.mirage-poster-shine{
+  position:absolute;inset:clamp(10px,2.2vw,16px);z-index:3;pointer-events:none;
+  background:linear-gradient(118deg,transparent 36%,rgba(255,255,255,.34) 49%,transparent 62%);
+  mix-blend-mode:soft-light;opacity:.55;
+  transform:translate3d(0,var(--ppy-shine,0),0);
+}
+.mirage-poster-plinth.is-lit .mirage-poster-mat{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.95) inset,
+    0 36px 88px rgba(0,40,120,.16),
+    0 12px 32px rgba(0,0,0,.08);
+}
+@media (max-width:760px){
+  .mirage-poster-stage{max-width:min(92vw,480px);min-height:clamp(720px,118vh,900px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .mirage-poster-plinth{transform:none!important;opacity:1!important}
+  .mirage-poster-art img{transform:none!important}
+}
 .mirage-cases,.spec-showcase{margin-left:clamp(22px,5vw,72px);margin-right:clamp(22px,5vw,72px)}
 
 .mirage-cases{display:grid;gap:clamp(38px,7vw,96px)}
@@ -602,13 +725,6 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 }
 .tw-feature p{font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.88;color:var(--tw-ink-m);font-weight:300}
 
-.tw-thinking{
-  position:relative;z-index:1;max-width:1180px;margin:0 auto;
-  padding:clamp(60px,8vw,100px) clamp(22px,5vw,72px);
-}
-.tw-thinking-head{margin-bottom:clamp(32px,5vw,52px)}
-.tw-thinking-head h3{font-family:"Playfair Display","Noto Serif SC",serif;font-size:clamp(32px,5vw,56px);line-height:1.05;color:var(--tw-ink)}
-.tw-thinking-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .tw-thought-card{
   position:relative;padding:22px 22px 24px 26px;border-radius:22px;
   border:1px solid rgba(255,255,255,.62);
@@ -623,6 +739,16 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 .tw-thought-label{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--tw-ink-m)}
 .tw-thought-label span{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:rgba(26,24,20,.08);font-size:10px}
 .tw-thought-card p{font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.86;color:var(--tw-ink-m)}
+
+.tw-inline-note{
+  position:relative;z-index:1;max-width:1180px;margin:0 auto;
+  padding:clamp(20px,4vw,36px) clamp(22px,5vw,72px);
+}
+.tw-inline-note .tw-thought-card{max-width:min(100%,440px)}
+.tw-inline-note--left .tw-thought-card{margin-right:auto}
+.tw-inline-note--right .tw-thought-card{margin-left:auto}
+.tw-inline-note--tight{padding-top:clamp(8px,2vw,16px);padding-bottom:clamp(8px,2vw,16px)}
+.tw-inline-note--loose{padding-top:clamp(28px,4vw,44px);padding-bottom:clamp(28px,4vw,44px)}
 
 .tw-vision{
   position:relative;z-index:1;min-height:72vh;display:grid;place-items:center;
@@ -653,7 +779,7 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
   .tw-spotlight-demo{justify-self:center;max-width:320px}
   .tw-design-grid{grid-template-columns:1fr;max-width:320px;margin:0 auto}
   .tw-dnote-row--offset{margin-left:0;text-align:left}
-  .tw-thinking-grid{grid-template-columns:1fr}
+  .tw-inline-note--right .tw-thought-card{margin-right:auto;margin-left:0}
 }
 @media(max-width:640px){
   .tw-boat{width:100px;bottom:36px}
@@ -671,7 +797,6 @@ body.eva-skin #timewalker{
   color:var(--tw-ink)!important;
 }
 body.eva-skin #timewalker .tw-brush-title,
-body.eva-skin #timewalker .tw-thinking-head h3,
 body.eva-skin #timewalker .tw-vision-inner .thought-line{color:var(--tw-ink)!important;text-shadow:none!important}
 body.eva-skin #timewalker .tw-kicker,
 body.eva-skin #timewalker .tw-dnote-label,
@@ -1048,12 +1173,12 @@ body.eva-skin .hero-work p{color:rgba(10,10,10,.5)!important}
 .eva-intertitle span{color:#fff!important}
 .eva-intertitle::before,.eva-intertitle::after{background:rgba(255,255,255,.35)!important}
 
-/* —— MIRAGE：白底字墙开场，非黑底 —— */
+/* —— MIRAGE：白底字墙开场 + 镜片海报 —— */
 body.eva-skin #mirage.eva-chapter{background:#fff!important;color:#0a0a0a!important}
 body.eva-skin #mirage .mirage-head{
-  position:relative!important;min-height:clamp(520px,72vh,780px)!important;
+  position:relative!important;min-height:auto!important;
   margin:0!important;padding:clamp(96px,11vh,128px) clamp(16px,4vw,56px) clamp(48px,6vw,72px)!important;
-  display:block!important;text-align:left!important;overflow:hidden!important;
+  display:block!important;text-align:left!important;overflow:visible!important;
   background:#fff!important;
 }
 body.eva-skin #mirage .mirage-wall{
@@ -1068,25 +1193,49 @@ body.eva-skin #mirage .mw--1{left:-2%;top:18%;font-size:clamp(4rem,18vw,11rem);o
 body.eva-skin #mirage .mw--2{right:-4%;top:8%;font-size:clamp(3rem,14vw,8rem);writing-mode:vertical-rl;opacity:.4}
 body.eva-skin #mirage .mw--3{left:8%;bottom:22%;font-size:clamp(2rem,9vw,5rem);color:rgba(230,0,122,.12)}
 body.eva-skin #mirage .mw--4{right:12%;bottom:8%;font-size:clamp(5rem,22vw,13rem);opacity:.18}
-
 body.eva-skin #mirage .mirage-head>div:first-of-type,
-body.eva-skin #mirage .mirage-title-art,
+body.eva-skin #mirage .mirage-hero-stage,
 body.eva-skin #mirage .mirage-open-foot{position:relative;z-index:2}
-body.eva-skin #mirage .mirage-head>div:first-of-type{
-  padding:0 0 20px!important;background:transparent!important;
-}
+body.eva-skin #mirage .mirage-head>div:first-of-type{padding:0 0 20px!important;background:transparent!important}
 body.eva-skin #mirage .mirage-quote{color:rgba(230,0,122,.75)!important;max-width:480px}
+body.eva-skin #mirage .mirage-head .mirage-hero-stage{
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  width:100%!important;min-height:auto!important;
+  margin:clamp(12px,3vw,28px) 0 0!important;
+  padding:0 0 clamp(40px,6vw,64px)!important;
+}
+body.eva-skin #mirage .mirage-product-float{
+  position:relative!important;top:auto!important;
+  width:clamp(380px,76vw,940px)!important;z-index:2!important;
+}
+body.eva-skin #mirage .mirage-product-float img{
+  mix-blend-mode:normal!important;
+  filter:drop-shadow(0 44px 88px rgba(0,0,0,.14))!important;
+}
+body.eva-skin #mirage .mirage-open-foot{
+  background:transparent!important;color:#0a0a0a!important;
+  padding:0!important;display:block!important;
+  position:relative!important;z-index:3!important;
+  max-width:760px!important;width:100%!important;
+  margin:clamp(20px,3vw,40px) auto 0!important;
+  text-align:center!important;
+}
+body.eva-skin #mirage .mirage-open-foot .section-title{
+  color:var(--eva-magenta-hot)!important;font-size:clamp(2.8rem,10vw,6.2rem)!important;
+  line-height:.82!important;margin:0 0 12px!important;
+  transform:scaleY(1.08)!important;text-align:center!important;
+}
+body.eva-skin #mirage .mirage-open-foot .section-desc{
+  color:rgba(10,10,10,.58)!important;max-width:680px;margin:0 auto!important;
+  text-align:center!important;
+}
+body.eva-skin #mirage .mirage-poster-stage{
+  max-width:min(680px,88vw)!important;
+  margin:0 auto clamp(56px,8vw,96px)!important;
+}
 
 body.eva-skin #mirage .mirage-title-art{
-  height:clamp(132px,20vh,200px)!important;background:var(--eva-blue)!important;
-  margin:0 0 20px!important;box-shadow:12px 14px 0 var(--eva-magenta-hot);
-}
-body.eva-skin #mirage .mirage-title-art::before{
-  background:radial-gradient(circle at 30% 50%,rgba(255,20,147,.45),transparent 55%),
-    linear-gradient(90deg,rgba(255,255,255,.08),transparent 60%)!important;
-}
-body.eva-skin #mirage .mirage-title-art img{
-  filter:saturate(1.1) contrast(1.05)!important;opacity:1!important;
+  display:none!important;
 }
 
 body.eva-skin #mirage .mirage-effect-board{
@@ -1158,72 +1307,7 @@ body.eva-skin #mirage .mirage-effect-tags span{
   text-shadow:0 2px 14px rgba(0,0,0,.7);
 }
 
-body.eva-skin #mirage .mirage-open-foot{
-  background:transparent!important;color:#0a0a0a!important;
-  padding:0!important;display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)!important;
-  grid-template-rows:auto auto auto!important;gap:6px 32px!important;
-  align-items:start!important;
-}
-body.eva-skin #mirage .mirage-frag{
-  font-family:var(--eva-wall)!important;font-size:11px!important;
-  color:var(--eva-magenta)!important;letter-spacing:.32em!important;
-}
-body.eva-skin #mirage .mirage-frag strong{color:var(--eva-magenta-hot)!important}
-body.eva-skin #mirage .mirage-frag--l{grid-column:1;grid-row:1;margin-top:48px}
-body.eva-skin #mirage .mirage-frag--r{grid-column:2;grid-row:1;text-align:left;margin-top:12px}
-body.eva-skin #mirage .mirage-open-foot .section-title{
-  grid-column:1/-1;grid-row:2;
-  color:var(--eva-magenta-hot)!important;font-size:clamp(3rem,11vw,7rem)!important;
-  line-height:.78!important;margin:8px 0 0!important;
-  transform:scaleY(1.12)!important;text-align:left!important;
-}
-body.eva-skin #mirage .mirage-open-foot .section-desc{
-  grid-column:1/-1;grid-row:3;
-  color:rgba(10,10,10,.58)!important;max-width:640px;margin-top:10px!important;
-}
-
-body.eva-skin #mirage .mirage-poster-stage{
-  position:relative;width:100vw;max-width:100vw;
-  margin:clamp(8px,2vw,20px) calc(50% - 50vw) clamp(64px,10vw,120px);
-  padding:clamp(48px,9vh,88px) 0;overflow:hidden;isolation:isolate;
-}
-body.eva-skin #mirage .mirage-poster-bg{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:url("assets/site/mirage-lens-poster.jpg") center center/cover no-repeat;
-  filter:blur(72px) saturate(1.28) brightness(1.06);
-  transform:scale(1.15);
-}
-body.eva-skin #mirage .mirage-poster-bg::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.28) 100%);
-}
-body.eva-skin #mirage .mirage-poster-duo{
-  position:relative;z-index:1;width:min(92vw,900px);margin:0 auto;padding:0;
-  -webkit-mask-image:
-    linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%),
-    linear-gradient(to bottom,transparent 0%,#000 10%,#000 90%,transparent 100%);
-  mask-image:
-    linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%),
-    linear-gradient(to bottom,transparent 0%,#000 10%,#000 90%,transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-composite:intersect;
-  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-}
-body.eva-skin #mirage .mirage-poster-sheet{
-  position:relative;width:100%;margin:0;padding:0;
-  overflow:hidden;line-height:0;background:transparent;
-}
-body.eva-skin #mirage .mirage-poster-half{
-  width:100%;aspect-ratio:723/422.5;overflow:hidden;
-}
-body.eva-skin #mirage .mirage-poster-half img{
-  display:block;width:100%;height:auto;max-width:none;
-  filter:saturate(1.06) contrast(1.03);
-}
-body.eva-skin #mirage .mirage-poster-half--b img{
-  transform:translateY(-50%);
-}
+body.eva-skin #mirage .mirage-frag{display:none!important}
 
 body.eva-skin #mirage .mirage-cases{
   background:
@@ -1902,7 +1986,8 @@ body.eva-skin #amadeus .ama-palace-room span{
   body.eva-skin #mirage .mirage-case,
   body.eva-skin #mirage .mirage-case:nth-child(even){transform:none}
   body.eva-skin #mirage .mirage-case .case-copy{margin-left:0!important}
-  body.eva-skin #mirage .mirage-open-foot{grid-template-columns:1fr}
+  body.eva-skin #mirage .mirage-open-foot{max-width:100%!important}
+  body.eva-skin #mirage .mirage-product-float{width:min(94vw,560px)!important}
   body.eva-skin #mirage .mirage-effect-copy{grid-template-columns:1fr}
   body.eva-skin #amadeus .ama-v2-module{transform:none!important}
 }
@@ -2305,7 +2390,7 @@ body.eva-skin .ama-chapter-break__title{
 <div class="eva-intertitle"><span>作品檔案</span></div>
 <main>
   <section class="section dark eva-chapter" id="mirage">
-    <div class="section-head mirage-head mirage-poster reveal">
+    <div class="section-head mirage-head mirage-poster">
       <div class="mirage-wall" aria-hidden="true">
         <span class="mw mw--1">现实</span>
         <span class="mw mw--2">转译</span>
@@ -2317,30 +2402,35 @@ body.eva-skin .ama-chapter-break__title{
         <p class="eva-caption mirage-quote">愿借设计，让烟火生姿，让光阴生彩。</p>
         <div class="num">EP.01 / PRODUCT CASE</div>
       </div>
-      <figure class="mirage-title-art magnetic">
-        <img src="assets/site/mirage-cover-from-old.jpg" alt="MIRAGE 现实转译后的城市街景">
-      </figure>
-      <div class="mirage-open-foot">
-        <div class="mirage-frag mirage-frag--l eva-caption" aria-hidden="true"><span>After that,</span><span>and</span><strong>THE END</strong></div>
-        <div class="mirage-frag mirage-frag--r eva-caption" aria-hidden="true"><span>NOT,</span><span>and</span><strong>ANT</strong></div>
-        <h2 class="section-title">MIRAGE<br>现实转译器</h2>
-        <p class="section-desc">MIRAGE 是一副以「现实转译」为核心的 AR 眼镜：用空间计算与实时渲染，让人重新看见街巷、树影与通勤路上的美——不是逃离现实，而是回到现实。它面向太赶、对生活失去兴趣或仍对生活感兴趣的人，也包括想用二次元的目光重新打量日常的爱好者。</p>
+      <div class="mirage-hero-stage" id="mirageHeroStage">
+        <figure class="mirage-product-float" id="mirageProductFloat">
+          <img src="assets/mirage/mirage-glasses-hero.png" alt="MIRAGE AR 眼镜产品渲染" width="1200" height="800" decoding="async">
+        </figure>
+        <div class="mirage-open-foot">
+          <h2 class="section-title">MIRAGE<br>现实转译器</h2>
+          <p class="section-desc">MIRAGE 是一副以「现实转译」为核心的 AR 眼镜：用空间计算与实时渲染，让人重新看见街巷、树影与通勤路上的美——不是逃离现实，而是回到现实。它面向太赶、对生活失去兴趣或仍对生活感兴趣的人，也包括想用二次元的目光重新打量日常的爱好者。</p>
+        </div>
       </div>
     </div>
 
-    <div class="mirage-poster-stage">
-      <div class="mirage-poster-bg" aria-hidden="true"></div>
-      <div class="mirage-poster-duo reveal" aria-label="MIRAGE 镜片海报 · 上下两屏">
-        <section class="mirage-poster-sheet mirage-poster-sheet--1">
-          <div class="mirage-poster-half">
-            <img src="assets/site/mirage-lens-poster.jpg" alt="MIRAGE 镜片海报（上）" width="723" height="845" decoding="async" fetchpriority="high">
+    <div class="mirage-poster-stage" id="mirageLensPoster">
+      <div class="mirage-poster-scene">
+        <div class="mirage-poster-atmo" aria-hidden="true">
+          <div class="mirage-poster-atmo__sky" data-poster-parallax="0.16"></div>
+          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--1" data-poster-parallax="0.38"></div>
+          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--2" data-poster-parallax="0.26"></div>
+          <div class="mirage-poster-atmo__cloud mirage-poster-atmo__cloud--3" data-poster-parallax="0.2"></div>
+          <div class="mirage-poster-atmo__mist" data-poster-parallax="0.32"></div>
+          <div class="mirage-poster-atmo__glow" data-poster-parallax="0.1"></div>
+        </div>
+        <div class="mirage-poster-plinth reveal" id="miragePosterPlinth">
+          <div class="mirage-poster-mat">
+            <figure class="mirage-poster-art">
+              <img src="assets/mirage/mirage-promo-poster.png" alt="MIRAGE 产品宣传海报" width="1024" height="1536" decoding="async" loading="lazy">
+            </figure>
           </div>
-        </section>
-        <section class="mirage-poster-sheet mirage-poster-sheet--2">
-          <div class="mirage-poster-half mirage-poster-half--b">
-            <img src="assets/site/mirage-lens-poster.jpg" alt="MIRAGE 镜片海报（下）" width="723" height="845" loading="lazy" decoding="async">
-          </div>
-        </section>
+          <div class="mirage-poster-shine" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
 
@@ -2684,6 +2774,13 @@ body.eva-skin .ama-chapter-break__title{
       </svg>
     </header>
 
+    <div class="tw-inline-note tw-inline-note--left tw-inline-note--tight reveal">
+      <div class="tw-thought-card tw-thought-card--q">
+        <div class="tw-thought-label"><span>?</span>Question</div>
+        <p>为什么「去过」的清单越来越长，我们对旅途本身的印象却越来越薄？</p>
+      </div>
+    </div>
+
     <section class="tw-dnote reveal">
       <div class="tw-dnote-v tw-dnote-v--l" aria-hidden="true">問</div>
       <div class="tw-dnote-v tw-dnote-v--r" aria-hidden="true">思</div>
@@ -2700,6 +2797,13 @@ body.eva-skin .ama-chapter-break__title{
         </div>
       </div>
     </section>
+
+    <div class="tw-inline-note tw-inline-note--right reveal">
+      <div class="tw-thought-card tw-thought-card--f">
+        <div class="tw-thought-label"><span>!</span>Finding</div>
+        <p>打卡完成行程，文化理解却滞后——真正值得听的故事，往往要回家后才从攻略里补上。</p>
+      </div>
+    </div>
 
     <div class="tw-showcase reveal">
       <div class="tw-layout">
@@ -2763,6 +2867,12 @@ body.eva-skin .ama-chapter-break__title{
             </div>
             <figcaption>近处回响 · 文化卡弹层</figcaption>
           </figure>
+        </div>
+        <div class="tw-inline-note tw-inline-note--left tw-inline-note--tight reveal">
+          <div class="tw-thought-card tw-thought-card--m">
+            <div class="tw-thought-label"><span>→</span>Method</div>
+            <p>把理解入口前移到「路过这里」的当下：弹层代替百科，三句话代替一百页攻略，关掉就能继续走。</p>
+          </div>
         </div>
         <div class="tw-design-showcase">
           <div class="tw-design-head">
@@ -2835,6 +2945,12 @@ body.eva-skin .ama-chapter-break__title{
               </div>
               <figcaption>发现页 · 雅集排行</figcaption>
             </figure>
+          </div>
+          <div class="tw-inline-note tw-inline-note--right tw-inline-note--tight reveal">
+            <div class="tw-thought-card tw-thought-card--v">
+              <div class="tw-thought-label"><span>◆</span>Value</div>
+              <p>足迹与故事一并归档——回忆时不只是坐标点，而是可被重新阅读的片段与成就感。</p>
+            </div>
           </div>
         </div>
       </div>
@@ -2942,6 +3058,78 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -80px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+const mirageHero=document.getElementById('mirageHeroStage');
+const mirageHead=document.querySelector('#mirage .mirage-head');
+const mirageLensPoster=document.getElementById('mirageLensPoster');
+const mirageReduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+if(mirageHero) mirageHero.classList.add('is-done');
+function getPosterParallax(){
+  if(!mirageLensPoster) return {progress:0,shift:0};
+  const rect=mirageLensPoster.getBoundingClientRect();
+  const h=Math.max(mirageLensPoster.offsetHeight,innerHeight);
+  const progress=Math.min(1,Math.max(0,(innerHeight*.78-rect.top)/(h-innerHeight*.32)));
+  const shift=(progress-.5)*Math.min(h*.48,520);
+  return {progress,shift};
+}
+function updateMiragePosterParallax(){
+  if(!mirageLensPoster) return;
+  if(mirageReduceMotion.matches){
+    const plinth=document.getElementById('miragePosterPlinth');
+    if(plinth){plinth.style.transform='none';plinth.style.opacity='1'}
+    mirageLensPoster.querySelectorAll('.mirage-poster-atmo [data-poster-parallax]').forEach(el=>{
+      el.style.setProperty('--ppy','0px');
+      el.style.setProperty('--ppx','0px');
+    });
+    const img=mirageLensPoster.querySelector('.mirage-poster-art img');
+    if(img){img.style.setProperty('--img-y','0px');img.style.setProperty('--img-scale','1')}
+    return;
+  }
+  const {progress,shift}=getPosterParallax();
+  mirageLensPoster.querySelectorAll('[data-poster-parallax]').forEach(el=>{
+    const s=parseFloat(el.dataset.posterParallax||0);
+    const y=shift*s;
+    const x=shift*s*.45;
+    if(el.classList.contains('mirage-poster-atmo__cloud')){
+      el.style.setProperty('--ppy',`${y}px`);
+      el.style.setProperty('--ppx',`${x}px`);
+    }else{
+      el.style.setProperty('--ppy',`${y}px`);
+    }
+  });
+  const plinth=document.getElementById('miragePosterPlinth');
+  if(plinth){
+    const enter=Math.min(1,Math.max(0,(innerHeight*.86-mirageLensPoster.getBoundingClientRect().top)/(innerHeight*.72)));
+    const rotX=(1-enter)*8;
+    const rotY=(shift/innerHeight)*-9;
+    const lift=(1-enter)*40-shift*.38;
+    plinth.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(0,${lift}px,0) scale(${0.84+enter*.16})`;
+    plinth.style.opacity=String(0.48+enter*.52);
+    plinth.classList.toggle('is-lit',enter>=0.58);
+  }
+  const img=mirageLensPoster.querySelector('.mirage-poster-art img');
+  if(img){
+    const iy=-shift*.14;
+    img.style.setProperty('--img-y',`${iy}px`);
+    img.style.setProperty('--img-scale',String(1.02+Math.min(.06,Math.abs(iy)*.00015)));
+  }
+  const shine=mirageLensPoster.querySelector('.mirage-poster-shine');
+  if(shine) shine.style.setProperty('--ppy-shine',`${-shift*.08}px`);
+}
+let posterAnimQueued=false;
+function queueMiragePosterParallax(){
+  if(posterAnimQueued) return;
+  posterAnimQueued=true;
+  requestAnimationFrame(()=>{
+    updateMiragePosterParallax();
+    posterAnimQueued=false;
+  });
+}
+if(mirageLensPoster){
+  queueMiragePosterParallax();
+  window.addEventListener('load',queueMiragePosterParallax,{passive:true});
+  mirageReduceMotion.addEventListener('change',queueMiragePosterParallax);
+}
+
 function typeThought(el){
   if(el.dataset.typed==='true') return;
   el.dataset.typed='true';
@@ -2983,14 +3171,24 @@ function onScroll(){
     return r.top<innerHeight*.45 && r.bottom>innerHeight*.25;
   });
   document.body.classList.toggle('dark-cursor',inDark);
+  queueMiragePosterParallax();
 }
 window.addEventListener('scroll',onScroll,{passive:true});
 onScroll();
+window.addEventListener('resize',queueMiragePosterParallax,{passive:true});
 
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+    const id=a.getAttribute('href');
+    const t=document.querySelector(id);
+    if(t){
+      e.preventDefault();
+      let top=t.getBoundingClientRect().top+scrollY;
+      if(id==='#mirage'&&mirageHead){
+        top=Math.max(0,mirageHead.getBoundingClientRect().top+scrollY-innerHeight+96);
+      }
+      scrollTo({top,behavior:'smooth'});
+    }
   });
 });
 
