@@ -233,11 +233,10 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
     0 12px 32px rgba(0,0,0,.08);
 }
 @media (max-width:760px){
-  .mirage-poster-stage{max-width:min(92vw,480px);min-height:clamp(720px,118vh,900px)}
+  .mirage-poster-stage{max-width:min(92vw,480px);min-height:clamp(820px,168vh,1040px)}
 }
 @media (prefers-reduced-motion:reduce){
-  .mirage-poster-plinth{transform:none!important;opacity:1!important}
-  .mirage-poster-art img{transform:none!important}
+  .mirage-poster-plinth{opacity:1!important}
 }
 .mirage-cases,.spec-showcase{margin-left:clamp(22px,5vw,72px);margin-right:clamp(22px,5vw,72px)}
 
@@ -3077,18 +3076,9 @@ function getPosterParallax(){
 }
 function updateMiragePosterParallax(){
   if(!mirageLensPoster) return;
-  if(mirageReduceMotion.matches){
-    const plinth=document.getElementById('miragePosterPlinth');
-    if(plinth){plinth.style.transform='none';plinth.style.opacity='1'}
-    mirageLensPoster.querySelectorAll('.mirage-poster-atmo [data-poster-parallax]').forEach(el=>{
-      el.style.setProperty('--ppy','0px');
-      el.style.setProperty('--ppx','0px');
-    });
-    const img=mirageLensPoster.querySelector('.mirage-poster-art img');
-    if(img){img.style.setProperty('--img-y','0px');img.style.setProperty('--img-scale','1')}
-    return;
-  }
-  const {progress,shift}=getPosterParallax();
+  const motionScale=mirageReduceMotion.matches?0.42:1;
+  const {progress,shift:rawShift}=getPosterParallax();
+  const shift=rawShift*motionScale;
   mirageLensPoster.querySelectorAll('[data-poster-parallax]').forEach(el=>{
     const s=parseFloat(el.dataset.posterParallax||0);
     const y=shift*s;
@@ -3103,9 +3093,9 @@ function updateMiragePosterParallax(){
   const plinth=document.getElementById('miragePosterPlinth');
   if(plinth){
     const enter=Math.min(1,Math.max(0,progress*1.08));
-    const rotX=(1-enter)*11+shift*.012;
+    const rotX=((1-enter)*11+shift*.012)*motionScale;
     const rotY=(shift/innerHeight)*-16;
-    const lift=(1-enter)*56-shift*.52;
+    const lift=((1-enter)*56-shift*.52)*motionScale;
     plinth.style.transform=`rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(0,${lift}px,0) scale(${0.8+enter*.2})`;
     plinth.style.opacity=String(0.42+enter*.58);
     plinth.classList.toggle('is-lit',enter>=0.52);
