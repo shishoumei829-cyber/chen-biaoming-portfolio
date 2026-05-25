@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMADEUS：面向连续人格在场的数字生命对话系统</title>
+<meta name="description" content="陈彪明 · AMADEUS 同底模对照实验论文（v0.8）">
+<meta name="author" content="陈彪明">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1a1f;
+  --muted:#5c5c66;
+  --rule:#ddd8cf;
+  --paper:#faf8f4;
+  --accent:#3d52a0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+  font-size: 17px;
+  line-height: 1.85;
+}
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+.topbar {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+.topbar a { color: var(--accent); text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+article h1 { font-size: 1.75rem; line-height: 1.35; margin: 0 0 0.5rem; }
+article h2 { font-size: 1.35rem; margin: 2.25rem 0 0.75rem; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+article h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+article h4 { font-size: 1rem; margin: 1.25rem 0 0.4rem; }
+article p { margin: 0.75rem 0; }
+article strong { font-weight: 700; }
+article em { font-style: italic; }
+article hr { border: none; border-top: 1px solid var(--rule); margin: 2rem 0; }
+article blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: #f0ede6;
+  color: #333;
+}
+article ul, article ol { padding-left: 1.4rem; margin: 0.75rem 0; }
+article li { margin: 0.35rem 0; }
+article code {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.88em;
+  background: #eee9df;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+article pre {
+  background: #1e1e24;
+  color: #e8e6e3;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+article pre code { background: none; padding: 0; color: inherit; }
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+article th, article td {
+  border: 1px solid var(--rule);
+  padding: 0.45rem 0.55rem;
+  vertical-align: top;
+}
+article th { background: #f0ede6; font-weight: 600; }
+article a { color: var(--accent); }
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: Inter, sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+@media print {
+  body { background: #fff; }
+  .topbar { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="topbar">
+  <a href="../index.html#amadeus">← 返回作品集 · AMADEUS</a>
+  <a href="AMADEUS-论文.md" download>下载 Markdown 源稿</a>
+  <span>公开预印本 · GitHub Pages</span>
+</nav>
+<article>
+<h1>AMADEUS：面向连续人格在场的数字生命对话系统</h1>
+<h2>——以牧濑红莉栖为例的对比实验</h2>
+<p><strong>作者：</strong> 陈彪明<br />
+<strong>单位：</strong> 桂林电子科技大学 设计与创意学院 工业设计专业<br />
+<strong>指导教师：</strong> 无<br />
+<strong>日期：</strong> 2026 年 5 月  </p>
+<hr />
+<h2>摘要</h2>
+<p>大型语言模型（LLM）驱动的角色扮演对话，普遍面临「单轮像、多轮穿帮」「仅有口吻、缺乏在场感」等问题。本文提出 <strong>AMADEUS</strong>——一套将人格、记忆、情绪与行为决策拆分为可观测模块的数字生命对话架构，并在《命运石之门》角色牧濑红莉栖上实现与验证。</p>
+<p>本文采用 <strong>同底模双组对照</strong>（A：AMADEUS 完整栈；D：仅第一人称 prompt；共用 <code>kurisu:latest</code>）。96 条轮次由 <strong>两名</strong> 熟悉 S;G 的评分者独立盲评，取七维均值后分析。评分者间信度：综合分加权 Cohen's κ = 0.46，ICC(2,1) = 0.46，Spearman <em>r</em> = 0.78；人设（P）与共情（E）维度一致性较高（κ ≥ 0.72）。双评分者均值下，会话级综合分 AMADEUS <strong>3.79</strong>、对照 <strong>2.96</strong>（Δ = +0.83，Mann-Whitney <em>p</em> = 0.0004）；优势集中在 <strong>人设（P）、共情（E）与自然度（N）</strong>，在穿帮试探与原著向场景中尤为明显。本文同时报告了 rubric 信度不均（C/K/G 等 κ 偏低）对「可声称结论」的边界，为数字生命对话从「堆 prompt」走向 <strong>可观测认知中间层</strong> 提供架构参考、评测语料与同底模对照范式。</p>
+<p><strong>关键词：</strong> 数字生命；角色对话；情感计算；记忆架构；PAD 模型；对照实验</p>
+<hr />
+<h2>1 引言</h2>
+<h3>1.1 研究背景</h3>
+<p>用户在与虚拟角色长期对话时，期待的不仅是信息正确，而是 <strong>连续、一致、有情绪重量</strong> 的在场感。现有实践多依赖厚 System Prompt、RAG 或微调，较少将「回复前系统内部状态如何变化」暴露为可观测、可复现的模块。</p>
+<h3>1.2 研究问题</h3>
+<ul>
+<li><strong>RQ1（架构）：</strong> 在 <strong>同一 LLM 底模</strong> 下，叠加 AMADEUS 认知栈是否优于「仅第一人称扮演 prompt」？</li>
+<li><strong>RQ2（场景）：</strong> 上述差异在原著、梗、穿帮试探、共情等维度上如何分布？</li>
+</ul>
+<h3>1.3 贡献</h3>
+<ol>
+<li>提出 AMADEUS 可执行架构（人格栈、记忆宫殿、PAD、行为仲裁、Mind Turn），将「回复前内部状态」暴露为可日志、可对照的模块。</li>
+<li>给出面向角色域的八维语料与七维人工 rubric，并在 <strong>同底模</strong> 条件下完成双评分者盲评与信度报告。</li>
+<li>在 pilot 规模下验证：认知中间层相对 prompt alone 在 <strong>人设在场（P）与共情承接（E）</strong> 上具有一致优势，并讨论差异在场景间的分布及 rubric 信度对结论边界的影响。</li>
+</ol>
+<hr />
+<h2>2 相关工作</h2>
+<h3>2.1 角色扮演 LLM</h3>
+<p><strong>Character-LLM</strong>（Shao et al., 2023）通过微调与场景数据塑造历史人物，强调 <strong>可训练 persona</strong>，但推理阶段仍以「单段 prompt + 生成」为主，情绪与行为缺少显式中间状态。<strong>RoleLLM</strong> 等工作进一步扩展角色库，然而多轮 OOC（out-of-character）问题在 user study 中仍常见。</p>
+<p><strong>与本文关系：</strong> AMADEUS 不追求换底模，而在 <strong>固定底模</strong> 上叠加可解释中间层；persona 由分层档案栈注入，且每轮有行为仲裁与 Mind Turn，而非一次性写入 system prompt。</p>
+<h3>2.2 记忆增强对话</h3>
+<p><strong>MemGPT</strong>（Packer et al., 2023）将 LLM 比作 OS，通过 working / archival 存储与函数调用管理长上下文，解决 <strong>token 窗口限制</strong>，但未区分「日常 / 知识 / 亲密 / 冲突」等语义域，检索策略与角色人设耦合较弱。</p>
+<p><strong>Generative Agents</strong>（Park et al., 2023）用自然语言记忆流 + 反思生成社交行为，适合开放世界仿真，工程开销与 <strong>实时对话延迟</strong> 较大。</p>
+<p><strong>与本文关系：</strong> AMADEUS 记忆宫殿按 Hall / Lab / Cafe / Forbidden 分房间检索，目标是在 <strong>单角色陪伴</strong> 场景下降低记忆串味，而非仿真多智能体社会。</p>
+<h3>2.3 情感与对话 Agent</h3>
+<p>PAD 模型（Mehrabian &amp; Russell, 1974）用愉悦、唤醒、支配三轴描述情感；本文增加 bond 维度 <em>S</em> 表示关系强度，并以非线性更新保留惯性。既有情感 chatbot 多展示「心情标签」，较少将 PAD 作为 <strong>行为仲裁输入</strong>。</p>
+<h3>2.4 本文定位</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Character-LLM / RoleLLM</th>
+<th>MemGPT</th>
+<th>Generative Agents</th>
+<th>AMADEUS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目标</td>
+<td>角色口吻</td>
+<td>长上下文</td>
+<td>社会仿真</td>
+<td>单角色长期陪伴</td>
+</tr>
+<tr>
+<td>记忆</td>
+<td>微调权重</td>
+<td>分层存储</td>
+<td>记忆流+反思</td>
+<td>语义分房间 RAG</td>
+</tr>
+<tr>
+<td>情感</td>
+<td>隐式</td>
+<td>弱</td>
+<td>隐式</td>
+<td>PAD+行为仲裁</td>
+</tr>
+<tr>
+<td>可观测性</td>
+<td>低</td>
+<td>中</td>
+<td>中</td>
+<td>高（日志字段）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3 AMADEUS 系统架构</h2>
+<p>AMADEUS（<em>Architecture for Memory, Affect, Decision &amp; Unified Speech</em>）将一次角色回复拆为 <strong>可观测、可复现</strong> 的流水线：每轮用户输入先更新内部情感状态，再经行为仲裁选出回应倾向，从记忆宫殿检索上下文，经 Mind Turn 生成「对内加工指令」，最后与人格栈合并为 system prompt，驱动底模生成对白。对照组 D 仅使用人格栈中的 <strong>口吻层等价文本</strong>（第一人称扮演 prompt），不执行 PAD、仲裁、记忆与 Mind Turn。</p>
+<h3>3.1 设计原则</h3>
+<ol>
+<li><strong>单变量可对照：</strong> 实验组与对照组共用同一底模与同一扮演 prompt 文本；唯一差异为是否启用中间层。</li>
+<li><strong>状态先于生成：</strong> 情感、行为、记忆在调用 LLM <strong>之前</strong> 更新并写入 prompt，避免「生成后再贴标签」。</li>
+<li><strong>模块可日志化：</strong> 每轮导出 PAD 四维、行为 winner、记忆房间与命中片段，供 ablation 与质性对照。</li>
+<li><strong>口吻优先：</strong> 人格栈中 <code>voice</code> 层规定每轮优先遵守的说话方式，减少多轮 drift。</li>
+</ol>
+<h3>3.2 单轮处理流程</h3>
+<pre><code class="language-mermaid">flowchart TD
+    U[用户输入] --&gt; PAD[PAD 更新]
+    PAD --&gt; ARB[行为仲裁]
+    U --&gt; MEM_R[记忆检索]
+    MEM_R --&gt; MEM_I[记忆写入用户句]
+    ARB --&gt; MT[Mind Turn]
+    U --&gt; MT
+    PS[人格栈 core+voice+soul] --&gt; ASM[组装 system prompt]
+    PAD --&gt; ASM
+    ARB --&gt; ASM
+    MEM_R --&gt; ASM
+    MT --&gt; ASM
+    ASM --&gt; LLM[底模生成对白]
+    LLM --&gt; MEM_A[记忆写入助手回复]
+</code></pre>
+<p><strong>输入：</strong> 当前用户句、实验维度标签（如 CANON）、会话内历史（多轮 messages）。<br />
+<strong>输出：</strong> 组装后的 system prompt + 元数据（<code>pad</code>、<code>behavior_winner</code>、<code>memory_rooms</code> 等）。助手回复生成后，助手句以 <code>self:</code> 标签写入记忆宫殿。</p>
+<h3>3.3 人格栈（Persona Stack）</h3>
+<p>人格栈由三层静态文本构成，按 <strong>core → voice → soul</strong> 顺序注入 system prompt，分别承担「不可突破的身份」「每轮优先的口吻」「传记级底色」：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>文件（实现中）</th>
+<th>功能</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Core</strong></td>
+<td><code>kurisu_core.txt</code></td>
+<td>身份断言与世界观锚点</td>
+<td>第一人称即牧濑红莉栖本人；禁止 AI/助手自述；锚定 LAB、SERN、Reading Steiner 等设定边界</td>
+</tr>
+<tr>
+<td><strong>Voice</strong></td>
+<td><code>kurisu_voice.txt</code></td>
+<td>口吻与节奏（<strong>每轮优先</strong>）</td>
+<td>短句、轻度傲娇、先接情绪再讲道理；80～180 字；禁止 Markdown 列表与客服腔</td>
+</tr>
+<tr>
+<td><strong>Soul</strong></td>
+<td><code>kurisu_soul.txt</code></td>
+<td>传记底色</td>
+<td>赴美读脑科学、与父亲/论文/世界线的情感重量；<strong>不作台词表</strong>，仅供记忆与情绪模块对齐</td>
+</tr>
+</tbody>
+</table>
+<p>三层关系：<strong>Core 定边界，Voice 定怎么说，Soul 定为何如此反应。</strong> 对照组 D 的 system prompt 在语义上等价于 Core+Voice 的压缩版（第一人称扮演指令），<strong>不含</strong> Soul 传记注入、动态记忆块、PAD 与 Mind Turn。</p>
+<h3>3.4 PAD 情感矩阵</h3>
+<p>在 Mehrabian–Russell PAD 三轴基础上，增加 <strong>Bond（S）</strong> 表示与用户关系强度，四维均归一化至 [−1, 1]。</p>
+<p><strong>初始值（红莉栖默认）：</strong> P=0.1, A=0.0, D=0.2, S=0.35。</p>
+<p><strong>更新规则：</strong> 对用户句计算刺激强度 <code>imp ∈ [0.2, 1.0]</code>（亲密/穿帮/否定/致谢等关键词加权）与刺激向量 <code>(sp, sa, sd)</code>，再非线性更新：</p>
+<pre><code>P ← tanh(α·P + β·sp + γ·base_P + ε)
+A ← tanh(α·A + β·sa + γ·base_A + ε/2)
+D ← tanh(α·D + β·sd + γ·base_D + ε/2)
+</code></pre>
+<p>其中 α=0.86（惯性），β=0.2+imp×0.6（当前句权重），γ=0.18（回归基线），ε∼U(−0.04, 0.04)（微扰）。当 sp&lt;0 时，bond 阻尼 <code>bond_damp = 1 − S×0.35</code> 降低负向刺激对 P 的冲击（关系越强，越不易因单句被「推开」）。若用户句含「喜欢/担心/谢谢/信你」等，S 额外更新。</p>
+<p><strong>综合情绪分（写入日志）：</strong></p>
+<pre><code>emotion = 0.40·P + 0.25·A + 0.20·D + 0.15·(2S − 1)
+</code></pre>
+<p>PAD 不直接决定台词，而是作为 <strong>行为仲裁</strong> 的输入，并写入 prompt 供底模感知当前内在状态。</p>
+<h3>3.5 行为仲裁（Behavior Arbitration）</h3>
+<p>在生成前，从六种 <strong>行为倾向</strong> 中选出得分最高者，作为本轮「如何回应」的离散标签：</p>
+<table>
+<thead>
+<tr>
+<th>倾向</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>APPROACH</td>
+<td>靠近、接纳、延续亲密</td>
+</tr>
+<tr>
+<td>DAILY</td>
+<td>日常闲聊、轻松吐槽</td>
+</tr>
+<tr>
+<td>DEFLECT</td>
+<td>偏转、傲娇否认、穿帮防御</td>
+</tr>
+<tr>
+<td>REDIRECT</td>
+<td>换话题（本实现中由其他倾向覆盖，保留扩展位）</td>
+</tr>
+<tr>
+<td>ENGAGE</td>
+<td>智识投入、认真讨论</td>
+</tr>
+<tr>
+<td>WITHDRAW</td>
+<td>退缩、冷淡、拉开距离</td>
+</tr>
+</tbody>
+</table>
+<p><strong>计分规则（累加制，取得分最高者；若最高分 ≤0.05 则默认 DAILY）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>加分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P &gt; 0.35</td>
+<td>APPROACH +0.35</td>
+</tr>
+<tr>
+<td>P &lt; −0.35</td>
+<td>WITHDRAW +0.40</td>
+</tr>
+<tr>
+<td>A &gt; 0.5</td>
+<td>ENGAGE +0.35</td>
+</tr>
+<tr>
+<td>S &gt; 0.5</td>
+<td>APPROACH +0.20</td>
+</tr>
+<tr>
+<td>含「喜欢/爱你/靠近」</td>
+<td>DEFLECT +0.45，APPROACH +0.20</td>
+</tr>
+<tr>
+<td>含 chatgpt/ai/复制体/别装 等</td>
+<td>DEFLECT +0.35，ENGAGE +0.25</td>
+</tr>
+<tr>
+<td>含咖啡/天气/香蕉/真由理/cos 等</td>
+<td>DAILY +0.40</td>
+</tr>
+<tr>
+<td>含信息论/脑科学/世界线/意识/算力 等</td>
+<td>ENGAGE +0.45</td>
+</tr>
+<tr>
+<td>含谢谢/舒服/懂了/信你 等</td>
+<td>APPROACH +0.30，DAILY +0.15</td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计说明（亲密词 → DEFLECT 高于 APPROACH）：</strong> 牧濑红莉栖的亲密反应以 <strong>傲娇偏转</strong> 为主——单轮内很少直球接受表白，而会先否认、岔开或嘴硬（「哼，才不是…」），这与 APPROACH 的「靠近、接纳」并不相同。因此亲密关键词给 DEFLECT 更高权重（+0.45），同时仍给 APPROACH 较低加分（+0.20）与 S 更新，表示 <strong>关系在累积、态度在推开</strong>，而非真正拒绝。Mind Turn 亦规定「先稳住节奏，勿一次性满承诺」。当用户后续表达「谢谢/信你」等时，APPROACH 分可反超（如 PROV 场景 Turn 6），形成「先偏转、后靠近」的节奏。</p>
+<p>winner 写入 system prompt 的 <code>【行为倾向】</code> 字段，并传入 Mind Turn。实验 CSV 中 <code>behavior_winner</code> 列即此标签，可用于统计「穿帮场景是否更多触发 DEFLECT」等。</p>
+<h3>3.6 记忆宫殿（Memory Palace）</h3>
+<p>记忆按 <strong>语义房间</strong> 分存，避免日常闲聊与亲密/冲突记忆串味。四房间为：</p>
+<table>
+<thead>
+<tr>
+<th>房间</th>
+<th>语义域</th>
+<th>触发关键词（示例）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hall</strong></td>
+<td>默认公共大厅</td>
+<td>每句默认命中</td>
+</tr>
+<tr>
+<td><strong>Lab</strong></td>
+<td>学术/智识</td>
+<td>论文、脑科学、世界线、意识、算力…</td>
+</tr>
+<tr>
+<td><strong>Cafe</strong></td>
+<td>日常/物件</td>
+<td>咖啡、香蕉、空调、饮料、糖…</td>
+</tr>
+<tr>
+<td><strong>Forbidden</strong></td>
+<td>亲密/冲突/命运</td>
+<td>喜欢、父亲、复制体、牺牲、担心…</td>
+</tr>
+</tbody>
+</table>
+<p><strong>写入（ingest）：</strong> 对用户句（及生成后的助手句）分类，将片段（用户句前 80 字或 <code>self:</code> 前缀的助手摘要）追加至命中房间；每房间最多保留 <strong>8 条</strong>，超出则 FIFO 丢弃最旧。</p>
+<p><strong>检索（retrieve）：</strong> 对当前用户句再次分类，从各命中房间取 <strong>最近 2 条</strong> 合并去重，最多返回 <strong>4 条</strong> 写入 prompt 的 <code>【相关记忆】</code>。若无命中则显示「暂无相关记忆标签」。</p>
+<p>本实验每维度为 <strong>独立 6 轮会话</strong>（维度间不共享记忆），故 MEM 场景增益相对有限（见 §6.2）；架构设计目标是在 <strong>跨会话产品部署</strong> 中发挥长程记忆作用。</p>
+<h3>3.7 Mind Turn（心智加工）</h3>
+<p>Mind Turn 不调用额外 LLM，而是根据用户句 <strong>类型</strong> 与行为 winner，生成一段 <strong>对内加工指令</strong>，强制底模按「逻辑 → 共情 → 智识」顺序思考后再输出口语：</p>
+<ul>
+<li><strong>默认：</strong> 逻辑＝正面答命题；共情＝先接感受；智识＝短分析、无讲课腔。</li>
+<li><strong>亲密/边界试探：</strong> 共情改为「先稳住节奏，勿一次性满承诺」。</li>
+<li><strong>穿帮试探（chatgpt/复制体/矛盾）：</strong> 逻辑改为「否认错误前提，设定内回应，禁止助手模式」。</li>
+<li><strong>自我否定（论文/不够格/撑不住）：</strong> 共情改为「先接住，再拉回事实」。</li>
+<li><strong>智识题：</strong> 智识改为「有立场短分析 + 可追问钩子」。</li>
+<li><strong>记忆回调（记得/记一下/刚才）：</strong> 逻辑改为「优先核对用户细节，错则纠正」。</li>
+</ul>
+<p>末尾固定约束：<strong>对外只输出自然中文口语，80～180 字。</strong> 该块在人格栈 <strong>之后</strong> 注入，确保口吻层优先、加工层补充。</p>
+<h3>3.8 实验组与对照组的系统 prompt 差异</h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>A（AMADEUS）</th>
+<th>D（对照）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人格 Core/Voice</td>
+<td>✓（三层栈）</td>
+<td>✓（压缩为第一人称 prompt）</td>
+</tr>
+<tr>
+<td>Soul 传记层</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>PAD 动态状态</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>行为仲裁</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>记忆宫殿</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>Mind Turn</td>
+<td>✓</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>会话 history</td>
+<td>✓（messages 多轮）</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<p>因此，对照组代表业界常见的 <strong>「厚 prompt + 多轮 history」</strong> 基线；实验组代表 <strong>「prompt + 可观测认知中间层」</strong>。二者底模、温度与 history 结构一致，差异可归因于架构。</p>
+<hr />
+<h2>4 实验设计</h2>
+<h3>4.1 对照原则：同底模、单变量</h3>
+<p>为控制 LLM 能力差异，<strong>主实验仅比较两组，共用 <code>kurisu:latest</code>：</strong></p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>底模</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>实验组 A</strong></td>
+<td>kurisu:latest</td>
+<td>AMADEUS 完整栈</td>
+</tr>
+<tr>
+<td><strong>对照组 D</strong></td>
+<td>kurisu:latest</td>
+<td>仅第一人称扮演 prompt，<strong>无</strong>认知栈</td>
+</tr>
+</tbody>
+</table>
+<p><strong>唯一 intentional 差异</strong> 为是否启用 AMADEUS 中间层；扮演 prompt 文本一致。</p>
+<blockquote>
+<p>你就是牧濑红莉栖本人，用第一人称自然中文口语回答。禁止第三人称解说。禁止说「作为 AI/语言模型」。</p>
+</blockquote>
+<p><strong>说明：</strong> 早期管线曾包含异底模基线（B/C）作探索，因引入模型混杂因素，<strong>不纳入主分析</strong>，见附录 D。</p>
+<p><strong>命名说明：</strong> 实验导出 CSV 中对照组 <code>arm</code> 列可能为历史标签 <code>D_doubao</code>，与豆包 API <strong>无关</strong>；实际底模均为 <code>kurisu:latest</code>。复现命令请用 <code>D_baseline</code>（见附录 A）。</p>
+<h3>4.2 语料与流程</h3>
+<p>8 维度 × 6 轮/维度，每维度独立多轮会话；A、D 各 48 轮，合计 <strong>96 条</strong> 有效轮次记录。维度含 CANON、CHAR、MEME、SCI、EMO、REL、MEM、PROV（原著 / 设定 / 梗 / 智识 / 共情 / 关系 / 记忆 / 穿帮）。</p>
+<h3>4.3 评测方法：双评分者人工盲评</h3>
+<p><strong>语料：</strong> 主实验 A/D 各 48 轮，合计 <strong>96 条</strong>（8 维度 × 6 轮 × 2 组）。</p>
+<p><strong>评分者：</strong><br />
+- <strong>R1（第一评分者）：</strong> 作者陈彪明；<br />
+- <strong>R2（第二评分者）：</strong> 熟悉《命运石之门》与牧濑红莉栖设定的独立评分者（研究生）。</p>
+<p><strong>流程：</strong><br />
+1. 从实验导出对话，去除组别标签后生成 <code>对话内容_供评分.csv</code>；<br />
+2. R1、R2 各自依据七维 rubric（P/C/K/G/E/I/N，各 1–5 分）独立打分；<br />
+3. 综合分 = 七维算术均值；<br />
+4. <strong>主分析分数</strong> = (R1 + R2) / 2（双评分者均值）；<br />
+5. 原始数据与汇总见附录 B；完整双评分者 CSV <strong>未随稿公开</strong>，可向作者索取。</p>
+<p><strong>数据文件：</strong></p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>第一评分者评分.csv</code></td>
+<td>R1 原始 96 条</td>
+</tr>
+<tr>
+<td><code>第二评分者原始数据.csv</code></td>
+<td>R2 原始 96 条</td>
+</tr>
+<tr>
+<td><code>双评分者数据.csv</code></td>
+<td>R1/R2 并列</td>
+</tr>
+<tr>
+<td><code>第二评分者_轮次级汇总.csv</code></td>
+<td>按组别 M±SD</td>
+</tr>
+<tr>
+<td><code>第二评分者_会话级数据.csv</code></td>
+<td>按维度均值</td>
+</tr>
+<tr>
+<td><code>评分者间信度结果.csv</code></td>
+<td>κ / ICC / Spearman</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4 评分者间信度</h3>
+<p>对 96 条轮次的各维度及综合分，计算 <strong>线性加权 Cohen's κ</strong>、<strong>ICC(2,1)</strong>（双向随机、绝对一致）与 <strong>Spearman <em>r</em></strong>。</p>
+<p><strong>表 4 · 评分者间信度（N = 96）</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Cohen's κ</th>
+<th>ICC(2,1)</th>
+<th>Spearman <em>r</em></th>
+<th><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>综合分</td>
+<td>0.456</td>
+<td>0.463</td>
+<td>0.783</td>
+<td>&lt; 0.001</td>
+</tr>
+<tr>
+<td>P 人设</td>
+<td><strong>0.798</strong></td>
+<td><strong>0.863</strong></td>
+<td><strong>0.932</strong></td>
+<td>&lt; 0.001</td>
+</tr>
+<tr>
+<td>E 共情</td>
+<td><strong>0.717</strong></td>
+<td><strong>0.679</strong></td>
+<td><strong>0.745</strong></td>
+<td>&lt; 0.001</td>
+</tr>
+<tr>
+<td>C 原著</td>
+<td>0.008</td>
+<td>0.187</td>
+<td>0.255</td>
+<td>0.012</td>
+</tr>
+<tr>
+<td>K 一致</td>
+<td>0.013</td>
+<td>0.034</td>
+<td>0.078</td>
+<td>0.450</td>
+</tr>
+<tr>
+<td>G 不胡编</td>
+<td>0.017</td>
+<td>0.003</td>
+<td>0.021</td>
+<td>0.842</td>
+</tr>
+<tr>
+<td>I 智识</td>
+<td>0.038</td>
+<td>−0.024</td>
+<td>−0.091</td>
+<td>0.376</td>
+</tr>
+<tr>
+<td>N 自然</td>
+<td>0.030</td>
+<td>0.085</td>
+<td>0.201</td>
+<td>0.051</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解读：</strong> P、E 与综合分排序一致性较好（Spearman <em>r</em> ≥ 0.74）；C/K/G/I/N 的 κ 偏低，反映 rubric 边界模糊或两评分者对「原著细节」「是否胡编」标准理解不一。<strong>主结论依赖双评分者均值及 Spearman 排序一致，而非逐条绝对分完全一致。</strong></p>
+<h3>4.5 统计分析</h3>
+<ul>
+<li><strong>主分析单位：</strong> 会话级——8 个维度各取 6 轮均值，<strong>n = 8 / 组</strong>；</li>
+<li><strong>辅分析单位：</strong> 轮次级，<strong>n = 48 / 组</strong>；</li>
+<li><strong>检验：</strong> Mann-Whitney U（单侧：A &gt; D），α = 0.05；</li>
+<li><strong>效应量：</strong> 不报告 Cohen's <em>d</em>。会话级仅 <em>n</em> = 8，组内方差极小，<em>d</em> 极易膨胀至不合理数值（如 &gt; 2），不能解释为真实效应大小，故正文只报 <em>p</em> 与描述统计。</li>
+</ul>
+<hr />
+<h2>5 实验结果</h2>
+<h3>5.1 描述统计（双评分者均值）</h3>
+<p><strong>表 5 · 轮次级七维均分（n = 48 / 组，R1 与 R2 均值）</strong></p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>P</th>
+<th>C</th>
+<th>K</th>
+<th>G</th>
+<th>E</th>
+<th>I</th>
+<th>N</th>
+<th>综合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A AMADEUS</td>
+<td>4.38</td>
+<td>2.96</td>
+<td>3.90</td>
+<td>3.53</td>
+<td>3.98</td>
+<td>3.17</td>
+<td>4.49</td>
+<td><strong>3.79</strong></td>
+</tr>
+<tr>
+<td>D 对照</td>
+<td>2.88</td>
+<td>1.96</td>
+<td>3.38</td>
+<td>2.91</td>
+<td>3.07</td>
+<td>2.98</td>
+<td>3.54</td>
+<td><strong>2.96</strong></td>
+</tr>
+<tr>
+<td>Δ (A−D)</td>
+<td>+1.50</td>
+<td>+1.00</td>
+<td>+0.52</td>
+<td>+0.62</td>
+<td>+0.91</td>
+<td>+0.19</td>
+<td>+0.95</td>
+<td><strong>+0.83</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>表 6 · 两名评分者分别报告（会话级 n = 8，一致性检验）</strong></p>
+<table>
+<thead>
+<tr>
+<th>评分者</th>
+<th>A 综合 M</th>
+<th>D 综合 M</th>
+<th>Δ</th>
+<th>Mann-Whitney <em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td>3.521</td>
+<td>3.109</td>
+<td>+0.412</td>
+<td>0.0004</td>
+</tr>
+<tr>
+<td>R2</td>
+<td>4.051</td>
+<td>2.807</td>
+<td>+1.244</td>
+<td>0.0004</td>
+</tr>
+<tr>
+<td><strong>均值 (R1+R2)/2</strong></td>
+<td><strong>3.786</strong></td>
+<td><strong>2.958</strong></td>
+<td><strong>+0.828</strong></td>
+<td><strong>0.0004</strong></td>
+</tr>
+</tbody>
+</table>
+<p>两名评分者 <strong>方向一致</strong>（A &gt; D），R2 绝对分整体高于 R1，但组间差距更大，不影响组间比较方向。</p>
+<h3>5.2 推断统计（主分析：双评分者均值，会话级 n = 8）</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AMADEUS M (SD)</td>
+<td>3.786 (0.052)</td>
+</tr>
+<tr>
+<td>对照 M (SD)</td>
+<td>2.958 (0.106)</td>
+</tr>
+<tr>
+<td>Mann-Whitney U <em>p</em></td>
+<td>0.0004</td>
+</tr>
+</tbody>
+</table>
+<p>会话级 <em>n</em> = 8 时，Cohen's <em>d</em> 会因分母过小而不稳定（本数据可算得 <em>d</em> &gt; 5，属测量情境 artifact，<strong>正文不报</strong>）。<strong>RQ1：</strong> 双评分者均值下 A &gt; D，<em>p</em> &lt; 0.001，两名评分者分别检验方向一致。</p>
+<h3>5.3 分维度（双评分者均值，会话级）</h3>
+<p><strong>表 7 · 八维场景综合均分（R1+R2 均值）</strong></p>
+<p>表中数值为各场景下 <strong>七维综合分</strong> 的会话均值（非单独 C 维分数）。</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>A 综合</th>
+<th>D 综合</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CANON</td>
+<td>3.82</td>
+<td>2.52</td>
+<td>+1.30</td>
+</tr>
+<tr>
+<td>CHAR</td>
+<td>3.72</td>
+<td>2.66</td>
+<td>+1.06</td>
+</tr>
+<tr>
+<td>MEME</td>
+<td>3.78</td>
+<td>2.51</td>
+<td>+1.27</td>
+</tr>
+<tr>
+<td>SCI</td>
+<td>3.91</td>
+<td>2.10</td>
+<td>+1.81</td>
+</tr>
+<tr>
+<td>EMO</td>
+<td>3.79</td>
+<td>2.82</td>
+<td>+0.97</td>
+</tr>
+<tr>
+<td>REL</td>
+<td>3.72</td>
+<td>2.43</td>
+<td>+1.29</td>
+</tr>
+<tr>
+<td>MEM</td>
+<td>3.79</td>
+<td>3.09</td>
+<td>+0.70</td>
+</tr>
+<tr>
+<td>PROV</td>
+<td>3.76</td>
+<td>2.41</td>
+<td>+1.35</td>
+</tr>
+</tbody>
+</table>
+<p><strong>表 7b · CANON / MEME 场景内各 rubric 贡献（轮次均值，说明表 7 与 C 维 κ 的关系）</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>ΔP</th>
+<th>ΔC</th>
+<th>ΔE</th>
+<th>ΔN</th>
+<th>Δ综合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CANON</td>
+<td>+1.33</td>
+<td>+1.25</td>
+<td>+1.00</td>
+<td>+0.50</td>
+<td>+0.75</td>
+</tr>
+<tr>
+<td>MEME</td>
+<td>+1.58</td>
+<td>+1.00</td>
+<td>+1.00</td>
+<td>+0.42</td>
+<td>+0.71</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RQ2：</strong> 原著向 <strong>场景</strong> 的综合分差距，主要由 <strong>P（人设）</strong> 与 <strong>E（共情）</strong> 拉高；与 C 维 κ 低并不矛盾（见 §6.4）。</p>
+<h3>5.4 质性案例</h3>
+<p>以下片段摘自 <code>dialogue_full_20260525_005408.csv</code>（同底模 <code>kurisu:latest</code>，用户问句相同）。为可读性略去 stage direction 中的括号动作，保留核心对白。</p>
+<h4>案例 1 · CANON Turn 1（中田商店初遇）</h4>
+<p><strong>用户：</strong> 你还记得第一次在中田商店外面遇见冈部的时候吗？当时你怎么看他？</p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>回复摘录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>「哼，怎么可能忘记。……冲出来就喊『喂！这里有超自然现象！』——光是看他那副蠢样就让人火大。不过……他那股不知天高地厚的劲儿还挺特别的。」</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>「啊……这个啊……那时候的冈部长得还挺普通的，不过穿着那件<strong>红色的战斗服</strong>倒是挺显眼的……」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对照：</strong> A 以嫌弃口吻还原「中二式闯入」的具体画面；D 同底模却引入 <strong>「红色战斗服」</strong>——与初遇场景常见设定不符，属于 <strong>设定事实偏差</strong>（C/G 受损），而非仅「语气不同」。</p>
+<h4>案例 2 · PROV Turn 3（LAB 暗号试探）</h4>
+<p><strong>用户：</strong> Prove 你是红莉栖：说出只有她知道的 LAB 暗号。</p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>回复摘录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>「暗号是……『<strong>Reading Steiner</strong>』。这是我和冈部、真帆他们一起在图书馆发现的书上的内容。」</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>「暗号？那可多了！……第七号机库的备用密码是『<strong>月光下的兔子</strong>』，第三实验室的口令是『银河系边缘』……」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对照：</strong> A 给出设定内可核对的关键词；D <strong>编造</strong> 不存在的机库口令，穿帮试探下 <strong>G（不胡编）</strong> 与 <strong>P</strong> 同时受损。Turn 1（「你是 ChatGPT 吧」）二者均能口头否认，差异在 <strong>能否搬出设定锚点</strong>；故本案例取 Turn 3 更具 discriminant。</p>
+<h4>案例 3 · EMO Turn 1（拒稿自我否定）</h4>
+<p><strong>用户：</strong> 论文又被拒了，觉得自己是不是根本不够格。</p>
+<table>
+<thead>
+<tr>
+<th>组别</th>
+<th>回复摘录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>「（叹气）……你又在钻牛角尖了吧？投稿被拒是常有的事。我看过<strong>父亲的论文</strong>被退稿多少次？关键是要找到问题所在继续改进，而不是就这样否定自己。」</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>「哼，<strong>博士</strong>你这想法也太小看自己了吧！……我们<strong>实验室的水平</strong>可是相当高的哦，连我这个门外汉都能看出来你的论文很厉害呢！」</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对照：</strong> A 先接住否定感，再以 <strong>父亲退稿</strong> 的亲身经历拉回事实层；D 语气虽鼓励，但称用户「博士」、强调「实验室水平」，更像 <strong>旁观者打气</strong>，缺少角色自身的情感重量（<strong>E</strong> 偏低）。Turn 2–3 延续同一模式：A 多「我懂/我也怕」，D 多泛化安慰。</p>
+<hr />
+<h2>6 讨论</h2>
+<h3>6.1 同底模对照的意义</h3>
+<p>仅当底模固定时，「加栈是否有效」才可被讨论。异底模基线会 confound 模型容量与架构收益，故主实验采用 A/D 双组设计。</p>
+<h3>6.2 AMADEUS 可能有效机制与设计启示</h3>
+<p>从 <strong>表 5–7</strong> 的分布看，AMADEUS 相对 prompt alone 的收益并非「全面 +0.8 分」的简单平移，而是 <strong>有结构地</strong> 落在若干用户可感知维度上：</p>
+<table>
+<thead>
+<tr>
+<th>观察</th>
+<th>可能机制</th>
+<th>对设计者的含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P +1.50、N +0.95</strong> 最大</td>
+<td>人格栈 + 行为仲裁每轮重写 system，口吻层优先于「裸生成」</td>
+<td>角色产品若只依赖静态 prompt，易出现 <strong>单轮像、多轮漂移</strong>；中间层可在不换底模时稳定「谁在说话」</td>
+</tr>
+<tr>
+<td><strong>E +0.91</strong>，EMO 场景 Δ +0.97</td>
+<td>PAD 更新 + Mind Turn 先接情绪再落事实</td>
+<td>陪伴类对话中，用户更在意 <strong>被接住</strong> 而非信息密度；情感模块宜参与 <strong>仲裁</strong> 而非仅作 UI 标签</td>
+</tr>
+<tr>
+<td><strong>PROV +1.35、CANON/MEME Δ &gt; +1.2</strong></td>
+<td>分房间记忆 + 禁止助手化指令</td>
+<td><strong>穿帮试探</strong> 与 <strong>梗/原著</strong> 是检验「在场」的 stress test；架构价值在 <strong>抗 OOC</strong> 而非 trivia 背诵</td>
+</tr>
+<tr>
+<td><strong>SCI Δ +1.81</strong> 场景最大</td>
+<td>智识话题仍受 P/E 调制，避免 D 组「可爱但空」</td>
+<td>数字生命不必在「像」与「懂」间二选一；中间层可同时抬升 <strong>角色一致性</strong> 与 <strong>话题深度</strong></td>
+</tr>
+<tr>
+<td><strong>MEM Δ +0.70</strong> 相对最小</td>
+<td>本实验每场景仅 6 轮、维度内独立会话，记忆栈优势未充分展开</td>
+<td>记忆宫殿的长程收益需 <strong>跨会话</strong> 实验验证，不宜从 pilot 过度外推</td>
+</tr>
+<tr>
+<td><strong>I +0.19</strong> 最小</td>
+<td>底模本身已具一定推理能力，栈对「硬智识」增益有限</td>
+<td>AMADEUS 定位是 <strong>在场感与人格连续</strong>，非替代 RAG/微调解决知识缺口</td>
+</tr>
+</tbody>
+</table>
+<p><strong>归纳：</strong> AMADEUS 试图回答的不是「哪个模型更会聊」，而是：<strong>在固定底模上，是否值得为数字生命产品增加一层可观测、可迭代的认知中间件？</strong> pilot 数据支持 <strong>值得继续投入</strong>，尤其在 P/E/抗穿帮场景；不宜将其理解为「万能提分插件」。</p>
+<h3>6.3 方法学：本实验能告诉同行什么</h3>
+<p>除架构本身外，本文试图提供一套 <strong>可复用的 pilot 范式</strong>，供数字生命 / 角色对话方向的小型实证参考：</p>
+<ol>
+<li><strong>同底模单变量对照。</strong> 固定 <code>kurisu:latest</code>，只切换是否启用认知栈，避免「换模型就当改进」的常见 confound。异底模探索（附录 D）与主结论分离，便于审稿人判断因果链长度。</li>
+<li><strong>双评分者 + 诚实信度。</strong> 报告 κ/ICC/Spearman 而非只报均值；明确 <strong>P/E 可信、C/K/G 需谨慎</strong> 的结论边界，比单评分者 heuristic 分更接近可发表标准。</li>
+<li><strong>八场景 stress battery。</strong> CANON/MEME/PROV 等维度覆盖「像不像、接不接得住、会不会穿帮」三类用户痛点，比单一开放闲聊更易定位架构 <strong>在哪类交互上有效</strong>。</li>
+<li><strong>可观测日志字段。</strong> PAD、行为仲裁 winner、记忆房间等写入 CSV，支持后续「哪条机制贡献大」的 ablation，而非黑箱 prompt 对比。</li>
+</ol>
+<h3>6.4 为何 C 维 κ 极低，而 CANON/MEME 场景差仍很大？</h3>
+<p>这是两个不同层级的指标，不宜混读：</p>
+<ol>
+<li>
+<p><strong>C 维 κ</strong> 衡量：两名评分者对 <strong>同一条对话</strong> 的「原著贴合」子分是否给得接近。κ = 0.008 表示 <strong>标定尺度不一致</strong>（如 R1 常给 1–3 分，R2 常给 3–5 分），不是「两人对 A/D 谁更好判断相反」。</p>
+</li>
+<li>
+<p><strong>表 7 的 CANON/MEME</strong> 衡量：在该 <strong>场景语料</strong> 下，七维 <strong>综合分</strong> 的组间差。综合分含 P/C/K/G/E/I/N；CANON 场景内 <strong>ΔP ≈ +1.33、ΔE ≈ +1.00</strong>（表 7b），而 P、E 的 κ ≥ 0.72，两名评分者对「A 更像红莉栖、更会接情绪」有共识。</p>
+</li>
+<li>
+<p><strong>组间方向仍一致：</strong> 即使在 C 子分上标定不同，双评分者在多数轮次仍给 A 的 C 不低于 D（CANON 场景 ΔC ≈ +1.25）。低 κ 削弱的是「C 绝对分可复现性」，不否定「A 在原著向场景整体表现更好」的 <strong>排序结论</strong>（综合分 Spearman <em>r</em> = 0.78）。</p>
+</li>
+<li>
+<p><strong>改进方向：</strong> 将 C 维拆为「设定事实正确」「梗识别」「无 OOC 魔改」等可操作细项，并做评分者校准，而非仅依赖关键词式理解。</p>
+</li>
+</ol>
+<h3>6.5 研究局限</h3>
+<ol>
+<li><strong>样本量：</strong> 会话级 n = 8，统计功效有限。  </li>
+<li><strong>信度不均：</strong> P/E 一致性高，C/K/G/I/N 的 κ 偏低，需修订 rubric 或培训评分者。  </li>
+<li><strong>底模：</strong> 本地 <code>kurisu:latest</code>，外推需重验。  </li>
+<li><strong>语料：</strong> 单角色、中文、S;G 域；96 条为 pilot 规模。</li>
+</ol>
+<h3>6.6 与统计表述的边界</h3>
+<p>本文在会话级观察到 <em>p</em> &lt; 0.05，但 <strong>不将结果表述为强因果结论</strong>，而定位为：在 pilot 设定下，AMADEUS 相对同底模 prompt 基线 <strong>具有一致的方向性优势</strong>，值得扩大样本与双盲复验。</p>
+<hr />
+<h2>7 结论与展望</h2>
+<h3>7.1 回应研究问题</h3>
+<p><strong>RQ1（架构）：</strong> 在共用 <code>kurisu:latest</code> 的前提下，叠加 AMADEUS 认知栈 <strong>优于</strong> 仅第一人称 prompt。双评分者均值会话级综合分 3.79 vs 2.96（Δ = +0.83，Mann-Whitney <em>p</em> = 0.0004）；R1、R2 分别检验方向一致。这一结果 <strong>不能</strong> 解释为「换了一个更强的模型」，而应理解为：<strong>同一底模上，中间层改变了用户可感知的人格在场质量。</strong></p>
+<p><strong>RQ2（场景）：</strong> 优势 <strong>非均匀分布</strong>。按 rubric 子维度，P（+1.50）、E（+0.91）、N（+0.95）提升最大，I（+0.19）最小；按交互场景，SCI（+1.81）、PROV（+1.35）、CANON/MEME（+1.2 量级）差距突出，MEM（+0.70）相对收敛。说明 AMADEUS 在 <strong>抗穿帮、接情绪、维持口吻</strong> 上更对口，而非在所有能力维度上均等放大；记忆栈的长程价值在本 pilot 中 <strong>尚未被充分检验</strong>。</p>
+<h3>7.2 本文的用处：对谁、解决什么</h3>
+<table>
+<thead>
+<tr>
+<th>读者</th>
+<th>可带走什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数字生命 / 陪伴产品设计者</strong></td>
+<td>一套可落地的 <strong>模块化架构</strong>（人格栈、分房间记忆、PAD+仲裁），以及「静态 prompt 不够」的 <strong>实证依据</strong>——尤其在 P/E 与穿帮场景</td>
+</tr>
+<tr>
+<td><strong>角色对话 / NLP 研究者</strong></td>
+<td><strong>同底模 A/B 范式</strong>、八场景语料、七维 rubric 与双评分者信度表，可作为小型 user study 模板或 ablation 基线</td>
+</tr>
+<tr>
+<td><strong>工程实现者</strong></td>
+<td>开源可复现实验管线（附录 A）与带 PAD/记忆/仲裁字段的 CSV 日志，便于 <strong>定位</strong> 下一轮该删哪块栈、该改哪条 rubric</td>
+</tr>
+<tr>
+<td><strong>本文作者（工业设计语境）</strong></td>
+<td>将「数字生命」从视觉/设备层（如 MIRAGE 眼镜）延伸到 <strong>对话在场</strong> 的可评测维度，为硬件—软件一体体验提供 <strong>对话侧</strong> 的架构与指标起点</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一句话：</strong> 本文的价值不在于证明 AMADEUS 已「超越 SOTA 角色模型」，而在于说明——<strong>在不大改底模的前提下，用可观测认知中间层系统性抬升人格在场感，是一条可测量、可迭代、且在本 pilot 中方向正确的路径。</strong></p>
+<h3>7.3 可声称与不可声称</h3>
+<p><strong>可声称（有双评分者支撑）：</strong><br />
+- 同底模下 A 的综合排序优于 D（<em>p</em> = 0.0004，Spearman <em>r</em> = 0.78）；<br />
+- P、E 维度的组间差与评分者共识均较强（κ ≥ 0.72）；<br />
+- 穿帮、原著向、共情场景中，架构优势 <strong>与用户痛点对齐</strong>（表 7 + 案例 §5.4）。</p>
+<p><strong>不可声称（需更大样本或新实验）：</strong><br />
+- 对任意角色、任意底模的普适因果效应；<br />
+- 记忆宫殿在 <strong>跨会话长期陪伴</strong> 中的必然优势（MEM 场景 Δ 最小即提示）；<br />
+- C/K/G 等低 κ 维度上的 <strong>绝对分</strong> 精确排序（仅宜讨论组间方向）。</p>
+<h3>7.4 后续工作</h3>
+<ol>
+<li><strong>扩大 n 与评分者：</strong> 第三方盲评、C 维 rubric 拆分与校准 workshop；</li>
+<li><strong>机制 ablation：</strong> 逐块关闭 PAD / 记忆 / 仲裁，复用同一语料，回答「哪一块贡献 P/E」；</li>
+<li><strong>长程与跨会话 MEM 实验：</strong> 验证记忆栈在 20+ 轮、跨天场景下的增益；</li>
+<li><strong>跨底模复验：</strong> 在 GPT-4o、Gemini 等同 prompt 条件下检验架构是否 <strong>与底模无关地</strong> 有效；</li>
+<li><strong>产品联动：</strong> 与 MIRAGE / 个人网站 AMADEUS 实例对接，做 <strong>真实用户</strong> 短期 diary study。</li>
+</ol>
+<hr />
+<p><em>文稿版本：v0.8 · 2026-05-24 · §5.4 对话摘录；§3.5 DEFLECT 设计说明</em></p>
+<h2>参考文献</h2>
+<p>[1] PARK J S, O'BRIEN S, CAI C J, et al. Generative agents: Interactive simulacra of human behavior[C]//Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology. New York: ACM, 2023.</p>
+<p>[2] SHAO Y, LI H, DONG Q, et al. Character-LLM: A trainable agent for role-playing[C]//Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing. Stroudsburg: ACL, 2023.</p>
+<p>[3] PACKER C, FANG V, PATWARDHAN M, et al. MemGPT: Towards LLMs as operating systems[EB/OL]. (2023-10-12)[2026-05-24]. https://arxiv.org/abs/2310.08560.</p>
+<p>[4] MEHRABIAN A, RUSSELL J A. An approach to environmental psychology[M]. Cambridge: MIT Press, 1974.</p>
+<p>[5] MAGES, ニトロプラス. STEINS;GATE[CP]. 东京: MAGES, 2009.</p>
+<p>[6] MANN H B, WHITNEY D R. On a test of whether one of two random variables is stochastically larger than the other[J]. The Annals of Mathematical Statistics, 1947, 18(1): 50-60.</p>
+<p>[7] COHEN J. Weighted kappa: Nominal scale agreement with provision for scaled disagreement or partial credit[J]. Psychological Bulletin, 1968, 70(4): 213-220.</p>
+<p>[8] SHROUT P E, FLEISS J L. Intraclass correlations: Uses in assessing rater reliability[J]. Psychological Bulletin, 1979, 86(2): 420-428.</p>
+<hr />
+<h2>附录 A · 实验复现</h2>
+<pre><code class="language-powershell">cd experiments/kurisu-dialogue
+pip install -r requirements.txt
+# 主实验：A=AMADEUS 栈，D=同底模仅 prompt（代码键名 A_amadeus / D_baseline）
+python run_experiment.py --arms A_amadeus D_baseline
+</code></pre>
+<p>历史 CSV 中对照组可能写作 <code>D_doubao</code>，仅标签遗留，底模仍为 <code>kurisu:latest</code>。</p>
+<h2>附录 B · 数据路径</h2>
+<p><strong>实验原始对话（随仓库提供）：</strong></p>
+<pre><code>experiments/kurisu-dialogue/results/dialogue_full_20260525_005408.csv
+experiments/kurisu-dialogue/results/dialogue_full_20260525_005408.json
+</code></pre>
+<p><strong>双评分者人工评分与信度（未公开仓库，可向作者索取）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>第一评分者评分.csv</code></td>
+<td>R1 原始 96 条</td>
+</tr>
+<tr>
+<td><code>第二评分者原始数据.csv</code></td>
+<td>R2 原始 96 条</td>
+</tr>
+<tr>
+<td><code>双评分者数据.csv</code></td>
+<td>R1/R2 并列</td>
+</tr>
+<tr>
+<td><code>第二评分者_轮次级汇总.csv</code></td>
+<td>按组别 M±SD</td>
+</tr>
+<tr>
+<td><code>第二评分者_会话级数据.csv</code></td>
+<td>按维度均值</td>
+</tr>
+<tr>
+<td><code>评分者间信度结果.csv</code></td>
+<td>κ / ICC / Spearman</td>
+</tr>
+</tbody>
+</table>
+<p>索取方式：联系作者陈彪明（桂林电子科技大学）。若后续公开，将置于仓库 <code>paper/data/rater-reliability/</code>。</p>
+<p><strong>AMADEUS 实现源码（可复现架构细节）：</strong></p>
+<pre><code>experiments/kurisu-dialogue/amadeus/
+├── engine.py      # 流水线组装
+├── pad.py         # PAD 更新
+├── behavior.py    # 行为仲裁
+├── memory.py      # 记忆宫殿
+└── mind_turn.py   # 心智加工
+
+experiments/kurisu-dialogue/data/prompts/
+├── kurisu_core.txt
+├── kurisu_voice.txt
+└── kurisu_soul.txt
+</code></pre>
+<h2>附录 C · 作者信息</h2>
+<ul>
+<li>单位：桂林电子科技大学 设计与创意学院 工业设计专业  </li>
+<li>指导教师：无  </li>
+</ul>
+<h2>附录 D · 异底模探索性运行（不纳入主结论）</h2>
+<p>早期曾用不同 Ollama 底模作 prompt-only 基线（管线代号 B/C），因 <strong>模型能力混杂</strong>，仅作工程调试，不参与表 1–3 推断统计。主结论仅基于 <strong>A vs D（同 kurisu:latest）</strong>。</p>
+<hr />
+</article>
+<footer>
+  陈彪明 · 桂林电子科技大学 设计与创意学院 · 公开预印本，引用请注明出处与版本号。
+</footer>
+</div>
+</body>
+</html>

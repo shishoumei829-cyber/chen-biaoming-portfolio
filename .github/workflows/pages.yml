@@ -31,7 +31,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html .nojekyll _site/
-          cp -r assets timewalker-app _site/
+          cp -r assets timewalker-app paper experiments _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
