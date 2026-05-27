@@ -1448,12 +1448,23 @@ body.eva-skin .ama-ui-v2.ama-ui-showcase{
 }
 body.eva-skin .ama-ui-showcase-inner{max-width:min(1180px,100%);margin:0 auto}
 body.eva-skin .ama-ui-showcase .ama-v2-sub{color:var(--eva-blue-deep)!important}
-body.eva-skin .ama-ui-showcase h3{
-  font-family:var(--eva-matisse);font-variation-settings:"opsz" 96;font-weight:800;
-  font-size:clamp(1.75rem,4.8vw,3.2rem)!important;line-height:.94!important;
-  letter-spacing:-.03em;color:#0a0a0a!important;
-  transform:scaleY(1.06);transform-origin:left center;
-  margin-bottom:clamp(16px,2.5vw,24px);
+body.eva-skin .ama-emotion-panel{
+  display:flex;flex-direction:column;
+  border:2px solid rgba(153,0,0,.35);
+  box-shadow:12px 14px 0 rgba(0,56,255,.1);
+  background:#050505;overflow:hidden;
+}
+body.eva-skin .ama-emotion-panel__head{
+  display:flex;justify-content:space-between;gap:12px;
+  padding:12px 16px;font-family:var(--eva-wall);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:#ff9d34!important;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+body.eva-skin .ama-emotion-panel img{width:100%;height:auto;display:block}
+body.eva-skin .ama-emotion-cap{
+  padding:10px 16px;font-family:var(--eva-wall);font-size:9px;letter-spacing:.28em;
+  text-transform:uppercase;color:rgba(10,10,10,.52)!important;
+  background:#f6f8ff;border-top:1px solid rgba(0,56,255,.14);
 }
 body.eva-skin .ama-ui-lead{
   max-width:min(640px,100%);margin:0;
@@ -1605,7 +1616,15 @@ body.eva-skin #amadeus .ama-system-card header{color:var(--ama-accent)!important
 body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase{
   background:#fff!important;
 }
-body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase h3{color:#0a0a0a!important}
+body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase h3{
+  font-family:var(--eva-matisse)!important;font-variation-settings:"opsz" 96!important;
+  font-weight:800!important;
+  font-size:clamp(42px,6.2vw,96px)!important;
+  line-height:.9!important;letter-spacing:-.048em!important;
+  color:#0a0a0a!important;transform:scaleY(1.1)!important;
+  transform-origin:left center;max-width:none!important;text-wrap:balance;
+  margin-bottom:clamp(18px,3vw,28px)!important;
+}
 
 body.eva-skin .ama-prologue{
   padding:clamp(48px,7vw,88px) clamp(16px,4vw,56px);
@@ -1884,7 +1903,8 @@ body.eva-skin #amadeus .ama-v2-module:nth-child(even) .ama-v2-copy-block{
 }
 body.eva-skin #amadeus .ama-v2-module .ama-system-card,
 body.eva-skin #amadeus .ama-v2-module .ama-palace-v2,
-body.eva-skin #amadeus .ama-v2-module .ama-flow-v2{
+body.eva-skin #amadeus .ama-v2-module .ama-flow-v2,
+body.eva-skin #amadeus .ama-v2-module .ama-emotion-panel{
   width:min(94%,920px);margin-left:auto;margin-right:auto;
   box-shadow:12px 14px 0 rgba(153,0,0,.2)!important;
 }
@@ -1950,7 +1970,8 @@ body.eva-skin #amadeus .ama-palace-room span{
   body.eva-skin .ama-dnote-row--think .ama-dnote-sub{margin-left:0}
   body.eva-skin .ama-dnote-h--vr{float:none;writing-mode:horizontal-tb;margin-bottom:16px}
   body.eva-skin #amadeus .ama-v2-module .ama-v2-copy-block{text-align:left;margin-left:0!important;margin-right:0!important}
-  body.eva-skin #amadeus .ama-v2-module .ama-system-card{margin-left:16px!important;margin-right:16px!important}
+  body.eva-skin #amadeus .ama-v2-module .ama-system-card,
+  body.eva-skin #amadeus .ama-v2-module .ama-emotion-panel{margin-left:16px!important;margin-right:16px!important}
 }
 
 @media (max-width:980px){
@@ -2793,7 +2814,7 @@ body.eva-skin .ama-chapter-break__title{
 
       <article class="mirage-case">
         <figure class="case-visual reveal magnetic">
-          <img src="assets/mirage/mirage-page-05.jpg" alt="MIRAGE 重塑真实" loading="lazy">
+          <img src="assets/mirage/mirage-safety-pov.png" alt="MIRAGE 行人安全预警：碰撞路径检测与红色空间警示" loading="lazy" decoding="async">
         </figure>
         <div class="case-copy reveal">
           <div class="case-index">03</div>
@@ -2940,16 +2961,11 @@ body.eva-skin .ama-chapter-break__title{
         <h3>情绪曲线把内部状态压成可观察信号。</h3>
         <p>页面里的情绪不是随便画条线，而是把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看到“关系、唤醒度和掌控感”如何共同塑造表达。</p>
       </div>
-      <div class="ama-system-card magnetic">
-        <header><span>amadeus_work.html</span><span>emotion score</span></header>
-        <pre><code><span class="kw">const</span> s = this.pad.S * 2 - 1; <span class="cm">// 0~1 → -1~1</span>
-<span class="kw">const</span> score =
-  0.40 * p + 0.25 * a + 0.20 * d + 0.15 * s;
-
-<span class="kw">const</span> guardPct = ((D - P) / 2 + 0.5) * 100;
-<span class="kw">const</span> volatility =
-  Math.abs(P + 0.1) * 0.5 + Math.abs(A - 0.2) * 0.5;</code></pre>
-      </div>
+      <figure class="ama-emotion-panel magnetic" aria-label="AMADEUS 情绪曲线界面">
+        <header class="ama-emotion-panel__head"><span>amadeus_work.html</span><span>inner state · live curve</span></header>
+        <img src="assets/amadeus/amadeus-inner-state-curve.png" alt="AMADEUS 项目 INNER STATE 面板：PAD 情绪曲线与实时坐标" loading="lazy" decoding="async" width="640" height="520">
+        <figcaption class="ama-emotion-cap">来自真实运行界面 · P/A/D/S 映射为可观察曲线</figcaption>
+      </figure>
     </article>
 <article class="ama-v2-module reveal" data-ama-section="behavior">
       <div class="ama-v2-copy-block">
