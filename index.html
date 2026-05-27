@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="陈彪明的工业设计作品集，收录 MIRAGE 现实转译器、AMADEUS 数字生命实验系统、墨舟时空导游与个人设计实践。" />
+<meta name="description" content="陈彪明的工业设计作品集，收录 MIRAGE、AMADEUS、墨舟、数字方舟与个人设计实践。" />
 <meta name="theme-color" content="#060606" />
 <title>陈彪明 · 把感知做成产品 · 工业设计作品集</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1078,6 +1078,7 @@ body.eva-skin .hero-copy,body.eva-skin .hero-meta,.eva-letterbox,.eva-scanlines,
 }
 body.eva-skin .hero-index{
   position:relative;border-top:1px solid rgba(255,255,255,.1);background:transparent;margin:0;
+  grid-template-columns:repeat(4,1fr)!important;
 }
 body.eva-skin .hero-work{border-right:1px solid rgba(255,255,255,.08);padding:16px 20px 18px}
 body.eva-skin .hero-work::after{display:none}
@@ -2406,6 +2407,491 @@ body.eva-skin .ama-chapter-break__title{
   .brief-dossier{padding-left:18px;padding-right:18px}
 }
 
+/* ═══ 第04話 · 数字方舟 ═══ */
+#digitalark{
+  --da-ink:#1c1c18;
+  --da-muted:#767872;
+  --da-body:#454742;
+  --da-sage:#596059;
+  --da-sage-lit:#8a9688;
+  --da-sage-glow:rgba(193,201,191,.45);
+  --da-cream:#fdf9f3;
+  --da-sand:#f7f3ed;
+  --da-paper:#faf8f4;
+  --da-line:rgba(89,96,89,.18);
+  padding:0!important;
+  background:var(--da-paper);
+  color:var(--da-ink);
+  overflow:hidden;
+}
+#digitalark .section-desc,#digitalark p{max-width:none}
+.da-atmo{
+  position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+}
+.da-atmo__grain{
+  position:absolute;inset:-20%;opacity:.14;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:daGrain 22s ease-in-out infinite alternate;
+}
+.da-atmo__halo{
+  position:absolute;left:50%;top:-12%;width:min(120vw,920px);aspect-ratio:1;
+  transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(193,201,191,.42),transparent 62%);
+  filter:blur(40px);animation:daHalo 9s ease-in-out infinite alternate;
+}
+@keyframes daGrain{from{transform:translate3d(-1%,0,0)}to{transform:translate3d(1%,-1%,0)}}
+@keyframes daHalo{from{opacity:.55;transform:translateX(-50%) scale(.96)}to{opacity:.85;transform:translateX(-50%) scale(1.04)}}
+@keyframes daOrbBreath{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.08);opacity:1}}
+@keyframes daLayerUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes daShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+.da-hero{
+  position:relative;z-index:1;min-height:100svh;
+  display:grid;grid-template-columns:1fr minmax(260px,380px);
+  gap:clamp(24px,5vw,64px);align-items:center;
+  padding:clamp(100px,14vh,140px) clamp(22px,5vw,72px) clamp(64px,8vw,96px);
+}
+.da-hero-copy{position:relative;z-index:2}
+.da-kicker{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.38em;text-transform:uppercase;
+  color:var(--da-sage);margin-bottom:clamp(18px,3vw,28px);
+}
+.da-title{
+  font-family:"Noto Serif SC",var(--eva-matisse),serif;
+  font-size:clamp(3rem,11vw,7.2rem);line-height:.88;font-weight:600;
+  letter-spacing:-.04em;margin-bottom:clamp(16px,2.5vw,24px);
+}
+.da-title em{font-style:normal;color:var(--da-sage);font-weight:500}
+.da-lede{
+  font-family:"Noto Serif SC",serif;font-size:clamp(15px,1.55vw,18px);
+  line-height:2.05;color:var(--da-body);font-weight:300;max-width:36em;
+}
+.da-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(22px,3vw,32px)}
+.da-tags span{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:9px 14px;border-radius:999px;border:1px solid var(--da-line);
+  background:rgba(255,255,255,.55);color:var(--da-muted);
+}
+.da-hero-stage{
+  position:relative;z-index:2;display:grid;place-items:center;
+}
+.da-orb-wrap{position:relative;width:min(72vw,320px);aspect-ratio:1}
+.da-orb-glow{
+  position:absolute;inset:-18%;border-radius:50%;
+  background:var(--da-sage-glow);filter:blur(32px);
+  animation:daOrbBreath 5.2s ease-in-out infinite;
+}
+.da-orb-ring{
+  position:absolute;inset:-4%;border-radius:50%;z-index:0;
+  background:conic-gradient(var(--da-sage) 68%,#e8e4de 0);
+  mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+}
+.da-orb-core{
+  position:relative;z-index:1;width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(165deg,#fff 0%,var(--da-sand) 55%,#e2e8e0 100%);
+  box-shadow:0 28px 70px rgba(28,28,24,.12),inset 0 1px 0 rgba(255,255,255,.9);
+  display:grid;place-items:center;overflow:hidden;
+}
+.da-orb-core::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,var(--da-sand),transparent 52%);
+}
+.da-orb-glyph{
+  position:relative;z-index:1;font-family:"Noto Serif SC",serif;
+  font-size:clamp(2.8rem,8vw,4.2rem);font-weight:600;color:var(--da-sage);
+  letter-spacing:.28em;text-indent:.28em;
+}
+.da-orb-caption{
+  position:absolute;left:50%;bottom:-2.2rem;transform:translateX(-50%);
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--da-muted);white-space:nowrap;
+}
+.da-vrule{
+  position:absolute;right:clamp(12px,3vw,48px);top:clamp(96px,14vh,168px);
+  writing-mode:vertical-rl;font-family:var(--eva-matisse);
+  font-size:11px;letter-spacing:.5em;color:rgba(89,96,89,.35);
+  border-right:1px solid var(--da-line);padding-right:12px;
+}
+
+.da-dnote{
+  position:relative;z-index:1;
+  padding:clamp(56px,8vw,96px) clamp(22px,5vw,72px);
+  border-top:1px solid var(--da-line);
+  background:linear-gradient(180deg,#fff 0%,var(--da-cream) 100%);
+}
+.da-dnote-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);
+  max-width:1120px;margin:0 auto;
+}
+.da-dnote-label{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--da-sage);margin-bottom:14px;
+}
+.da-dnote h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.35rem,3.2vw,2rem);
+  line-height:1.35;font-weight:600;letter-spacing:-.02em;margin-bottom:16px;
+}
+.da-dnote p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:var(--da-muted);font-weight:300;
+}
+
+.da-origin{
+  position:relative;z-index:1;
+  padding:clamp(56px,8vw,88px) clamp(22px,5vw,72px);
+  background:linear-gradient(180deg,#fff 0%,var(--da-cream) 100%);
+  border-top:1px solid var(--da-line);
+}
+.da-origin-inner{max-width:820px;margin:0 auto}
+.da-origin h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.6rem,4.2vw,2.6rem);
+  line-height:1.2;letter-spacing:-.02em;margin:12px 0 20px;
+}
+.da-origin-prose p{
+  font-family:"Noto Serif SC",serif;font-size:15px;line-height:2.05;
+  color:var(--da-body);font-weight:300;margin-bottom:1.1em;
+}
+.da-origin-prose p:last-child{margin-bottom:0}
+
+.da-stance{
+  position:relative;z-index:1;
+  padding:clamp(48px,7vw,72px) clamp(22px,5vw,72px);
+  background:var(--da-sand);
+  border-top:1px solid var(--da-line);
+}
+.da-stance-inner{max-width:880px;margin:0 auto}
+.da-stance-lead{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.35rem,3vw,1.9rem);
+  line-height:1.45;font-weight:600;color:var(--da-ink);margin-bottom:18px;
+}
+.da-stance-inner>p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:var(--da-body);font-weight:300;margin-bottom:14px;
+}
+
+.da-principles{
+  position:relative;z-index:1;
+  padding:0 clamp(22px,5vw,72px) clamp(56px,8vw,80px);
+  background:var(--da-sand);
+}
+.da-principle-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2.5vw,22px);
+  max-width:1120px;margin:0 auto;
+}
+.da-principle{
+  padding:22px 20px;border-radius:18px;background:#fff;
+  border:1px solid var(--da-line);box-shadow:0 10px 32px rgba(28,28,24,.04);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+}
+.da-principle:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(28,28,24,.07)}
+.da-principle strong{
+  display:block;font-family:"Noto Serif SC",serif;font-size:1rem;
+  margin-bottom:10px;color:var(--da-sage);
+}
+.da-principle p{font-size:13px;line-height:1.75;color:var(--da-muted)}
+
+.da-arch{
+  position:relative;z-index:1;
+  padding:clamp(56px,8vw,96px) clamp(22px,5vw,72px);
+  background:var(--da-cream);
+  border-top:1px solid var(--da-line);
+}
+.da-arch-head{max-width:760px;margin-bottom:clamp(32px,5vw,48px)}
+.da-arch-head h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.7rem,4vw,2.8rem);
+  line-height:1.12;margin:10px 0 14px;
+}
+.da-arch-head p{font-size:14px;line-height:2;color:var(--da-body);font-weight:300}
+.da-arch-grid{
+  display:grid;gap:14px;max-width:960px;margin:0 auto;
+}
+.da-arch-card{
+  padding:20px 22px;border-radius:16px;background:rgba(255,255,255,.8);
+  border:1px solid var(--da-line);
+}
+.da-arch-card header{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;margin-bottom:10px;
+}
+.da-arch-card h4{
+  font-family:"Noto Serif SC",serif;font-size:1.05rem;font-weight:600;
+}
+.da-arch-card .da-arch-dims{
+  font-family:var(--eva-wall);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--da-sage);
+}
+.da-arch-card p{font-size:13px;line-height:1.8;color:var(--da-muted);margin-bottom:8px}
+.da-arch-card p:last-child{margin-bottom:0}
+.da-arch-card cite{
+  display:block;font-size:11px;line-height:1.6;color:rgba(89,96,89,.75);
+  font-style:normal;margin-top:10px;padding-top:10px;border-top:1px dashed var(--da-line);
+}
+
+.da-training{
+  position:relative;z-index:1;
+  padding:clamp(56px,8vw,92px) clamp(22px,5vw,72px);
+  background:#fff;border-top:1px solid var(--da-line);
+}
+.da-training-head{max-width:720px;margin-bottom:clamp(32px,5vw,48px)}
+.da-training-head h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.5rem,3.5vw,2.2rem);
+  margin-top:10px;line-height:1.15;
+}
+.da-step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,24px);max-width:1100px;margin:0 auto}
+.da-step{
+  padding:24px 20px;border-radius:18px;background:var(--da-sand);
+  border:1px solid var(--da-line);position:relative;overflow:hidden;
+}
+.da-step::before{
+  content:attr(data-step);position:absolute;top:14px;right:16px;
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.2em;color:rgba(89,96,89,.35);
+}
+.da-step h4{font-family:"Noto Serif SC",serif;font-size:1.05rem;margin-bottom:12px;font-weight:600}
+.da-step p{font-size:13px;line-height:1.8;color:var(--da-muted)}
+.da-step ul{
+  margin-top:12px;padding-left:1.1em;font-size:12px;line-height:1.75;color:var(--da-body);
+}
+.da-step li{margin-bottom:6px}
+
+.da-weigh{
+  position:relative;z-index:1;
+  padding:clamp(48px,7vw,80px) clamp(22px,5vw,72px);
+  background:var(--da-ink);color:var(--da-cream);
+}
+.da-weigh-inner{max-width:880px;margin:0 auto}
+.da-weigh h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.35rem,3vw,1.85rem);
+  margin:10px 0 16px;font-weight:500;
+}
+.da-weigh>p{font-size:14px;line-height:2;color:rgba(253,249,243,.62);font-weight:300;margin-bottom:20px}
+.da-weigh-vars{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+}
+.da-weigh-vars div{
+  padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);font-size:13px;line-height:1.65;
+}
+.da-weigh-vars strong{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--da-sage-lit);margin-bottom:6px;font-weight:600}
+
+.da-boundary{
+  position:relative;z-index:1;
+  padding:clamp(56px,8vw,88px) clamp(22px,5vw,72px);
+  background:linear-gradient(135deg,#eef2ec 0%,var(--da-cream) 60%,#fff 100%);
+  border-top:1px solid var(--da-line);
+}
+.da-boundary-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,40px);
+  max-width:1000px;margin:0 auto;
+}
+.da-boundary h3{
+  font-family:"Noto Serif SC",serif;font-size:1.15rem;margin-bottom:14px;
+}
+.da-boundary ul{
+  list-style:none;font-size:13px;line-height:1.85;color:var(--da-muted);
+}
+.da-boundary li{padding:8px 0;border-bottom:1px solid var(--da-line)}
+.da-boundary li:last-child{border-bottom:0}
+.da-boundary--pos h3{color:var(--da-sage)}
+.da-boundary--neg h3{color:var(--da-muted)}
+.da-boundary-foot{
+  max-width:720px;margin:clamp(32px,5vw,48px) auto 0;text-align:center;
+}
+.da-boundary-foot p{
+  font-family:"Noto Serif SC",serif;font-size:15px;line-height:2;
+  color:var(--da-body);font-weight:300;
+}
+
+.da-thesis{
+  position:relative;z-index:1;
+  padding:clamp(48px,7vw,88px) clamp(22px,5vw,72px);
+  background:var(--da-ink);color:var(--da-cream);
+}
+.da-thesis-inner{max-width:920px;margin:0 auto}
+.da-thesis blockquote{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.25rem,2.8vw,1.85rem);
+  line-height:1.75;font-weight:300;margin:0 0 24px;
+  border-left:3px solid var(--da-sage-lit);padding-left:clamp(16px,3vw,28px);
+}
+.da-thesis cite{
+  display:block;font-family:var(--eva-wall);font-size:10px;
+  letter-spacing:.28em;text-transform:uppercase;color:rgba(253,249,243,.45);
+  font-style:normal;
+}
+
+.da-layers{
+  position:relative;z-index:1;
+  padding:clamp(64px,9vw,108px) clamp(22px,5vw,72px);
+  background:var(--da-sand);
+}
+.da-layers-head{max-width:720px;margin-bottom:clamp(36px,6vw,56px)}
+.da-layers-head h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.8rem,4.5vw,3rem);
+  line-height:1.1;letter-spacing:-.03em;margin:12px 0 16px;
+}
+.da-layers-head p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:var(--da-body);font-weight:300;
+}
+.da-layer-stack{display:grid;gap:12px;max-width:880px;margin:0 auto}
+.da-layer{
+  display:grid;grid-template-columns:88px 1fr auto;gap:clamp(14px,3vw,24px);
+  align-items:center;padding:18px 22px;border-radius:18px;
+  background:rgba(255,255,255,.72);border:1px solid var(--da-line);
+  box-shadow:0 12px 36px rgba(28,28,24,.04);
+  opacity:0;transform:translateY(24px);
+  transition:opacity .85s var(--ease),transform .85s var(--ease);
+}
+.da-layers.in .da-layer{opacity:1;transform:none}
+.da-layers.in .da-layer:nth-child(1){transition-delay:.06s}
+.da-layers.in .da-layer:nth-child(2){transition-delay:.12s}
+.da-layers.in .da-layer:nth-child(3){transition-delay:.18s}
+.da-layers.in .da-layer:nth-child(4){transition-delay:.24s}
+.da-layers.in .da-layer:nth-child(5){transition-delay:.30s}
+.da-layer-num{
+  font-family:var(--eva-wall);font-size:11px;letter-spacing:.2em;
+  color:var(--da-sage);text-transform:uppercase;
+}
+.da-layer strong{
+  display:block;font-family:"Noto Serif SC",serif;font-size:1.05rem;
+  margin-bottom:4px;font-weight:600;
+}
+.da-layer span{font-size:13px;line-height:1.65;color:var(--da-muted)}
+.da-layer-bar{
+  width:72px;height:6px;border-radius:999px;background:#e8e4de;overflow:hidden;
+}
+.da-layer-bar i{
+  display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--da-sage),#a8b5a4);
+  transform-origin:left;transform:scaleX(0);transition:transform 1.1s var(--ease);
+}
+.da-layers.in .da-layer:nth-child(1) .da-layer-bar i{transform:scaleX(.92)}
+.da-layers.in .da-layer:nth-child(2) .da-layer-bar i{transform:scaleX(.68)}
+.da-layers.in .da-layer:nth-child(3) .da-layer-bar i{transform:scaleX(.78)}
+.da-layers.in .da-layer:nth-child(4) .da-layer-bar i{transform:scaleX(.64)}
+.da-layers.in .da-layer:nth-child(5) .da-layer-bar i{transform:scaleX(.71)}
+
+.da-triad{
+  position:relative;z-index:1;
+  padding:clamp(64px,9vw,100px) clamp(22px,5vw,72px);
+  background:var(--da-cream);
+}
+.da-triad-head{text-align:center;max-width:640px;margin:0 auto clamp(40px,6vw,64px)}
+.da-triad-head h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.6rem,4vw,2.6rem);
+  margin-top:10px;line-height:1.15;
+}
+.da-triad-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,28px);
+  max-width:1180px;margin:0 auto;
+}
+.da-phone{
+  border-radius:28px;padding:14px 14px 18px;
+  background:linear-gradient(180deg,#fff,#f3efe8);
+  border:1px solid rgba(89,96,89,.14);
+  box-shadow:0 24px 60px rgba(28,28,24,.08);
+  transition:transform .65s var(--ease),box-shadow .65s var(--ease);
+}
+.da-phone:hover{transform:translateY(-8px);box-shadow:0 32px 72px rgba(28,28,24,.12)}
+.da-phone-tag{
+  font-family:var(--eva-wall);font-size:9px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--da-sage);margin-bottom:10px;
+}
+.da-phone-screen{
+  border-radius:18px;background:var(--da-sand);min-height:280px;
+  padding:16px;display:flex;flex-direction:column;gap:10px;overflow:hidden;
+}
+.da-phone-screen--dark{background:linear-gradient(180deg,#2a2e2a,#1c1c18);color:#f5f3ef}
+.da-chip{
+  align-self:flex-start;font-size:10px;padding:5px 10px;border-radius:999px;
+  background:rgba(89,96,89,.12);color:var(--da-sage);
+}
+.da-phone-screen--dark .da-chip{background:rgba(255,255,255,.1);color:#d4ddd2}
+.da-bubble{
+  max-width:92%;padding:10px 12px;border-radius:14px;font-size:11px;line-height:1.55;
+  font-family:"Noto Sans SC",system-ui,sans-serif;
+}
+.da-bubble--ai{background:#fff;border:1px solid #e6e2dc;color:var(--da-ink);align-self:flex-start}
+.da-bubble--me{background:var(--da-sage);color:#fff;align-self:flex-end}
+.da-phone-screen--dark .da-bubble--ai{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#f0ece6}
+.da-pbar{height:5px;border-radius:999px;background:#e6e2dc;overflow:hidden;margin-top:auto}
+.da-pbar i{display:block;height:100%;width:68%;background:var(--da-sage);border-radius:999px}
+.da-phone h4{
+  font-family:"Noto Serif SC",serif;font-size:14px;margin-top:14px;font-weight:600;
+}
+.da-phone p{font-size:12px;line-height:1.7;color:var(--da-muted);margin-top:6px}
+
+.da-system{
+  position:relative;z-index:1;
+  padding:clamp(56px,8vw,92px) clamp(22px,5vw,72px);
+  border-top:1px solid var(--da-line);
+  background:#fff;
+}
+.da-system-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,56px);
+  max-width:1120px;margin:0 auto;align-items:start;
+}
+.da-system h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.4rem,3vw,2rem);
+  margin-bottom:14px;line-height:1.2;
+}
+.da-system p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:var(--da-body);font-weight:300;margin-bottom:12px;
+}
+.da-flow{display:grid;gap:10px}
+.da-flow div{
+  padding:14px 16px;border-radius:14px;border:1px solid var(--da-line);
+  background:var(--da-sand);font-size:13px;line-height:1.65;color:var(--da-body);
+}
+.da-flow strong{color:var(--da-sage);font-weight:600}
+
+.da-ethics{
+  position:relative;z-index:1;
+  padding:clamp(48px,7vw,80px) clamp(22px,5vw,72px);
+  background:linear-gradient(135deg,#eef2ec 0%,var(--da-cream) 60%,#fff 100%);
+  border-top:1px solid var(--da-line);
+}
+.da-ethics-inner{
+  max-width:880px;margin:0 auto;text-align:center;
+}
+.da-ethics h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.3rem,3vw,1.75rem);
+  margin-bottom:14px;
+}
+.da-ethics p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:var(--da-muted);font-weight:300;
+}
+
+.da-vision{
+  position:relative;z-index:1;min-height:72vh;
+  display:grid;place-items:center;text-align:center;
+  padding:clamp(64px,10vw,120px) clamp(22px,5vw,72px);
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(193,201,191,.35),transparent 55%),
+    var(--da-ink);color:var(--da-cream);
+}
+.da-vision h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.8rem,5vw,3.2rem);
+  line-height:1.2;font-weight:500;max-width:14em;margin:0 auto 20px;
+}
+.da-vision p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:rgba(253,249,243,.58);font-weight:300;max-width:36em;margin:0 auto;
+}
+
+@media (max-width:980px){
+  .da-hero{grid-template-columns:1fr;text-align:center}
+  .da-lede{margin-left:auto;margin-right:auto}
+  .da-tags{justify-content:center}
+  .da-vrule{display:none}
+  .da-dnote-grid,.da-system-grid,.da-triad-grid,.da-principle-grid,.da-step-grid,.da-boundary-grid,.da-weigh-vars{grid-template-columns:1fr}
+  .da-layer{grid-template-columns:64px 1fr}
+  .da-layer-bar{display:none}
+}
+@media (max-width:768px){
+  #digitalark{scroll-margin-top:72px}
+}
+
 /* ═══ 移动端 · 桌面样式不变 ═══ */
 .dock-nav{display:none}
 @media (max-width:768px){
@@ -2413,7 +2899,7 @@ body.eva-skin .ama-chapter-break__title{
   body.eva-skin{
     padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));
   }
-  #brief,#mirage,#amadeus,#timewalker,#self{
+  #brief,#mirage,#amadeus,#timewalker,#digitalark,#self{
     scroll-margin-top:72px;
     scroll-margin-bottom:calc(68px + env(safe-area-inset-bottom,0px));
   }
@@ -2423,7 +2909,7 @@ body.eva-skin .ama-chapter-break__title{
   .brand{font-size:20px}
 
   .dock-nav{
-    display:grid;grid-template-columns:repeat(5,1fr);
+    display:grid;grid-template-columns:repeat(6,1fr);
     position:fixed;left:0;right:0;bottom:0;z-index:8500;
     padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));
     background:rgba(255,255,255,.94);
@@ -2441,13 +2927,12 @@ body.eva-skin .ama-chapter-break__title{
     color:var(--eva-blue-deep);background:rgba(0,56,255,.08);
   }
   .dock-nav .dock-num{font-size:9px;letter-spacing:.12em;opacity:.7}
-  .dock-nav .dock-label{font-size:10px;letter-spacing:.08em;line-height:1.1}
+  .dock-nav .dock-label{font-size:9px;letter-spacing:.06em;line-height:1.1}
 
   body.eva-skin .hero.eva-poster{
     min-height:auto!important;display:flex;flex-direction:column;
     padding:0!important;
   }
-  .hero-index[data-speed]{transform:none!important}
   .eva-quote--tl{display:none}
   .eva-hero-mid{
     position:relative!important;left:auto!important;right:auto!important;top:auto!important;
@@ -2603,13 +3088,15 @@ body.eva-skin .ama-chapter-break__title{
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .split-word span,
+  .eva-hero-mid .eva-t span,
+  .eva-plate-black .split-word span,
+  .eva-plate-white .split-word span{
+    opacity:1!important;transform:none!important;animation:none!important;
   }
-  .reveal{opacity:1;transform:none}
+  .mirage-hero-stage.is-done .mirage-product-float img{animation:none!important}
+  .tw-atmo__mist,.tw-atmo__moon{animation:none!important}
 }
 
 
@@ -2627,6 +3114,7 @@ body.eva-skin .ama-chapter-break__title{
     <li><a href="#mirage">第01話</a></li>
     <li><a href="#amadeus">第02話</a></li>
     <li><a href="#timewalker">第03話</a></li>
+    <li><a href="#digitalark">第04話</a></li>
     <li><a href="#self">关于</a></li>
   </ul>
 </nav>
@@ -2680,6 +3168,11 @@ body.eva-skin .ama-chapter-break__title{
         <h3>墨舟</h3>
         <p>旅行文化 · 到达即读懂</p>
       </a>
+      <a class="hero-work magnetic" href="#digitalark">
+        <small>第04話 / PRESENCE</small>
+        <h3>数字方舟</h3>
+        <p>本地分身 · 五层人格 · 长期在场</p>
+      </a>
     </div>
   </div>
 </header>
@@ -2695,8 +3188,6 @@ body.eva-skin .ama-chapter-break__title{
       <div class="brief-prose">
         <p class="brief-lead">愿借设计，让烟火生姿，让光阴生彩——这份档案想留住的，首先是观察如何慢慢留下痕迹。</p>
         <p class="brief-text">我习惯从那些容易被略过的时刻问起：街角的光线、深夜未说完的话、旅途中一闪而过的地名。工业设计的训练让我尊重材料与身体；而产品与系统的实践，则把那些漂浮的直觉，收束成可以被触摸、被迭代、也值得被审视的体验。</p>
-        <p class="brief-text">空间、关系、旅途——三种语境，三种温度。它们并不共用同一种答案，却都在试探同一件事：当人愿意短暂停下来的时候，能不能多读懂一点什么，而不必付出离开当下的代价。</p>
-        <p class="brief-closing">作品档案 · 三话展开</p>
       </div>
       <aside class="brief-aside" aria-label="作者信息">
         <p class="brief-signature">陈彪明</p>
@@ -2992,12 +3483,12 @@ body.eva-skin .ama-chapter-break__title{
       <div class="ama-v2-copy-block">
         <div class="ama-v2-sub">06 / Autonomous Drive</div>
         <h3>主动不是定时问候，而是内生目标。</h3>
-        <p>主动性来自多层条件：关系分数、PAD 状态、记忆观察、空闲时间、在场状态和上一轮话题。系统甚至会禁止“按分钟数催回复”，避免主动陪伴退化成烦人的定时器。</p>
+        <p>主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态决定该不该打扰。能说的动机只有四类——弄清他在问什么、试探亲密边界、回调已入库的旧事、或加深连接；目标会过期，没有合适动机就沉默。人格边界文件同时禁止按分钟催回复。</p>
       </div>
       <div class="ama-flow-v2">
-        <div><i>1</i><span>每 3 轮检查一次内生目标：理解对方、测试边界、想起他说过的事、建立更深连接。</span></div>
-        <div><i>2</i><span>空闲触发时先检查 presence 与最近一句话，不允许编造用户没提过的实验或论文。</span></div>
-        <div><i>3</i><span>主动开口后，下一轮必须承接她自己抛出的线，避免“主动完就断线”。</span></div>
+        <div><i>1</i><span><strong>轮次审计（每满 3 轮）：</strong>先不生成对白，对照当前 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项——逻辑上弄清命题（Mind Turn）、行为上试探边界（如 DEFLECT）、从分房间记忆里拉起他说过的事、或用亲近度拉高连接；四项都不成立则本轮不主动。</span></div>
+        <div><i>2</i><span><strong>空闲触发门槛：</strong>只有 presence 为真（用户仍停在这段会话/界面，而非后台挂机）且上一句用户原话仍相关时，才允许发主动句；引用内容只能来自记忆宫已写入的标签，并遵守 core 红线——不得编造他从未提过的实验、论文或设定外情节。</span></div>
+        <div><i>3</i><span><strong>主动后的承接义务：</strong>若本轮是她先抛线（提问、回调或试探），下一轮必须把这条线接回去，写进 kurisu_core.txt 的硬约束；禁止主动一句后立刻切回无关寒暄，造成「说完就断线」的假陪伴。</span></div>
       </div>
     </article>
 
@@ -3271,6 +3762,306 @@ body.eva-skin .ama-chapter-break__title{
     </section>
   </section>
 
+  <section class="section da-chapter" id="digitalark" aria-labelledby="da-title">
+    <div class="da-atmo" aria-hidden="true">
+      <div class="da-atmo__halo"></div>
+      <div class="da-atmo__grain"></div>
+    </div>
+    <p class="da-vrule" aria-hidden="true">本地 · 私密 · 可长期运行</p>
+
+    <header class="da-hero reveal">
+      <div class="da-hero-copy">
+        <p class="da-kicker">第04話 · PRESENCE / DIGITAL TWIN</p>
+        <h2 class="da-title" id="da-title">数字<em>方舟</em></h2>
+        <p class="da-lede">一套本地运行的数字人格构建与陪护系统。为突然离别与来不及的告别留出余地——让人被记住，而不只是被模仿几句口吻。</p>
+        <div class="da-tags">
+          <span>Local First</span>
+          <span>五层人格</span>
+          <span>CAPS 动力</span>
+          <span>训练 · 陪护</span>
+        </div>
+      </div>
+      <div class="da-hero-stage magnetic" aria-hidden="true">
+        <div class="da-orb-wrap">
+          <div class="da-orb-glow"></div>
+          <div class="da-orb-ring" style="--pct:68"></div>
+          <div class="da-orb-core">
+            <span class="da-orb-glyph">舟</span>
+          </div>
+          <span class="da-orb-caption">人格拟合 · 68%</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="da-origin reveal">
+      <div class="da-origin-inner">
+        <p class="da-kicker">为何做 · Design Intent</p>
+        <h3>死亡不是终点，遗忘才是。</h3>
+        <div class="da-origin-prose">
+          <p>时代在老龄化，离别却不只来自衰老——意外、突发、来不及告别的离开，每天都在发生。我做数字方舟，是想减轻这种离别带来的伤害：在意外来临之前，给亲人一条可以托付的交代；在离去之后，仍留下可被对话、可被想起的内在，而不是骤然空白。</p>
+          <p>我相信被记住，比被复述几句口头禅更接近安慰。方舟承载的不是一具会说话的壳，而是一个人的判断方式、情绪节奏、关系习惯与有质感的经历——让告别之后，仍有机会说「对，这是她会说的话、会做的选择」。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="da-dnote reveal">
+      <div class="da-dnote-grid">
+        <div>
+          <p class="da-dnote-label">我发现的问题</p>
+          <h3>市面上的「数字人」，大多只有一张嘴。</h3>
+          <p>常见做法是用提示词堆出名义上像某个人：口吻像了，内在、记忆、语言习惯与关系模式却没有被系统性地留下。关掉窗口，关系就结束；没有训练体系，也没有可沉淀的数据——更像角色扮演，而不是可被托付的数字人格。</p>
+        </div>
+        <div>
+          <p class="da-dnote-label">我怎么解决</p>
+          <h3>从真实的人身上，提取可运行的判断引擎。</h3>
+          <p>数字方舟在本地完成采集、训练与陪护：用情境与行为暴露真实结构，用经历塑造判断，用纠错迭代拟合。产品端拆成训练、圣殿与陪护三界面；引擎端用五层架构 + CAPS 动力，让每一次表达都从内部状态长出来，而不是贴标签检索。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="da-stance reveal">
+      <div class="da-stance-inner">
+        <p class="da-kicker">核心立场</p>
+        <p class="da-stance-lead">不是模仿表面，而是复刻底层。</p>
+        <p>一个人之所以是他自己，不只因为说了什么，而是因为有一套稳定的内部运作——怎么判断、怎么感受、怎么记住、怎么表达。现有系统多在复制<strong>输出</strong>；我要建模的是驱动输出的<strong>内部结构</strong>。</p>
+        <p>目标因此不是「让 AI 说话像某个人」，而是：从一个真实的人身上提取可运行的判断引擎，再用这个引擎驱动表达。足够有根，所以在任何情境下的反应都能被感受到——「对，这是她」。</p>
+      </div>
+    </section>
+
+    <section class="da-principles reveal">
+      <div class="da-principle-grid">
+        <article class="da-principle magnetic">
+          <strong>行为先于描述</strong>
+          <p>不问「你是什么样的人」，而用价值冲突、第一反应、具体情境来归纳。人对自己的描述常不准，行为会暴露真实结构。</p>
+        </article>
+        <article class="da-principle magnetic">
+          <strong>经历塑造判断</strong>
+          <p>采集的不只是当下状态，而是塑成现在的经历——尤其有情绪重量、改变了判断方式的经历。记忆用来塑造判断，不是挂检索标签。</p>
+        </article>
+        <article class="da-principle magnetic">
+          <strong>动态优于静态</strong>
+          <p>人格不是固定点，而是情境里不同侧面的集合。建模「在 X 情境下倾向于 Y」，冲突时动态权衡——对应 CAPS 与四变量决策机制。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="da-thesis reveal">
+      <div class="da-thesis-inner">
+        <blockquote>从「会答题的 AI」走向「会陪你过时间的数字存在」——本地优先、关系连续、内心状态可感知；从提示词皮肤，走向可训练、可纠错、可托付的人格投影。</blockquote>
+        <cite>数字人格构建系统 · 设计总结</cite>
+      </div>
+    </section>
+
+    <section class="da-arch reveal">
+      <div class="da-arch-head">
+        <p class="da-kicker">五层架构 · 我怎么设计</p>
+        <h3>从认知驱动到音色表达</h3>
+        <p>五层不是五个文件夹，而是同一个人的五种可采集、可沉淀、可运行的结构。产品实现里与「核心 / 情绪 / 记忆 / 关系 / 表达」一一对应；下面是设计时的分工与依据。</p>
+      </div>
+      <div class="da-arch-grid">
+        <article class="da-arch-card">
+          <header><h4>认知架构</h4><span class="da-arch-dims">世界观 · 价值排序 · 道德边界 · 自我规范 …</span></header>
+          <p>最底层的驱动力：怎么解读事件、冲突里选什么、对自己的要求。采集以<strong>价值冲突场景</strong>为核心——把两个都在乎的东西放在对立面，选择与选择后的感受，比自述更真实。</p>
+          <cite>理论支撑：Schwartz 价值理论 · Haidt 道德基础 · Bandura 自我效能</cite>
+        </article>
+        <article class="da-arch-card">
+          <header><h4>情感架构</h4><span class="da-arch-dims">触发 · 表达 · 压抑 · 内心独白 · 恢复 …</span></header>
+          <p>不只「会有什么情绪」，而是被什么触发、怎么处理与隐藏、外部反应之下真正在想什么。内心独白是最有原创性的维度之一——驱动反应的来源，而非仅建模外露语气。</p>
+          <cite>理论支撑：Damasio 躯体标记 · Gross 情绪调节 · 依恋理论 · 双系统</cite>
+        </article>
+        <article class="da-arch-card">
+          <header><h4>关系架构</h4><span class="da-arch-dims">亲密 · 冲突 · 信任 · 边界与付出 …</span></header>
+          <p>建模在关系里<strong>怎么运作</strong>：靠近与退后、冲突反应、信任建立与失去、会不会在关系里弄丢自己。某次被辜负后的收缩、某段关系里学会的边界，会以稳定模式延续。</p>
+          <cite>理论支撑：依恋理论 · 社会交换 · Mischel CAPS · 自我决定理论</cite>
+        </article>
+        <article class="da-arch-card">
+          <header><h4>记忆架构</h4><span class="da-arch-dims">情绪类型 × 人生领域 · 活态 / 沉淀态</span></header>
+          <p>记忆塑造判断，而非仅供检索。<strong>活态</strong>以事件形式可被激活；<strong>沉淀态</strong>已内化为认知规则。不要求回忆完整经历——在当下捕捉碎片，对话追问加厚质感。</p>
+          <cite>理论支撑：Tulving 情节/语义记忆 · LeDoux 情绪记忆 · McAdams 叙事认同</cite>
+        </article>
+        <article class="da-arch-card">
+          <header><h4>音色架构</h4><span class="da-arch-dims">风格 · 幽默 · 沉默 · 对不同人的差异 …</span></header>
+          <p>用户感知最直接的一层：音色不对会立刻觉得「不像」。重点采集<strong>驱动逻辑</strong>——为何在这种情绪下语气会变、沉默意味着什么、幽默与回避如何因人而异。</p>
+          <cite>理论支撑：言语行为理论 · Grice 会话含义 · 非语言沟通</cite>
+        </article>
+      </div>
+    </section>
+
+    <section class="da-layers reveal" id="daLayers">
+      <div class="da-layers-head">
+        <p class="da-kicker">Runtime · 产品映射</p>
+        <h3>五层在系统里如何叠合</h3>
+        <p>训练进度按层加权；盲测里程碑解锁更完整能力。下列为运行时的自下而上链路——与上文五架构一一对应。</p>
+      </div>
+      <div class="da-layer-stack">
+        <article class="da-layer">
+          <span class="da-layer-num">05</span>
+          <div><strong>表达层 ≈ 音色架构</strong><span>怎么说：音色、句式、场景区分——用户听见的一层。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">04</span>
+          <div><strong>关系层 ≈ 关系架构</strong><span>与谁在场：亲密、信任、历史事件与关系中的自我。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">03</span>
+          <div><strong>记忆层 ≈ 记忆架构</strong><span>活态可被激活；沉淀态内化为规则，反复模式慢慢写入认知。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">02</span>
+          <div><strong>情绪层 ≈ 情感架构</strong><span>PAD 与情绪节奏；影响权衡，而非表演「开心/难过」。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">01</span>
+          <div><strong>核心层 ≈ 认知架构</strong><span>价值、边界、道德与判断方式——冲突时先过这一关。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="da-training reveal">
+      <div class="da-training-head">
+        <p class="da-kicker">训练体系 · 我怎么设计</p>
+        <h3>三阶段：冷启动 → 日常积累 → 校准迭代</h3>
+      </div>
+      <div class="da-step-grid">
+        <article class="da-step" data-step="01">
+          <h4>冷启动</h4>
+          <p>导入聊天记录、日记等文字，自动提取音色初始参数；同步启动游戏化<strong>价值冲突</strong>——用户以为在做选择，实际在暴露认知优先级。追问「为什么」，理由比选择更有价值。</p>
+          <ul>
+            <li>不追求一次完整，只求能启动对话</li>
+            <li>主题目 + 备用 A/B，同一维度多种切入</li>
+          </ul>
+        </article>
+        <article class="da-step" data-step="02">
+          <h4>日常积累</h4>
+          <p>题库按<strong>当下状态、数据空白、自然时机</strong>动态抽取。采集方式是当下捕捉碎片，系统追问加厚——不要求一次性回忆整个人生。</p>
+          <ul>
+            <li>随时一句感受、一个念头即可入库</li>
+            <li>脉络在碎片足够时自然浮现</li>
+          </ul>
+        </article>
+        <article class="da-step" data-step="03">
+          <h4>校准与迭代</h4>
+          <p>数字人反应后，用户标注像/不像，并解释为何。纠错发生在<strong>对比</strong>中，比凭空描述更真实——「在 X 情境下，应是 Z 而非 Y」写入核心修正。</p>
+          <ul>
+            <li>纠错库随使用时间增值</li>
+            <li>盲测里程碑检验拟合度</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="da-weigh reveal">
+      <div class="da-weigh-inner">
+        <p class="da-kicker" style="color:rgba(253,249,243,.5)">Decision</p>
+        <h3>核心层冲突时，如何权衡？</h3>
+        <p>四个变量决定本次情境里哪一维权重更高：生成内心活动，再驱动表达输出。</p>
+        <div class="da-weigh-vars">
+          <div><strong>关系深度</strong>陌生人、半熟人还是亲密的人——边界与付出尺度随之变化。</div>
+          <div><strong>情绪状态</strong>当下 PAD 与内部节奏——影响是激化、压抑还是接住。</div>
+          <div><strong>事件性质</strong>触碰核心价值，还是表面偏好——决定是否动用道德与边界模块。</div>
+          <div><strong>先例记忆</strong>类似情境曾如何解决、结果好不好——活态记忆参与修正。</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="da-triad reveal">
+      <div class="da-triad-head">
+        <p class="da-kicker">Three Surfaces · 界面设计</p>
+        <h3>三端一体：训练、圣殿、陪护</h3>
+        <p style="font-family:'Noto Serif SC',serif;font-size:14px;line-height:2;color:var(--da-muted);font-weight:300;margin-top:12px">鼠尾草绿与奶油色、呼吸光晕与拟合环——视觉刻意安静，把复杂留给后台；用户第一眼感到的是「可以被倾听」，而不是监控面板。</p>
+      </div>
+      <div class="da-triad-grid">
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Sanctuary · 伴侣</p>
+          <div class="da-phone-screen">
+            <span class="da-chip">内心平静</span>
+            <span class="da-chip">静心沉思</span>
+            <p class="da-bubble da-bubble--ai">我在听，今天想聊点什么？</p>
+            <div class="da-pbar" aria-hidden="true"><i></i></div>
+          </div>
+          <h4>日常陪护入口</h4>
+          <p>呼吸光晕、情绪芯片与语音输入——把「在场」做成第一眼就能感到的界面，而不是设置页里的参数。</p>
+        </article>
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Training · 训练</p>
+          <div class="da-phone-screen">
+            <p class="da-bubble da-bubble--ai">你昨晚说项目卡住了，我猜你今天会有点烦。要不要先把最难的一块拆出来？</p>
+            <p class="da-bubble da-bubble--me">这句话像我吗？</p>
+            <p class="da-bubble da-bubble--ai">收到。我会把「先共情再给方法」的权重调低一点。</p>
+            <div class="da-pbar" aria-hidden="true"><i style="width:68%"></i></div>
+          </div>
+          <h4>试聊与拟合反馈</h4>
+          <p>像/不像/很像我——每一句纠正都写回五层进度；价值卡片、记忆碎片与关系建档在同一套引导里完成。</p>
+        </article>
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Companion · 伦理</p>
+          <div class="da-phone-screen da-phone-screen--dark">
+            <span class="da-chip">数字分身</span>
+            <p class="da-bubble da-bubble--ai">我始终在这里。你知道对面是我，不是真人实时在线——温暖可以真实，来源也必须诚实。</p>
+          </div>
+          <h4>知情与边界</h4>
+          <p>首次进入不可跳过知情同意；哀伤模式渐进淡出主动频率；数据默认留在本机，导出备份由你掌控。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="da-system reveal">
+      <div class="da-system-grid">
+        <div>
+          <p class="da-kicker">Pipeline</p>
+          <h3>本地闭环：采集 → 加工 → 表达</h3>
+          <p>Node.js + Ollama 本地推理，RAG 检索个人记忆，可选 Electron 常驻与托盘。每一轮对话先更新 PAD、检索记忆宫、走 CAPS 权衡，再生成对白——状态先于生成，避免「先说完再贴标签」。</p>
+          <p>与 AMADEUS 实验栈同源的方法论：可观测中间层、同底模对照、七维 rubric——数字方舟是把那套「在场感」推进到可训练、可陪护的产品形态。</p>
+        </div>
+        <div class="da-flow" aria-label="单轮处理流程">
+          <div><strong>输入</strong> 用户文本 + 关系深度 + 先例记忆 + 情绪 PAD</div>
+          <div><strong>CAPS</strong> 情境编码 → 网状单元激活 → If-Then 行为签名</div>
+          <div><strong>五层</strong> 核心权衡 → 记忆命中 → 关系缓冲 → 表达输出</div>
+          <div><strong>输出</strong> 自然对白 / 语音播报 / 主动问候（通过门槛后）</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="da-boundary reveal">
+      <div class="da-boundary-grid">
+        <div class="da-boundary--pos">
+          <p class="da-kicker">能做到</p>
+          <h3>足够有根的投影</h3>
+          <ul>
+            <li>表达上像这个人，核心判断从其底色出发</li>
+            <li>记忆有质感，不是标签检索</li>
+            <li>随纠错与沉淀慢慢演化，而非静态人设</li>
+            <li>本地私密运行，数据由本人与授权者掌控</li>
+          </ul>
+        </div>
+        <div class="da-boundary--neg">
+          <p class="da-kicker">做不到 · 必须诚实</p>
+          <h3>不是有意识的存在</h3>
+          <ul>
+            <li>持续存在的自我意识或真正「成长」</li>
+            <li>感官经历的质感，只能以内心轨迹近似</li>
+            <li>全新情境下是从核心层生长反应，非真正自我判断</li>
+            <li>陪护端须标明数字分身，不可冒充真人实时在线</li>
+          </ul>
+        </div>
+      </div>
+      <div class="da-boundary-foot">
+        <p>透明是前提，温暖是体验。哀伤模式可渐进淡出主动频率；知情同意不可跳过——像读一封遗书，明知来源，仍会动容，但来源必须诚实。</p>
+      </div>
+    </section>
+
+    <section class="da-vision reveal">
+      <p class="da-kicker" style="color:rgba(253,249,243,.45)">Vision</p>
+      <h3 class="thought-line" data-typewriter="遗忘才是终点；&#10;方舟负责记住。"></h3>
+      <p>为预防意外、为告别后仍能被想起、为自我探索的一面镜子——同一条技术链，三种托付。与 AMADEUS 实验同源的可观测中间层；数字方舟，是把「在场」做成可训练、可陪护、可留在本机的产品。</p>
+    </section>
+  </section>
+
   <section class="section light self self-poster" id="self">
     <img class="self-poster-img" src="assets/site/self-final-poster.png" alt="陈彪明个人介绍视觉海报" loading="lazy">
     <div class="self-typefield reveal" aria-label="个人介绍">
@@ -3293,12 +4084,13 @@ body.eva-skin .ama-chapter-break__title{
   <a href="#mirage"><span class="dock-num">01</span><span class="dock-label">MIRAGE</span></a>
   <a href="#amadeus"><span class="dock-num">02</span><span class="dock-label">AMADEUS</span></a>
   <a href="#timewalker"><span class="dock-num">03</span><span class="dock-label">墨舟</span></a>
+  <a href="#digitalark"><span class="dock-num">04</span><span class="dock-label">方舟</span></a>
   <a href="#self"><span class="dock-num">—</span><span class="dock-label">关于</span></a>
 </nav>
 
 <footer>
   <div>© 2026 Chen Biaoming</div>
-  <div>MIRAGE · AMADEUS · 墨舟 · 陈彪明</div>
+  <div>MIRAGE · AMADEUS · 墨舟 · 数字方舟</div>
 </footer>
 
 <script>
@@ -3321,10 +4113,35 @@ document.querySelectorAll('a,.magnetic,.feature,.app-card').forEach(el=>{
   el.addEventListener('mouseleave',()=>{el.style.transform=''});
 });
 
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{if(entry.isIntersecting) entry.target.classList.add('in')});
-},{threshold:.12,rootMargin:'0px 0px -80px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function revealIn(el){el.classList.add('in')}
+function primeReveal(){
+  const vh=innerHeight;
+  document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<vh*.94&&r.bottom>vh*.04) revealIn(el);
+  });
+}
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      revealIn(entry.target);
+      revealObs.unobserve(entry.target);
+    }
+  });
+},{threshold:.06,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+const daLayers=document.getElementById('daLayers');
+if(daLayers){
+  const daLayerObs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('in');
+    });
+  },{threshold:.2});
+  daLayerObs.observe(daLayers);
+}
+requestAnimationFrame(primeReveal);
+window.addEventListener('load',primeReveal,{passive:true});
+window.addEventListener('resize',primeReveal,{passive:true});
 
 const mirageHero=document.getElementById('mirageHeroStage');
 const mirageHead=document.querySelector('#mirage .mirage-head');
@@ -3345,7 +4162,7 @@ function getPosterParallax(){
 }
 function updateMiragePosterParallax(){
   if(!mirageLensPoster) return;
-  const motionScale=mirageReduceMotion.matches?0.42:1;
+  const motionScale=mirageReduceMotion.matches?0.55:1;
   const {progress,shift:rawShift}=getPosterParallax();
   const shift=rawShift*motionScale;
   mirageLensPoster.querySelectorAll('[data-poster-parallax]').forEach(el=>{
@@ -3423,7 +4240,7 @@ document.querySelectorAll('[data-typewriter]').forEach(el=>typeObs.observe(el));
 
 const darkSections=[...document.querySelectorAll('.hero,.dark')];
 const sectionNavLinks=[...document.querySelectorAll('.dock-nav a[href^="#"],.nav a[href^="#"]')];
-const briefSectionIds=['#brief','#mirage','#amadeus','#timewalker','#self'];
+const briefSectionIds=['#brief','#mirage','#amadeus','#timewalker','#digitalark','#self'];
 function updateBriefAnchors(){
   if(!sectionNavLinks.length) return;
   const probe=scrollY+innerHeight*.34;
@@ -3437,14 +4254,15 @@ function updateBriefAnchors(){
 function onScroll(){
   const max=document.documentElement.scrollHeight-innerHeight;
   document.getElementById('progress').style.width=(scrollY/max*100)+'%';
-  if(innerWidth>768){
-    document.querySelectorAll('[data-speed]').forEach(el=>{
-      const speed=parseFloat(el.dataset.speed||0);
-      el.style.transform=`translateY(${scrollY*speed}px) scale(1.08)`;
-    });
-  }else{
-    document.querySelectorAll('[data-speed]').forEach(el=>{el.style.transform=''});
-  }
+  const parallaxScale=innerWidth>768?1:0.22;
+  document.querySelectorAll('[data-speed]').forEach(el=>{
+    const speed=parseFloat(el.dataset.speed||0);
+    if(!speed||parallaxScale<=0){
+      el.style.transform='';
+      return;
+    }
+    el.style.transform=`translateY(${scrollY*speed*parallaxScale}px) scale(1.08)`;
+  });
   const inDark=darkSections.some(sec=>{
     const r=sec.getBoundingClientRect();
     return r.top<innerHeight*.45 && r.bottom>innerHeight*.25;
@@ -3556,9 +4374,9 @@ const amaGuideLines={
     state:'autonomous drive',
     pos:'pos-left',
     lines:[
-      '主动不是定时弹窗。真的要像活人，很多时候就应该不说话。',
-      '这里最重要的是克制：不许按分钟催回复，不许编造用户没提过的实验。',
-      '内生目标会出现，也会过期。想了解、想试探、想起他说过的事，不是固定指令。'
+      '主动层在情绪、记忆、行为都算完之后才决定说不说——不是到点就弹窗。',
+      '每满几轮先审计内生目标；空闲还要看人还在不在场、上一句还相不相关。',
+      'core 里写死：不许按分钟催、不许胡编论文实验；她先开口的线，下一轮必须接回去。'
     ]
   },
   mind:{
