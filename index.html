@@ -2300,6 +2300,136 @@ body.eva-skin .ama-chapter-break__title{
   line-height:.86!important;
 }
 
+/* —— 30″ 速览档案 —— */
+#brief,#mirage,#amadeus,#timewalker,#self{scroll-margin-top:clamp(72px,10vh,96px)}
+.brief-dossier{
+  position:relative;z-index:6;
+  padding:clamp(52px,7vw,88px) clamp(22px,5vw,72px) clamp(44px,6vw,72px);
+  background:
+    linear-gradient(180deg,rgba(0,56,255,.04) 0%,transparent 28%),
+    #fff;
+  color:#0a0a0a;
+  border-bottom:1px solid rgba(0,56,255,.12);
+}
+.brief-dossier::before{
+  content:"";position:absolute;left:clamp(22px,5vw,72px);right:clamp(22px,5vw,72px);top:0;height:3px;
+  background:linear-gradient(90deg,var(--eva-magenta-hot),var(--eva-blue-mid) 52%,transparent);
+}
+.brief-inner{max-width:1240px;margin:0 auto}
+.brief-head{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,48px);
+  align-items:end;margin-bottom:clamp(32px,5vw,52px);
+  padding-bottom:clamp(24px,4vw,36px);
+  border-bottom:1px solid rgba(10,10,10,.08);
+}
+.brief-kicker{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.48em;text-transform:uppercase;
+  color:var(--eva-blue-deep);margin-bottom:14px;
+}
+.brief-title{
+  font-family:var(--eva-matisse);font-variation-settings:"opsz" 96;font-weight:800;
+  font-size:clamp(1.65rem,4.2vw,2.75rem);line-height:.92;letter-spacing:-.03em;
+  transform:scaleY(1.06);transform-origin:left center;
+}
+.brief-lead{
+  max-width:min(520px,100%);margin-top:16px;
+  font-family:"Noto Serif SC",serif;font-size:clamp(13px,1.35vw,15px);line-height:2;
+  color:rgba(10,10,10,.58);font-weight:300;
+}
+.brief-timer{
+  display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(10,10,10,.42);
+}
+.brief-timer strong{
+  font-family:var(--eva-matisse);font-variation-settings:"opsz" 72;font-size:clamp(2.4rem,6vw,3.6rem);
+  line-height:1;letter-spacing:-.02em;color:var(--eva-magenta-hot);
+  transform:scaleY(1.12);
+}
+.brief-grid{
+  display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);gap:clamp(28px,5vw,56px);
+  align-items:start;
+}
+.brief-identity{padding-top:4px}
+.brief-role{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;
+}
+.brief-role span{
+  border:1px solid rgba(0,56,255,.22);border-radius:999px;padding:7px 12px;
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--eva-blue-deep);background:rgba(0,56,255,.04);
+}
+.brief-proof{
+  font-family:"Noto Serif SC",serif;font-size:13px;line-height:1.95;color:rgba(10,10,10,.52);font-weight:300;
+}
+.brief-proof em{font-style:normal;color:var(--eva-crimson-lit);font-weight:600}
+.brief-episodes{display:grid;gap:0;border:1px solid rgba(10,10,10,.1);background:#fff;box-shadow:12px 14px 0 rgba(0,56,255,.08)}
+.brief-ep{
+  display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,2.5vw,22px);align-items:center;
+  padding:clamp(16px,2.5vw,22px) clamp(18px,3vw,26px);
+  border-bottom:1px solid rgba(10,10,10,.08);
+  transition:background .35s var(--ease),transform .35s var(--ease);
+}
+.brief-ep:last-child{border-bottom:0}
+.brief-ep:hover{background:rgba(255,20,147,.04)}
+.brief-ep-num{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.28em;color:var(--eva-blue-deep);
+  writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);opacity:.85;
+}
+.brief-ep-body{min-width:0}
+.brief-ep-tag{
+  font-family:var(--eva-wall);font-size:9px;letter-spacing:.36em;text-transform:uppercase;
+  color:rgba(10,10,10,.45);margin-bottom:6px;
+}
+.brief-ep-title{
+  font-family:var(--eva-matisse);font-variation-settings:"opsz" 72;font-weight:800;
+  font-size:clamp(1.15rem,2.2vw,1.55rem);line-height:1;letter-spacing:-.02em;
+  color:var(--eva-magenta-hot);transform:scaleY(1.08);
+}
+.brief-ep-desc{
+  margin-top:8px;font-family:"Noto Serif SC",serif;font-size:12px;line-height:1.75;
+  color:rgba(10,10,10,.55);font-weight:300;
+}
+.brief-ep-arrow{
+  font-family:var(--eva-wall);font-size:18px;line-height:1;color:rgba(0,56,255,.35);
+  transition:transform .35s var(--ease),color .35s var(--ease);
+}
+.brief-ep:hover .brief-ep-arrow{transform:translateX(4px);color:var(--eva-magenta-hot)}
+.brief-anchors{
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(28px,4vw,40px);padding-top:clamp(22px,3vw,28px);
+  border-top:1px solid rgba(10,10,10,.08);
+}
+.brief-anchors-label{
+  width:100%;font-family:var(--eva-wall);font-size:9px;letter-spacing:.42em;text-transform:uppercase;
+  color:rgba(10,10,10,.38);margin-bottom:2px;
+}
+.brief-anchor{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 16px;border:1px solid rgba(10,10,10,.12);border-radius:999px;
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(10,10,10,.72);background:#fff;
+  transition:border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease);
+}
+.brief-anchor:hover{
+  border-color:var(--eva-magenta-hot);color:var(--eva-magenta-hot);
+  box-shadow:0 0 0 1px rgba(255,20,147,.12);
+}
+.brief-anchor.is-here{border-color:var(--eva-blue-mid);color:var(--eva-blue-deep);background:rgba(0,56,255,.05)}
+.brief-anchor span.brief-anchor-n{opacity:.55}
+@media (max-width:980px){
+  .brief-head{grid-template-columns:1fr}
+  .brief-timer{align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;gap:10px 16px}
+  .brief-grid{grid-template-columns:1fr}
+  .brief-ep-num{writing-mode:horizontal-tb;transform:none}
+}
+@media (max-width:620px){
+  .brief-dossier{padding-left:18px;padding-right:18px}
+  .brief-ep{grid-template-columns:1fr auto;gap:10px}
+  .brief-ep-num{grid-column:1/-1}
+  .brief-anchors{gap:8px}
+  .brief-anchor{padding:9px 12px;font-size:9px;letter-spacing:.16em}
+}
+
 @media (hover:none), (pointer:coarse){
   body{cursor:auto}
   .cursor-dot,.cursor-ring{display:none}
@@ -2326,6 +2456,7 @@ body.eva-skin .ama-chapter-break__title{
 <nav class="nav">
   <a class="brand" href="#top">陳彪明</a>
   <ul>
+    <li><a href="#brief">速览</a></li>
     <li><a href="#mirage">第01話</a></li>
     <li><a href="#amadeus">第02話</a></li>
     <li><a href="#timewalker">第03話</a></li>
@@ -2385,6 +2516,69 @@ body.eva-skin .ama-chapter-break__title{
     </div>
   </div>
 </header>
+
+<section class="brief-dossier reveal" id="brief" aria-labelledby="brief-title">
+  <div class="brief-inner">
+    <header class="brief-head">
+      <div>
+        <p class="brief-kicker">30″ SCAN · DOSSIER</p>
+        <h2 class="brief-title" id="brief-title">三十秒，读懂这份档案</h2>
+        <p class="brief-lead">工业设计出身，用 UX 与产品思维把「感知」落成可验证的系统——从 AR 空间计算，到数字生命架构，再到旅行文化产品。下文三话各讲一条完整链路。</p>
+      </div>
+      <p class="brief-timer" aria-hidden="true"><span>estimated read</span><strong>30″</strong></p>
+    </header>
+
+    <div class="brief-grid">
+      <div class="brief-identity">
+        <div class="brief-role" aria-label="角色定位">
+          <span>UX 设计</span>
+          <span>产品设计</span>
+          <span>产品经理</span>
+        </div>
+        <p class="brief-proof">桂林电子科技大学 · 工业设计<br>代表作含 <em>96 轮双评分者盲评</em> 对照实验论文（AMADEUS v0.8，已公开）</p>
+      </div>
+
+      <div class="brief-episodes">
+        <a class="brief-ep magnetic" href="#mirage">
+          <span class="brief-ep-num">01</span>
+          <div class="brief-ep-body">
+            <p class="brief-ep-tag">第01話 / AR · 空间计算</p>
+            <h3 class="brief-ep-title">MIRAGE</h3>
+            <p class="brief-ep-desc">AR 眼镜「现实转译」：美化街景而不逃离现实；MIA 与物理坐标对齐，兼顾沉浸与安全冗余。</p>
+          </div>
+          <span class="brief-ep-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="brief-ep magnetic" href="#amadeus">
+          <span class="brief-ep-num">02</span>
+          <div class="brief-ep-body">
+            <p class="brief-ep-tag">第02話 / AI · 实验系统</p>
+            <h3 class="brief-ep-title">AMADEUS</h3>
+            <p class="brief-ep-desc">数字生命架构：人格档案栈、记忆宫殿检索、PAD 情绪动力学与行为倾向竞争——非套壳聊天。</p>
+          </div>
+          <span class="brief-ep-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="brief-ep magnetic" href="#timewalker">
+          <span class="brief-ep-num">03</span>
+          <div class="brief-ep-body">
+            <p class="brief-ep-tag">第03話 / TRAVEL · 文化产品</p>
+            <h3 class="brief-ep-title">墨舟</h3>
+            <p class="brief-ep-desc">到达即读懂：景点范围内弹出轻量文化卡，三句话读懂即可继续走；足迹与故事一并归档。</p>
+          </div>
+          <span class="brief-ep-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <nav class="brief-anchors" aria-label="章节锚点">
+      <span class="brief-anchors-label">Jump to section</span>
+      <a class="brief-anchor is-here" href="#brief"><span class="brief-anchor-n">00</span> 速览</a>
+      <a class="brief-anchor" href="#mirage"><span class="brief-anchor-n">01</span> MIRAGE</a>
+      <a class="brief-anchor" href="#amadeus"><span class="brief-anchor-n">02</span> AMADEUS</a>
+      <a class="brief-anchor" href="#timewalker"><span class="brief-anchor-n">03</span> 墨舟</a>
+      <a class="brief-anchor" href="#self"><span class="brief-anchor-n">—</span> 关于</a>
+    </nav>
+  </div>
+</section>
 
 <div class="eva-intertitle"><span>作品檔案</span></div>
 <main>
@@ -3164,6 +3358,18 @@ const typeObs=new IntersectionObserver(entries=>{
 document.querySelectorAll('[data-typewriter]').forEach(el=>typeObs.observe(el));
 
 const darkSections=[...document.querySelectorAll('.hero,.dark')];
+const briefAnchorLinks=[...document.querySelectorAll('.brief-anchor[href^="#"]')];
+const briefSectionIds=['#brief','#mirage','#amadeus','#timewalker','#self'];
+function updateBriefAnchors(){
+  if(!briefAnchorLinks.length) return;
+  const probe=scrollY+innerHeight*.34;
+  let active='#brief';
+  briefSectionIds.forEach(id=>{
+    const el=document.querySelector(id);
+    if(el && el.offsetTop<=probe) active=id;
+  });
+  briefAnchorLinks.forEach(a=>a.classList.toggle('is-here',a.getAttribute('href')===active));
+}
 function onScroll(){
   const max=document.documentElement.scrollHeight-innerHeight;
   document.getElementById('progress').style.width=(scrollY/max*100)+'%';
@@ -3176,6 +3382,7 @@ function onScroll(){
     return r.top<innerHeight*.45 && r.bottom>innerHeight*.25;
   });
   document.body.classList.toggle('dark-cursor',inDark);
+  updateBriefAnchors();
   queueMiragePosterParallax();
 }
 window.addEventListener('scroll',onScroll,{passive:true});
