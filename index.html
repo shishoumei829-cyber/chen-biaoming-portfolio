@@ -2300,7 +2300,7 @@ body.eva-skin .ama-chapter-break__title{
   line-height:.86!important;
 }
 
-/* —— 30″ 速览档案 —— */
+/* —— 档案总述 —— */
 #brief,#mirage,#amadeus,#timewalker,#self{scroll-margin-top:clamp(72px,10vh,96px)}
 .brief-dossier{
   position:relative;z-index:6;
@@ -2331,103 +2331,58 @@ body.eva-skin .ama-chapter-break__title{
   font-size:clamp(1.65rem,4.2vw,2.75rem);line-height:.92;letter-spacing:-.03em;
   transform:scaleY(1.06);transform-origin:left center;
 }
-.brief-lead{
-  max-width:min(520px,100%);margin-top:16px;
-  font-family:"Noto Serif SC",serif;font-size:clamp(13px,1.35vw,15px);line-height:2;
-  color:rgba(10,10,10,.58);font-weight:300;
-}
-.brief-timer{
-  display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;
-  font-family:var(--eva-wall);font-size:10px;letter-spacing:.32em;text-transform:uppercase;
-  color:rgba(10,10,10,.42);
-}
-.brief-timer strong{
-  font-family:var(--eva-matisse);font-variation-settings:"opsz" 72;font-size:clamp(2.4rem,6vw,3.6rem);
-  line-height:1;letter-spacing:-.02em;color:var(--eva-magenta-hot);
-  transform:scaleY(1.12);
-}
-.brief-grid{
-  display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.28fr);gap:clamp(28px,5vw,56px);
-  align-items:start;
-}
-.brief-identity{padding-top:4px}
-.brief-role{
-  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;
-}
-.brief-role span{
-  border:1px solid rgba(0,56,255,.22);border-radius:999px;padding:7px 12px;
-  font-family:var(--eva-wall);font-size:10px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--eva-blue-deep);background:rgba(0,56,255,.04);
-}
-.brief-proof{
-  font-family:"Noto Serif SC",serif;font-size:13px;line-height:1.95;color:rgba(10,10,10,.52);font-weight:300;
-}
-.brief-proof em{font-style:normal;color:var(--eva-crimson-lit);font-weight:600}
-.brief-episodes{display:grid;gap:0;border:1px solid rgba(10,10,10,.1);background:#fff;box-shadow:12px 14px 0 rgba(0,56,255,.08)}
-.brief-ep{
-  display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,2.5vw,22px);align-items:center;
-  padding:clamp(16px,2.5vw,22px) clamp(18px,3vw,26px);
-  border-bottom:1px solid rgba(10,10,10,.08);
-  transition:background .35s var(--ease),transform .35s var(--ease);
-}
-.brief-ep:last-child{border-bottom:0}
-.brief-ep:hover{background:rgba(255,20,147,.04)}
-.brief-ep-num{
-  font-family:var(--eva-wall);font-size:10px;letter-spacing:.28em;color:var(--eva-blue-deep);
-  writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);opacity:.85;
-}
-.brief-ep-body{min-width:0}
-.brief-ep-tag{
-  font-family:var(--eva-wall);font-size:9px;letter-spacing:.36em;text-transform:uppercase;
-  color:rgba(10,10,10,.45);margin-bottom:6px;
-}
-.brief-ep-title{
-  font-family:var(--eva-matisse);font-variation-settings:"opsz" 72;font-weight:800;
-  font-size:clamp(1.15rem,2.2vw,1.55rem);line-height:1;letter-spacing:-.02em;
-  color:var(--eva-magenta-hot);transform:scaleY(1.08);
-}
-.brief-ep-desc{
-  margin-top:8px;font-family:"Noto Serif SC",serif;font-size:12px;line-height:1.75;
-  color:rgba(10,10,10,.55);font-weight:300;
-}
-.brief-ep-arrow{
-  font-family:var(--eva-wall);font-size:18px;line-height:1;color:rgba(0,56,255,.35);
-  transition:transform .35s var(--ease),color .35s var(--ease);
-}
-.brief-ep:hover .brief-ep-arrow{transform:translateX(4px);color:var(--eva-magenta-hot)}
-.brief-anchors{
-  display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(28px,4vw,40px);padding-top:clamp(22px,3vw,28px);
+.brief-head{margin-bottom:0;padding-bottom:0;border-bottom:0}
+.brief-body{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(168px,.34fr);
+  gap:clamp(32px,6vw,72px);align-items:start;
+  margin-top:clamp(28px,4vw,44px);
+  padding-top:clamp(24px,4vw,36px);
   border-top:1px solid rgba(10,10,10,.08);
 }
-.brief-anchors-label{
-  width:100%;font-family:var(--eva-wall);font-size:9px;letter-spacing:.42em;text-transform:uppercase;
-  color:rgba(10,10,10,.38);margin-bottom:2px;
+.brief-prose{max-width:min(680px,100%)}
+.brief-lead{
+  margin:0 0 clamp(20px,3vw,28px);
+  font-family:"Noto Serif SC",serif;font-size:clamp(15px,1.55vw,17px);line-height:2.05;
+  color:rgba(10,10,10,.78);font-weight:400;
 }
-.brief-anchor{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 16px;border:1px solid rgba(10,10,10,.12);border-radius:999px;
-  font-family:var(--eva-wall);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(10,10,10,.72);background:#fff;
-  transition:border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease);
+.brief-text{
+  margin:0 0 clamp(16px,2.5vw,22px);
+  font-family:"Noto Serif SC",serif;font-size:clamp(13px,1.35vw,15px);line-height:2.02;
+  color:rgba(10,10,10,.56);font-weight:300;
 }
-.brief-anchor:hover{
-  border-color:var(--eva-magenta-hot);color:var(--eva-magenta-hot);
-  box-shadow:0 0 0 1px rgba(255,20,147,.12);
+.brief-text:last-of-type{margin-bottom:0}
+.brief-closing{
+  margin:clamp(28px,4vw,40px) 0 0;padding-top:clamp(20px,3vw,28px);
+  border-top:1px solid rgba(0,56,255,.12);
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.38em;text-transform:uppercase;
+  color:rgba(10,10,10,.38);
 }
-.brief-anchor.is-here{border-color:var(--eva-blue-mid);color:var(--eva-blue-deep);background:rgba(0,56,255,.05)}
-.brief-anchor span.brief-anchor-n{opacity:.55}
+.brief-aside{
+  padding-top:6px;padding-left:clamp(16px,3vw,28px);
+  border-left:1px solid rgba(0,56,255,.16);
+}
+.brief-signature{
+  font-family:var(--eva-matisse);font-variation-settings:"opsz" 72;font-weight:800;
+  font-size:clamp(1.1rem,2vw,1.35rem);line-height:1.1;letter-spacing:.06em;
+  color:var(--eva-magenta-hot);transform:scaleY(1.06);margin-bottom:14px;
+}
+.brief-meta{
+  font-family:var(--eva-wall);font-size:10px;line-height:1.75;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--eva-blue-deep);margin-bottom:18px;
+}
+.brief-note{
+  font-family:"Noto Serif SC",serif;font-size:12px;line-height:1.9;
+  color:rgba(10,10,10,.48);font-weight:300;
+}
 @media (max-width:980px){
-  .brief-head{grid-template-columns:1fr}
-  .brief-timer{align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;gap:10px 16px}
-  .brief-grid{grid-template-columns:1fr}
-  .brief-ep-num{writing-mode:horizontal-tb;transform:none}
+  .brief-body{grid-template-columns:1fr}
+  .brief-aside{
+    padding-left:0;padding-top:clamp(24px,4vw,32px);
+    border-left:0;border-top:1px solid rgba(0,56,255,.12);
+  }
 }
 @media (max-width:620px){
   .brief-dossier{padding-left:18px;padding-right:18px}
-  .brief-ep{grid-template-columns:1fr auto;gap:10px}
-  .brief-ep-num{grid-column:1/-1}
-  .brief-anchors{gap:8px}
-  .brief-anchor{padding:9px 12px;font-size:9px;letter-spacing:.16em}
 }
 
 /* ═══ 移动端 · 桌面样式不变 ═══ */
@@ -2507,16 +2462,9 @@ body.eva-skin .ama-chapter-break__title{
   .brief-dossier{padding:40px 18px 32px}
   .brief-dossier::before{left:18px;right:18px}
   .brief-title{font-size:clamp(1.45rem,6.5vw,1.85rem)}
-  .brief-lead{font-size:13px;line-height:1.85}
-  .brief-timer strong{font-size:2rem}
-  .brief-episodes{box-shadow:8px 10px 0 rgba(0,56,255,.08)}
-  .brief-ep{grid-template-columns:1fr;padding:16px 14px}
-  .brief-ep-num{
-    writing-mode:horizontal-tb;transform:none;
-    font-size:9px;margin-bottom:4px;display:block;
-  }
-  .brief-ep-arrow{display:none}
-  .brief-anchors{display:none}
+  .brief-lead{font-size:14px;line-height:1.95}
+  .brief-text{font-size:13px;line-height:1.9}
+  .brief-body{margin-top:20px;padding-top:20px}
 
   body.eva-skin #mirage .mirage-head{
     padding:88px 18px 40px!important;
@@ -2651,7 +2599,7 @@ body.eva-skin .ama-chapter-break__title{
 <nav class="nav">
   <a class="brand" href="#top">陳彪明</a>
   <ul>
-    <li><a href="#brief">速览</a></li>
+    <li><a href="#brief">总述</a></li>
     <li><a href="#mirage">第01話</a></li>
     <li><a href="#amadeus">第02話</a></li>
     <li><a href="#timewalker">第03話</a></li>
@@ -2715,63 +2663,23 @@ body.eva-skin .ama-chapter-break__title{
 <section class="brief-dossier reveal" id="brief" aria-labelledby="brief-title">
   <div class="brief-inner">
     <header class="brief-head">
-      <div>
-        <p class="brief-kicker">30″ SCAN · DOSSIER</p>
-        <h2 class="brief-title" id="brief-title">三十秒，读懂这份档案</h2>
-        <p class="brief-lead">工业设计出身，用 UX 与产品思维把「感知」落成可验证的系统——从 AR 空间计算，到数字生命架构，再到旅行文化产品。下文三话各讲一条完整链路。</p>
-      </div>
-      <p class="brief-timer" aria-hidden="true"><span>estimated read</span><strong>30″</strong></p>
+      <p class="brief-kicker">ARCHIVE · PREFACE</p>
+      <h2 class="brief-title" id="brief-title">档案总述</h2>
     </header>
 
-    <div class="brief-grid">
-      <div class="brief-identity">
-        <div class="brief-role" aria-label="角色定位">
-          <span>UX 设计</span>
-          <span>产品设计</span>
-          <span>产品经理</span>
-        </div>
-        <p class="brief-proof">桂林电子科技大学 · 工业设计<br>代表作含 <em>96 轮双评分者盲评</em> 对照实验论文（AMADEUS v0.8，已公开）</p>
+    <div class="brief-body">
+      <div class="brief-prose">
+        <p class="brief-lead">愿借设计，让烟火生姿，让光阴生彩——这份档案想留住的，首先是观察如何慢慢留下痕迹。</p>
+        <p class="brief-text">我习惯从那些容易被略过的时刻问起：街角的光线、深夜未说完的话、旅途中一闪而过的地名。工业设计的训练让我尊重材料与身体；而产品与系统的实践，则把那些漂浮的直觉，收束成可以被触摸、被迭代、也值得被审视的体验。</p>
+        <p class="brief-text">空间、关系、旅途——三种语境，三种温度。它们并不共用同一种答案，却都在试探同一件事：当人愿意短暂停下来的时候，能不能多读懂一点什么，而不必付出离开当下的代价。</p>
+        <p class="brief-closing">作品档案 · 三话展开</p>
       </div>
-
-      <div class="brief-episodes">
-        <a class="brief-ep magnetic" href="#mirage">
-          <span class="brief-ep-num">01</span>
-          <div class="brief-ep-body">
-            <p class="brief-ep-tag">第01話 / AR · 空间计算</p>
-            <h3 class="brief-ep-title">MIRAGE</h3>
-            <p class="brief-ep-desc">AR 眼镜「现实转译」：美化街景而不逃离现实；MIA 与物理坐标对齐，兼顾沉浸与安全冗余。</p>
-          </div>
-          <span class="brief-ep-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="brief-ep magnetic" href="#amadeus">
-          <span class="brief-ep-num">02</span>
-          <div class="brief-ep-body">
-            <p class="brief-ep-tag">第02話 / AI · 实验系统</p>
-            <h3 class="brief-ep-title">AMADEUS</h3>
-            <p class="brief-ep-desc">数字生命架构：人格档案栈、记忆宫殿检索、PAD 情绪动力学与行为倾向竞争——非套壳聊天。</p>
-          </div>
-          <span class="brief-ep-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="brief-ep magnetic" href="#timewalker">
-          <span class="brief-ep-num">03</span>
-          <div class="brief-ep-body">
-            <p class="brief-ep-tag">第03話 / TRAVEL · 文化产品</p>
-            <h3 class="brief-ep-title">墨舟</h3>
-            <p class="brief-ep-desc">到达即读懂：景点范围内弹出轻量文化卡，三句话读懂即可继续走；足迹与故事一并归档。</p>
-          </div>
-          <span class="brief-ep-arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
+      <aside class="brief-aside" aria-label="作者信息">
+        <p class="brief-signature">陈彪明</p>
+        <p class="brief-meta">体验设计 · 产品 · PM</p>
+        <p class="brief-note">桂林电子科技大学 · 工业设计<br>研究含对照实验论文（AMADEUS v0.8）</p>
+      </aside>
     </div>
-
-    <nav class="brief-anchors" aria-label="章节锚点">
-      <span class="brief-anchors-label">Jump to section</span>
-      <a class="brief-anchor is-here" href="#brief"><span class="brief-anchor-n">00</span> 速览</a>
-      <a class="brief-anchor" href="#mirage"><span class="brief-anchor-n">01</span> MIRAGE</a>
-      <a class="brief-anchor" href="#amadeus"><span class="brief-anchor-n">02</span> AMADEUS</a>
-      <a class="brief-anchor" href="#timewalker"><span class="brief-anchor-n">03</span> 墨舟</a>
-      <a class="brief-anchor" href="#self"><span class="brief-anchor-n">—</span> 关于</a>
-    </nav>
   </div>
 </section>
 
@@ -3428,7 +3336,7 @@ body.eva-skin .ama-chapter-break__title{
 </main>
 
 <nav class="dock-nav" aria-label="章节快捷导航">
-  <a href="#brief"><span class="dock-num">00</span><span class="dock-label">速览</span></a>
+  <a href="#brief"><span class="dock-num">00</span><span class="dock-label">总述</span></a>
   <a href="#mirage"><span class="dock-num">01</span><span class="dock-label">MIRAGE</span></a>
   <a href="#amadeus"><span class="dock-num">02</span><span class="dock-label">AMADEUS</span></a>
   <a href="#timewalker"><span class="dock-num">03</span><span class="dock-label">墨舟</span></a>
@@ -3561,7 +3469,7 @@ const typeObs=new IntersectionObserver(entries=>{
 document.querySelectorAll('[data-typewriter]').forEach(el=>typeObs.observe(el));
 
 const darkSections=[...document.querySelectorAll('.hero,.dark')];
-const sectionNavLinks=[...document.querySelectorAll('.brief-anchor[href^="#"],.dock-nav a[href^="#"]')];
+const sectionNavLinks=[...document.querySelectorAll('.dock-nav a[href^="#"],.nav a[href^="#"]')];
 const briefSectionIds=['#brief','#mirage','#amadeus','#timewalker','#self'];
 function updateBriefAnchors(){
   if(!sectionNavLinks.length) return;
