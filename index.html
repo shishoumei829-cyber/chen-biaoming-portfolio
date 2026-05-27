@@ -2411,213 +2411,363 @@ body.eva-skin .ama-chapter-break__title{
   .brief-dossier{padding-left:18px;padding-right:18px}
 }
 
-/* ═══ 数字方舟 · Death Stranding 单屏（AMADEUS 延展） ═══ */
-#digitalark.ama-ds-ark{
-  --ds-ink:#f4f1ec;
-  --ds-muted:rgba(244,241,236,.58);
-  --ds-line:rgba(255,255,255,.14);
-  --ds-accent:#c41e2a;
-  --ds-hud:"Share Tech Mono","Courier New",monospace;
-  position:relative;
-  margin:0!important;
+/* ═══ 第04話 · 数字方舟 ═══ */
+#digitalark{
+  --da-ink:#1c1c18;
+  --da-muted:#767872;
+  --da-body:#454742;
+  --da-sage:#596059;
+  --da-sage-lit:#8a9688;
+  --da-sage-glow:rgba(193,201,191,.45);
+  --da-cream:#fdf9f3;
+  --da-sand:#f7f3ed;
+  --da-paper:#faf8f4;
+  --da-line:rgba(89,96,89,.18);
   padding:0!important;
-  min-height:100svh;
-  max-height:100svh;
+  background:var(--da-paper);
+  color:var(--da-ink);
   overflow:hidden;
-  color:var(--ds-ink);
-  border-top:1px solid rgba(255,255,255,.08);
-  scroll-margin-top:72px;
 }
-.ama-ds-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
-.ama-ds-bg__layer{
-  position:absolute;inset:-8% -4%;
-  background-size:cover;background-position:center;
-  transform:scale(1.06);
+#digitalark .section-desc,#digitalark p{max-width:none}
+.da-atmo{
+  position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;
 }
-.ama-ds-bg__layer--base{
-  background-image:url("assets/digitalark/ds-bg-main.png");
-  filter:saturate(1.05) contrast(1.08);
+.da-atmo__grain{
+  position:absolute;inset:-20%;opacity:.14;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:daGrain 22s ease-in-out infinite alternate;
 }
-.ama-ds-bg__layer--coast{
-  background-image:url("assets/digitalark/ds-bg-coast.png");
-  opacity:.72;
-  mix-blend-mode:screen;
-  mask-image:linear-gradient(105deg,transparent 28%,#000 58%,#000 88%,transparent 100%);
-  -webkit-mask-image:linear-gradient(105deg,transparent 28%,#000 58%,#000 88%,transparent 100%);
+.da-atmo__halo{
+  position:absolute;left:50%;top:-12%;width:min(120vw,920px);aspect-ratio:1;
+  transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(193,201,191,.42),transparent 62%);
+  filter:blur(40px);animation:daHalo 9s ease-in-out infinite alternate;
 }
-.ama-ds-bg__layer--mist{
-  background-image:url("assets/digitalark/ds-bg-mist.png");
-  opacity:.45;
-  mix-blend-mode:soft-light;
-  mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);
+@keyframes daGrain{from{transform:translate3d(-1%,0,0)}to{transform:translate3d(1%,-1%,0)}}
+@keyframes daHalo{from{opacity:.55;transform:translateX(-50%) scale(.96)}to{opacity:.85;transform:translateX(-50%) scale(1.04)}}
+@keyframes daOrbBreath{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.08);opacity:1}}
+@keyframes daLayerUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes daShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+.da-hero{
+  position:relative;z-index:1;min-height:100svh;
+  display:grid;grid-template-columns:1fr minmax(260px,380px);
+  gap:clamp(24px,5vw,64px);align-items:center;
+  padding:clamp(100px,14vh,140px) clamp(22px,5vw,72px) clamp(64px,8vw,96px);
 }
-.ama-ds-bg__veil{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(6,6,8,.82) 0%,rgba(18,8,12,.38) 38%,rgba(8,6,8,.9) 100%),
-    linear-gradient(90deg,rgba(8,8,10,.75) 0%,rgba(8,8,10,.15) 42%,rgba(48,8,14,.28) 100%);
+.da-hero-copy{position:relative;z-index:2}
+.da-kicker{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.38em;text-transform:uppercase;
+  color:var(--da-sage);margin-bottom:clamp(18px,3vw,28px);
 }
-.ama-ds-frame{position:absolute;inset:clamp(12px,2vw,24px);z-index:2;pointer-events:none}
-.ama-ds-corner{position:absolute;width:28px;height:28px;border-color:rgba(255,255,255,.35);border-style:solid}
-.ama-ds-corner--tl{top:0;left:0;border-width:1px 0 0 1px}
-.ama-ds-corner--tr{top:0;right:0;border-width:1px 1px 0 0}
-.ama-ds-corner--bl{bottom:0;left:0;border-width:0 0 1px 1px}
-.ama-ds-corner--br{bottom:0;right:0;border-width:0 1px 1px 0}
-.ama-ds-stage{
-  position:relative;z-index:3;
-  max-width:1280px;margin:0 auto;
-  min-height:100svh;
-  padding:clamp(72px,10vh,96px) clamp(18px,4vw,40px) clamp(20px,3vh,32px);
-  display:flex;flex-direction:column;
-  gap:clamp(10px,2vh,18px);
+.da-title{
+  font-family:"Noto Serif SC",var(--eva-matisse),serif;
+  font-size:clamp(3rem,11vw,7.2rem);line-height:.88;font-weight:600;
+  letter-spacing:-.04em;margin-bottom:clamp(16px,2.5vw,24px);
 }
-.ama-ds-head{max-width:720px}
-.ama-ds-bridge{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.42em;
-  text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 10px;
+.da-title em{font-style:normal;color:var(--da-sage);font-weight:500}
+.da-lede{
+  font-family:"Noto Serif SC",serif;font-size:clamp(15px,1.55vw,18px);
+  line-height:2.05;color:var(--da-body);font-weight:300;max-width:36em;
 }
-.ama-ds-note{
-  font-family:"Noto Serif SC",serif;font-size:13px;line-height:1.85;
-  color:var(--ds-muted);font-weight:300;margin:0;max-width:52em;
+.da-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(22px,3vw,32px)}
+.da-tags span{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding:9px 14px;border-radius:999px;border:1px solid var(--da-line);
+  background:rgba(255,255,255,.55);color:var(--da-muted);
 }
-.ama-ds-app-row{
-  display:flex;justify-content:center;align-items:flex-end;
-  gap:clamp(10px,2vw,22px);flex:1;min-height:0;
-  padding:clamp(4px,1vh,12px) 0;
+.da-hero-stage{
+  position:relative;z-index:2;display:grid;place-items:center;
 }
-.ama-ds-phone{margin:0;text-align:center}
-.ama-ds-phone figcaption{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--ds-muted);margin-top:8px;
+.da-orb-wrap{position:relative;width:min(72vw,320px);aspect-ratio:1}
+.da-orb-glow{
+  position:absolute;inset:-18%;border-radius:50%;
+  background:var(--da-sage-glow);filter:blur(32px);
+  animation:daOrbBreath 5.2s ease-in-out infinite;
 }
-.ama-ds-phone--hero{flex:0 0 auto}
-.ama-ds-phone--side{flex:0 0 auto;opacity:.88;transform:translateY(12px) scale(.92)}
-.ama-ds-phone-bezel{
-  border-radius:28px;padding:10px;
-  background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(0,0,0,.35));
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 24px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12);
+.da-orb-ring{
+  position:absolute;inset:-4%;border-radius:50%;z-index:0;
+  background:conic-gradient(var(--da-sage) 68%,#e8e4de 0);
+  mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));
 }
-.ama-ds-phone--hero .ama-ds-phone-bezel{width:min(268px,30vw)}
-.ama-ds-phone--side .ama-ds-phone-bezel{width:min(188px,20vw)}
-.ama-ds-screen{
-  border-radius:20px;min-height:300px;padding:14px 12px 16px;
-  display:flex;flex-direction:column;gap:10px;overflow:hidden;
-  font-family:"Noto Sans SC",system-ui,sans-serif;
+.da-orb-core{
+  position:relative;z-index:1;width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(165deg,#fff 0%,var(--da-sand) 55%,#e2e8e0 100%);
+  box-shadow:0 28px 70px rgba(28,28,24,.12),inset 0 1px 0 rgba(255,255,255,.9);
+  display:grid;place-items:center;overflow:hidden;
 }
-.ama-ds-screen--home{
-  background:linear-gradient(180deg,#f7f3ed 0%,#ebe6de 100%);
-  color:#1c1c18;min-height:340px;
+.da-orb-core::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,var(--da-sand),transparent 52%);
 }
-.ama-ds-screen--train,.ama-ds-screen--ethic{
-  background:linear-gradient(180deg,#f0ece6,#e8e4de);
-  color:#1c1c18;min-height:260px;
+.da-orb-glyph{
+  position:relative;z-index:1;font-family:"Noto Serif SC",serif;
+  font-size:clamp(2.8rem,8vw,4.2rem);font-weight:600;color:var(--da-sage);
+  letter-spacing:.28em;text-indent:.28em;
 }
-.ama-ds-screen--ethic{background:linear-gradient(180deg,#2a2e2a,#1a1c18);color:#f0ece6}
-.ama-ds-screen-top{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:11px;letter-spacing:.12em;font-weight:600;
+.da-orb-caption{
+  position:absolute;left:50%;bottom:-2.2rem;transform:translateX(-50%);
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--da-muted);white-space:nowrap;
 }
-.ama-ds-dot{width:7px;height:7px;border-radius:50%;background:#7a9a78;box-shadow:0 0 10px rgba(122,154,120,.8)}
-.ama-ds-orb{
-  width:108px;height:108px;margin:8px auto 4px;border-radius:50%;
-  background:linear-gradient(165deg,#fff,#e2e8e0);
-  display:grid;place-items:center;box-shadow:0 16px 40px rgba(89,96,89,.25);
-  font-family:"Noto Serif SC",serif;font-size:2.4rem;font-weight:600;color:#596059;
-}
-.ama-ds-greet{text-align:center;font-size:13px;line-height:1.5;margin:0;font-family:"Noto Serif SC",serif}
-.ama-ds-chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
-.ama-ds-chips span{
-  font-size:10px;padding:4px 10px;border-radius:999px;
-  background:rgba(89,96,89,.12);color:#596059;
-}
-.ama-ds-input{
-  margin-top:auto;padding:10px 14px;border-radius:999px;
-  background:#fff;border:1px solid #e6e2dc;font-size:11px;color:#9a9a94;
-}
-.ama-ds-mic{
-  width:52px;height:52px;margin:4px auto 0;border-radius:50%;border:none;
-  background:#596059;box-shadow:0 8px 24px rgba(89,96,89,.4);cursor:default;
-}
-.ama-ds-chat{display:grid;gap:8px;flex:1}
-.ama-ds-bubble{
-  max-width:92%;padding:8px 10px;border-radius:12px;font-size:10px;line-height:1.5;
-}
-.ama-ds-bubble--ai{background:#fff;border:1px solid #e6e2dc;align-self:flex-start}
-.ama-ds-bubble--me{background:#596059;color:#fff;align-self:flex-end}
-.ama-ds-screen--ethic .ama-ds-bubble--ai{
-  background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#f0ece6;
-}
-.ama-ds-fb{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:auto}
-.ama-ds-fb span{
-  text-align:center;font-size:9px;padding:6px 4px;border-radius:8px;
-  border:1px solid #e0dcd6;background:#fff;color:#596059;
-}
-.ama-ds-consent{
-  margin-top:auto;font-size:9px;letter-spacing:.08em;
-  color:rgba(240,236,230,.55);text-align:center;
-}
-.ama-ds-body{
-  display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(20px,3vw,36px);
-  align-items:end;padding-top:4px;
-}
-.ama-ds-kicker{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.38em;
-  text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 8px;
-}
-.ama-ds-title{
-  font-family:"Noto Serif SC",serif;font-size:clamp(2rem,5vw,3.2rem);
-  line-height:.95;font-weight:600;letter-spacing:-.03em;margin:0 0 12px;
-}
-.ama-ds-lede{
-  font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.9;
-  color:var(--ds-muted);font-weight:300;margin:0 0 16px;max-width:28em;
-}
-.ama-ds-tags{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.ama-ds-tags li{
-  display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:baseline;
-  font-size:12px;line-height:1.55;color:rgba(244,241,236,.78);
-  border-top:1px solid var(--ds-line);padding-top:8px;
-}
-.ama-ds-tags span{
-  font-family:var(--ds-hud);font-size:10px;color:rgba(255,255,255,.45);
-}
-.ama-ds-panel{
-  border:1px solid var(--ds-line);
-  background:rgba(8,8,10,.42);
-  backdrop-filter:blur(12px);
-  padding:16px 18px;
-}
-.ama-ds-panel-label{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.32em;
-  text-transform:uppercase;color:rgba(255,255,255,.45);margin:0 0 8px;
-}
-.ama-ds-panel-label:not(:first-child){margin-top:14px}
-.ama-ds-code{
-  margin:0;font-family:var(--ds-hud);font-size:11px;line-height:1.65;
-  color:rgba(244,241,236,.88);white-space:pre-wrap;
-}
-.ama-ds-code--sm{font-size:10px;opacity:.88}
-.ama-ds-reveal{
-  opacity:0;transform:translateY(22px);
-  transition:opacity 1s var(--ease),transform 1s var(--ease);
-}
-#digitalark.ama-ds-ark.in .ama-ds-reveal,
-#digitalark.ama-ds-ark.in .ama-ds-reveal.in{
-  opacity:1;transform:none;
-}
-@media (max-width:980px){
-  #digitalark.ama-ds-ark{max-height:none;min-height:auto;overflow:visible}
-  .ama-ds-stage{min-height:auto;padding-bottom:48px}
-  .ama-ds-app-row{flex-wrap:wrap}
-  .ama-ds-phone--side{display:none}
-  .ama-ds-body{grid-template-columns:1fr}
-}
-@media (max-width:768px){
-  #digitalark.ama-ds-ark{scroll-margin-top:72px}
+.da-vrule{
+  position:absolute;right:clamp(12px,3vw,48px);top:clamp(96px,14vh,168px);
+  writing-mode:vertical-rl;font-family:var(--eva-matisse);
+  font-size:11px;letter-spacing:.5em;color:rgba(89,96,89,.35);
+  border-right:1px solid var(--da-line);padding-right:12px;
 }
 
+/* 数字方舟 · 与 AMADEUS / 墨舟同型叙事（ama-dnote / ama-v2-module） */
+body.eva-skin #digitalark .ama-dnote--p1{
+  position:relative;z-index:1;margin:0;
+  min-height:clamp(480px,82vh,860px)!important;
+  padding:clamp(56px,8vw,96px) clamp(16px,4vw,48px) clamp(48px,7vw,80px)!important;
+  overflow:hidden;
+  background:linear-gradient(180deg,#fff 0%,var(--da-cream) 100%)!important;
+  border-top:1px solid var(--da-line);
+  color:var(--da-ink);
+}
+body.eva-skin #digitalark .ama-dnote-vrule{color:rgba(89,96,89,.28)!important}
+body.eva-skin #digitalark .ama-dnote-row--think{border-top-color:var(--da-line)}
+body.eva-skin #digitalark .ama-dnote-h,
+body.eva-skin #digitalark .ama-dnote-h--vr{color:var(--da-sage)!important}
+body.eva-skin #digitalark .ama-dnote-line,
+body.eva-skin #digitalark .ama-dnote-line .thought-line{
+  color:var(--da-ink)!important;
+  font-family:"Noto Serif SC",serif!important;
+  font-variation-settings:normal!important;
+  font-size:clamp(2rem,6.5vw,4.4rem)!important;
+  font-weight:600!important;
+  letter-spacing:-.03em!important;
+}
+body.eva-skin #digitalark .ama-dnote-sub,
+body.eva-skin #digitalark .thought-sub{color:var(--da-muted)!important}
+body.eva-skin #digitalark .da-collage{
+  position:relative;z-index:1;background:var(--da-cream);
+  padding:0 clamp(22px,5vw,72px);
+}
+body.eva-skin #digitalark .ama-v2-module{
+  min-height:auto;padding:clamp(64px,8vw,108px) 0;
+  transform:none!important;
+}
+body.eva-skin #digitalark .ama-v2-copy-block h3{
+  font-family:"Noto Serif SC",serif!important;
+  font-size:clamp(1.75rem,4.5vw,3.2rem)!important;
+  line-height:1.12!important;letter-spacing:-.03em!important;
+  color:var(--da-ink)!important;
+}
+body.eva-skin #digitalark .ama-v2-copy-block p{
+  color:var(--da-body)!important;max-width:560px;
+}
+body.eva-skin #digitalark .ama-v2-sub{color:var(--da-sage)!important}
+body.eva-skin #digitalark .ama-flow-v2>div{
+  background:rgba(255,255,255,.85);border-color:var(--da-line);
+  color:var(--da-body);
+}
+body.eva-skin #digitalark .ama-flow-v2 i{
+  background:rgba(89,96,89,.12);color:var(--da-sage);
+  box-shadow:none;
+}
+body.eva-skin #digitalark .ama-flow-v2 strong{color:var(--da-ink)}
+body.eva-skin #digitalark .ama-palace-room{
+  background:rgba(255,255,255,.9);border-color:var(--da-line);
+}
+body.eva-skin #digitalark .ama-palace-room b{color:var(--da-sage)}
+body.eva-skin #digitalark .ama-palace-room strong{color:var(--da-sage-lit)}
+body.eva-skin #digitalark .ama-palace-room span{color:var(--da-muted)}
+body.eva-skin #digitalark .ama-chapter-break{
+  background:var(--da-sand);border-top:1px solid var(--da-line);
+  border-bottom:1px solid var(--da-line);
+}
+body.eva-skin #digitalark .ama-chapter-break__kicker{color:var(--da-sage)!important}
+body.eva-skin #digitalark .ama-chapter-break__title{
+  font-family:"Noto Serif SC",serif!important;
+  font-variation-settings:normal!important;
+  font-weight:600!important;color:var(--da-ink)!important;
+  transform:none!important;
+}
+body.eva-skin #digitalark .ama-chapter-break__sub{color:var(--da-muted)!important}
+body.eva-skin #digitalark .ama-chapter-break--vision{
+  background:var(--da-ink);border-color:transparent;
+}
+body.eva-skin #digitalark .ama-chapter-break--vision .ama-chapter-break__kicker,
+body.eva-skin #digitalark .ama-chapter-break--vision .ama-chapter-break__title,
+body.eva-skin #digitalark .ama-chapter-break--vision .ama-chapter-break__sub{
+  color:rgba(253,249,243,.88)!important;
+}
+body.eva-skin #digitalark .ama-chapter-break--vision .ama-chapter-break__sub{
+  color:rgba(253,249,243,.55)!important;
+}
+body.eva-skin #digitalark .da-ui-showcase{
+  position:relative;z-index:1;
+  padding:clamp(64px,8vw,100px) clamp(22px,5vw,72px);
+  background:var(--da-cream);border-top:1px solid var(--da-line);
+}
+body.eva-skin #digitalark .da-ui-showcase__head{max-width:640px;margin-bottom:clamp(36px,5vw,52px)}
+body.eva-skin #digitalark .da-ui-showcase__head h3{
+  font-family:"Noto Serif SC",serif;font-size:clamp(1.6rem,4vw,2.6rem);
+  line-height:1.15;margin:12px 0 14px;
+}
+body.eva-skin #digitalark .da-ui-showcase__head p{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:2;
+  color:var(--da-muted);font-weight:300;
+}
+body.eva-skin #digitalark .da-system-card{
+  border:1px solid var(--da-line);border-radius:22px;
+  background:#fff;box-shadow:0 18px 52px rgba(28,28,24,.07);
+  overflow:hidden;
+}
+body.eva-skin #digitalark .da-system-card header{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:12px 18px;border-bottom:1px solid var(--da-line);
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--da-sage);
+}
+body.eva-skin #digitalark .da-system-card pre{
+  margin:0;padding:clamp(14px,2.5vw,20px);
+  white-space:pre-wrap;word-break:break-word;
+  font-family:"Share Tech Mono","Courier New",monospace;
+  font-size:11px;line-height:1.72;color:var(--da-ink);
+  background:linear-gradient(180deg,var(--da-sand),#fff);
+  max-height:min(420px,52vh);overflow:auto;
+}
+body.eva-skin #digitalark .da-system-card .kw{color:var(--da-sage);font-weight:600}
+body.eva-skin #digitalark .da-system-card .fn{color:#4a6b4a}
+body.eva-skin #digitalark .da-system-card .st{color:#7a6b4a}
+body.eva-skin #digitalark .da-system-card .cm{color:var(--da-muted)}
+body.eva-skin #digitalark .da-system-card-stack{display:grid;gap:14px}
+body.eva-skin #digitalark .da-arch-flow{
+  padding:18px 20px;border-radius:18px;border:1px dashed var(--da-line);
+  background:rgba(255,255,255,.9);
+  font-family:"Share Tech Mono","Courier New",monospace;
+  font-size:11px;line-height:1.85;color:var(--da-body);
+}
+
+.da-layers--inline{
+  padding:0;background:transparent;
+}
+.da-layers--inline .da-layer-stack{max-width:100%}
+.da-layer-stack{display:grid;gap:12px;max-width:880px;margin:0 auto}
+.da-layer{
+  display:grid;grid-template-columns:88px 1fr auto;gap:clamp(14px,3vw,24px);
+  align-items:center;padding:18px 22px;border-radius:18px;
+  background:rgba(255,255,255,.72);border:1px solid var(--da-line);
+  box-shadow:0 12px 36px rgba(28,28,24,.04);
+  opacity:0;transform:translateY(24px);
+  transition:opacity .85s var(--ease),transform .85s var(--ease);
+}
+.da-layers.in .da-layer{opacity:1;transform:none}
+.da-layers.in .da-layer:nth-child(1){transition-delay:.06s}
+.da-layers.in .da-layer:nth-child(2){transition-delay:.12s}
+.da-layers.in .da-layer:nth-child(3){transition-delay:.18s}
+.da-layers.in .da-layer:nth-child(4){transition-delay:.24s}
+.da-layers.in .da-layer:nth-child(5){transition-delay:.30s}
+.da-layer-num{
+  font-family:var(--eva-wall);font-size:11px;letter-spacing:.2em;
+  color:var(--da-sage);text-transform:uppercase;
+}
+.da-layer strong{
+  display:block;font-family:"Noto Serif SC",serif;font-size:1.05rem;
+  margin-bottom:4px;font-weight:600;
+}
+.da-layer span{font-size:13px;line-height:1.65;color:var(--da-muted)}
+.da-layer-bar{
+  width:72px;height:6px;border-radius:999px;background:#e8e4de;overflow:hidden;
+}
+.da-layer-bar i{
+  display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--da-sage),#a8b5a4);
+  transform-origin:left;transform:scaleX(0);transition:transform 1.1s var(--ease);
+}
+.da-layers.in .da-layer:nth-child(1) .da-layer-bar i{transform:scaleX(.92)}
+.da-layers.in .da-layer:nth-child(2) .da-layer-bar i{transform:scaleX(.68)}
+.da-layers.in .da-layer:nth-child(3) .da-layer-bar i{transform:scaleX(.78)}
+.da-layers.in .da-layer:nth-child(4) .da-layer-bar i{transform:scaleX(.64)}
+.da-layers.in .da-layer:nth-child(5) .da-layer-bar i{transform:scaleX(.71)}
+
+.da-triad-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,3vw,28px);
+  max-width:1180px;margin:0 auto;
+}
+.da-phone{
+  border-radius:28px;padding:14px 14px 18px;
+  background:linear-gradient(180deg,#fff,#f3efe8);
+  border:1px solid rgba(89,96,89,.14);
+  box-shadow:0 24px 60px rgba(28,28,24,.08);
+  transition:transform .65s var(--ease),box-shadow .65s var(--ease);
+}
+.da-phone:hover{transform:translateY(-8px);box-shadow:0 32px 72px rgba(28,28,24,.12)}
+.da-phone-tag{
+  font-family:var(--eva-wall);font-size:9px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--da-sage);margin-bottom:10px;
+}
+.da-phone-screen{
+  border-radius:18px;background:var(--da-sand);min-height:280px;
+  padding:16px;display:flex;flex-direction:column;gap:10px;overflow:hidden;
+}
+.da-phone-screen--dark{background:linear-gradient(180deg,#2a2e2a,#1c1c18);color:#f5f3ef}
+.da-chip{
+  align-self:flex-start;font-size:10px;padding:5px 10px;border-radius:999px;
+  background:rgba(89,96,89,.12);color:var(--da-sage);
+}
+.da-phone-screen--dark .da-chip{background:rgba(255,255,255,.1);color:#d4ddd2}
+.da-bubble{
+  max-width:92%;padding:10px 12px;border-radius:14px;font-size:11px;line-height:1.55;
+  font-family:"Noto Sans SC",system-ui,sans-serif;
+}
+.da-bubble--ai{background:#fff;border:1px solid #e6e2dc;color:var(--da-ink);align-self:flex-start}
+.da-bubble--me{background:var(--da-sage);color:#fff;align-self:flex-end}
+.da-phone-screen--dark .da-bubble--ai{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#f0ece6}
+.da-pbar{height:5px;border-radius:999px;background:#e6e2dc;overflow:hidden;margin-top:auto}
+.da-pbar i{display:block;height:100%;width:68%;background:var(--da-sage);border-radius:999px}
+.da-phone h4{
+  font-family:"Noto Serif SC",serif;font-size:14px;margin-top:14px;font-weight:600;
+}
+.da-phone p{font-size:12px;line-height:1.7;color:var(--da-muted);margin-top:6px}
+
+@media (max-width:980px){
+  .da-hero{grid-template-columns:1fr;text-align:center}
+  .da-lede{margin-left:auto;margin-right:auto}
+  .da-tags{justify-content:center}
+  .da-vrule{display:none}
+  .da-triad-grid,body.eva-skin #digitalark .ama-v2-module{grid-template-columns:1fr}
+  body.eva-skin #digitalark .ama-v2-module.alt .ama-v2-copy-block{order:0}
+  .da-layer{grid-template-columns:64px 1fr}
+  .da-layer-bar{display:none}
+}
+@media (max-width:768px){
+  #digitalark{scroll-margin-top:72px}
+}
+
+
+.da-bridge{
+  position:relative;z-index:1;
+  padding:clamp(28px,4vw,40px) clamp(22px,5vw,72px);
+  background:linear-gradient(180deg,#fff,var(--da-cream));
+  border-top:1px solid var(--da-line);
+}
+.da-bridge-kicker{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.38em;
+  text-transform:uppercase;color:var(--da-sage);margin:0 0 10px;
+}
+.da-bridge-note{
+  font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.95;
+  color:var(--da-body);font-weight:300;max-width:52em;margin:0;
+}
+.da-ui-lead{
+  position:relative;z-index:1;
+  padding:clamp(40px,6vw,72px) clamp(22px,5vw,72px);
+  background:var(--da-sand);
+  border-top:1px solid var(--da-line);
+}
+.da-phone--hero{transform:translateY(-12px);box-shadow:0 36px 80px rgba(28,28,24,.14)}
+#digitalark .da-rise{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .95s var(--ease),transform .95s var(--ease);
+}
+#digitalark.in .da-rise,#digitalark .da-rise.in{
+  opacity:1;transform:none;
+}
 /* ═══ 移动端 · 桌面样式不变 ═══ */
 .dock-nav{display:none}
 @media (max-width:768px){
@@ -3031,7 +3181,7 @@ body.eva-skin .ama-chapter-break__title{
 
       <article class="mirage-case mirage-case--safety">
         <figure class="case-visual reveal magnetic">
-          <img src="assets/digitalark/ds-bg-coast.png" alt="MIRAGE 安全冗余：环境风险与路径预警示意" loading="lazy" decoding="async">
+          <img src="assets/mirage/mirage-safety-pov.png" alt="MIRAGE 安全冗余：环境风险与路径预警示意" loading="lazy" decoding="async">
         </figure>
         <div class="case-copy reveal">
           <div class="case-index">03</div>
@@ -3266,92 +3416,367 @@ body.eva-skin .ama-chapter-break__title{
       </div>
     </section>
 
-    <section class="ama-ds-ark" id="digitalark" aria-labelledby="ama-ds-title">
-      <div class="ama-ds-bg" aria-hidden="true">
-        <div class="ama-ds-bg__layer ama-ds-bg__layer--base"></div>
-        <div class="ama-ds-bg__layer ama-ds-bg__layer--coast"></div>
-        <div class="ama-ds-bg__layer ama-ds-bg__layer--mist"></div>
-        <div class="ama-ds-bg__veil"></div>
-      </div>
-      <div class="ama-ds-frame" aria-hidden="true">
-        <span class="ama-ds-corner ama-ds-corner--tl"></span>
-        <span class="ama-ds-corner ama-ds-corner--tr"></span>
-        <span class="ama-ds-corner ama-ds-corner--bl"></span>
-        <span class="ama-ds-corner ama-ds-corner--br"></span>
-      </div>
-      <div class="ama-ds-stage">
-        <header class="ama-ds-head">
-          <p class="ama-ds-bridge ama-ds-reveal">AMADEUS 体系延展 · 迭代产物</p>
-          <p class="ama-ds-note ama-ds-reveal">同一套「可观测中间层 + 状态先于生成」从实验角色推进到可训练、可陪护的本地产品——用数字方舟验证架构能否横向迭代，而不只是堆新界面。</p>
-        </header>
+  </section>
 
-        <div class="ama-ds-app-row ama-ds-reveal" aria-label="数字方舟 App 界面">
-          <figure class="ama-ds-phone ama-ds-phone--side" aria-hidden="true">
-            <div class="ama-ds-phone-bezel">
-              <div class="ama-ds-screen ama-ds-screen--train">
-                <header class="ama-ds-screen-top"><span>训练试聊</span><span>68%</span></header>
-                <div class="ama-ds-chat">
-                  <p class="ama-ds-bubble ama-ds-bubble--ai">你昨晚说项目卡住了，我猜你今天会有点烦。</p>
-                  <p class="ama-ds-bubble ama-ds-bubble--me">这句话像我吗？</p>
-                </div>
-                <div class="ama-ds-fb"><span>不像</span><span>有点像</span><span>很像我</span></div>
-              </div>
-            </div>
-            <figcaption>Training</figcaption>
-          </figure>
-          <figure class="ama-ds-phone ama-ds-phone--hero">
-            <div class="ama-ds-phone-bezel">
-              <div class="ama-ds-screen ama-ds-screen--home">
-                <header class="ama-ds-screen-top"><span>数字方舟</span><span class="ama-ds-dot"></span></header>
-                <div class="ama-ds-orb" aria-hidden="true"><span>舟</span></div>
-                <p class="ama-ds-greet">我在听，今天想聊点什么？</p>
-                <div class="ama-ds-chips"><span>内心平静</span><span>静心沉思</span></div>
-                <div class="ama-ds-input"><span>输入您的消息…</span></div>
-                <button type="button" class="ama-ds-mic" aria-label="语音输入"></button>
-              </div>
-            </div>
-            <figcaption>Sanctuary · 陪护</figcaption>
-          </figure>
-          <figure class="ama-ds-phone ama-ds-phone--side" aria-hidden="true">
-            <div class="ama-ds-phone-bezel">
-              <div class="ama-ds-screen ama-ds-screen--ethic">
-                <header class="ama-ds-screen-top"><span>数字分身</span></header>
-                <p class="ama-ds-bubble ama-ds-bubble--ai">你知道对面是我，不是真人实时在线——温暖可以真实，来源也必须诚实。</p>
-                <div class="ama-ds-consent">知情同意已确认 · 本地数据</div>
-              </div>
-            </div>
-            <figcaption>Companion</figcaption>
-          </figure>
-        </div>
+  <section class="section da-chapter" id="digitalark" aria-labelledby="da-title">
+    <div class="da-atmo" aria-hidden="true">
+      <div class="da-atmo__halo"></div>
+      <div class="da-atmo__grain"></div>
+    </div>
+    
+    <div class="da-bridge reveal">
+      <p class="da-bridge-kicker">AMADEUS 体系延展 · 迭代产物</p>
+      <p class="da-bridge-note">同一套「可观测中间层 + 状态先于生成」从实验角色推到可训练、可陪护的本地产品——数字方舟用来证明架构可以横向迭代，而不是只换一层 UI。</p>
+    </div>
 
-        <div class="ama-ds-body">
-          <div class="ama-ds-copy ama-ds-reveal">
-            <p class="ama-ds-kicker">第04話 · DIGITAL ARK</p>
-            <h2 class="ama-ds-title" id="ama-ds-title">数字方舟</h2>
-            <p class="ama-ds-lede">本地运行的数字人格构建与陪护系统。把 AMADEUS 验证过的在场感，推进到可训练、可纠错、可托付的日常产品形态。</p>
-            <ul class="ama-ds-tags">
-              <li><span>01</span>五层人格 · CAPS 权衡</li>
-              <li><span>02</span>训练台 / 试聊 / 陪护三端</li>
-              <li><span>03</span>Node.js + Ollama · 数据留本机</li>
-            </ul>
+    <section class="da-ui-lead reveal" aria-label="数字方舟 App 界面">
+      <div class="da-triad-grid">
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Training · 训练</p>
+          <div class="da-phone-screen">
+            <p class="da-bubble da-bubble--ai">你昨晚说项目卡住了，我猜你今天会有点烦。要不要先把最难的一块拆出来？</p>
+            <p class="da-bubble da-bubble--me">这句话像我吗？</p>
+            <p class="da-bubble da-bubble--ai">收到。我会把「先共情再给方法」的权重调低一点。</p>
+            <div class="da-pbar" aria-hidden="true"><i style="width:68%"></i></div>
           </div>
-          <aside class="ama-ds-panel ama-ds-reveal" aria-label="架构与代码证明">
-            <p class="ama-ds-panel-label">RUNTIME · PIPELINE</p>
-            <pre class="ama-ds-code"><code>用户输入 + PAD + 关系深度
-  → CAPSEngine.processCAPS
-  → buildDigitalTwinPrompt
-  → Ollama /api/chat</code></pre>
-            <p class="ama-ds-panel-label">lib/design-spec.js</p>
-            <pre class="ama-ds-code ama-ds-code--sm"><code>LAYER_WEIGHTS = {
-  core: .35, memory: .20,
-  emotion: .15, relationship: .15,
-  expression: .15
-}</code></pre>
-          </aside>
+          <h4>试聊与拟合反馈</h4>
+          <p>像/不像/很像我——每一句纠正都写回五层进度。</p>
+        </article>
+        <article class="da-phone magnetic da-phone--hero">
+          <p class="da-phone-tag">Sanctuary · 陪护</p>
+          <div class="da-phone-screen">
+            <span class="da-chip">内心平静</span>
+            <span class="da-chip">静心沉思</span>
+            <p class="da-bubble da-bubble--ai">我在听，今天想聊点什么？</p>
+            <div class="da-pbar" aria-hidden="true"><i></i></div>
+          </div>
+          <h4>日常陪护入口</h4>
+          <p>呼吸光晕、情绪芯片与语音输入——第一眼感到「可以被倾听」。</p>
+        </article>
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Companion · 伦理</p>
+          <div class="da-phone-screen da-phone-screen--dark">
+            <span class="da-chip">数字分身</span>
+            <p class="da-bubble da-bubble--ai">你知道对面是我，不是真人实时在线——温暖可以真实，来源也必须诚实。</p>
+          </div>
+          <h4>知情与边界</h4>
+          <p>知情同意不可跳过；数据默认留在本机。</p>
+        </article>
+      </div>
+    </section>
+<p class="da-vrule" aria-hidden="true">本地 · 私密 · 可长期运行</p>
+
+    <header class="da-hero reveal">
+      <div class="da-hero-copy">
+        <p class="da-kicker">第04話 · PRESENCE / DIGITAL TWIN</p>
+        <h2 class="da-title" id="da-title">数字<em>方舟</em></h2>
+        <p class="da-lede">一套本地运行的数字人格构建与陪护系统。为突然离别与来不及的告别留出余地——让人被记住，而不只是被模仿几句口吻。</p>
+        <div class="da-tags">
+          <span>Local First</span>
+          <span>五层人格</span>
+          <span>CAPS 动力</span>
+          <span>训练 · 陪护</span>
+        </div>
+      </div>
+      <div class="da-hero-stage magnetic" aria-hidden="true">
+        <div class="da-orb-wrap">
+          <div class="da-orb-glow"></div>
+          <div class="da-orb-ring" style="--pct:68"></div>
+          <div class="da-orb-core">
+            <span class="da-orb-glyph">舟</span>
+          </div>
+          <span class="da-orb-caption">人格拟合 · 68%</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="ama-design-thought ama-dnote ama-dnote--p1 reveal">
+      <div class="ama-dnote-vrule ama-dnote-vrule--l" aria-hidden="true">問題</div>
+      <div class="ama-dnote-vrule ama-dnote-vrule--r" aria-hidden="true">思考</div>
+      <div class="ama-dnote-body">
+        <div class="ama-dnote-row ama-dnote-row--problem">
+          <p class="ama-dnote-h">我发现的问题</p>
+          <h3 class="da-rise ama-dnote-line">遗忘，比离别更让人难以承受。</h3>
+          <p class="thought-sub ama-dnote-sub">老龄化与突发离别每天都在发生——市面上的「数字人」却多半只有一张嘴：口吻像了，判断、记忆与关系习惯没有留下。关掉窗口，关系就结束；更像角色扮演，而不是可被托付的数字人格。</p>
+        </div>
+        <div class="ama-dnote-row ama-dnote-row--think">
+          <p class="ama-dnote-h ama-dnote-h--vr">我的思考</p>
+          <h3 class="da-rise ama-dnote-line ama-dnote-line--offset">被记住，比被模仿更接近安慰。</h3>
+          <p class="thought-sub ama-dnote-sub">死亡不是终点，遗忘才是。方舟要承载的是一个人的判断方式、情绪节奏与有质感的经历——让告别之后仍能说：对，这是她会说的话、会做的选择。</p>
         </div>
       </div>
     </section>
 
+    <div class="da-collage">
+    <article class="ama-v2-module reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">01 / 设计立场</div>
+        <h3>不是模仿表面，<br>是复刻底层。</h3>
+        <p>一个人之所以是他自己，不只因为说了什么，而是因为有一套稳定的内部运作。现有系统多在复制输出；我要建模的是驱动输出的内部结构——从真实的人身上提取可运行的判断引擎。</p>
+      </div>
+      <div class="ama-flow-v2">
+        <div><i>01</i><span><strong>行为先于描述</strong>——用价值冲突与具体情境归纳，人对自己的描述常不准，行为会暴露真实结构。</span></div>
+        <div><i>02</i><span><strong>经历塑造判断</strong>——采集有情绪重量、改变了判断方式的经历；记忆用来塑造判断，不是挂检索标签。</span></div>
+        <div><i>03</i><span><strong>动态优于静态</strong>——建模「在 X 情境下倾向于 Y」，冲突时动态权衡，对应 CAPS 与四变量决策。</span></div>
+      </div>
+    </article>
+
+    <section class="ama-chapter-break reveal">
+      <div class="ama-chapter-break__inner">
+        <p class="ama-chapter-break__kicker">我的解决</p>
+        <h3 class="ama-chapter-break__title da-rise" >本地训练、五层人格、三端陪护一体。</h3>
+        <p class="ama-chapter-break__sub thought-sub">用情境与行为暴露结构，用经历塑造判断，用纠错迭代拟合——每一次表达都从内部状态长出来，而不是贴标签检索。</p>
+      </div>
+    </section>
+
+    <article class="ama-v2-module alt reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">02 / 系统架构</div>
+        <h3>可运行的仓库，<br>不是概念图。</h3>
+        <p>Node.js + Express 本地服务，Ollama 推理，数据落在用户目录。五层负责采集与分工，CAPS 负责运行时加工，Prompt 组装把 PAD、RAG、核心人格与行为签名写进同一条 system 上下文。</p>
+      </div>
+      <div class="da-system-card-stack magnetic">
+        <div class="da-arch-flow" aria-label="单轮对话架构流">
+用户输入 + 关系深度 + PAD + 先例记忆
+        ↓
+CAPSEngine.parseSituation → corePersona.processCAPS
+        ↓
+五层权重 · 核心 8 维 · RAG / 个人记忆检索
+        ↓
+buildDigitalTwinPrompt → Ollama /api/chat
+        ↓
+表达层对白（训练 / 陪护模式分支）</div>
+        <div class="da-system-card">
+          <header><span>digital-ark/</span><span>repo layout</span></header>
+          <pre><code><span class="cm">├──</span> <span class="fn">server.js</span>              <span class="cm"># Express · 单轮流水线入口</span>
+<span class="cm">├──</span> <span class="fn">lib/</span>
+<span class="cm">│   ├──</span> design-spec.js    <span class="cm"># 五层权重 · 题库 · 阶段</span>
+<span class="cm">│   ├──</span> core-persona.js   <span class="cm"># 核心层 8 维 · processCAPS</span>
+<span class="cm">│   ├──</span> caps-engine.js    <span class="cm"># CAU 网状 · If-Then 签名</span>
+<span class="cm">│   ├──</span> prompt-builder.js <span class="cm"># 数字分身 Prompt 组装</span>
+<span class="cm">│   ├──</span> rag.js            <span class="cm"># 本地向量检索</span>
+<span class="cm">│   ├──</span> training*.js      <span class="cm"># 训练 · 纠错 · 盲测</span>
+<span class="cm">│   └──</span> grief-mode.js     <span class="cm"># 哀伤模式 · 伦理</span>
+<span class="cm">├──</span> cognitive/         <span class="cm"># PAD · 动机 · 策略 · 行为</span>
+<span class="cm">└──</span> public/            <span class="cm"># 训练台 · 试聊 · 陪护 Web UI</span></code></pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="ama-v2-module reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">03 / 五层人格</div>
+        <h3>先状态，<br>后生成。</h3>
+        <p>设计说明书里的 LAYER_WEIGHTS 驱动总进度条；运行时自下而上：核心层 8 维 → 情绪 PAD → 记忆活态/沉淀 → 关系亲密 → 表达音色。下面左侧是产品映射，右侧是仓库里的权重定义。</p>
+      </div>
+      <div class="da-system-card-stack magnetic">
+      <div class="da-layers da-layers--inline" id="daLayers">
+      <div class="da-layer-stack">
+        <article class="da-layer">
+          <span class="da-layer-num">05</span>
+          <div><strong>表达层</strong><span>音色、句式、场景区分——用户听见的一层。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">04</span>
+          <div><strong>关系层</strong><span>亲密、信任、历史事件与关系中的自我。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">03</span>
+          <div><strong>记忆层</strong><span>活态可被激活；沉淀态内化为规则。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">02</span>
+          <div><strong>情绪层</strong><span>PAD 与情绪节奏影响权衡，而非表演开心或难过。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+        <article class="da-layer">
+          <span class="da-layer-num">01</span>
+          <div><strong>核心层</strong><span>价值、边界、道德与判断方式——冲突时先过这一关。</span></div>
+          <div class="da-layer-bar" aria-hidden="true"><i></i></div>
+        </article>
+      </div>
+      </div>
+        <div class="da-system-card">
+          <header><span>lib/design-spec.js</span><span>layer weights</span></header>
+          <pre><code><span class="cm">/** 五层人格拟合度权重（总进度条） */</span>
+<span class="kw">const</span> LAYER_WEIGHTS = {
+  core: <span class="st">0.35</span>,
+  emotion: <span class="st">0.15</span>,
+  memory: <span class="st">0.20</span>,
+  relationship: <span class="st">0.15</span>,
+  expression: <span class="st">0.15</span>
+};
+
+<span class="kw">const</span> STAGES = [
+  { id: <span class="st">'init'</span>, name: <span class="st">'初始化'</span>, min: <span class="st">0</span>, max: <span class="st">0.20</span> },
+  { id: <span class="st">'awakening'</span>, name: <span class="st">'觉醒期'</span>, min: <span class="st">0.20</span>, max: <span class="st">0.40</span> },
+  <span class="cm">// … 成长期 · 成熟期 · 完整体</span>
+];</code></pre>
+        </div>
+        <div class="da-system-card">
+          <header><span>lib/core-persona.js</span><span>core dimensions</span></header>
+          <pre><code><span class="kw">const</span> CORE_DIMENSIONS = {
+  value_priority: { label: <span class="st">'价值优先级'</span>, desc: <span class="st">'冲突时你选什么'</span> },
+  self_regulation: { label: <span class="st">'自我规范'</span>, desc: <span class="st">'你对自己的要求'</span> },
+  boundary_pattern: { label: <span class="st">'边界模式'</span>, desc: <span class="st">'触碰后的稳定反应'</span> },
+  interpersonal_style: { label: <span class="st">'待人处事'</span> },
+  inner_activity: { label: <span class="st">'内心活动'</span>, desc: <span class="st">'外显之下真正在想什么'</span> },
+  <span class="cm">// … perspective · moral_judgment · quality_traits</span>
+};</code></pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="ama-v2-module alt reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">04 / CAPS 与单轮流水线</div>
+        <h3>情境进，<br>签名出。</h3>
+        <p>Mischel-Shoda CAPS 把核心层 8 维投影到五类 CAU，经网状传播生成 If-Then 行为签名，再写入 Prompt。server.js 里每一轮对话都先跑这条管线，再调 Ollama——状态先于生成。</p>
+      </div>
+      <div class="da-system-card-stack magnetic">
+        <div class="da-system-card">
+          <header><span>lib/caps-engine.js</span><span>CAU · situation</span></header>
+          <pre><code><span class="kw">const</span> DIMENSION_TO_CAU = {
+  perspective: <span class="st">'encodings'</span>,
+  boundary_pattern: <span class="st">'encodings'</span>,
+  value_priority: <span class="st">'goals_values'</span>,
+  quality_traits: <span class="st">'goals_values'</span>
+};
+
+<span class="kw">const</span> DEFAULT_EDGES = [
+  { from: <span class="st">'encodings'</span>, to: <span class="st">'affects'</span>, weight: <span class="st">0.85</span> },
+  { from: <span class="st">'affects'</span>, to: <span class="st">'goals_values'</span>, weight: <span class="st">0.65</span> },
+  { from: <span class="st">'goals_values'</span>, to: <span class="st">'competencies'</span>, weight: <span class="st">0.82</span> }
+];</code></pre>
+        </div>
+        <div class="da-system-card">
+          <header><span>server.js</span><span>runPersonaCapsPipeline</span></header>
+          <pre><code><span class="kw">function</span> <span class="fn">runPersonaCapsPipeline</span>(userQuery, options = {}) {
+  <span class="kw">const</span> relScore = memorySystem.getRelationshipScore();
+  <span class="kw">const</span> engine = <span class="kw">new</span> CAPSEngine(corePersona);
+  <span class="kw">const</span> situation = engine.parseSituation({
+    user_text: userQuery,
+    relationship_depth: relScore,
+    emotion_valence: currentPAD.P,
+    event_nature: options.event_nature || <span class="st">'mixed'</span>
+  });
+  <span class="kw">const</span> precedent = memoryInfluence.findPrecedent(userQuery, …);
+  <span class="kw">const</span> capsResult = corePersona.processCAPS({ …, precedent_memory: precedent });
+  capsSediment.recordActivation(capsResult, userQuery);
+  <span class="kw">return</span> { capsResult, precedent, sediment, situation };
+}</code></pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="ama-v2-module reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">05 / Prompt 组装</div>
+        <h3>人格写进 system，<br>不是贴一句人设。</h3>
+        <p>buildDigitalTwinPrompt 把核心摘要、CAPS 行为签名、PAD 自然语言、RAG 命中与纠错反馈合并；陪护模式强制诚实标明数字分身，训练模式用于试聊校准。</p>
+      </div>
+      <div class="da-system-card magnetic">
+        <header><span>lib/prompt-builder.js</span><span>buildDigitalTwinPrompt</span></header>
+        <pre><code><span class="kw">function</span> <span class="fn">buildDigitalTwinPrompt</span>(ctx) {
+  <span class="kw">const</span> identity = ctx.mode === <span class="st">'companion'</span>
+    ? <span class="st">`你是${trainee}的数字分身「${name}」…不是真人实时在线。`</span>
+    : <span class="st">`你正在扮演${trainee}的数字分身进行试聊…用第一人称「我」。`</span>;
+
+  <span class="kw">let</span> body = <span class="st">`${identity}
+【人格特征】${traitBlock}
+【核心人格】${corePersonaSummary}
+${capsContext}
+当前情感状态：${padDesc}`</span>;
+
+  <span class="kw">if</span> (ragContext) body += <span class="st">`\n检索到的训练资料：\n${ragContext}`</span>;
+  <span class="cm">// 回复要求：第一人称 · 不冒充真人 · 保持语气</span>
+  <span class="kw">return</span> body;
+}</code></pre>
+      </div>
+    </article>
+
+    <article class="ama-v2-module alt reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">06 / 训练体系</div>
+        <h3>冷启动、日常积累、<br>校准迭代。</h3>
+        <p>导入文字提取音色初值，同步启动价值冲突游戏化采集；日常按状态与空白动态出题；试聊后像/不像的纠错比凭空描述更真实。</p>
+      </div>
+      <div class="ama-flow-v2">
+        <div><i>1</i><span><strong>冷启动：</strong>聊天记录与日记入库，价值冲突暴露认知优先级；追问「为什么」，理由比选择更有价值。</span></div>
+        <div><i>2</i><span><strong>日常积累：</strong>当下捕捉碎片，系统追问加厚——不要求一次性回忆整个人生。</span></div>
+        <div><i>3</i><span><strong>校准迭代：</strong>「在 X 情境下应是 Z 而非 Y」写入核心修正；盲测里程碑检验拟合度。</span></div>
+      </div>
+    </article>
+
+    <article class="ama-v2-module reveal">
+      <div class="ama-v2-copy-block">
+        <div class="ama-v2-sub">07 / 伦理与边界</div>
+        <h3>温暖可以真实，<br>来源必须诚实。</h3>
+        <p>不是有意识的存在，不能冒充真人实时在线。能做到的是足够有根的投影、有质感的记忆与本地私密；做不到的是感官质感与真正的自我成长。</p>
+      </div>
+      <div class="da-system-card magnetic">
+        <header><span>lib/grief-mode.js · ETHICS_AND_SAFETY.md</span><span>runtime guard</span></header>
+        <pre><code><span class="cm">// 陪护模式 identity（prompt-builder）</span>
+<span class="st">「…由其在世时的记录与训练数据塑造，不是真人实时在线。」</span>
+
+<span class="cm">// 首次进入：AuthorizationStore 知情同意</span>
+<span class="cm">// 哀伤模式：主动问候频率渐进淡出</span>
+<span class="cm">// DATA_DIR 默认 ~/digital_ark_data · 本地 JSON + 加密字段</span></code></pre>
+      </div>
+    </article>
+    </div>
+
+    <section class="da-ui-showcase reveal">
+      <div class="da-ui-showcase__head">
+        <p class="ama-v2-sub">08 / 三端界面</p>
+        <h3>训练台 · 试聊台 · 陪护端</h3>
+        <p>鼠尾草绿与奶油色、呼吸光晕与拟合环——视觉安静，把复杂留给后台；用户第一眼感到的是「可以被倾听」，而不是监控面板。</p>
+      </div>
+      <div class="da-triad-grid">
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Sanctuary · 伴侣</p>
+          <div class="da-phone-screen">
+            <span class="da-chip">内心平静</span>
+            <span class="da-chip">静心沉思</span>
+            <p class="da-bubble da-bubble--ai">我在听，今天想聊点什么？</p>
+            <div class="da-pbar" aria-hidden="true"><i></i></div>
+          </div>
+          <h4>日常陪护入口</h4>
+          <p>呼吸光晕、情绪芯片与语音输入——把「在场」做成第一眼就能感到的界面，而不是设置页里的参数。</p>
+        </article>
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Training · 训练</p>
+          <div class="da-phone-screen">
+            <p class="da-bubble da-bubble--ai">你昨晚说项目卡住了，我猜你今天会有点烦。要不要先把最难的一块拆出来？</p>
+            <p class="da-bubble da-bubble--me">这句话像我吗？</p>
+            <p class="da-bubble da-bubble--ai">收到。我会把「先共情再给方法」的权重调低一点。</p>
+            <div class="da-pbar" aria-hidden="true"><i style="width:68%"></i></div>
+          </div>
+          <h4>试聊与拟合反馈</h4>
+          <p>像/不像/很像我——每一句纠正都写回五层进度；价值卡片、记忆碎片与关系建档在同一套引导里完成。</p>
+        </article>
+        <article class="da-phone magnetic">
+          <p class="da-phone-tag">Companion · 伦理</p>
+          <div class="da-phone-screen da-phone-screen--dark">
+            <span class="da-chip">数字分身</span>
+            <p class="da-bubble da-bubble--ai">我始终在这里。你知道对面是我，不是真人实时在线——温暖可以真实，来源也必须诚实。</p>
+          </div>
+          <h4>知情与边界</h4>
+          <p>首次进入不可跳过知情同意；哀伤模式渐进淡出主动频率；数据默认留在本机，导出备份由你掌控。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ama-chapter-break ama-chapter-break--vision reveal">
+      <div class="ama-chapter-break__inner">
+        <p class="ama-chapter-break__kicker">我的愿景</p>
+        <h3 class="ama-chapter-break__title da-rise" >遗忘才是终点；方舟负责记住。</h3>
+        <p class="ama-chapter-break__sub thought-sub">为预防意外、为告别后仍能被想起、为自我探索的一面镜子——与 AMADEUS 实验同源的可观测中间层；数字方舟，是把「在场」做成可训练、可陪护、可留在本机的产品。</p>
+      </div>
+    </section>
   </section>
 
   <section class="section timewalker tw-chapter" id="timewalker">
@@ -3642,18 +4067,19 @@ const revealObs=new IntersectionObserver(entries=>{
   });
 },{threshold:.06,rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
-const dsArk=document.getElementById('digitalark');
-if(dsArk){
-  const dsArkObs=new IntersectionObserver(entries=>{
+const daChapter=document.getElementById('digitalark');
+if(daChapter){
+  const daRiseObs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting) return;
-      dsArk.classList.add('in');
-      dsArk.querySelectorAll('.ama-ds-reveal').forEach((el,i)=>{
-        el.style.transitionDelay=(i*.07)+'s';
+      daChapter.classList.add('in');
+      entry.target.querySelectorAll('.da-rise').forEach((el,i)=>{
+        el.classList.add('in');
+        el.style.transitionDelay=(i*.08)+'s';
       });
     });
-  },{threshold:.22});
-  dsArkObs.observe(dsArk);
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  daRiseObs.observe(daChapter);
 }
 requestAnimationFrame(primeReveal);
 window.addEventListener('load',primeReveal,{passive:true});
