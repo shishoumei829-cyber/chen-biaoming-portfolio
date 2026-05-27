@@ -1465,13 +1465,40 @@ body.eva-skin .ama-equation-main span{color:#00a86b!important}
 body.eva-skin .ama-axis strong{color:#ff9d34!important}
 body.eva-skin .ama-palace-room strong{color:#00a86b!important}
 body.eva-skin .ama-flow-v2 i{color:#00a86b!important;background:rgba(0,168,107,.1)!important}
+body.eva-skin .ama-flow-v2>div,
+body.eva-skin .ama-flow-v2>div span{color:#0a0a0a!important}
 
-body.eva-skin .ama-ui-v2{
-  background:linear-gradient(180deg,#fff 0%,#eef3ff 55%,var(--eva-blue) 100%)!important;
-  color:#0a0a0a!important;
+body.eva-skin .ama-ui-v2.ama-ui-showcase{
+  position:relative;z-index:2;max-width:none;margin:0;
+  padding:clamp(72px,9vw,120px) clamp(22px,5vw,72px) clamp(88px,10vw,128px);
+  background:#fff!important;color:#0a0a0a!important;
 }
-body.eva-skin .ama-ui-v2 h3{color:var(--eva-magenta-hot)!important}
-body.eva-skin .ama-ui-panels div{background:#fff!important;border-color:rgba(0,56,255,.2)!important}
+body.eva-skin .ama-ui-showcase-inner{max-width:min(1180px,100%);margin:0 auto}
+body.eva-skin .ama-ui-showcase .ama-v2-sub{color:var(--eva-blue-deep)!important}
+body.eva-skin .ama-ui-showcase h3{
+  font-family:var(--eva-matisse);font-variation-settings:"opsz" 96;font-weight:800;
+  font-size:clamp(1.75rem,4.8vw,3.2rem)!important;line-height:.94!important;
+  letter-spacing:-.03em;color:#0a0a0a!important;
+  transform:scaleY(1.06);transform-origin:left center;
+  margin-bottom:clamp(16px,2.5vw,24px);
+}
+body.eva-skin .ama-ui-lead{
+  max-width:min(640px,100%);margin:0;
+  font-family:"Noto Serif SC",serif;font-size:clamp(13px,1.35vw,15px);line-height:2;
+  color:rgba(10,10,10,.62)!important;font-weight:300;
+}
+body.eva-skin .ama-ui-figure{
+  margin-top:clamp(36px,5vw,56px);
+  border:1px solid rgba(10,10,10,.12);
+  box-shadow:14px 16px 0 rgba(0,56,255,.1);
+  background:#050505;overflow:hidden;
+}
+body.eva-skin .ama-ui-figure img{width:100%;height:auto;display:block}
+body.eva-skin .ama-ui-cap{
+  padding:12px 18px;font-family:var(--eva-wall);font-size:10px;letter-spacing:.32em;
+  text-transform:uppercase;color:rgba(10,10,10,.5)!important;
+  background:#f6f8ff;border-top:1px solid rgba(0,56,255,.14);
+}
 
 /* 设计师：保留蓝但提亮 */
 body.eva-skin #self.eva-chapter,
@@ -2512,6 +2539,8 @@ body.eva-skin .ama-chapter-break__title{
   body.eva-skin #amadeus .ama-v2-module{padding-left:18px!important;padding-right:18px!important}
   body.eva-skin #amadeus .ama-system-card,
   body.eva-skin #amadeus .ama-equation{box-shadow:6px 8px 0 var(--eva-crimson-lit)!important}
+  body.eva-skin .ama-ui-v2.ama-ui-showcase{padding-left:18px!important;padding-right:18px!important}
+  body.eva-skin .ama-ui-figure{box-shadow:8px 10px 0 rgba(0,56,255,.1)}
   body.eva-skin .ama-chapter-break__title{
     font-size:clamp(1.75rem,9vw,2.8rem)!important;
   }
@@ -3000,30 +3029,15 @@ body.eva-skin .ama-chapter-break__title{
     </article>
     </div>
 
-    <section class="ama-ui-v2 reveal" data-ama-section="ui">
-      <div class="ama-v2-sub">08 / Product Surface</div>
-      <h3>最后才展示 UI。</h3>
-      <p>前面的部分负责证明系统不是套壳；最后的界面只展示“用户真正会看到什么”：一个更克制的聊天入口、轻量状态、记忆节点和开发者透明模式。</p>
-      <div class="ama-ui-board">
-        <div class="ama-phone-v2 magnetic">
-          <div class="ama-phone-v2-screen">
-            <div class="ama-phone-head">
-              <img src="assets/site/personal-portrait.jpg" alt="AMADEUS avatar interface preview" loading="lazy">
-              <span>PAD · close</span>
-            </div>
-            <div class="ama-chat-bubble">你刚刚看的是情绪矩阵，不是“心情好就温柔”那么简单。</div>
-            <div class="ama-chat-bubble user">那它到底影响什么？</div>
-            <div class="ama-chat-bubble">影响我愿不愿意多解释、要不要顶回去，还有什么时候该闭嘴。最后一点尤其重要。</div>
-            <div class="ama-chat-bubble user">所以不是固定台词？</div>
-            <div class="ama-chat-bubble">固定台词最容易穿帮。你应该已经看出来了。</div>
-          </div>
-        </div>
-        <div class="ama-ui-panels">
-          <div><strong>Companion Surface</strong><span>给普通用户的简约聊天界面，少量状态，不暴露工程噪声。</span></div>
-          <div><strong>Memory Palace</strong><span>用房间分层解释记忆：日常、知识、亲密、冲突各有入口。</span></div>
-          <div><strong>Affective Matrix</strong><span>用曲线与矩阵展示 P/A/D/S 如何共同塑造行为倾向。</span></div>
-          <div><strong>Developer Lens</strong><span>代码、公式、候选打分和心智加工负责证明系统真实存在。</span></div>
-        </div>
+    <section class="ama-ui-v2 ama-ui-showcase reveal" data-ama-section="ui">
+      <div class="ama-ui-showcase-inner">
+        <p class="ama-v2-sub">08 / Frontend Interface</p>
+        <h3>前端界面 · 用户真正打开的一屏</h3>
+        <p class="ama-ui-lead">前面的拆解，是为了证明系统在场；这一屏才是日常会盯着看、会打字进去的那一面——神经链、记忆宫、PAD 与对话轨收进同一块 HUD，而不是另起一套演示壳。</p>
+        <figure class="ama-ui-figure magnetic">
+          <img src="assets/amadeus/amadeus-system-ui.png" alt="AMADEUS 系统前端界面：牧濑红莉栖神经链 HUD、记忆宫、PAD 状态与对话输入轨" width="1920" height="1080" loading="lazy" decoding="async">
+          <figcaption class="ama-ui-cap">AMADEUS SYSTEM · v1.0 · Neural Link Established</figcaption>
+        </figure>
       </div>
     </section>
 
