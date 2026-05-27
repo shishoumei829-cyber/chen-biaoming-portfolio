@@ -724,31 +724,6 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 }
 .tw-feature p{font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.88;color:var(--tw-ink-m);font-weight:300}
 
-.tw-thought-card{
-  position:relative;padding:22px 22px 24px 26px;border-radius:22px;
-  border:1px solid rgba(255,255,255,.62);
-  background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.34));
-  backdrop-filter:blur(18px);box-shadow:0 18px 42px rgba(40,32,24,.08);
-}
-.tw-thought-card::before{content:"";position:absolute;left:0;top:20px;bottom:20px;width:3px;border-radius:999px;background:var(--tw-ink-s)}
-.tw-thought-card--q::before{background:#8b7d6b}
-.tw-thought-card--f::before{background:#5d8a78}
-.tw-thought-card--m::before{background:var(--tw-vermilion)}
-.tw-thought-card--v::before{background:#1a1814}
-.tw-thought-label{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--tw-ink-m)}
-.tw-thought-label span{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:rgba(26,24,20,.08);font-size:10px}
-.tw-thought-card p{font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.86;color:var(--tw-ink-m)}
-
-.tw-inline-note{
-  position:relative;z-index:1;max-width:1180px;margin:0 auto;
-  padding:clamp(20px,4vw,36px) clamp(22px,5vw,72px);
-}
-.tw-inline-note .tw-thought-card{max-width:min(100%,440px)}
-.tw-inline-note--left .tw-thought-card{margin-right:auto}
-.tw-inline-note--right .tw-thought-card{margin-left:auto}
-.tw-inline-note--tight{padding-top:clamp(8px,2vw,16px);padding-bottom:clamp(8px,2vw,16px)}
-.tw-inline-note--loose{padding-top:clamp(28px,4vw,44px);padding-bottom:clamp(28px,4vw,44px)}
-
 .tw-vision{
   position:relative;z-index:1;min-height:72vh;display:grid;place-items:center;
   padding:clamp(80px,10vw,140px) clamp(22px,5vw,72px);
@@ -778,7 +753,6 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
   .tw-spotlight-demo{justify-self:center;max-width:320px}
   .tw-design-grid{grid-template-columns:1fr;max-width:320px;margin:0 auto}
   .tw-dnote-row--offset{margin-left:0;text-align:left}
-  .tw-inline-note--right .tw-thought-card{margin-right:auto;margin-left:0}
 }
 @media(max-width:640px){
   .tw-boat{width:100px;bottom:36px}
@@ -804,7 +778,6 @@ body.eva-skin #timewalker .tw-lede,
 body.eva-skin #timewalker .section-desc,
 body.eva-skin #timewalker .tw-dnote-sub,
 body.eva-skin #timewalker .tw-vision-sub,
-body.eva-skin #timewalker .tw-thought-card p,
 body.eva-skin #timewalker .tw-feature p{color:var(--tw-ink-m)!important}
 body.eva-skin #timewalker .num{color:var(--tw-vermilion)!important}
 body.eva-skin #timewalker .thought-line{color:var(--tw-ink)!important;font-family:"Noto Serif SC",serif!important}
@@ -1629,10 +1602,10 @@ body.eva-skin #amadeus .ama-flow-v2>div{
   border-color:rgba(153,0,0,.22)!important;
 }
 body.eva-skin #amadeus .ama-system-card header{color:var(--ama-accent)!important}
-body.eva-skin .ama-ui-v2{
-  background:linear-gradient(180deg,#fff 0%,#eef3ff 50%,var(--eva-blue) 100%)!important;
+body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase{
+  background:#fff!important;
 }
-body.eva-skin #amadeus .ama-ui-v2 h3{color:var(--eva-crimson-lit)!important}
+body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase h3{color:#0a0a0a!important}
 
 body.eva-skin .ama-prologue{
   padding:clamp(48px,7vw,88px) clamp(16px,4vw,56px);
@@ -2548,8 +2521,9 @@ body.eva-skin .ama-chapter-break__title{
   body.eva-skin #timewalker .tw-hero{min-height:auto;padding:72px 18px 56px}
   body.eva-skin #timewalker .tw-brush-title{font-size:clamp(64px,20vw,96px)}
   body.eva-skin #timewalker .tw-layout{padding-left:0;padding-right:0}
-  body.eva-skin #timewalker .tw-thinking-grid{grid-template-columns:1fr}
   body.eva-skin #timewalker .tw-features{padding-left:18px;padding-right:18px}
+  body.eva-skin #timewalker .tw-showcase,
+  body.eva-skin #timewalker .tw-dnote{content-visibility:auto;contain-intrinsic-size:auto 520px}
 
   body.eva-skin #self.self-poster{display:flex;flex-direction:column}
   body.eva-skin #self .self-poster-img{max-height:42vh;object-fit:cover;object-position:center 18%}
@@ -3095,13 +3069,6 @@ body.eva-skin .ama-chapter-break__title{
       </svg>
     </header>
 
-    <div class="tw-inline-note tw-inline-note--left tw-inline-note--tight reveal">
-      <div class="tw-thought-card tw-thought-card--q">
-        <div class="tw-thought-label"><span>?</span>Question</div>
-        <p>为什么「去过」的清单越来越长，我们对旅途本身的印象却越来越薄？</p>
-      </div>
-    </div>
-
     <section class="tw-dnote reveal">
       <div class="tw-dnote-v tw-dnote-v--l" aria-hidden="true">問</div>
       <div class="tw-dnote-v tw-dnote-v--r" aria-hidden="true">思</div>
@@ -3118,13 +3085,6 @@ body.eva-skin .ama-chapter-break__title{
         </div>
       </div>
     </section>
-
-    <div class="tw-inline-note tw-inline-note--right reveal">
-      <div class="tw-thought-card tw-thought-card--f">
-        <div class="tw-thought-label"><span>!</span>Finding</div>
-        <p>打卡完成行程，文化理解却滞后——真正值得听的故事，往往要回家后才从攻略里补上。</p>
-      </div>
-    </div>
 
     <div class="tw-showcase reveal">
       <div class="tw-layout">
@@ -3163,7 +3123,7 @@ body.eva-skin .ama-chapter-break__title{
                   <span class="tw-mock-header-city">桂林 ▾</span>
                 </header>
                 <div class="tw-mock-explore-bg" aria-hidden="true">
-                  <img src="assets/timewalker/ink-mountains.png" alt="">
+                  <img src="assets/timewalker/ink-mountains.png" alt="" loading="lazy" decoding="async" width="390" height="844">
                 </div>
                 <main class="tw-mock-explore-main" aria-hidden="true">
                   <div class="tw-mock-blob"><span>已启动</span></div>
@@ -3172,7 +3132,7 @@ body.eva-skin .ama-chapter-break__title{
                 <div class="tw-mock-spotlight-dim" aria-hidden="true"></div>
                 <div class="tw-mock-spotlight-panel">
                   <div class="tw-mock-spotlight-bg" aria-hidden="true">
-                    <img src="assets/timewalker/ink-cloud-moon.png" alt="">
+                    <img src="assets/timewalker/ink-cloud-moon.png" alt="" loading="lazy" decoding="async" width="390" height="280">
                   </div>
                   <div class="tw-mock-spotlight-body">
                     <div class="tw-mock-spotlight-handle"></div>
@@ -3188,12 +3148,6 @@ body.eva-skin .ama-chapter-break__title{
             </div>
             <figcaption>近处回响 · 文化卡弹层</figcaption>
           </figure>
-        </div>
-        <div class="tw-inline-note tw-inline-note--left tw-inline-note--tight reveal">
-          <div class="tw-thought-card tw-thought-card--m">
-            <div class="tw-thought-label"><span>→</span>Method</div>
-            <p>把理解入口前移到「路过这里」的当下：弹层代替百科，三句话代替一百页攻略，关掉就能继续走。</p>
-          </div>
         </div>
         <div class="tw-design-showcase">
           <div class="tw-design-head">
@@ -3212,7 +3166,7 @@ body.eva-skin .ama-chapter-break__title{
                       <span class="tw-mock-header-city">桂林 ▾</span>
                     </header>
                     <div class="tw-mock-explore-bg" aria-hidden="true">
-                      <img src="assets/timewalker/ink-mountains.png" alt="">
+                      <img src="assets/timewalker/ink-mountains.png" alt="" loading="lazy" decoding="async" width="390" height="844">
                     </div>
                     <main class="tw-mock-explore-main">
                       <div class="tw-mock-blob"><span>开启探索</span></div>
@@ -3241,7 +3195,7 @@ body.eva-skin .ama-chapter-break__title{
                       <h2 class="tw-mock-discover-title">雅集排行</h2>
                       <p class="tw-mock-discover-sub">当前城市值得一读的去处</p>
                       <article class="tw-mock-rank">
-                        <img class="tw-mock-rank-img" src="assets/timewalker/ink-moon-boat.png" alt="">
+                        <img class="tw-mock-rank-img" src="assets/timewalker/ink-moon-boat.png" alt="象鼻山水墨示意" loading="lazy" decoding="async" width="320" height="180">
                         <div class="tw-mock-rank-head">
                           <span class="tw-mock-rank-num">01</span>
                           <h3 class="tw-mock-rank-name">象鼻山</h3>
@@ -3267,12 +3221,6 @@ body.eva-skin .ama-chapter-break__title{
               <figcaption>发现页 · 雅集排行</figcaption>
             </figure>
           </div>
-          <div class="tw-inline-note tw-inline-note--right tw-inline-note--tight reveal">
-            <div class="tw-thought-card tw-thought-card--v">
-              <div class="tw-thought-label"><span>◆</span>Value</div>
-              <p>足迹与故事一并归档——回忆时不只是坐标点，而是可被重新阅读的片段与成就感。</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -3293,31 +3241,6 @@ body.eva-skin .ama-chapter-break__title{
         <h4>足迹自动归档</h4>
         <p>路过与到访自动收纳，日后在雅藏与城市足迹中找回叙事。</p>
       </article>
-    </div>
-
-    <div class="tw-thinking reveal">
-      <div class="tw-thinking-head">
-        <p class="tw-kicker">Design Notes</p>
-        <h3>设计思考 · 留白处见深度</h3>
-      </div>
-      <div class="tw-thinking-grid">
-        <div class="tw-thought-card tw-thought-card--q">
-          <div class="tw-thought-label"><span>?</span>Question</div>
-          <p>为什么「去过」的清单越来越长，我们对旅途本身的印象却越来越薄？</p>
-        </div>
-        <div class="tw-thought-card tw-thought-card--f">
-          <div class="tw-thought-label"><span>!</span>Finding</div>
-          <p>打卡完成行程，文化理解却滞后——真正值得听的故事，往往要回家后才从攻略里补上。</p>
-        </div>
-        <div class="tw-thought-card tw-thought-card--m">
-          <div class="tw-thought-label"><span>→</span>Method</div>
-          <p>把理解入口前移到「路过这里」的当下：弹层代替百科，三句话代替一百页攻略，关掉就能继续走。</p>
-        </div>
-        <div class="tw-thought-card tw-thought-card--v">
-          <div class="tw-thought-label"><span>◆</span>Value</div>
-          <p>足迹与故事一并归档——回忆时不只是坐标点，而是可被重新阅读的片段与成就感。</p>
-        </div>
-      </div>
     </div>
 
     <section class="tw-vision reveal">
