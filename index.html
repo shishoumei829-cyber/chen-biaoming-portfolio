@@ -2430,6 +2430,201 @@ body.eva-skin .ama-chapter-break__title{
   .brief-anchor{padding:9px 12px;font-size:9px;letter-spacing:.16em}
 }
 
+/* ═══ 移动端 · 桌面样式不变 ═══ */
+.dock-nav{display:none}
+@media (max-width:768px){
+  html,body{overflow-x:clip}
+  body.eva-skin{
+    padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));
+  }
+  #brief,#mirage,#amadeus,#timewalker,#self{
+    scroll-margin-top:72px;
+    scroll-margin-bottom:calc(68px + env(safe-area-inset-bottom,0px));
+  }
+
+  .nav ul{display:none}
+  .nav{padding:14px 18px}
+  .brand{font-size:20px}
+
+  .dock-nav{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    position:fixed;left:0;right:0;bottom:0;z-index:8500;
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+    border-top:1px solid rgba(0,56,255,.14);
+    box-shadow:0 -12px 40px rgba(0,0,0,.08);
+  }
+  .dock-nav a{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:44px;padding:4px 2px;border-radius:10px;
+    font-family:var(--eva-wall);color:rgba(10,10,10,.55);
+    transition:background .25s var(--ease),color .25s var(--ease);
+  }
+  .dock-nav a.is-here{
+    color:var(--eva-blue-deep);background:rgba(0,56,255,.08);
+  }
+  .dock-nav .dock-num{font-size:9px;letter-spacing:.12em;opacity:.7}
+  .dock-nav .dock-label{font-size:10px;letter-spacing:.08em;line-height:1.1}
+
+  body.eva-skin .hero.eva-poster{
+    min-height:auto!important;display:flex;flex-direction:column;
+    padding:0!important;
+  }
+  .hero-index[data-speed]{transform:none!important}
+  .eva-quote--tl{display:none}
+  .eva-hero-mid{
+    position:relative!important;left:auto!important;right:auto!important;top:auto!important;
+    padding:88px 20px 24px;
+  }
+  .eva-t--xl{font-size:clamp(2rem,11.5vw,2.75rem)!important;line-height:.9!important}
+  .eva-hero-mid .eva-cn{
+    font-size:clamp(.72rem,3.2vw,.82rem)!important;letter-spacing:.12em!important;
+    line-height:1.65;margin-top:12px;max-width:100%;
+  }
+  .eva-plate-black,.eva-plate-white{
+    position:relative!important;margin-top:0!important;
+    padding:24px 18px 20px!important;
+  }
+  .eva-t--hero-bottom{
+    font-size:clamp(1.05rem,5.4vw,1.55rem)!important;
+    letter-spacing:-.03em!important;line-height:1.02!important;
+    padding:0 2px;overflow-wrap:anywhere;word-break:break-word;
+  }
+  .eva-plate-black .eva-t--hero-bottom span,
+  .eva-plate-white .eva-t--hero-bottom span{transform:scaleY(1.06)!important}
+  .eva-script{font-size:12px!important;margin:10px 0 16px!important}
+  body.eva-skin .hero-index{
+    margin-top:8px!important;border-top:1px solid rgba(0,56,255,.14)!important;
+  }
+  body.eva-skin .hero-work{
+    border-right:none!important;border-bottom:1px solid rgba(0,56,255,.1)!important;
+    padding:16px 2px 18px!important;min-height:auto!important;
+  }
+  body.eva-skin .hero-work:last-child{border-bottom:0!important}
+  body.eva-skin .hero-work p{max-width:none;font-size:11px;line-height:1.65}
+
+  .brief-dossier{padding:40px 18px 32px}
+  .brief-dossier::before{left:18px;right:18px}
+  .brief-title{font-size:clamp(1.45rem,6.5vw,1.85rem)}
+  .brief-lead{font-size:13px;line-height:1.85}
+  .brief-timer strong{font-size:2rem}
+  .brief-episodes{box-shadow:8px 10px 0 rgba(0,56,255,.08)}
+  .brief-ep{grid-template-columns:1fr;padding:16px 14px}
+  .brief-ep-num{
+    writing-mode:horizontal-tb;transform:none;
+    font-size:9px;margin-bottom:4px;display:block;
+  }
+  .brief-ep-arrow{display:none}
+  .brief-anchors{display:none}
+
+  body.eva-skin #mirage .mirage-head{
+    padding:88px 18px 40px!important;
+  }
+  body.eva-skin #mirage .mw--2,
+  body.eva-skin #mirage .mw--4{display:none}
+  body.eva-skin #mirage .mw--1{font-size:clamp(2.8rem,16vw,4.5rem)}
+  body.eva-skin #mirage .mirage-product-float{
+    width:100%!important;max-width:100%!important;
+  }
+  body.eva-skin #mirage .mirage-head .section-title{
+    font-size:clamp(1.75rem,8.5vw,2.5rem)!important;line-height:1!important;
+  }
+  body.eva-skin #mirage .mirage-open-foot .section-desc{font-size:13px;line-height:1.85}
+  body.eva-skin #mirage .mirage-case{min-height:auto;padding-top:48px;padding-bottom:48px}
+  body.eva-skin #mirage .case-copy h3{font-size:clamp(1.5rem,6vw,2rem)!important}
+
+  body.eva-skin .ama-poster{min-height:min(100svh,720px)}
+  body.eva-skin .ama-poster-vtext{display:none}
+  body.eva-skin .ama-poster-title{font-size:clamp(2rem,11vw,3.2rem)}
+  body.eva-skin .ama-poster-kanji{font-size:clamp(2.4rem,18vw,4.2rem)}
+  body.eva-skin .ama-poster-foot{flex-direction:column;align-items:flex-start;gap:12px}
+  body.eva-skin .ama-poster-foot-en{text-align:left;padding-bottom:0}
+  body.eva-skin .ama-dnote-vrule{display:none}
+  body.eva-skin .ama-dnote-row--problem{
+    padding:0 0 40px 0!important;
+  }
+  body.eva-skin .ama-dnote-row--think{
+    margin-left:0!important;width:100%!important;
+    padding:32px 0 0 0!important;text-align:left!important;
+  }
+  body.eva-skin .ama-dnote-line{
+    font-size:clamp(1.65rem,7.5vw,2.6rem)!important;line-height:.95!important;
+  }
+  body.eva-skin .ama-dnote-hero-line{
+    font-size:clamp(1.85rem,8.5vw,2.8rem)!important;
+  }
+  body.eva-skin .ama-prologue-grid{grid-template-columns:1fr}
+  body.eva-skin .ama-vision-list{grid-template-columns:1fr}
+  body.eva-skin #amadeus .ama-v2-copy-block h3,
+  body.eva-skin #amadeus .ama-v2-h3{
+    font-size:clamp(1.55rem,7vw,2.15rem)!important;
+    line-height:1.05!important;text-align:left!important;margin-left:0!important;
+  }
+  body.eva-skin #amadeus .ama-v2-module{padding-left:18px!important;padding-right:18px!important}
+  body.eva-skin #amadeus .ama-system-card,
+  body.eva-skin #amadeus .ama-equation{box-shadow:6px 8px 0 var(--eva-crimson-lit)!important}
+  body.eva-skin .ama-chapter-break__title{
+    font-size:clamp(1.75rem,9vw,2.8rem)!important;
+  }
+
+  body.eva-skin #timewalker .tw-hero{min-height:auto;padding:72px 18px 56px}
+  body.eva-skin #timewalker .tw-brush-title{font-size:clamp(64px,20vw,96px)}
+  body.eva-skin #timewalker .tw-layout{padding-left:0;padding-right:0}
+  body.eva-skin #timewalker .tw-thinking-grid{grid-template-columns:1fr}
+  body.eva-skin #timewalker .tw-features{padding-left:18px;padding-right:18px}
+
+  body.eva-skin #self.self-poster{display:flex;flex-direction:column}
+  body.eva-skin #self .self-poster-img{max-height:42vh;object-fit:cover;object-position:center 18%}
+  body.eva-skin #self .self-typefield{
+    position:relative!important;inset:auto!important;
+    display:flex;flex-direction:column;gap:18px;
+    padding:28px 18px calc(24px + env(safe-area-inset-bottom,0px));
+    pointer-events:auto;
+  }
+  body.eva-skin #self .self-type{
+    position:static!important;writing-mode:horizontal-tb!important;
+    max-width:100%!important;transform:none!important;text-shadow:none;
+  }
+  body.eva-skin #self .self-type--lead{
+    font-size:clamp(1.35rem,6.5vw,1.85rem);order:1;
+  }
+  body.eva-skin #self .self-type--side{
+    font-size:11px;letter-spacing:.14em;opacity:.72;order:2;
+  }
+  body.eva-skin #self .self-type--huge{
+    font-size:clamp(2.4rem,13vw,3.4rem);line-height:.88;order:3;
+  }
+  body.eva-skin #self .self-type--block{
+    font-size:clamp(.95rem,4.2vw,1.15rem);line-height:1.55;font-weight:600;order:4;
+  }
+  body.eva-skin #self .self-type--vertical{
+    font-size:clamp(.85rem,3.8vw,1rem);opacity:.55;order:5;
+  }
+  body.eva-skin #self .self-contact-strip{
+    position:static;flex-direction:column;align-items:flex-start;gap:10px;
+    margin-top:8px;order:6;font-size:11px;
+  }
+
+  footer{
+    flex-direction:column;align-items:flex-start;gap:8px;
+    padding:24px 18px calc(72px + env(safe-area-inset-bottom,0px))!important;
+    font-size:11px;
+  }
+}
+
+@media (max-width:768px){
+  .section{padding-left:18px!important;padding-right:18px!important}
+  .eva-intertitle{padding-left:18px;padding-right:18px}
+  body.eva-skin #mirage .thought-page--center-q{
+    margin-left:18px!important;margin-right:18px!important;
+    padding:48px 18px!important;min-height:auto!important;
+  }
+  body.eva-skin #mirage .thought-page--center-q .thought-line{
+    font-size:clamp(1.55rem,7vw,2.2rem)!important;
+  }
+}
+
 @media (hover:none), (pointer:coarse){
   body{cursor:auto}
   .cursor-dot,.cursor-ring{display:none}
@@ -3232,6 +3427,14 @@ body.eva-skin .ama-chapter-break__title{
   </section>
 </main>
 
+<nav class="dock-nav" aria-label="章节快捷导航">
+  <a href="#brief"><span class="dock-num">00</span><span class="dock-label">速览</span></a>
+  <a href="#mirage"><span class="dock-num">01</span><span class="dock-label">MIRAGE</span></a>
+  <a href="#amadeus"><span class="dock-num">02</span><span class="dock-label">AMADEUS</span></a>
+  <a href="#timewalker"><span class="dock-num">03</span><span class="dock-label">墨舟</span></a>
+  <a href="#self"><span class="dock-num">—</span><span class="dock-label">关于</span></a>
+</nav>
+
 <footer>
   <div>© 2026 Chen Biaoming</div>
   <div>MIRAGE · AMADEUS · 墨舟 · 陈彪明</div>
@@ -3358,25 +3561,29 @@ const typeObs=new IntersectionObserver(entries=>{
 document.querySelectorAll('[data-typewriter]').forEach(el=>typeObs.observe(el));
 
 const darkSections=[...document.querySelectorAll('.hero,.dark')];
-const briefAnchorLinks=[...document.querySelectorAll('.brief-anchor[href^="#"]')];
+const sectionNavLinks=[...document.querySelectorAll('.brief-anchor[href^="#"],.dock-nav a[href^="#"]')];
 const briefSectionIds=['#brief','#mirage','#amadeus','#timewalker','#self'];
 function updateBriefAnchors(){
-  if(!briefAnchorLinks.length) return;
+  if(!sectionNavLinks.length) return;
   const probe=scrollY+innerHeight*.34;
   let active='#brief';
   briefSectionIds.forEach(id=>{
     const el=document.querySelector(id);
     if(el && el.offsetTop<=probe) active=id;
   });
-  briefAnchorLinks.forEach(a=>a.classList.toggle('is-here',a.getAttribute('href')===active));
+  sectionNavLinks.forEach(a=>a.classList.toggle('is-here',a.getAttribute('href')===active));
 }
 function onScroll(){
   const max=document.documentElement.scrollHeight-innerHeight;
   document.getElementById('progress').style.width=(scrollY/max*100)+'%';
-  document.querySelectorAll('[data-speed]').forEach(el=>{
-    const speed=parseFloat(el.dataset.speed||0);
-    el.style.transform=`translateY(${scrollY*speed}px) scale(1.08)`;
-  });
+  if(innerWidth>768){
+    document.querySelectorAll('[data-speed]').forEach(el=>{
+      const speed=parseFloat(el.dataset.speed||0);
+      el.style.transform=`translateY(${scrollY*speed}px) scale(1.08)`;
+    });
+  }else{
+    document.querySelectorAll('[data-speed]').forEach(el=>{el.style.transform=''});
+  }
   const inDark=darkSections.some(sec=>{
     const r=sec.getBoundingClientRect();
     return r.top<innerHeight*.45 && r.bottom>innerHeight*.25;
