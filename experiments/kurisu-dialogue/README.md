@@ -30,6 +30,19 @@ python run_experiment.py --dimensions CANON MEME
 python score_experiment.py
 ```
 
+## 作品集对话演示
+
+```powershell
+cd experiments/kurisu-dialogue
+pip install -r requirements.txt
+ollama serve   # 另开终端，确保有 kurisu:latest
+
+python chat_server.py
+# 浏览器打开 assets/amadeus-demo/index.html?api=http://127.0.0.1:8765
+```
+
+未连 API 时，演示页使用实验 **curated 稿** + 前端 PAD 更新（GitHub Pages 可离线对话）。
+
 ## 输出
 
 - `results/dialogue_full_*.json` — 原始对话 + AMADEUS 内部信号

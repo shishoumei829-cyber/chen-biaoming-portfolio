@@ -3127,6 +3127,65 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   }
 }
 
+/* ─── AMADEUS · 可对话演示（与数字方舟同款嵌入）──── */
+.ama2-app-showcase{
+  position:relative;z-index:2;
+  padding:clamp(48px,7vw,80px) clamp(22px,5vw,64px) clamp(72px,9vw,100px);
+  border-top:1px solid rgba(153,0,0,.18);
+  background:#fff;
+}
+.ama2-app-integrated{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:clamp(28px,5vw,56px);
+  align-items:center;
+  max-width:min(100%,980px);
+  margin:0 auto;
+  padding:clamp(24px,3.5vw,36px);
+  border:1px solid rgba(153,0,0,.22);
+  box-shadow:10px 12px 0 var(--eva-crimson-lit,#b30000);
+}
+.ama2-app-lead{
+  font-family:"Noto Serif SC",serif;font-size:clamp(14px,1.45vw,16px);
+  font-weight:300;line-height:2.05;color:rgba(10,10,10,.58);
+  margin-top:clamp(12px,2vw,18px);max-width:520px;
+}
+.ama2-app-note{
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--eva-crimson,#990000);
+  margin-top:clamp(18px,3vw,26px);
+}
+.ama2-app-open{
+  display:inline-block;margin-top:14px;
+  font-family:var(--eva-wall);font-size:10px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--eva-crimson-lit,#b30000);border-bottom:1px solid rgba(153,0,0,.35);
+  padding-bottom:2px;
+}
+.ama2-app-device{
+  flex-shrink:0;
+  opacity:0;transform:translateY(40px) scale(.94);
+  filter:blur(6px);
+  transition:opacity 1s var(--ease),transform 1.1s cubic-bezier(.22,1,.36,1),filter .9s var(--ease);
+}
+.ama2-app-device.in{opacity:1;transform:none;filter:none}
+.ama2-app-frame{
+  width:390px;height:844px;border-radius:50px;overflow:hidden;
+  border:2px solid rgba(153,0,0,.35);
+  box-shadow:12px 14px 0 rgba(0,56,255,.12);
+  background:#050508;
+}
+.ama2-app-frame iframe{width:390px;height:844px;border:0;display:block;background:#050508}
+@media(max-width:920px){
+  .ama2-app-integrated{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .ama2-app-lead{margin-left:auto;margin-right:auto}
+}
+@media(max-width:420px){
+  .ama2-app-frame,.ama2-app-frame iframe{
+    width:min(100vw - 44px,390px);
+    height:min(calc((100vw - 44px) * 844 / 390),844px);
+  }
+}
+
 /* ─── 立场 banner ────────────────────────── */
 .da2-stance{
   position:relative;z-index:2;
@@ -4144,15 +4203,26 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
     </article>
     </div>
 
-    <section class="ama-ui-v2 ama-ui-showcase reveal" data-ama-section="ui">
-      <div class="ama-ui-showcase-inner">
-        <p class="ama-v2-sub">08 / Frontend Interface</p>
-        <h3>前端界面 · 用户真正打开的一屏</h3>
-        <p class="ama-ui-lead">前面的拆解，是为了证明系统在场；这一屏才是日常会盯着看、会打字进去的那一面——神经链、记忆宫、PAD 与对话轨收进同一块 HUD，而不是另起一套演示壳。</p>
-        <figure class="ama-ui-figure magnetic">
-          <img src="assets/amadeus/amadeus-system-ui.png" alt="AMADEUS 系统前端界面：牧濑红莉栖神经链 HUD、记忆宫、PAD 状态与对话输入轨" width="1920" height="1080" loading="lazy" decoding="async">
-          <figcaption class="ama-ui-cap">AMADEUS SYSTEM · v1.0 · Neural Link Established</figcaption>
-        </figure>
+    <section class="ama2-app-showcase reveal" data-ama-section="ui" aria-labelledby="ama2-app-title">
+      <div class="ama2-app-integrated">
+        <div class="ama2-app-context">
+          <p class="ama-v2-sub">08 / Live Dialogue</p>
+          <h3 id="ama2-app-title" style="font-family:var(--eva-matisse);font-size:clamp(1.65rem,4vw,2.4rem);line-height:1.05;color:var(--eva-crimson-lit,#b30000);margin:12px 0 0">牧濑红莉栖 · 可对话演示</h3>
+          <p class="ama2-app-lead">
+            与数字方舟相同：说明和可交互界面放在一起。输入一句，走 AMADEUS 情绪与记忆栈；作品集页内为离线演示稿，连接本机对话服务后可切换为完整模型回复（无语音）。
+          </p>
+          <p class="ama2-app-note">交互演示 · 可打字对话</p>
+          <a class="ama2-app-open" href="assets/amadeus-demo/index.html" target="_blank" rel="noopener noreferrer">全屏打开对话 ↗</a>
+        </div>
+        <div class="ama2-app-device" id="ama2AppDevice" aria-hidden="false">
+          <div class="ama2-app-frame">
+            <iframe
+              src="assets/amadeus-demo/index.html?embed=portfolio"
+              title="AMADEUS 牧濑红莉栖对话演示"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -4920,6 +4990,16 @@ document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
       }
     },{threshold:.2, rootMargin:'0px 0px -6% 0px'});
     devObs.observe(da2AppDevice);
+  }
+  const ama2AppDevice = document.getElementById('ama2AppDevice');
+  if(ama2AppDevice){
+    const amaDevObs = new IntersectionObserver(entries=>{
+      if(entries[0].isIntersecting){
+        ama2AppDevice.classList.add('in');
+        amaDevObs.unobserve(ama2AppDevice);
+      }
+    },{threshold:.2, rootMargin:'0px 0px -6% 0px'});
+    amaDevObs.observe(ama2AppDevice);
   }
   const da2Stance = document.querySelector('.da2-stance');
   if(da2Stance){

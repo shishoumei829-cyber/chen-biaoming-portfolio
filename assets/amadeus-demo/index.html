@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AMADEUS · 牧濑红莉栖对话</title>
+  <link rel="stylesheet" href="chat.css"/>
+  <link rel="stylesheet" href="portfolio-embed.css"/>
+  <script>
+    if (/embed=portfolio/.test(location.search)) document.documentElement.classList.add('ama-portfolio-embed');
+  </script>
+</head>
+<body>
+  <div class="ama-hud" role="application" aria-label="AMADEUS 对话演示">
+    <header class="ama-top">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL" alt="牧濑红莉栖" width="44" height="44"/>
+      <div class="ama-top-meta">
+        <strong>牧濑红莉栖</strong>
+        <span>Neural Link · AMADEUS</span>
+      </div>
+    </header>
+    <div class="ama-pad" aria-label="PAD 状态">
+      <span>P <b data-pad="P">+0.10</b></span>
+      <span>A <b data-pad="A">+0.00</b></span>
+      <span>D <b data-pad="D">+0.20</b></span>
+      <span>S <b data-pad="S">+0.35</b></span>
+    </div>
+    <p class="ama-banner hidden" id="amaBanner"></p>
+    <div class="ama-msgs" id="amaMsgs" aria-live="polite"></div>
+    <form class="ama-compose" onsubmit="return false">
+      <input type="text" id="amaInput" placeholder="和牧濑红莉栖说点什么…" autocomplete="off" maxlength="500"/>
+      <button type="button" class="ama-send" id="amaSend" aria-label="发送">↑</button>
+    </form>
+  </div>
+  <script src="chat.js"></script>
+</body>
+</html>
