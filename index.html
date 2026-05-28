@@ -2482,7 +2482,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   #digitalark .da2-char{opacity:1!important;transform:none!important;animation:none!important}
   #digitalark .da2-char::after{animation:none!important;opacity:.5!important}
   #digitalark .da2-title-cn,#digitalark .da2-tagline,#digitalark .da2-scroll-hint{opacity:1!important;transform:none!important}
-  #digitalark .da2-pull-line{opacity:1!important;transform:none!important;filter:none!important}
+  #digitalark .da2-pull-line,#digitalark .da2-flow-line{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
+  #digitalark .da2-pull-line::before,#digitalark .da2-split-col{opacity:1!important;transform:none!important;animation:none!important}
+  #digitalark .da2-narrative-inner.da2-narr-in .da2-split-piece{opacity:1!important;animation:none!important}
   #digitalark .da2-scroll-line{animation:none!important}
   #da2Canvas{display:none!important}
 }
@@ -2722,19 +2724,82 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   margin-bottom:clamp(28px,4vw,44px);
 }
 .da2-pull-line{
+  position:relative;
   display:block;
+  padding-left:clamp(14px,2vw,22px);
   opacity:0;
-  transform:translateY(1.1em);
+  transform:translateY(1.25em);
+  filter:blur(8px);
+}
+.da2-pull-line::before{
+  content:"";
+  position:absolute;left:0;top:.2em;bottom:.2em;
+  width:1px;
+  transform:scaleY(0);
+  transform-origin:top;
+  background:linear-gradient(180deg,rgba(244,241,236,.75),rgba(244,241,236,0));
+}
+.da2-pull.is-visible .da2-pull-line{
+  animation:da2LineIn 1.05s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:calc(var(--line-i,0) * .16s);
+}
+.da2-pull.is-visible .da2-pull-line::before{
+  animation:da2StrandBar .9s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:calc(var(--line-i,0) * .16s + .12s);
+}
+@keyframes da2LineIn{
+  to{opacity:1;transform:none;filter:none}
+}
+@keyframes da2StrandBar{
+  to{transform:scaleY(1)}
+}
+
+/* 叙事正文 · 分句浮现 */
+.da2-flow-line{
+  display:inline;
+  opacity:0;
   filter:blur(6px);
-  transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease);
-  transition-delay:calc(var(--line-i,0) * .11s + .08s);
 }
-.da2-pull.in .da2-pull-line,
-.da2-pull.da2-reveal.in .da2-pull-line{
-  opacity:1;
-  transform:none;
-  filter:none;
+.da2-p[data-flow-lines].is-visible .da2-flow-line{
+  animation:da2FlowIn .95s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:calc(var(--line-i,0) * .22s + .35s);
 }
+@keyframes da2FlowIn{
+  to{opacity:1;filter:none}
+}
+
+/* 叙事双栏 · 左右滑入 + 块内交错 */
+.da2-narrative-inner .da2-split-col{
+  opacity:0;
+}
+.da2-narrative-inner .da2-split-col--l{
+  transform:translateX(-36px);
+}
+.da2-narrative-inner .da2-split-col--r{
+  transform:translateX(36px);
+}
+.da2-narrative-inner.da2-narr-in .da2-split-col--l{
+  animation:da2SlideL .95s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:.5s;
+}
+.da2-narrative-inner.da2-narr-in .da2-split-col--r{
+  animation:da2SlideR .95s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:.62s;
+}
+@keyframes da2SlideL{to{opacity:1;transform:none}}
+@keyframes da2SlideR{to{opacity:1;transform:none}}
+.da2-split-piece{
+  opacity:0;
+  transform:translateY(14px);
+}
+.da2-narrative-inner.da2-narr-in .da2-split-col--l .da2-split-piece,
+.da2-narrative-inner.da2-narr-in .da2-split-col--r .da2-split-piece{
+  animation:da2PieceIn .8s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:calc(var(--piece-i,0) * .09s + var(--col-d,0s));
+}
+.da2-narrative-inner.da2-narr-in .da2-split-col--l .da2-split-piece{--col-d:.58s}
+.da2-narrative-inner.da2-narr-in .da2-split-col--r .da2-split-piece{--col-d:.7s}
+@keyframes da2PieceIn{to{opacity:1;transform:none}}
 .da2-pull em{
   font-style:italic;
   color:rgba(255,255,255,.52);
@@ -3834,25 +3899,25 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <!-- ░░ 叙事段落 · 情感入口 ░░ -->
   <div class="da2-narrative">
     <div class="da2-narrative-inner">
-      <p class="da2-pull da2-reveal" data-pull-lines>
+      <p class="da2-pull" data-pull-lines>
         离开往往毫无预兆。<br>
         来不及说的话，<br>
         最后都变成别人记不清的细节。
       </p>
-      <p class="da2-p da2-reveal da2-reveal-delay-1">
+      <p class="da2-p" data-flow-lines>
         我们真正怕的，是记忆变淡。市面上的数字人忙着学语气，却没有人去保存她怎么判断、怎么犹豫、怎么在一次次经历之后，才变成现在的样子。
       </p>
 
       <div class="da2-split">
-        <div class="da2-split-col da2-reveal">
-          <p class="da2-split-label">我发现的问题</p>
-          <h3 class="da2-split-h">想记住，却越来越抓不住。</h3>
-          <p class="da2-split-p">多数数字人只有一张会说话的嘴。没有训练出来的判断结构，关掉窗口，人就又远了。</p>
+        <div class="da2-split-col da2-split-col--l">
+          <p class="da2-split-label da2-split-piece" style="--piece-i:0">我发现的问题</p>
+          <h3 class="da2-split-h da2-split-piece" style="--piece-i:1">想记住，却越来越抓不住。</h3>
+          <p class="da2-split-p da2-split-piece" style="--piece-i:2">多数数字人只有一张会说话的嘴。没有训练出来的判断结构，关掉窗口，人就又远了。</p>
         </div>
-        <div class="da2-split-col da2-reveal da2-reveal-delay-1">
-          <p class="da2-split-label">我的思考</p>
-          <h3 class="da2-split-h">要留的是她，不是她的台词。</h3>
-          <p class="da2-split-p">方舟保存驱动她说话的那套内部结构。告别之后，仍能说：对，这是她会做的选择。</p>
+        <div class="da2-split-col da2-split-col--r">
+          <p class="da2-split-label da2-split-piece" style="--piece-i:0">我的思考</p>
+          <h3 class="da2-split-h da2-split-piece" style="--piece-i:1">要留的是她，不是她的台词。</h3>
+          <p class="da2-split-p da2-split-piece" style="--piece-i:2">方舟保存驱动她说话的那套内部结构。告别之后，仍能说：对，这是她会做的选择。</p>
         </div>
       </div>
     </div>
@@ -4430,8 +4495,32 @@ document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
       '<span class="da2-pull-line" style="--line-i:'+i+'">'+line+'</span>'
     ).join('');
   }
+  function da2FlowLines(el){
+    const parts = el.textContent.trim().split(/(?<=[。！？])/g).filter(Boolean);
+    el.textContent = '';
+    parts.forEach((part,i)=>{
+      const s = document.createElement('span');
+      s.className = 'da2-flow-line';
+      s.style.setProperty('--line-i', i);
+      s.textContent = part;
+      el.appendChild(s);
+    });
+  }
   document.querySelectorAll('[data-strand]').forEach(da2Strandize);
-  document.querySelectorAll('[data-pull-lines]').forEach(da2PullLines);
+  const da2Narr = document.querySelector('.da2-narrative-inner');
+  if(da2Narr){
+    da2Narr.querySelectorAll('[data-pull-lines]').forEach(da2PullLines);
+    da2Narr.querySelectorAll('[data-flow-lines]').forEach(da2FlowLines);
+    const narrObs = new IntersectionObserver(entries=>{
+      if(!entries[0].isIntersecting) return;
+      const root = entries[0].target;
+      root.classList.add('da2-narr-in');
+      root.querySelector('[data-pull-lines]')?.classList.add('is-visible');
+      root.querySelector('[data-flow-lines]')?.classList.add('is-visible');
+      narrObs.unobserve(root);
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    narrObs.observe(da2Narr);
+  }
   const da2Cover = document.getElementById('da2Cover');
   if(da2Cover){
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
