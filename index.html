@@ -2427,15 +2427,16 @@ body.eva-skin .ama-chapter-break__title{
 }
 #digitalark .section-desc,#digitalark p{max-width:none}
 
-.da-ds-wrap{position:relative;isolation:isolate}
+.da-ds-wrap{position:relative;isolation:isolate;background:#060608}
 .da-ds-bg{
   position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  min-height:calc(100vw * 4);
+  display:flex;flex-direction:column;
 }
-.da-ds-bg__img{
-  width:100%;height:auto;display:block;
-  transform:none;
-  filter:saturate(1.02) contrast(1.04);
+.da-ds-bg-panel{flex:none;width:100%;min-height:100svh;overflow:hidden}
+.da-ds-bg-panel img{
+  width:100%;height:100%;min-height:100svh;display:block;
+  object-fit:cover;object-position:center;
+  filter:saturate(.96) contrast(1.05);
 }
 .da-ds-bg__grain{
   position:absolute;inset:0;opacity:.12;mix-blend-mode:overlay;
@@ -2443,7 +2444,7 @@ body.eva-skin .ama-chapter-break__title{
 }
 .da-ds-bg__readability{
   position:absolute;inset:0;
-  background:linear-gradient(105deg,rgba(6,6,8,.35) 0%,rgba(6,6,8,.08) 40%,rgba(20,6,6,.22) 100%);
+  background:linear-gradient(180deg,rgba(6,6,8,.78) 0%,rgba(6,6,8,.52) 40%,rgba(6,6,8,.68) 100%);
   pointer-events:none;
 }
 .da-ds-frame{
@@ -2460,83 +2461,76 @@ body.eva-skin .ama-chapter-break__title{
 .da-ds-body{position:relative;z-index:2}
 
 .da-ds-poster{
-  position:relative;min-height:100svh;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:clamp(96px,11vh,128px) clamp(22px,5vw,72px) clamp(56px,7vh,80px);
-  overflow:hidden;
+  position:relative;z-index:2;min-height:100svh;width:100%;
+  display:grid;grid-template-rows:auto 1fr auto;
+  overflow:hidden;color:var(--ds-ink);
 }
-.da-ds-poster-visual{
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-}
-.da-ds-poster-visual img{
-  width:100%;height:100%;object-fit:cover;object-position:center 42%;
-  filter:saturate(.88) contrast(1.08) brightness(.72);
-}
-.da-ds-poster-fade{
+.da-ds-poster-bg{
   position:absolute;inset:0;
   background:
-    linear-gradient(180deg,rgba(6,6,8,.55) 0%,rgba(6,6,8,.15) 38%,rgba(6,6,8,.72) 78%,rgba(6,6,8,.94) 100%),
-    linear-gradient(90deg,rgba(6,6,8,.5) 0%,transparent 42%,rgba(6,6,8,.35) 100%);
+    radial-gradient(ellipse 80% 55% at 50% 42%,rgba(28,32,38,.55),transparent 70%),
+    linear-gradient(180deg,#0a0b0e 0%,#060608 55%,#040406 100%);
 }
-.da-ds-poster-content{position:relative;z-index:2;max-width:1120px}
-.da-ds-extend{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.42em;
-  text-transform:uppercase;color:rgba(255,255,255,.62);margin:0 0 14px;
+.da-ds-poster-grain{
+  position:absolute;inset:0;opacity:.14;pointer-events:none;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.da-ds-kicker{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.48em;
-  text-transform:uppercase;color:rgba(255,255,255,.4);margin:0 0 18px;
+.da-ds-poster-vtext{
+  position:absolute;z-index:3;top:clamp(96px,14vh,160px);bottom:clamp(120px,18vh,200px);
+  writing-mode:vertical-rl;font-family:var(--ds-hud);
+  font-size:clamp(9px,1.1vw,11px);letter-spacing:.42em;
+  color:rgba(255,255,255,.38);border-right:1px solid rgba(255,255,255,.16);padding-right:10px;
 }
-.da-ds-display{
-  margin:0 0 clamp(14px,2vh,22px);padding:0;
-  font-family:"Helvetica Neue","Noto Sans SC",Arial,sans-serif;
-  font-weight:300;color:var(--ds-ink);line-height:1.05;
+.da-ds-poster-vtext--l{left:clamp(16px,3vw,40px)}
+.da-ds-poster-vtext--r{
+  right:clamp(16px,3vw,40px);border-right:0;border-left:1px solid rgba(255,255,255,.16);
+  padding-right:0;padding-left:10px;
 }
+.da-ds-poster-top{
+  position:relative;z-index:4;padding:clamp(88px,10vh,120px) clamp(20px,5vw,56px) 0;
+  font-family:var(--ds-hud);font-size:10px;letter-spacing:.36em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);
+}
+.da-ds-poster-mid{
+  position:relative;z-index:4;align-self:center;text-align:center;
+  padding:0 clamp(20px,6vw,80px);
+}
+.da-ds-poster-en{
+  font-family:var(--ds-hud);font-size:10px;letter-spacing:.44em;
+  text-transform:uppercase;color:rgba(255,255,255,.48);margin:0 0 20px;
+}
+.da-ds-display{margin:0;padding:0;line-height:1}
 .da-ds-display-line{
-  display:block;font-size:clamp(2rem,7.5vw,4.2rem);
-  letter-spacing:.38em;text-indent:.38em;text-transform:uppercase;
-}
-.da-ds-display-line--cn{
-  font-size:clamp(1.35rem,4.5vw,2.4rem);letter-spacing:.22em;text-indent:.22em;
-  margin-top:.45em;font-weight:400;
+  display:block;font-family:"Helvetica Neue","Noto Sans SC",Arial,sans-serif;
+  font-weight:300;font-size:clamp(2.4rem,9vw,5.4rem);
+  letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--ds-ink);
 }
 .da-ds-display-line::after{
-  content:"";display:block;width:1px;height:1.1em;margin:.42em auto 0;
-  background:linear-gradient(180deg,rgba(255,255,255,.5),transparent);
+  content:"";display:block;width:1px;height:1em;margin:.38em auto 0;
+  background:linear-gradient(180deg,rgba(255,255,255,.45),transparent);
 }
-.da-ds-tagline{
-  font-family:"Noto Serif SC",serif;font-size:clamp(14px,1.45vw,17px);
-  line-height:1.9;color:var(--ds-muted);font-weight:300;max-width:36em;margin:0 0 clamp(36px,5vh,52px);
+.da-ds-poster-sub{
+  margin:clamp(14px,2vh,20px) 0 0;font-family:"Noto Sans SC",sans-serif;
+  font-size:clamp(1rem,2.8vw,1.5rem);letter-spacing:.32em;font-weight:400;
+  color:rgba(255,255,255,.78);
 }
-.da-ds-pillars{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.5vw,22px);
+.da-ds-poster-tag{
+  margin:clamp(18px,3vw,28px) auto 0;max-width:26em;
+  font-family:"Noto Serif SC",serif;font-size:clamp(13px,1.4vw,15px);
+  line-height:2;color:var(--ds-muted);font-weight:300;
 }
-.da-ds-pillar{
-  padding:clamp(18px,2.5vw,24px) clamp(18px,2.2vw,22px);
-  background:var(--ds-glass);border:1px solid var(--ds-line);
-  backdrop-filter:blur(14px);
+.da-ds-poster-foot{
+  position:relative;z-index:4;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 clamp(16px,4vw,56px) clamp(28px,5vw,48px);gap:20px;
 }
-.da-ds-pillar h2{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.32em;
-  text-transform:uppercase;color:rgba(255,255,255,.52);margin:0 0 12px;font-weight:400;
+.da-ds-poster-kanji{
+  font-family:"Noto Serif SC",serif;font-weight:600;
+  font-size:clamp(3.2rem,14vw,7rem);line-height:.85;letter-spacing:.12em;
+  color:rgba(255,255,255,.88);
 }
-.da-ds-pillar p{
-  font-family:"Noto Serif SC",serif;font-size:14px;line-height:1.9;
-  color:var(--ds-muted);font-weight:300;margin:0;
-}
-.da-ds-pillar ul{
-  margin:12px 0 0;padding:0;list-style:none;
-  font-family:"Noto Serif SC",serif;font-size:13px;line-height:1.85;color:var(--ds-dim);
-}
-.da-ds-pillar li{padding-left:14px;position:relative;margin-top:8px}
-.da-ds-pillar li::before{
-  content:"";position:absolute;left:0;top:.65em;width:5px;height:1px;background:rgba(255,255,255,.45);
-}
-.da-ds-refs-bar{
-  display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:clamp(22px,3vw,32px);
-  padding-top:16px;border-top:1px solid var(--ds-line);
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--ds-dim);
+.da-ds-poster-foot-en{
+  font-family:var(--ds-hud);font-size:9px;line-height:1.65;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--ds-dim);text-align:right;padding-bottom:8px;
 }
 
 #digitalark .da-fade,#digitalark .da-rise{
@@ -2544,6 +2538,11 @@ body.eva-skin .ama-chapter-break__title{
   transition:opacity .88s var(--ease),transform .88s var(--ease);
 }
 #digitalark .da-fade.in,#digitalark .da-rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  #digitalark .da-fade,#digitalark .da-rise,
+  #digitalark .da-layer{opacity:1!important;transform:none!important;transition:none!important}
+  #digitalark .da-layer-bar i{transform:scaleX(1)!important;transition:none!important}
+}
 
 body.eva-skin #digitalark .ama-dnote--p1{
   margin:0!important;min-height:clamp(520px,88vh,900px)!important;
@@ -2576,19 +2575,28 @@ body.eva-skin #digitalark .ama-v2-copy-block h3{
   color:var(--ds-ink)!important;
 }
 body.eva-skin #digitalark .ama-v2-copy-block h3 br{display:none}
-body.eva-skin #digitalark .ama-v2-copy-block p{color:var(--ds-muted)!important;max-width:540px}
+body.eva-skin #digitalark .ama-v2-copy-block p{
+  color:var(--ds-muted)!important;max-width:42rem;line-height:1.9!important;
+}
 body.eva-skin #digitalark .ama-v2-sub{
   font-family:var(--ds-hud)!important;font-size:10px!important;
   letter-spacing:.26em!important;color:rgba(255,255,255,.48)!important;
 }
-body.eva-skin #digitalark .ama-flow-v2>div,
+body.eva-skin #digitalark .ama-flow-v2>div{
+  background:transparent!important;border:0!important;border-bottom:1px solid var(--ds-line)!important;
+  border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;
+  transform:none!important;padding-left:0!important;padding-right:0!important;
+}
 body.eva-skin #digitalark .ama-palace-room,
 body.eva-skin #digitalark .da-system-card,
-body.eva-skin #digitalark .da-arch-flow,
+body.eva-skin #digitalark .da-arch-flow{
+  background:rgba(0,0,0,.32)!important;border:1px solid var(--ds-line)!important;
+  color:var(--ds-muted)!important;backdrop-filter:none;
+  box-shadow:none!important;transform:none!important;
+}
 body.eva-skin #digitalark .da-layer{
-  background:var(--ds-glass)!important;border:1px solid var(--ds-line)!important;
-  color:var(--ds-muted)!important;backdrop-filter:blur(14px);
-  box-shadow:0 10px 36px rgba(0,0,0,.28)!important;
+  background:transparent!important;border:0!important;border-bottom:1px solid var(--ds-line)!important;
+  border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;
   transform:none!important;
 }
 body.eva-skin #digitalark .ama-flow-v2>div span{color:var(--ds-muted)!important}
@@ -2660,54 +2668,44 @@ body.eva-skin #digitalark .da-arch-flow{
 .da-layers.in .da-layer:nth-child(4) .da-layer-bar i{transform:scaleX(.64)}
 .da-layers.in .da-layer:nth-child(5) .da-layer-bar i{transform:scaleX(.71)}
 
-.da-eight-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
-  margin-top:clamp(20px,3vw,28px);max-width:880px;
+.da-eight-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px;
+  margin:clamp(20px,3vw,28px) 0 0;max-width:880px;padding:0;
 }
-.da-eight-grid div{
-  padding:12px 14px;border:1px solid var(--ds-line);background:rgba(0,0,0,.22);
+.da-eight-list div{margin:0 0 14px}
+.da-eight-list dt{
+  font-family:"Noto Sans SC",sans-serif;font-size:14px;font-weight:500;color:var(--ds-ink);
 }
-.da-eight-grid strong{
-  display:block;font-family:"Noto Sans SC",sans-serif;font-size:13px;font-weight:500;
-  color:var(--ds-ink);margin-bottom:4px;
+.da-eight-list dd{
+  margin:4px 0 0;font-family:var(--ds-hud);font-size:9px;letter-spacing:.1em;color:var(--ds-dim);
 }
-.da-eight-grid span{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.12em;color:var(--ds-dim);
-}
-.da-ds-screens{
-  padding:clamp(48px,6vw,72px) clamp(18px,4vw,56px);
+body.eva-skin #digitalark .da-ui-showcase{
+  position:relative;z-index:2;padding:clamp(72px,9vw,120px) clamp(22px,5vw,72px);
   border-top:1px solid var(--ds-line);
 }
-.da-ds-screens-kicker{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.36em;
-  text-transform:uppercase;color:rgba(255,255,255,.45);margin:0 0 clamp(20px,3vw,28px);
-  text-align:center;
+body.eva-skin #digitalark .da-ui-showcase h3{
+  font-family:"Noto Serif SC",serif!important;font-size:clamp(1.5rem,3.5vw,2.25rem)!important;
+  font-weight:600!important;line-height:1.2!important;color:var(--ds-ink)!important;margin:0 0 16px!important;
 }
-.da-ds-screens-row{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,20px);
-  max-width:960px;margin:0 auto;
+body.eva-skin #digitalark .da-ui-showcase .ama-ui-lead{color:var(--ds-muted)!important;max-width:42rem}
+body.eva-skin #digitalark .da-ui-figure{
+  margin-top:clamp(32px,5vw,48px);max-width:min(420px,100%);
+  border:1px solid var(--ds-line);background:#0a0a0c;overflow:hidden;
 }
-.da-ds-screens-row figure{margin:0}
-.da-ds-screens-row img{
-  width:100%;height:auto;display:block;border-radius:14px;
-  border:1px solid var(--ds-line);box-shadow:0 24px 56px rgba(0,0,0,.45);
-}
-.da-ds-screens-row figcaption{
-  font-family:var(--ds-hud);font-size:8px;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--ds-dim);margin-top:10px;text-align:center;
+body.eva-skin #digitalark .da-ui-figure img{width:100%;height:auto;display:block}
+body.eva-skin #digitalark .da-ui-cap{
+  padding:10px 14px;font-family:var(--ds-hud);font-size:9px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--ds-dim);border-top:1px solid var(--ds-line);
 }
 
 @media (max-width:980px){
-  .da-ds-pillars{grid-template-columns:1fr}
-  .da-ds-poster{min-height:auto;padding-top:clamp(88px,14vh,120px)}
-  .da-ds-tagline{margin-left:auto;margin-right:auto;text-align:center}
-  .da-ds-display{text-align:center}
+  .da-ds-poster-vtext{display:none}
+  .da-ds-poster-foot{flex-direction:column;align-items:flex-start}
   body.eva-skin #digitalark .ama-v2-module{grid-template-columns:1fr}
   body.eva-skin #digitalark .ama-v2-module.alt .ama-v2-copy-block{order:0}
   .da-layer{grid-template-columns:64px 1fr}
   .da-layer-bar{display:none}
-  .da-eight-grid{grid-template-columns:1fr}
-  .da-ds-screens-row{grid-template-columns:1fr;max-width:320px}
+  .da-eight-list{grid-template-columns:1fr}
 }
 @media (max-width:768px){
   #digitalark{scroll-margin-top:72px}
@@ -3366,7 +3364,9 @@ body.eva-skin #digitalark .da-arch-flow{
   <section class="section da-chapter" id="digitalark" aria-labelledby="da-title">
     <div class="da-ds-wrap">
       <div class="da-ds-bg" aria-hidden="true">
-        <img class="da-ds-bg__img" src="assets/digitalark/ds-bg-main.png" alt="" width="256" height="1024" decoding="async">
+        <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-coast.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
+        <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-mist.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
+        <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-foam.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
         <div class="da-ds-bg__readability"></div>
         <div class="da-ds-bg__grain"></div>
       </div>
@@ -3379,45 +3379,23 @@ body.eva-skin #digitalark .da-arch-flow{
       <div class="da-ds-body">
 
     <header class="da-ds-poster reveal">
-      <div class="da-ds-poster-visual" aria-hidden="true">
-        <img src="assets/digitalark/ds-hero-poster.png" alt="" width="1920" height="1080" loading="eager" decoding="async">
-        <div class="da-ds-poster-fade"></div>
-      </div>
-      <div class="da-ds-poster-content">
-        <p class="da-ds-extend da-fade">AMADEUS 体系延展 · 同一架构的下游产品</p>
-        <p class="da-ds-kicker da-fade">第04話 · DIGITAL ARK</p>
-        <h1 class="da-ds-display da-fade" id="da-title">
-          <span class="da-ds-display-line">DIGITAL ARK</span>
-          <span class="da-ds-display-line da-ds-display-line--cn">数字方舟</span>
+      <div class="da-ds-poster-bg" aria-hidden="true"></div>
+      <div class="da-ds-poster-grain" aria-hidden="true"></div>
+      <div class="da-ds-poster-vtext da-ds-poster-vtext--l" aria-hidden="true">本地数字人格 · 训练与陪护</div>
+      <div class="da-ds-poster-vtext da-ds-poster-vtext--r" aria-hidden="true">AMADEUS 体系延展</div>
+      <div class="da-ds-poster-top">第04話 / DIGITAL ARK</div>
+      <div class="da-ds-poster-mid">
+        <p class="da-ds-poster-en">PRESENCE · DIGITAL TWIN · LOCAL FIRST</p>
+        <h1 class="da-ds-display" id="da-title">
+          <span class="da-ds-display-line">DIGITAL</span>
+          <span class="da-ds-display-line">ARK</span>
         </h1>
-        <p class="da-ds-tagline da-fade">在本地训练、运行与陪护的数字人格——为来不及的告别留一台「还会按她的方式做选择」的分身，而不是只会复读口吻的聊天框。</p>
-        <div class="da-ds-pillars">
-          <article class="da-ds-pillar da-fade">
-            <h2>为什么做</h2>
-            <p>市面上的数字人多半只复制说话风格；人走后，窗口一关，判断、记忆与关系习惯就一起消失。我想把「被记住」做成可训练、可验证、数据留在本机的系统。</p>
-          </article>
-          <article class="da-ds-pillar da-fade">
-            <h2>解决什么</h2>
-            <p>让家属在哀伤期仍能与「还会按她方式反应」的数字人格对话；训练端采集有情绪重量的经历，陪护端标明非真人、支持知情同意与淡出，不把安慰建立在欺骗上。</p>
-          </article>
-          <article class="da-ds-pillar da-fade">
-            <h2>怎么设计</h2>
-            <p>借鉴 Mischel &amp; Shoda（1995）认知-情感处理系统（CAPS）：不记台词，而记「在什么情境下倾向于怎样反应」。运行时先算 PAD 情绪与 CAU 网状传播，再生成 If-Then 行为签名，最后才调用大模型说话。</p>
-            <ul>
-              <li>核心层 8 维：价值优先级、自我规范、边界模式、待人风格、眼光视角、内心活动、道德判断、品质特质——各有权重，冲突时动态权衡。</li>
-              <li>五层栈：核心 → PAD 情绪 → 记忆 → 关系 → 表达；与 AMADEUS 实验相同的「中间层可观测」思路。</li>
-            </ul>
-          </article>
-          <article class="da-ds-pillar da-fade">
-            <h2>有什么用</h2>
-            <p>本地 Node + Ollama，数据不出机；Sanctuary / Training / Companion 三端分工：训练人格、校准纠错、日常陪护。架构从 AMADEUS 横向迭代而来，证明同一套状态机可以落到真实产品。</p>
-          </article>
-        </div>
-        <footer class="da-ds-refs-bar da-fade">
-          <span>理论 · Mischel-Shoda CAPS (1995)</span>
-          <span>情绪 · PAD / Mehrabian-Russell</span>
-          <span>伦理 · 知情同意 · 非真人标识 · 哀伤淡出</span>
-        </footer>
+        <p class="da-ds-poster-sub">数字方舟</p>
+        <p class="da-ds-poster-tag">人与离别之间，一台还可被训练、被记住的分身。</p>
+      </div>
+      <div class="da-ds-poster-foot">
+        <div class="da-ds-poster-kanji">方舟</div>
+        <div class="da-ds-poster-foot-en">CHEN BIAOMING · 2026</div>
       </div>
     </header>
 
@@ -3457,24 +3435,6 @@ body.eva-skin #digitalark .da-arch-flow{
         <p class="ama-chapter-break__kicker">我的解决</p>
         <h3 class="ama-chapter-break__title da-rise">本地训练、五层人格、三端陪护一体。</h3>
         <p class="ama-chapter-break__sub thought-sub">用情境与行为暴露结构，用经历塑造判断，用纠错迭代拟合——每一次表达都从内部状态长出来，而不是贴标签检索。</p>
-      </div>
-    </section>
-
-    <section class="da-ds-screens reveal" aria-label="产品界面">
-      <p class="da-ds-screens-kicker">产品界面 · 本地 Web 三端（真实运行截图）</p>
-      <div class="da-ds-screens-row">
-        <figure class="magnetic">
-          <img src="assets/digitalark/ui-sanctuary.png" alt="数字方舟 Sanctuary 主界面" width="390" height="844" loading="lazy" decoding="async">
-          <figcaption>Sanctuary · 主端</figcaption>
-        </figure>
-        <figure class="magnetic">
-          <img src="assets/digitalark/ui-training.png" alt="数字方舟训练端" width="390" height="844" loading="lazy" decoding="async">
-          <figcaption>Training · 训练</figcaption>
-        </figure>
-        <figure class="magnetic">
-          <img src="assets/digitalark/ui-companion.png" alt="数字方舟陪护端" width="390" height="844" loading="lazy" decoding="async">
-          <figcaption>Companion · 陪护</figcaption>
-        </figure>
       </div>
     </section>
 
@@ -3548,16 +3508,16 @@ buildDigitalTwinPrompt → Ollama /api/chat
         </article>
       </div>
       </div>
-      <div class="da-eight-grid" aria-label="核心层八维人格">
-        <div><strong>价值优先级</strong><span>冲突时选什么 · 权重 20%</span></div>
-        <div><strong>自我规范</strong><span>对自己的要求 · 15%</span></div>
-        <div><strong>边界模式</strong><span>触碰后的稳定反应 · 15%</span></div>
-        <div><strong>待人处事风格</strong><span>温柔、直接等稳定风格 · 15%</span></div>
-        <div><strong>眼光视角</strong><span>你看世界的角度 · 10%</span></div>
-        <div><strong>内心活动模式</strong><span>外显之下真正在想什么 · 5%</span></div>
-        <div><strong>道德判断</strong><span>是非标准 · 10%</span></div>
-        <div><strong>品质特质</strong><span>身上稳定的东西 · 10%</span></div>
-      </div>
+      <dl class="da-eight-list" aria-label="核心层八维人格">
+        <div><dt>价值优先级</dt><dd>冲突时选什么 · 权重 20%</dd></div>
+        <div><dt>自我规范</dt><dd>对自己的要求 · 15%</dd></div>
+        <div><dt>边界模式</dt><dd>触碰后的稳定反应 · 15%</dd></div>
+        <div><dt>待人处事风格</dt><dd>稳定的人际风格 · 15%</dd></div>
+        <div><dt>眼光视角</dt><dd>你看世界的角度 · 10%</dd></div>
+        <div><dt>内心活动模式</dt><dd>外显之下真正在想什么 · 5%</dd></div>
+        <div><dt>道德判断</dt><dd>是非标准 · 10%</dd></div>
+        <div><dt>品质特质</dt><dd>身上稳定的东西 · 10%</dd></div>
+      </dl>
         <div class="da-system-card">
           <header><span>lib/design-spec.js</span><span>layer weights</span></header>
           <pre><code><span class="cm">/** 五层人格拟合度权重（总进度条） */</span>
@@ -3686,6 +3646,18 @@ ${capsContext}
 <span class="cm">// DATA_DIR 默认 ~/digital_ark_data · 本地 JSON + 加密字段</span></code></pre>
       </div>
     </article>
+
+    <section class="ama-ui-v2 da-ui-showcase reveal" aria-label="产品界面">
+      <div class="ama-ui-showcase-inner">
+        <p class="ama-v2-sub">08 / 产品界面</p>
+        <h3>用户真正打开的一屏</h3>
+        <p class="ama-ui-lead">训练、试聊与陪护在同一套本地 Web 里切换；下面是 Sanctuary 主端实机截图。Training / Companion 是同一设计系统下的模式，不是三套割裂界面。</p>
+        <figure class="da-ui-figure magnetic">
+          <img src="assets/digitalark/ui-sanctuary.png" alt="数字方舟 Sanctuary 主界面实机截图" width="488" height="1055" loading="lazy" decoding="async">
+          <figcaption class="da-ui-cap">DIGITAL ARK · SANCTUARY · LOCAL</figcaption>
+        </figure>
+      </div>
+    </section>
     </div>
 
       </div>
