@@ -40,6 +40,8 @@ class ChatResponse(BaseModel):
     pad: dict[str, float]
     behavior: str = ""
     emotion_score: float = 0.0
+    memory_rooms: list[str] = []
+    memory_hits: list[str] = []
 
 
 @app.get("/health")
@@ -71,6 +73,8 @@ def chat(req: ChatRequest):
         pad=pad,
         behavior=meta.get("behavior_winner", ""),
         emotion_score=meta.get("emotion_score", 0.0),
+        memory_rooms=meta.get("memory_rooms", []),
+        memory_hits=meta.get("memory_hits", []),
     )
 
 

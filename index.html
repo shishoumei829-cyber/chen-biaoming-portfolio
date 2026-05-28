@@ -1526,6 +1526,15 @@ body.eva-skin .ama-ui-figure{
   background:#050505;overflow:hidden;
 }
 body.eva-skin .ama-ui-figure img{width:100%;height:auto;display:block}
+body.eva-skin .ama-ui-figure--live .ama-work-live{
+  position:relative;width:100%;aspect-ratio:16/9;min-height:min(56vw,520px);
+  background:#050505;overflow:hidden;
+  border:1px solid rgba(10,10,10,.1);
+}
+body.eva-skin .ama-ui-figure--live .ama-work-live{
+  box-shadow:14px 16px 0 rgba(0,56,255,.1);
+}
+.ama-work-iframe{width:100%;height:100%;border:0;display:block;background:#050505}
 body.eva-skin .ama-ui-cap{
   padding:12px 18px;font-family:var(--eva-wall);font-size:10px;letter-spacing:.32em;
   text-transform:uppercase;color:rgba(10,10,10,.5)!important;
@@ -4149,9 +4158,17 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
         <p class="ama-v2-sub">08 / Frontend Interface</p>
         <h3>前端界面 · 用户真正打开的一屏</h3>
         <p class="ama-ui-lead">前面的拆解，是为了证明系统在场；这一屏才是日常会盯着看、会打字进去的那一面——神经链、记忆宫、PAD 与对话输入轨收进同一块 HUD，而不是另起一套演示壳。</p>
-        <figure class="ama-ui-figure magnetic">
-          <img src="assets/amadeus/amadeus-system-ui.png" alt="AMADEUS 系统前端界面：牧濑红莉栖神经链 HUD、记忆宫、PAD 状态与对话输入轨" width="1920" height="1080" loading="lazy" decoding="async">
-          <figcaption class="ama-ui-cap">AMADEUS SYSTEM · v1.0 · Neural Link Established</figcaption>
+        <figure class="ama-ui-figure ama-ui-figure--live magnetic">
+          <div class="ama-work-live">
+            <iframe
+              class="ama-work-iframe"
+              src="assets/amadeus-work/index.html"
+              title="AMADEUS SYSTEM · 牧濑红莉栖神经链 HUD"
+              loading="lazy"
+              allow="clipboard-write"
+            ></iframe>
+          </div>
+          <figcaption class="ama-ui-cap">AMADEUS SYSTEM · v1.0 · Neural Link Established · 网页版可对话（无语音/视频）</figcaption>
         </figure>
       </div>
     </section>

@@ -43,6 +43,15 @@ python chat_server.py
 
 未连 API 时，演示页使用实验 **curated 稿** + 前端 PAD 更新（GitHub Pages 可离线对话）。
 
+作品集嵌入页：`assets/amadeus-work/index.html`（还原 HUD 截图布局，非手机壳）。
+
+### 公网完整模型对话
+
+1. 本机：`ollama serve` + `python chat_server.py`（默认 `http://127.0.0.1:8765`）
+2. 若需他人通过 GitHub 链接访问同一后端：用 ngrok 暴露 8765，并把 iframe 改为  
+   `assets/amadeus-work/index.html?api=https://你的隧道地址`
+3. Render 等云平台无法自带 Ollama，需自行配置 `OPENAI_API_KEY` 等（见 `llm/providers.py`）或仅作 API 中转。
+
 ## 输出
 
 - `results/dialogue_full_*.json` — 原始对话 + AMADEUS 内部信号
