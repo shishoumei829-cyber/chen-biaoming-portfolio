@@ -2430,11 +2430,12 @@ body.eva-skin .ama-chapter-break__title{
 .da-ds-wrap{position:relative;isolation:isolate}
 .da-ds-bg{
   position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  min-height:calc(100vw * 4);
 }
 .da-ds-bg__img{
   width:100%;height:auto;display:block;
-  will-change:transform;
-  filter:saturate(1.04) contrast(1.06);
+  transform:none;
+  filter:saturate(1.02) contrast(1.04);
 }
 .da-ds-bg__grain{
   position:absolute;inset:0;opacity:.12;mix-blend-mode:overlay;
@@ -2560,9 +2561,12 @@ body.eva-skin #digitalark .ama-palace-room,
 body.eva-skin #digitalark .da-system-card,
 body.eva-skin #digitalark .da-arch-flow,
 body.eva-skin #digitalark .da-layer{
-  background:var(--ds-glass)!important;border-color:var(--ds-line)!important;
+  background:var(--ds-glass)!important;border:1px solid var(--ds-line)!important;
   color:var(--ds-muted)!important;backdrop-filter:blur(14px);
+  box-shadow:0 10px 36px rgba(0,0,0,.28)!important;
+  transform:none!important;
 }
+body.eva-skin #digitalark .ama-flow-v2>div span{color:var(--ds-muted)!important}
 body.eva-skin #digitalark .ama-flow-v2 i{
   background:rgba(255,255,255,.08)!important;color:rgba(255,255,255,.65)!important;
 }
@@ -3883,18 +3887,6 @@ const revealObs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
 const daChapter=document.getElementById('digitalark');
 if(daChapter){
-  const daBgImg=daChapter.querySelector('.da-ds-bg__img');
-  const daWrap=daChapter.querySelector('.da-ds-wrap');
-  function syncDaBg(){
-    if(!daBgImg||!daWrap) return;
-    const imgH=daBgImg.offsetHeight;
-    const chH=daChapter.offsetHeight;
-    const maxShift=Math.max(0,imgH-chH);
-    const top=daChapter.getBoundingClientRect().top;
-    const span=Math.max(1,chH-innerHeight);
-    const p=Math.min(1,Math.max(0,-top/span));
-    daBgImg.style.transform='translate3d(0,'+(-p*maxShift)+'px,0)';
-  }
   const daInObs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{ daChapter.classList.toggle('in-view',entry.isIntersecting); });
   },{threshold:0,rootMargin:'0px'});
@@ -3910,9 +3902,6 @@ if(daChapter){
     el.style.transitionDelay=(i*.05)+'s';
     daFadeObs.observe(el);
   });
-  window.addEventListener('scroll',syncDaBg,{passive:true});
-  window.addEventListener('resize',syncDaBg,{passive:true});
-  syncDaBg();
 }
 requestAnimationFrame(primeReveal);
 window.addEventListener('load',primeReveal,{passive:true});
