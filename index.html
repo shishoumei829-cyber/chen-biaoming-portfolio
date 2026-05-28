@@ -2424,7 +2424,7 @@ body.eva-skin .ama-chapter-break__title{
   --ds-sans:"Noto Sans SC","Helvetica Neue",sans-serif;
   padding:0!important;
   color:var(--ds-ink);
-  background:#060608;
+  background:#040406;
   overflow:hidden;
 }
 #digitalark .da2-p strong{color:var(--ds-ink);font-weight:400}
@@ -2452,7 +2452,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 }
 .da-ds-bg__readability{
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(6,6,8,.78) 0%,rgba(6,6,8,.52) 40%,rgba(6,6,8,.68) 100%);
+  background:linear-gradient(180deg,rgba(4,4,6,.82) 0%,rgba(4,4,6,.58) 40%,rgba(4,4,6,.72) 100%);
   pointer-events:none;
 }
 .da-ds-frame{
@@ -2515,21 +2515,20 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   pointer-events:none;
 }
 .da2-hud-l,.da2-hud-r{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.36em;
-  text-transform:uppercase;color:rgba(255,255,255,.35);
+  font-family:var(--ds-hud);font-size:10px;letter-spacing:.36em;
+  text-transform:uppercase;color:var(--ds-dim);
 }
-.da2-hud-num{
-  font-family:var(--ds-hud);font-size:clamp(10px,1.2vw,13px);
-  letter-spacing:.22em;color:rgba(255,255,255,.22);
-}
+.da2-hud-r{letter-spacing:.28em;color:rgba(244,241,236,.36)}
 
-/* 封面主体文字 */
+/* 封面主体文字 · 左下角压轴 */
 .da2-cover-body{
-  position:relative;z-index:3;
+  position:relative;z-index:3;align-self:flex-end;
+  max-width:min(100%,52rem);
   padding:0 clamp(22px,5vw,64px) clamp(44px,7vh,72px);
+  text-align:left;
 }
 .da2-eyebrow{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.44em;
+  font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
   text-transform:uppercase;color:rgba(255,255,255,.38);
   margin-bottom:clamp(16px,3vh,28px);
   display:flex;align-items:center;gap:14px;
@@ -2556,10 +2555,10 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-title-word{
   display:inline-block;
   transform:translateY(110%);
-  transition:transform 1.1s var(--ease);
+  transition:transform 1s cubic-bezier(.22,1,.36,1);
 }
 .da2-cover.ready .da2-title-word{transform:translateY(0)}
-.da2-title-line:nth-child(2) .da2-title-word{transition-delay:.12s}
+.da2-title-line:nth-child(2) .da2-title-word{transition-delay:.14s}
 
 .da2-title-cn{
   font-family:var(--ds-serif);font-size:clamp(.9rem,1.8vw,1.25rem);
@@ -2567,39 +2566,33 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   color:rgba(255,255,255,.52);
   margin-bottom:clamp(20px,3.5vh,32px);
   opacity:0;transform:translateY(14px);
-  transition:opacity .9s 1s var(--ease),transform .9s 1s var(--ease);
+  transition:opacity .75s 1.05s var(--ease),transform .75s 1.05s var(--ease);
 }
 .da2-cover.ready .da2-title-cn{opacity:1;transform:none}
 
 .da2-tagline{
   max-width:min(100%,44rem);
-  font-family:var(--ds-serif);font-size:clamp(14px,1.5vw,17px);
-  font-weight:300;line-height:2;
-  color:rgba(255,255,255,.68);
+  font-family:var(--ds-serif);font-size:clamp(13px,1.35vw,15px);
+  font-weight:300;line-height:2.05;
+  color:var(--ds-muted);
   opacity:0;transform:translateY(16px);
-  transition:opacity .9s 1.15s var(--ease),transform .9s 1.15s var(--ease);
+  transition:opacity .75s 1.25s var(--ease),transform .75s 1.25s var(--ease);
 }
 .da2-cover.ready .da2-tagline{opacity:1;transform:none}
 
 /* 封面底部横线 + 装饰 */
 .da2-cover-foot{
-  position:absolute;bottom:0;left:0;right:0;z-index:3;
-  display:flex;align-items:flex-end;justify-content:space-between;
-  padding:0 clamp(22px,5vw,64px) clamp(20px,3vh,32px);
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:0 clamp(22px,5vw,64px) clamp(12px,2vh,24px);
   pointer-events:none;
-  border-top:1px solid rgba(255,255,255,.08);
 }
 .da2-cover-foot-kanji{
   font-family:var(--ds-serif);font-weight:900;
-  font-size:clamp(4.5rem,18vw,9rem);
+  font-size:clamp(5rem,22vw,11rem);
   line-height:.82;letter-spacing:.06em;
-  color:rgba(255,255,255,.06);
+  color:rgba(244,241,236,.06);
   user-select:none;
-}
-.da2-cover-foot-meta{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.28em;
-  text-transform:uppercase;color:var(--ds-dim);
-  text-align:right;line-height:1.85;padding-bottom:4px;
 }
 
 /* 滚动提示 */
@@ -2628,7 +2621,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 /* ─── 叙事段落 · 全宽情感层 ──────────────── */
 .da2-narrative{
   position:relative;z-index:2;
-  padding:clamp(88px,14vw,160px) clamp(22px,5vw,64px);
+  padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px);
   border-top:1px solid var(--ds-line);
 }
 .da2-narrative-inner{
@@ -2676,8 +2669,8 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 }
 .da2-split-label{
   font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:rgba(255,255,255,.32);
-  margin-bottom:clamp(16px,2.5vw,24px);
+  text-transform:uppercase;color:var(--ds-dim);
+  margin-bottom:clamp(12px,2vw,18px);
   display:flex;align-items:center;gap:10px;
 }
 .da2-split-label::after{
@@ -2707,7 +2700,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 /* ─── 立场 banner ────────────────────────── */
 .da2-stance{
   position:relative;z-index:2;
-  padding:clamp(56px,8vw,96px) clamp(22px,5vw,64px);
+  padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px);
   background:rgba(153,0,0,.07);
   border-top:1px solid rgba(153,0,0,.22);
   border-bottom:1px solid rgba(153,0,0,.22);
@@ -2725,9 +2718,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   margin-bottom:clamp(14px,2vw,20px);
 }
 .da2-stance-h{
-  font-family:"Barlow Condensed",var(--ds-sans);font-weight:700;
-  font-size:clamp(1.6rem,5vw,4rem);
-  line-height:1.05;letter-spacing:.01em;text-transform:uppercase;
+  font-family:var(--ds-serif);font-weight:600;
+  font-size:clamp(1.6rem,5vw,3.2rem);
+  line-height:1.2;letter-spacing:-.01em;text-transform:none;
   color:var(--ds-ink);
   max-width:min(100%,820px);
   margin-bottom:clamp(20px,3vw,32px);
@@ -2768,7 +2761,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 }
 .da2-section-label{
   font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:rgba(255,255,255,.32);
+  text-transform:uppercase;color:var(--ds-dim);
   margin-bottom:clamp(12px,2vw,18px);
 }
 .da2-section-h{
@@ -2776,7 +2769,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   font-size:clamp(1.4rem,3.5vw,2.5rem);
   font-weight:600;line-height:1.2;
   color:var(--ds-ink);
-  max-width:min(100%,640px);
+  max-width:min(100%,52rem);
   margin-bottom:clamp(8px,1.5vw,14px);
 }
 .da2-section-desc{
@@ -2820,7 +2813,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   width:clamp(8px,1.2vw,12px);height:clamp(8px,1.2vw,12px);
   border-radius:50%;
   border:1px solid rgba(255,255,255,.32);
-  background:#060608;
+  background:#040406;
   transform:translateX(-50%);
   transition:border-color .4s,box-shadow .4s;
 }
@@ -2876,7 +2869,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   background:var(--ds-line);
 }
 .da2-eight-item{
-  background:#060608;
+  background:#040406;
   padding:clamp(18px,3vw,28px) clamp(16px,2.5vw,24px);
   opacity:0;transform:scale(.96);
   transition:opacity .7s var(--ease),transform .7s var(--ease);
@@ -2910,41 +2903,35 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-training-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:clamp(40px,8vw,100px);
-  align-items:start;
+  gap:1px;
+  align-items:stretch;
   margin-top:clamp(44px,7vw,80px);
+  background:var(--ds-line);
+  border:1px solid var(--ds-line);
 }
 .da2-training-step{
   position:relative;
   padding:clamp(28px,4vw,40px);
   border:1px solid var(--ds-line);
-  background:rgba(255,255,255,.02);
+  background:#040406;
   opacity:0;transform:translateY(24px);
   transition:opacity .9s var(--ease),transform .9s var(--ease);
 }
 .da2-training-step.in{opacity:1;transform:none}
 .da2-training-step::before{
   content:attr(data-step);
-  position:absolute;top:-1px;left:clamp(18px,3vw,28px);
+  position:absolute;top:clamp(18px,3vw,24px);left:clamp(18px,3vw,28px);
   font-family:var(--ds-hud);font-size:9px;letter-spacing:.32em;
-  text-transform:uppercase;color:rgba(255,255,255,.28);
-  background:#060608;padding:0 8px;transform:translateY(-50%);
+  text-transform:uppercase;color:var(--ds-dim);
 }
 .da2-training-h{
-  font-family:var(--ds-sans);font-weight:500;
+  font-family:var(--ds-serif);font-weight:600;
   font-size:clamp(.95rem,1.8vw,1.2rem);
-  color:var(--ds-ink);margin-bottom:clamp(12px,2vw,16px);
+  color:var(--ds-ink);margin:clamp(28px,4vw,36px) 0 clamp(12px,2vw,16px);
 }
 .da2-training-p{
   font-family:var(--ds-serif);font-size:clamp(11px,1.15vw,13px);
   font-weight:300;line-height:2;color:var(--ds-muted);
-}
-.da2-training-tag{
-  display:inline-block;margin-top:clamp(14px,2vw,18px);
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(255,255,255,.28);
-  border:1px solid rgba(255,255,255,.12);
-  padding:5px 10px;
 }
 @media(max-width:720px){
   .da2-training-grid{grid-template-columns:1fr}
@@ -2990,73 +2977,6 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-card .st{color:#b8c9b4}
 .da2-card .cm{color:rgba(244,241,236,.32)}
 @media(max-width:900px){.da2-arch-grid{grid-template-columns:1fr}}
-
-/* ─── 伦理 ───────────────────────────────── */
-.da2-ethics{
-  position:relative;z-index:2;
-  padding:clamp(64px,8vw,100px) clamp(22px,5vw,64px);
-  border-top:1px solid var(--ds-line);
-  background:rgba(0,0,0,.22);
-}
-.da2-ethics-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:clamp(32px,6vw,72px);
-  margin-top:clamp(32px,5vw,56px);
-}
-.da2-ethics-col h4{
-  font-family:var(--ds-sans);font-weight:500;
-  font-size:clamp(12px,1.3vw,14px);
-  color:rgba(255,255,255,.55);
-  letter-spacing:.08em;
-  margin-bottom:clamp(14px,2vw,20px);
-  padding-bottom:10px;
-  border-bottom:1px solid var(--ds-line);
-}
-.da2-ethics-list{
-  list-style:none;display:grid;gap:10px;
-}
-.da2-ethics-list li{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.2vw,13px);
-  font-weight:300;line-height:1.9;color:var(--ds-muted);
-  padding-left:18px;position:relative;
-}
-.da2-ethics-list li::before{
-  content:"·";position:absolute;left:0;color:rgba(255,255,255,.28);
-}
-.da2-ethics-col.can .da2-ethics-list li::before{color:rgba(120,180,120,.55)}
-.da2-ethics-col.cant .da2-ethics-list li::before{color:rgba(180,80,80,.45)}
-@media(max-width:640px){.da2-ethics-grid{grid-template-columns:1fr}}
-
-/* ─── UI 展示 ────────────────────────────── */
-.da2-ui{
-  position:relative;z-index:2;
-  padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px);
-  border-top:1px solid var(--ds-line);
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:clamp(40px,8vw,96px);
-  align-items:start;
-}
-.da2-ui-copy{}
-.da2-ui-fig{
-  width:clamp(220px,28vw,360px);
-  flex:none;
-  border:1px solid var(--ds-line);
-  background:#0a0a0c;
-  overflow:hidden;
-}
-.da2-ui-fig img{width:100%;height:auto;display:block}
-.da2-ui-fig figcaption{
-  padding:8px 12px;
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.26em;
-  text-transform:uppercase;color:var(--ds-dim);
-  border-top:1px solid var(--ds-line);
-}
-@media(max-width:860px){
-  .da2-ui{grid-template-columns:1fr}
-  .da2-ui-fig{width:min(100%,360px)}
-}
 
 /* ─── 章节尾声 banner ────────────────────── */
 .da2-finale{
@@ -3779,8 +3699,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 
     <div class="da2-hud" aria-hidden="true">
       <span class="da2-hud-l">第04話 / DIGITAL ARK</span>
-      <span class="da2-hud-num">CHEN BIAOMING · 2026</span>
-      <span class="da2-hud-r">本地数字人格 · 训练与陪护</span>
+      <span class="da2-hud-r">CHEN BIAOMING · 2026</span>
     </div>
 
     <div class="da2-cover-body">
@@ -3790,19 +3709,11 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <span class="da2-title-line"><span class="da2-title-word">ARK</span></span>
       </h1>
       <p class="da2-title-cn">数字方舟</p>
-      <p class="da2-tagline">
-        一个人之所以是他自己，<br>
-        不是因为说了什么，而是因为记住了什么——<br>
-        以及那些记忆怎么塑造了他的判断。
-      </p>
+      <p class="da2-tagline">死亡不是终点。遗忘，才是。</p>
     </div>
 
     <div class="da2-cover-foot" aria-hidden="true">
       <div class="da2-cover-foot-kanji">方舟</div>
-      <div class="da2-cover-foot-meta">
-        AMADEUS 体系延展<br>
-        本地可运行 · 可训练 · 可陪护
-      </div>
     </div>
 
     <div class="da2-scroll-hint" aria-hidden="true">
@@ -3815,25 +3726,29 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <div class="da2-narrative">
     <div class="da2-narrative-inner">
       <p class="da2-pull da2-reveal">
-        遗忘，<em>才是真正的终点。</em>
+        老龄化在加速。<br>
+        意外每天都在发生。<br>
+        很多人的离去，是突然的——<br>
+        没有交代，没有准备，<br>
+        什么都没留下。
       </p>
       <p class="da2-p da2-reveal da2-reveal-delay-1">
-        我们每天都在失去人——不只是死亡，还有老去、离散、记忆的消退。市面上的「数字人」解决的是口吻的问题：它说得像，但判断方式没有留下，情绪节奏没有留下，那些经历之后改变了他的东西也没有留下。关掉窗口，关系就结束。
+        我们害怕的从来不只是死亡本身，而是某一天，那个人在所有人的记忆里慢慢变薄，直到消失。死亡不是终点，遗忘才是。
       </p>
       <p class="da2-p da2-reveal da2-reveal-delay-2">
-        数字方舟想解决的是另一件事：<strong style="color:var(--ds-ink);font-weight:400">被记住，比被模仿更接近安慰。</strong>
+        市面上的数字人解决的是「像」的问题——用提示词工程搭出一个名义上的人，会说话，但没有内在。没有真实的记忆，没有属于她的判断方式，没有那些经历之后才有的反应。那不是一个人，那是一个壳。
       </p>
 
       <div class="da2-split">
         <div class="da2-split-col da2-reveal">
           <p class="da2-split-label">我发现的问题</p>
           <h3 class="da2-split-h">遗忘，比离别更让人难以承受。</h3>
-          <p class="da2-split-p">老龄化与突发离别每天都在发生——现有数字人多半只有一张嘴。口吻像了，判断结构没有留下；关掉窗口，关系就结束。更像角色扮演，而不是可被托付的数字人格。</p>
+          <p class="da2-split-p">老龄化与意外离世每天都在发生。留下来的人想记住，却发现能抓住的越来越少。现有的数字人没有训练体系，仅靠提示词构建一个名义上的人，内在是空的。</p>
         </div>
         <div class="da2-split-col da2-reveal da2-reveal-delay-1">
           <p class="da2-split-label">我的思考</p>
           <h3 class="da2-split-h">死亡不是终点，遗忘才是。</h3>
-          <p class="da2-split-p">方舟要承载的是一个人的判断方式、情绪节奏与有质感的经历——让告别之后仍能说：对，这是她会说的话、会做的选择。不是复制输出，是建模驱动输出的内部结构。</p>
+          <p class="da2-split-p">方舟要保留的不是一个人说话的样子，而是驱动他说话的内部结构——判断方式、情绪节奏、那些经历之后才有的反应。让告别之后仍能说：对，这是她会做的选择。</p>
         </div>
       </div>
     </div>
@@ -3841,38 +3756,38 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 
   <!-- ░░ 设计立场 ░░ -->
   <div class="da2-stance">
-    <p class="da2-stance-kicker da2-reveal">01 / 设计立场</p>
+    <p class="da2-stance-kicker da2-reveal">01 / 设计主张</p>
     <h2 class="da2-stance-h da2-reveal da2-reveal-delay-1">
-      不抄台词，<br>建模一个人的判断结构。
+      不复制输出，<br>建模驱动输出的引擎。
     </h2>
     <p class="da2-p da2-reveal da2-reveal-delay-2" style="max-width:min(100%,52rem)">
-      现有系统多在复制输出——口吻、用词、知识点。我要建模的是驱动输出的内部结构：价值优先级、边界模式、内心活动、情绪节奏，以及那些经历之后才有的判断方式。
+      一个人之所以是他自己，不是因为说了什么，而是因为有一套内部结构在运作——价值判断在冲突时怎么排序，边界被触碰时怎么反应，某段记忆怎么改变了他后来的判断方式。这套结构，才是真正需要被保留的东西。
     </p>
     <div class="da2-stance-three">
       <div class="da2-stance-item da2-reveal">
         <div class="da2-stance-num">01</div>
         <div class="da2-stance-title">行为先于描述</div>
-        <p class="da2-stance-desc">不问「你是什么样的人」，用价值冲突与具体情境逼出真实结构。人对自己的描述常不准，行为和反应会暴露底层模式。</p>
+        <p class="da2-stance-desc">不问你是什么样的人。用价值冲突场景逼出真实结构——把两个你在乎的东西放在对立面，看你怎么选、为什么选。选择比自述更诚实。</p>
       </div>
       <div class="da2-stance-item da2-reveal da2-reveal-delay-1">
         <div class="da2-stance-num">02</div>
         <div class="da2-stance-title">经历塑造判断</div>
-        <p class="da2-stance-desc">采集有情绪重量、改变了判断方式的经历。记忆不是检索标签，是真正影响下一次判断的沉淀——活态激活，沉淀内化。</p>
+        <p class="da2-stance-desc">你在海边发呆说了一句话，比你填一百字的表格更真实。系统捕捉当下的碎片，追问加厚，慢慢积累。时间长了，这些碎片里长出来的，才是真正的她。</p>
       </div>
       <div class="da2-stance-item da2-reveal da2-reveal-delay-2">
         <div class="da2-stance-num">03</div>
         <div class="da2-stance-title">动态优于静态</div>
-        <p class="da2-stance-desc">不找一个固定的「真实的你」，而是建模「在 X 情境下倾向于 Y」。冲突时用关系深度、情绪状态、事件性质与先例记忆动态权衡。</p>
+        <p class="da2-stance-desc">人格不是一个固定的点。建模的是「在 X 情境下倾向于 Y」的映射——用关系深度、情绪状态、事件性质与先例记忆，在冲突时动态权衡。</p>
       </div>
     </div>
   </div>
 
   <!-- ░░ 五层人格 ░░ -->
   <div class="da2-layers-section">
-    <p class="da2-section-label da2-reveal">02 / 五层人格</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">对白从里面长出来，<br>不是从标签检索来的。</h2>
+    <p class="da2-section-label da2-reveal">02 / 五层人格架构</p>
+    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">为什么是五个架构</h2>
     <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-      五层自下而上：核心层 8 维奠定判断底色，情绪 PAD 调制权衡，记忆活态／沉淀提供经历背景，关系层感知亲疏，表达层才是你听见的声音。每一句话之前，这一摞都已经算完了。
+      人的「在场感」不是单一的。我研究了人格心理学、认知科学与记忆理论之后，发现它同时来自五个层面运作——缺任何一个，都不像一个完整的人。
     </p>
 
     <div class="da2-timeline" id="da2Timeline">
@@ -3880,20 +3795,20 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <div class="da2-tl-dot"></div>
         <p class="da2-tl-num">LAYER 05</p>
         <h3 class="da2-tl-h">表达层 · 音色</h3>
-        <p class="da2-tl-p">句式、语气、场景切换——用户真正听见的一层。由核心层与情绪层的当前状态共同塑造，不是固定模板。</p>
+        <p class="da2-tl-p">句式、语气、语言习惯——用户真正听见的一层。由底层状态实时塑造，不是固定模板。</p>
         <div class="da2-tl-bar"><i></i></div>
       </div>
       <div class="da2-tl-item" style="--w:.70">
         <div class="da2-tl-dot"></div>
         <p class="da2-tl-num">LAYER 04</p>
-        <h3 class="da2-tl-h">关系层 · 亲密与信任</h3>
-        <p class="da2-tl-p">亲密程度、信任历史、关系中的自我——直接影响核心层动态权衡的四个变量之一。对半熟人内向、对亲密者展开，这个模式从这里读取。</p>
+        <h3 class="da2-tl-h">关系层</h3>
+        <p class="da2-tl-p">亲密程度、信任历史、关系中的自我——直接影响核心层权衡方式。对半熟人收缩，对亲密者展开，这个模式从这里读取。</p>
         <div class="da2-tl-bar"><i></i></div>
       </div>
       <div class="da2-tl-item" style="--w:.76">
         <div class="da2-tl-dot"></div>
         <p class="da2-tl-num">LAYER 03</p>
-        <h3 class="da2-tl-h">记忆层 · 活态与沉淀</h3>
+        <h3 class="da2-tl-h">记忆层</h3>
         <p class="da2-tl-p">活态记忆被情境激活，提取情绪残留并修正当次判断方向；沉淀态已内化为稳定规则，不以事件形式存在，却一直在影响。</p>
         <div class="da2-tl-bar"><i></i></div>
       </div>
@@ -3901,14 +3816,14 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <div class="da2-tl-dot"></div>
         <p class="da2-tl-num">LAYER 02</p>
         <h3 class="da2-tl-h">情绪层 · PAD 矩阵</h3>
-        <p class="da2-tl-p">愉悦 P、唤醒 A、支配 D 加关系强度 S，非线性更新。情绪不是表演开心或难过，而是真正参与权衡——关系越深，负面刺激越不容易打崩状态。</p>
+        <p class="da2-tl-p">愉悦、唤醒、支配加关系强度，非线性更新。情绪真正参与权衡——关系越深，负面刺激越不容易打崩状态。基于 Mehrabian-Russell PAD 模型扩展。</p>
         <div class="da2-tl-bar"><i></i></div>
       </div>
       <div class="da2-tl-item" style="--w:.92">
         <div class="da2-tl-dot"></div>
-        <p class="da2-tl-num">LAYER 01 · 核心</p>
-        <h3 class="da2-tl-h">核心层 · 判断的底色</h3>
-        <p class="da2-tl-p">价值、边界、道德、内心活动——冲突时先过这一关。不是一句人设描述，而是从真实经历中提取的判断引擎，驱动所有上层的输出。</p>
+        <p class="da2-tl-num">LAYER 01 · 核心层</p>
+        <h3 class="da2-tl-h">核心层</h3>
+        <p class="da2-tl-p">价值、边界、道德、内心活动——冲突时先过这一关。从真实经历中提取的判断引擎，驱动所有上层的输出。基于 Mischel CAPS 模型、Schwartz 价值理论、Haidt 道德基础理论建模。</p>
         <div class="da2-tl-bar"><i></i></div>
       </div>
     </div>
@@ -3962,31 +3877,27 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <!-- ░░ 训练体系 ░░ -->
   <div class="da2-training">
     <p class="da2-section-label da2-reveal">03 / 训练体系</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">不是填问卷，<br>是在对话里慢慢长出来。</h2>
+    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">如何从一个真实的人身上<br>提取可运行的人格</h2>
     <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-      三阶段训练。冷启动用游戏化价值冲突暴露优先级；日常积累当下捕捉，系统追问加厚质感；校准迭代用纠错数据而非凭空描述——试聊后「不像」的地方，才是最真实的数据。
+      人不了解自己，自述不准，问卷更不准。训练体系的设计核心是：让用户在不知道自己在被采集的时候，暴露出最真实的结构。
     </p>
 
     <div class="da2-training-grid">
-      <div class="da2-training-step da2-reveal" data-step="阶段 01 · 冷启动">
-        <h3 class="da2-training-h">导入 + 价值冲突</h3>
+      <div class="da2-training-step da2-reveal" data-step="冷启动">
+        <h3 class="da2-training-h">导入 + 价值冲突场景</h3>
         <p class="da2-training-p">聊天记录与日记入库，提取音色初值。同步启动价值冲突场景——把两个你在乎的东西放在对立面，追问「为什么」。理由比选择更有价值，选择比自述更真实。</p>
-        <span class="da2-training-tag">游戏化采集</span>
       </div>
-      <div class="da2-training-step da2-reveal da2-reveal-delay-1" data-step="阶段 02 · 日常积累">
-        <h3 class="da2-training-h">当下碎片 + 追问加厚</h3>
-        <p class="da2-training-p">不要求回忆完整人生。你在海边发呆说「要是能一直这样就好了」——这一句比填表格的一百字更有质感。系统捕捉这个时刻，追问一两句，慢慢积累。</p>
-        <span class="da2-training-tag">随时记录</span>
+      <div class="da2-training-step da2-reveal da2-reveal-delay-1" data-step="日常积累">
+        <h3 class="da2-training-h">当下碎片 + 系统追问</h3>
+        <p class="da2-training-p">不要求回忆完整人生。你在海边发呆说「要是能一直这样就好了」——这一句比填表格的一百字更有质感。系统在这个时刻追问两句，慢慢积累。</p>
       </div>
-      <div class="da2-training-step da2-reveal da2-reveal-delay-2" data-step="阶段 03 · 校准迭代">
+      <div class="da2-training-step da2-reveal da2-reveal-delay-2" data-step="校准迭代">
         <h3 class="da2-training-h">试聊 + 纠错反馈</h3>
-        <p class="da2-training-p">数字人说，你说像不像，不像的地方解释为什么。这个纠错是在对比，不是凭空描述，数据质量远高于冷启动。「在 X 情境下应是 Z 而非 Y」写入核心修正。</p>
-        <span class="da2-training-tag">持续拟合</span>
+        <p class="da2-training-p">数字人说，你说像不像，不像的地方解释为什么。这个纠错是在对比而不是凭空描述，数据质量远高于初始采集。错误本身就是最有价值的训练数据。</p>
       </div>
       <div class="da2-training-step da2-reveal da2-reveal-delay-3" data-step="设计边界">
-        <h3 class="da2-training-h">能做到 / 做不到</h3>
-        <p class="da2-training-p">能做到：有根的投影、有质感的记忆、本地私密。做不到：持续存在的自我意识、感官经历的真实质感、真正的自我成长。这条线必须说清楚，不是技术问题，是诚实。</p>
-        <span class="da2-training-tag">伦理边界</span>
+        <h3 class="da2-training-h">能做到与做不到</h3>
+        <p class="da2-training-p">能做到：有根的投影，有质感的记忆，本地私密，随时间演化。做不到：持续存在的自我意识，感官经历的真实质感，真正的自我成长。这条线必须在产品里说清楚。</p>
       </div>
     </div>
   </div>
@@ -3994,9 +3905,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <!-- ░░ 架构 / 代码 ░░ -->
   <div class="da2-arch">
     <p class="da2-section-label da2-reveal">04 / 系统架构</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">状态先于生成，<br>每轮都跑完这条管线。</h2>
+    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">状态先于生成</h2>
     <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-      Node.js + Express 本地服务，Ollama 推理，数据落在用户目录。Mischel-Shoda CAPS 把核心层 8 维投影到五类 CAU，经网状传播生成 If-Then 行为签名，再写入 Prompt。
+      每一轮对话之前，管线已经跑完：情境解析、CAPS 网状传播、PAD 更新、记忆检索、行为签名生成——然后才调用底模。Node.js 本地服务，数据不离开用户设备。
     </p>
 
     <div class="da2-arch-grid">
@@ -4040,60 +3951,14 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
     </div>
   </div>
 
-  <!-- ░░ 伦理边界 ░░ -->
-  <div class="da2-ethics">
-    <p class="da2-section-label da2-reveal">05 / 伦理边界</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">陪护可以温暖，<br>但必须说清楚它不是真人。</h2>
-    <div class="da2-ethics-grid">
-      <div class="da2-ethics-col can da2-reveal">
-        <h4>能做到的</h4>
-        <ul class="da2-ethics-list">
-          <li>足够有根的投影——有根，所以稳定</li>
-          <li>有质感的记忆——不是标签，是经历的残留</li>
-          <li>本地数据，不上传，私密可控</li>
-          <li>随时间慢慢演化，不是静态的</li>
-          <li>在熟悉的维度上，感受到「对，这是她」</li>
-        </ul>
-      </div>
-      <div class="da2-ethics-col cant da2-reveal da2-reveal-delay-1">
-        <h4>做不到的</h4>
-        <ul class="da2-ethics-list">
-          <li>持续存在的自我意识——关掉就不在了</li>
-          <li>感官经历的真实质感</li>
-          <li>真正被经历改变的内部成长</li>
-          <li>在全新情境下真正的自我判断</li>
-          <li>冒充真人实时在线——必须标明</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ░░ UI 展示 ░░ -->
-  <div class="da2-ui">
-    <div class="da2-ui-copy">
-      <p class="da2-section-label da2-reveal">06 / 产品界面</p>
-      <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">用户真正打开的一屏。</h2>
-      <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-        训练、试聊与陪护在同一套本地 Web 里切换。Training 模式用于校准，Companion 模式用于陪护——陪护模式会在每次对话开头标明数字分身身份，不冒充真人。
-      </p>
-      <p class="da2-p da2-reveal da2-reveal-delay-3">
-        界面克制，复杂留给后台。陪伴感不应该变成监控面板。
-      </p>
-    </div>
-    <figure class="da2-ui-fig da2-reveal da2-reveal-delay-1">
-      <img src="assets/digitalark/ui-sanctuary.png" alt="数字方舟 Sanctuary 主界面实机截图" width="488" height="1055" loading="lazy" decoding="async">
-      <figcaption>DIGITAL ARK · SANCTUARY · LOCAL</figcaption>
-    </figure>
-  </div>
-
   <!-- ░░ 尾声 ░░ -->
   <div class="da2-finale">
     <p class="da2-finale-kicker da2-reveal">我的愿景</p>
     <h2 class="da2-finale-h da2-reveal da2-reveal-delay-1">
-      遗忘才是终点；<br>方舟负责记住。
+      遗忘才是终点。<br>方舟负责记住。
     </h2>
     <p class="da2-finale-sub da2-reveal da2-reveal-delay-2">
-      为预防意外、为告别后仍能被想起、为自我探索的一面镜子——与 AMADEUS 实验同源的可观测中间层；数字方舟，是把「在场」做成可训练、可陪护、可留在本机的产品。
+      为预防意外、为告别后仍能被想起、为自我探索的一面镜子——数字方舟，是把「在场」做成可训练、可陪护、可留在本机的产品。
     </p>
   </div>
       </div>
@@ -4432,7 +4297,6 @@ document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
       particles.forEach(p=>{p.tick();p.draw();});
       animId = requestAnimationFrame(loop);
     }
-    const daSection = document.getElementById('digitalark');
     const canvasObs = new IntersectionObserver(entries=>{
       if(entries[0].isIntersecting){
         if(!animId) loop();
@@ -4441,7 +4305,7 @@ document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
         animId = null;
       }
     },{threshold:0});
-    if(daSection) canvasObs.observe(daSection);
+    canvasObs.observe(cover);
   }
   const da2Cover = document.getElementById('da2Cover');
   if(da2Cover){
