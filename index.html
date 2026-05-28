@@ -8,7 +8,7 @@
 <title>陈彪明 · 把感知做成产品 · 工业设计作品集</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,500&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,500&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -2420,12 +2420,23 @@ body.eva-skin .ama-chapter-break__title{
   --ds-red:rgba(153,0,0,.9);
   --ds-red-glow:rgba(153,0,0,.32);
   --ds-hud:"Barlow Condensed","Share Tech Mono",monospace;
+  --ds-strand:"Barlow Condensed",var(--ds-hud);
   --ds-serif:"Noto Serif SC",Georgia,serif;
   --ds-sans:"Noto Sans SC","Helvetica Neue",sans-serif;
   padding:0!important;
   color:var(--ds-ink);
-  background:#040406;
+  background:transparent;
   overflow:hidden;
+}
+#digitalark .da2-p,
+#digitalark .da2-pull,
+#digitalark .da2-section-h,
+#digitalark .da2-stance-h,
+#digitalark .da2-split-h,
+#digitalark .da2-tl-h,
+#digitalark .da2-training-h,
+#digitalark .da2-finale-h{
+  text-shadow:0 2px 28px rgba(0,0,0,.75),0 0 48px rgba(4,4,6,.65);
 }
 #digitalark .da2-p strong{color:var(--ds-ink);font-weight:400}
 body.eva-skin #digitalark .ama-flow-v2>div,
@@ -2450,11 +2461,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   position:absolute;inset:0;opacity:.12;mix-blend-mode:overlay;z-index:2;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.da-ds-bg__readability{
-  position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,rgba(4,4,6,.82) 0%,rgba(4,4,6,.58) 40%,rgba(4,4,6,.72) 100%);
-  pointer-events:none;
-}
+.da-ds-bg__readability{display:none}
 .da-ds-frame{
   position:fixed;inset:clamp(10px,1.6vw,20px);z-index:5;pointer-events:none;
   opacity:0;transition:opacity .6s var(--ease);
@@ -2472,39 +2479,42 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   #digitalark .da2-training-step,#digitalark .da2-card{
     opacity:1!important;transform:none!important;transition:none!important;
   }
-  #digitalark .da2-title-word{transform:none!important}
+  #digitalark .da2-char{opacity:1!important;transform:none!important;animation:none!important}
+  #digitalark .da2-char::after{animation:none!important;opacity:.5!important}
   #digitalark .da2-title-cn,#digitalark .da2-tagline,#digitalark .da2-scroll-hint{opacity:1!important;transform:none!important}
+  #digitalark .da2-pull-line{opacity:1!important;transform:none!important;filter:none!important}
   #digitalark .da2-scroll-line{animation:none!important}
   #da2Canvas{display:none!important}
 }
 
 @media (max-width:768px){
   #digitalark{scroll-margin-top:72px}
+  .da2-title{
+    font-size:clamp(2.2rem,14vw,4.2rem);
+    letter-spacing:.22em;
+    text-indent:.22em;
+  }
+  .da2-title-line{padding-bottom:clamp(32px,10vh,80px)}
+  .da2-char::after,.da2-char::before{height:var(--strand-h,8vh)!important;max-height:72px}
 }
 
 .da2-cover{
   position:relative;min-height:100svh;
   display:flex;flex-direction:column;justify-content:flex-end;
-  overflow:hidden;
+  align-items:stretch;
+  overflow:visible;
 }
-.da2-cover-bg{
-  position:absolute;inset:0;z-index:0;
-  background:
-    radial-gradient(ellipse 120% 70% at 50% -10%,rgba(12,16,24,.0),transparent 60%),
-    radial-gradient(ellipse 60% 80% at 8% 50%,rgba(153,0,0,.06),transparent 55%),
-    radial-gradient(ellipse 50% 60% at 92% 55%,rgba(0,40,176,.06),transparent 50%),
-    #040406;
-}
+.da2-cover-bg{display:none}
 .da2-cover-grain{
   position:absolute;inset:0;z-index:1;pointer-events:none;
-  opacity:.18;mix-blend-mode:overlay;
+  opacity:.08;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* 粒子画布 */
 #da2Canvas{
   position:absolute;inset:0;z-index:1;pointer-events:none;
-  opacity:.55;
+  opacity:.32;
 }
 
 /* HUD 顶部状态栏 */
@@ -2520,63 +2530,137 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 }
 .da2-hud-r{letter-spacing:.28em;color:rgba(244,241,236,.36)}
 
-/* 封面主体文字 · 左下角压轴 */
+/* 封面 · 死亡搁浅式细长字 + 丝线下垂 */
 .da2-cover-body{
-  position:relative;z-index:3;align-self:flex-end;
-  max-width:min(100%,52rem);
-  padding:0 clamp(22px,5vw,64px) clamp(44px,7vh,72px);
-  text-align:left;
+  position:relative;z-index:3;align-self:stretch;
+  width:100%;
+  padding:0 clamp(16px,4vw,48px) clamp(72px,11vh,120px);
+  text-align:center;
 }
 .da2-eyebrow{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:rgba(255,255,255,.38);
-  margin-bottom:clamp(16px,3vh,28px);
+  font-family:var(--ds-hud);font-size:9px;letter-spacing:.52em;
+  text-transform:uppercase;color:rgba(255,255,255,.42);
+  margin-bottom:clamp(20px,4vh,36px);
+  justify-content:center;
   display:flex;align-items:center;gap:14px;
+  opacity:0;
+  transition:opacity .8s .15s var(--ease);
 }
-.da2-eyebrow::before{
-  content:"";flex:none;width:28px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4));
+.da2-cover.ready .da2-eyebrow{opacity:1}
+.da2-eyebrow::before,
+.da2-eyebrow::after{
+  content:"";flex:1;max-width:72px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35));
 }
+.da2-eyebrow::after{transform:scaleX(-1)}
 
 .da2-title{
-  font-family:"Barlow Condensed",var(--ds-sans);
-  font-weight:800;
-  font-size:clamp(5rem,18vw,17rem);
-  line-height:.88;letter-spacing:-.02em;
+  font-family:var(--ds-strand);
+  font-weight:200;
+  font-size:clamp(2.8rem,11.5vw,12.5rem);
+  line-height:1.02;
+  letter-spacing:.42em;
+  text-indent:.42em;
   text-transform:uppercase;
   color:var(--ds-ink);
   display:grid;
-  gap:0;
-  margin-bottom:clamp(28px,4vh,44px);
+  gap:clamp(4px,1vh,12px);
+  margin-bottom:clamp(24px,4vh,40px);
+  filter:drop-shadow(0 8px 40px rgba(0,0,0,.55));
 }
 .da2-title-line{
-  display:block;overflow:hidden;
+  display:block;
+  overflow:visible;
+  padding-bottom:clamp(48px,14vh,160px);
 }
 .da2-title-word{
-  display:inline-block;
-  transform:translateY(110%);
-  transition:transform 1s cubic-bezier(.22,1,.36,1);
+  display:inline-flex;
+  flex-wrap:nowrap;
+  justify-content:center;
+  gap:.06em;
+  letter-spacing:inherit;
 }
-.da2-cover.ready .da2-title-word{transform:translateY(0)}
-.da2-title-line:nth-child(2) .da2-title-word{transition-delay:.14s}
+.da2-char{
+  position:relative;
+  display:inline-block;
+  font:inherit;
+  font-weight:200;
+  line-height:1;
+  opacity:0;
+  transform:translateY(1.15em);
+  transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .95s cubic-bezier(.22,1,.36,1);
+  transition-delay:var(--strand-d,0s);
+}
+.da2-cover.ready .da2-char{
+  opacity:1;
+  transform:translateY(0);
+}
+.da2-char--sp{width:.42em}
+.da2-char::after{
+  content:"";
+  position:absolute;
+  left:50%;top:calc(100% + 2px);
+  width:1px;
+  height:var(--strand-h,14vh);
+  transform:translateX(-50%) scaleY(0);
+  transform-origin:top center;
+  background:linear-gradient(180deg,
+    rgba(244,241,236,.92) 0%,
+    rgba(244,241,236,.35) 42%,
+    rgba(244,241,236,0) 100%
+  );
+  opacity:0;
+  pointer-events:none;
+}
+.da2-cover.ready .da2-char::after{
+  opacity:1;
+  animation:da2StrandGrow 2.2s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:calc(var(--strand-d,0s) + .35s);
+}
+@keyframes da2StrandGrow{
+  0%{transform:translateX(-50%) scaleY(0);opacity:0}
+  100%{transform:translateX(-50%) scaleY(1);opacity:1}
+}
+.da2-cover.ready .da2-char::before{
+  content:"";
+  position:absolute;
+  left:50%;top:100%;
+  width:1px;
+  height:var(--strand-h,14vh);
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,rgba(244,241,236,.55),transparent 70%);
+  animation:da2StrandFlow 5.5s ease-in-out infinite;
+  animation-delay:var(--strand-d,0s);
+  opacity:.35;
+  filter:blur(.3px);
+}
+@keyframes da2StrandFlow{
+  0%,100%{transform:translateX(-50%) scaleY(.72);opacity:.2}
+  45%{transform:translateX(-50%) scaleY(1.06);opacity:.55}
+  70%{transform:translateX(-50%) scaleY(.88);opacity:.35}
+}
 
 .da2-title-cn{
-  font-family:var(--ds-serif);font-size:clamp(.9rem,1.8vw,1.25rem);
-  font-weight:300;letter-spacing:.55em;text-indent:.55em;
-  color:rgba(255,255,255,.52);
-  margin-bottom:clamp(20px,3.5vh,32px);
-  opacity:0;transform:translateY(14px);
-  transition:opacity .75s 1.05s var(--ease),transform .75s 1.05s var(--ease);
+  font-family:var(--ds-hud);font-weight:300;
+  font-size:clamp(10px,1.2vw,12px);
+  letter-spacing:.72em;text-indent:.72em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.48);
+  margin-bottom:clamp(16px,2.5vh,24px);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .75s 1.2s var(--ease),transform .75s 1.2s var(--ease);
 }
 .da2-cover.ready .da2-title-cn{opacity:1;transform:none}
 
 .da2-tagline{
-  max-width:min(100%,44rem);
+  max-width:min(100%,36rem);
+  margin:0 auto;
   font-family:var(--ds-serif);font-size:clamp(13px,1.35vw,15px);
   font-weight:300;line-height:2.05;
+  letter-spacing:.12em;
   color:var(--ds-muted);
-  opacity:0;transform:translateY(16px);
-  transition:opacity .75s 1.25s var(--ease),transform .75s 1.25s var(--ease);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .8s 1.45s var(--ease),transform .8s 1.45s var(--ease);
 }
 .da2-cover.ready .da2-tagline{opacity:1;transform:none}
 
@@ -2636,6 +2720,20 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   letter-spacing:-.01em;
   color:var(--ds-ink);
   margin-bottom:clamp(28px,4vw,44px);
+}
+.da2-pull-line{
+  display:block;
+  opacity:0;
+  transform:translateY(1.1em);
+  filter:blur(6px);
+  transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease);
+  transition-delay:calc(var(--line-i,0) * .11s + .08s);
+}
+.da2-pull.in .da2-pull-line,
+.da2-pull.da2-reveal.in .da2-pull-line{
+  opacity:1;
+  transform:none;
+  filter:none;
 }
 .da2-pull em{
   font-style:italic;
@@ -2701,9 +2799,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-stance{
   position:relative;z-index:2;
   padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px);
-  background:rgba(153,0,0,.07);
-  border-top:1px solid rgba(153,0,0,.22);
-  border-bottom:1px solid rgba(153,0,0,.22);
+  background:rgba(153,0,0,.04);
+  border-top:1px solid rgba(153,0,0,.18);
+  border-bottom:1px solid rgba(153,0,0,.18);
   overflow:hidden;
 }
 .da2-stance::before{
@@ -2728,26 +2826,30 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-stance-three{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:clamp(16px,3vw,36px);
+  gap:1px;
   margin-top:clamp(32px,5vw,56px);
   border-top:1px solid var(--ds-line);
-  padding-top:clamp(24px,4vw,40px);
+  background:var(--ds-line);
 }
-.da2-stance-item{}
+.da2-stance-item{
+  padding:clamp(24px,3.5vw,36px) clamp(18px,2.5vw,28px);
+  background:rgba(4,4,6,.28);
+  backdrop-filter:blur(14px);
+}
 .da2-stance-num{
-  font-family:var(--ds-hud);font-size:clamp(2rem,5vw,3.5rem);
-  font-weight:700;letter-spacing:-.02em;
-  color:rgba(255,255,255,.08);
-  line-height:1;margin-bottom:12px;
+  font-family:var(--ds-hud);font-size:10px;
+  font-weight:400;letter-spacing:.36em;
+  color:var(--ds-dim);
+  line-height:1;margin-bottom:clamp(14px,2vw,18px);
 }
 .da2-stance-title{
-  font-family:var(--ds-sans);font-size:clamp(13px,1.4vw,15px);
-  font-weight:500;color:var(--ds-ink);
-  margin-bottom:8px;
+  font-family:var(--ds-serif);font-size:clamp(14px,1.5vw,16px);
+  font-weight:600;color:var(--ds-ink);
+  margin-bottom:10px;line-height:1.35;
 }
 .da2-stance-desc{
-  font-family:var(--ds-serif);font-size:clamp(11px,1.1vw,13px);
-  font-weight:300;line-height:1.9;color:var(--ds-muted);
+  font-family:var(--ds-serif);font-size:clamp(12px,1.2vw,13px);
+  font-weight:300;line-height:2;color:var(--ds-muted);
 }
 @media(max-width:720px){
   .da2-stance-three{grid-template-columns:1fr}
@@ -2863,32 +2965,34 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-eight{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:1px;
+  gap:clamp(28px,4vw,40px) clamp(16px,3vw,28px);
   margin-top:clamp(40px,6vw,72px);
-  border:1px solid var(--ds-line);
-  background:var(--ds-line);
+  border:none;
+  background:transparent;
 }
 .da2-eight-item{
-  background:#040406;
-  padding:clamp(18px,3vw,28px) clamp(16px,2.5vw,24px);
-  opacity:0;transform:scale(.96);
-  transition:opacity .7s var(--ease),transform .7s var(--ease);
+  background:transparent;
+  padding:0 0 clamp(12px,2vw,16px);
+  border-bottom:1px solid var(--ds-line);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .75s var(--ease),transform .75s var(--ease);
 }
 .da2-eight-item.in{opacity:1;transform:none}
 .da2-eight-dt{
-  font-family:var(--ds-sans);font-size:clamp(12px,1.3vw,14px);
-  font-weight:500;color:var(--ds-ink);
+  font-family:var(--ds-serif);font-size:clamp(13px,1.35vw,15px);
+  font-weight:600;color:var(--ds-ink);
   margin-bottom:6px;
 }
 .da2-eight-dd{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.14em;
+  font-family:var(--ds-hud);font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;
   color:var(--ds-dim);
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .da2-eight-w{
-  font-family:var(--ds-hud);font-size:clamp(1.4rem,3vw,2.2rem);
-  font-weight:700;letter-spacing:-.02em;
-  color:rgba(255,255,255,.08);
+  font-family:var(--ds-strand);font-size:clamp(1.6rem,3.2vw,2.4rem);
+  font-weight:200;letter-spacing:.08em;
+  color:rgba(244,241,236,.22);
   line-height:1;
 }
 @media(max-width:900px){.da2-eight{grid-template-columns:repeat(2,1fr)}}
@@ -2903,31 +3007,34 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 .da2-training-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:1px;
-  align-items:stretch;
+  gap:clamp(40px,6vw,64px) clamp(28px,5vw,48px);
+  align-items:start;
   margin-top:clamp(44px,7vw,80px);
-  background:var(--ds-line);
-  border:1px solid var(--ds-line);
+  background:transparent;
+  border:none;
 }
 .da2-training-step{
   position:relative;
-  padding:clamp(28px,4vw,40px);
-  border:1px solid var(--ds-line);
-  background:#040406;
-  opacity:0;transform:translateY(24px);
-  transition:opacity .9s var(--ease),transform .9s var(--ease);
+  padding:0 0 0 clamp(18px,2.5vw,24px);
+  border:none;
+  border-left:1px solid rgba(255,255,255,.22);
+  background:transparent;
+  opacity:0;transform:translateY(28px);
+  filter:blur(4px);
+  transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease);
 }
-.da2-training-step.in{opacity:1;transform:none}
+.da2-training-step.in{opacity:1;transform:none;filter:none}
 .da2-training-step::before{
   content:attr(data-step);
-  position:absolute;top:clamp(18px,3vw,24px);left:clamp(18px,3vw,28px);
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.32em;
+  display:block;
+  font-family:var(--ds-hud);font-size:9px;letter-spacing:.38em;
   text-transform:uppercase;color:var(--ds-dim);
+  margin-bottom:clamp(14px,2vw,18px);
 }
 .da2-training-h{
   font-family:var(--ds-serif);font-weight:600;
   font-size:clamp(.95rem,1.8vw,1.2rem);
-  color:var(--ds-ink);margin:clamp(28px,4vw,36px) 0 clamp(12px,2vw,16px);
+  color:var(--ds-ink);margin:0 0 clamp(12px,2vw,16px);
 }
 .da2-training-p{
   font-family:var(--ds-serif);font-size:clamp(11px,1.15vw,13px);
@@ -2950,13 +3057,15 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   margin-top:clamp(44px,6vw,72px);
 }
 .da2-card{
-  background:rgba(0,0,0,.38);
-  border:1px solid var(--ds-line);
+  background:rgba(4,4,6,.42);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.14);
   overflow:hidden;
-  opacity:0;transform:translateY(20px);
-  transition:opacity .85s var(--ease),transform .85s var(--ease);
+  opacity:0;transform:translateY(24px);
+  filter:blur(3px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);
 }
-.da2-card.in{opacity:1;transform:none}
+.da2-card.in{opacity:1;transform:none;filter:none}
 .da2-card-head{
   display:flex;align-items:center;justify-content:space-between;
   padding:10px 16px;border-bottom:1px solid var(--ds-line);
@@ -3017,10 +3126,11 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 
 /* ─── 通用滚动动效 ───────────────────────── */
 .da2-reveal{
-  opacity:0;transform:translateY(22px);
-  transition:opacity .9s var(--ease),transform .9s var(--ease);
+  opacity:0;transform:translateY(28px);
+  filter:blur(5px);
+  transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease);
 }
-.da2-reveal.in{opacity:1;transform:none}
+.da2-reveal.in{opacity:1;transform:none;filter:none}
 .da2-reveal-delay-1{transition-delay:.1s}
 .da2-reveal-delay-2{transition-delay:.2s}
 .da2-reveal-delay-3{transition-delay:.32s}
@@ -3681,7 +3791,6 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-coast.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
         <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-mist.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
         <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-foam.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
-        <div class="da-ds-bg__readability"></div>
         <div class="da-ds-bg__grain"></div>
       </div>
       <div class="da-ds-frame" aria-hidden="true">
@@ -3704,9 +3813,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 
     <div class="da2-cover-body">
       <p class="da2-eyebrow">PRESENCE · DIGITAL TWIN · LOCAL FIRST</p>
-      <h1 class="da2-title" id="da2-title">
-        <span class="da2-title-line"><span class="da2-title-word">DIGITAL</span></span>
-        <span class="da2-title-line"><span class="da2-title-word">ARK</span></span>
+      <h1 class="da2-title" id="da2-title" aria-label="DIGITAL ARK">
+        <span class="da2-title-line"><span class="da2-title-word" data-strand>DIGITAL</span></span>
+        <span class="da2-title-line"><span class="da2-title-word" data-strand>ARK</span></span>
       </h1>
       <p class="da2-title-cn">数字方舟</p>
       <p class="da2-tagline">死亡不是终点。遗忘，才是。</p>
@@ -3725,7 +3834,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <!-- ░░ 叙事段落 · 情感入口 ░░ -->
   <div class="da2-narrative">
     <div class="da2-narrative-inner">
-      <p class="da2-pull da2-reveal">
+      <p class="da2-pull da2-reveal" data-pull-lines>
         老龄化在加速。<br>
         意外每天都在发生。<br>
         很多人的离去，是突然的——<br>
@@ -4307,6 +4416,27 @@ document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
     },{threshold:0});
     canvasObs.observe(cover);
   }
+  function da2Strandize(word){
+    const text = word.textContent.trim();
+    word.textContent = '';
+    word.setAttribute('aria-hidden','true');
+    [...text].forEach((ch,i)=>{
+      const s = document.createElement('span');
+      s.className = ch === ' ' ? 'da2-char da2-char--sp' : 'da2-char';
+      s.textContent = ch === ' ' ? '\u00a0' : ch;
+      s.style.setProperty('--strand-d', (i * 0.09) + 's');
+      s.style.setProperty('--strand-h', (7 + Math.random() * 20) + 'vh');
+      word.appendChild(s);
+    });
+  }
+  function da2PullLines(el){
+    const raw = el.innerHTML.split(/<br\s*\/?>/i).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);
+    el.innerHTML = raw.map((line,i)=>
+      '<span class="da2-pull-line" style="--line-i:'+i+'">'+line+'</span>'
+    ).join('');
+  }
+  document.querySelectorAll('[data-strand]').forEach(da2Strandize);
+  document.querySelectorAll('[data-pull-lines]').forEach(da2PullLines);
   const da2Cover = document.getElementById('da2Cover');
   if(da2Cover){
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
