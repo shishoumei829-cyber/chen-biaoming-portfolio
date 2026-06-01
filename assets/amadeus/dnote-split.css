@@ -1,0 +1,84 @@
+/* AMADEUS · 问题/思考 · 双正方 · 参考左方块排版 */
+
+body.eva-skin .ama-dnote--split{
+  min-height:auto!important;padding:0!important;
+  background:transparent!important;overflow:visible!important;
+}
+body.eva-skin .ama-dnote--split .ama-dnote-vrule,
+body.eva-skin .ama-dnote--split .ama-dnote-body{display:none!important}
+body.eva-skin .ama-dnote-split{
+  display:grid;grid-template-columns:1fr 1fr;width:100%;
+  border-top:3px solid #0a0a0a;
+}
+body.eva-skin .ama-dnote-cell{
+  position:relative;aspect-ratio:1/1;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(28px,5vw,52px);
+}
+body.eva-skin .ama-dnote-cell::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.38;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body.eva-skin .ama-dnote-cell--problem{background:#fff!important}
+body.eva-skin .ama-dnote-cell--think{
+  background:#f7f7f7!important;
+  border-left:1px solid rgba(10,10,10,.08);
+}
+body.eva-skin .ama-dnote-cell--problem::after,
+body.eva-skin .ama-dnote-cell--think::after{display:none}
+
+/* 左缘黑条 · 参考图 */
+body.eva-skin .ama-dnote-edge,
+body.eva-skin .ama-poster-edge{
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:clamp(10px,1.2vw,14px);height:clamp(28px,3.5vw,40px);
+  background:#0a0a0a;z-index:3;
+}
+body.eva-skin .ama-dnote-edge--r{left:auto;right:0}
+
+body.eva-skin .ama-dnote-cell--problem .ama-dnote-h,
+body.eva-skin .ama-dnote-cell--think .ama-dnote-h--think{
+  position:absolute;z-index:3;
+  top:clamp(20px,3.6vw,36px);left:clamp(20px,3.6vw,36px);margin:0;
+  font-family:var(--eva-wall,monospace);font-size:9px;letter-spacing:.4em;
+  text-transform:uppercase;color:rgba(10,10,10,.42)!important;
+}
+
+/* 居中主文案 · 参考左方块 */
+body.eva-skin .ama-dnote-ellipsis{
+  position:relative;z-index:2;margin:0 0 clamp(10px,1.6vw,16px);
+  font-family:"Playfair Display","Bodoni Moda",var(--eva-matisse,serif),serif;
+  font-size:clamp(13px,1.5vw,18px);letter-spacing:.42em;line-height:1;
+  color:#0a0a0a;
+}
+body.eva-skin .ama-dnote-cell--problem .ama-dnote-line--l,
+body.eva-skin .ama-dnote-cell--think .ama-dnote-line--r{
+  position:relative;z-index:2;margin:0!important;padding:0!important;
+  max-width:min(88%,15em);text-align:center!important;
+  font-family:"Playfair Display","Bodoni Moda",var(--eva-matisse,serif),serif!important;
+  font-weight:700!important;
+  font-size:clamp(1.05rem,2.35vw,1.65rem)!important;
+  line-height:1.38!important;letter-spacing:-.01em!important;
+  transform:none!important;
+}
+body.eva-skin .ama-dnote-cell--problem .ama-dnote-line--l{color:#0a0a0a!important}
+body.eva-skin .ama-dnote-cell--think .ama-dnote-line--r{color:#0a0a0a!important}
+
+body.eva-skin .ama-dnote-cell--problem .ama-dnote-sub,
+body.eva-skin .ama-dnote-cell--think .ama-dnote-sub--r{
+  position:absolute;z-index:3;
+  bottom:clamp(18px,3.6vw,32px);left:clamp(18px,3.6vw,32px);right:clamp(18px,3.6vw,32px);
+  margin:0!important;max-width:none!important;text-align:center!important;
+  font-family:"Noto Serif SC",serif!important;
+  font-size:clamp(10px,.95vw,11px)!important;line-height:1.82!important;
+  color:rgba(10,10,10,.52)!important;
+}
+
+@media(max-width:900px){
+  body.eva-skin .ama-dnote-split{grid-template-columns:1fr}
+  body.eva-skin .ama-dnote-cell{aspect-ratio:auto;min-height:min(92vw,520px)}
+  body.eva-skin .ama-dnote-cell--problem .ama-dnote-line--l,
+  body.eva-skin .ama-dnote-cell--think .ama-dnote-line--r{
+    font-size:clamp(1rem,5.2vw,1.35rem)!important;
+  }
+}

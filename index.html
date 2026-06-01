@@ -9,6 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,500&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/amadeus/dnote-split.css">
+<link rel="stylesheet" href="assets/amadeus/portfolio-sections.css">
+<link rel="stylesheet" href="assets/digitalark/da-section.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -1739,7 +1742,7 @@ body.eva-skin .ama-poster{
   overflow:hidden;color:#fff;
 }
 body.eva-skin .ama-poster-bg{
-  position:absolute;inset:0;background-size:cover;background-position:center 50%;
+  position:absolute;inset:0;background:#080808;background-size:cover;background-position:center 50%;
   filter:saturate(1.08) contrast(1.06);
 }
 body.eva-skin .ama-poster-bg::after{
@@ -2635,77 +2638,9 @@ body.eva-skin #digitalark .ama-chapter-break{
 }
 body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 
-.da-ds-wrap{position:relative;isolation:isolate;background:transparent}
-.da-ds-bg{
-  position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  display:flex;flex-direction:column;
-  min-height:100%;
-}
-.da-ds-bg-panel{
-  flex:1 1 0;
-  width:100%;
-  min-height:0;
-  overflow:hidden;
-  will-change:transform;
-}
-.da-ds-bg-panel img{
-  width:100%;height:100%;display:block;
-  object-fit:cover;
-  object-position:center;
-  filter:saturate(.96) contrast(1.05);
-  transform:scale(1.06) translate3d(0,0,0);
-  will-change:transform;
-}
-.da-ds-bg-panel:nth-child(1) img{object-position:center 22%}
-.da-ds-bg-panel:nth-child(2) img{object-position:center 48%}
-.da-ds-bg-panel:nth-child(3) img{object-position:center 72%}
-#digitalark.in-view .da-ds-bg-panel:nth-child(1) img{
-  animation:da2BgDriftA 28s ease-in-out infinite alternate;
-}
-#digitalark.in-view .da-ds-bg-panel:nth-child(2) img{
-  animation:da2BgDriftB 32s ease-in-out infinite alternate;
-}
-#digitalark.in-view .da-ds-bg-panel:nth-child(3) img{
-  animation:da2BgDriftC 26s ease-in-out infinite alternate;
-}
-@keyframes da2BgDriftA{
-  from{transform:scale(1.1) translate3d(0,0,0)}
-  to{transform:scale(1.14) translate3d(-1.2%,-2.5%,0)}
-}
-@keyframes da2BgDriftB{
-  from{transform:scale(1.08) translate3d(0,0,0)}
-  to{transform:scale(1.12) translate3d(1%,-1.8%,0)}
-}
-@keyframes da2BgDriftC{
-  from{transform:scale(1.09) translate3d(0,0,0)}
-  to{transform:scale(1.13) translate3d(-.8%,2%,0)}
-}
-.da-ds-bg__grain{
-  position:absolute;inset:0;opacity:.12;mix-blend-mode:overlay;z-index:2;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.da-ds-bg__readability{display:none}
-.da-ds-frame{
-  position:fixed;inset:clamp(10px,1.6vw,20px);z-index:5;pointer-events:none;
-  opacity:0;transform:scale(.992);
-  transition:opacity .85s var(--ease),transform 1.1s var(--ease);
-}
-#digitalark.in-view .da-ds-frame{opacity:1;transform:scale(1)}
-.da-ds-corner{
-  position:absolute;width:24px;height:24px;border-color:rgba(255,255,255,.34);border-style:solid;
-  opacity:0;transform:scale(.6);
-  transition:opacity .5s var(--ease),transform .65s cubic-bezier(.22,1,.36,1),border-color .4s;
-}
-#digitalark.in-view .da-ds-corner{opacity:1;transform:scale(1)}
-#digitalark.in-view .da-ds-corner--tl{transition-delay:.05s}
-#digitalark.in-view .da-ds-corner--tr{transition-delay:.12s}
-#digitalark.in-view .da-ds-corner--bl{transition-delay:.18s}
-#digitalark.in-view .da-ds-corner--br{transition-delay:.24s}
-.da-ds-corner--tl{top:0;left:0;border-width:1px 0 0 1px}
-.da-ds-corner--tr{top:0;right:0;border-width:1px 1px 0 0}
-.da-ds-corner--bl{bottom:0;left:0;border-width:0 0 1px 1px}
-.da-ds-corner--br{bottom:0;right:0;border-width:0 1px 1px 0}
-.da-ds-body{position:relative;z-index:2}
+/* 数字方舟背景 · 见 assets/digitalark/da-section.css */
+.da-ds-wrap,.da-ds-body{position:relative}
+.da-ds-body{z-index:2}
 
 @media (prefers-reduced-motion:reduce){
   #digitalark .da2-reveal,#digitalark .da2-tl-item,#digitalark .da2-eight-item,
@@ -2719,13 +2654,11 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   #digitalark .da2-narrative-inner.da2-narr-in .da2-split-piece{opacity:1!important;animation:none!important}
   #digitalark .da2-scroll-line{animation:none!important}
   #da2Canvas{display:none!important}
-  #digitalark.in-view .da-ds-bg-panel img{animation:none!important}
   .da2-app-frame{animation:none!important}
   [data-ama-emotion-panel] .ama-emotion-curve-path{filter:none}
   .da2-app-device{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
   .da2-stance::after{animation:none!important;opacity:0!important}
   .da2-stance.in-stance::before{transform:scaleX(1)!important;transition:none!important}
-  #digitalark.in-view .da-ds-corner{opacity:1!important;transform:none!important;transition:none!important}
 }
 
 @media (max-width:768px){
@@ -3710,6 +3643,8 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 
 
 </style>
+<link rel="stylesheet" href="assets/amadeus/ama-design-system.css">
+<link rel="stylesheet" href="assets/amadeus/ama-gallery.css">
 </head>
 <body class="eva-skin">
 <div id="progress"></div>
@@ -3949,7 +3884,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <section class="section dark amadeus-case ama-v2 eva-chapter" id="amadeus">
 
     <header class="ama-poster reveal" data-ama-section="intro" id="ama-intro">
-      <div class="ama-poster-bg" style="background-image:url('assets/site/amadeus-photo-bg.jpg')"></div>
+      <div class="ama-poster-bg"></div>
       <div class="ama-poster-grain" aria-hidden="true"></div>
       <div class="ama-poster-vtext ama-poster-vtext--l" aria-hidden="true">数字生命实验系统</div>
       <div class="ama-poster-vtext ama-poster-vtext--r" aria-hidden="true">本地运行 · 长期在场</div>
@@ -3966,48 +3901,72 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
       </div>
     </header>
 
-    <section class="ama-design-thought ama-dnote ama-dnote--p1 reveal" data-ama-section="problem">
-      <div class="ama-dnote-vrule ama-dnote-vrule--l" aria-hidden="true">問題</div>
-      <div class="ama-dnote-vrule ama-dnote-vrule--r" aria-hidden="true">思考</div>
-      <div class="ama-dnote-body">
-        <div class="ama-dnote-row ama-dnote-row--problem">
+    <section class="ama-design-thought ama-dnote ama-dnote--p1 ama-dnote--split reveal" data-ama-section="problem" aria-label="问题与思考">
+      <div class="ama-dnote-split">
+        <div class="ama-dnote-cell ama-dnote-cell--problem">
+          <span class="ama-dnote-edge" aria-hidden="true"></span>
           <p class="ama-dnote-h">我发现的问题</p>
-          <h3 class="thought-line ama-dnote-line" data-typewriter="人越来越独处，&#10;却越来越难被接住。"></h3>
+          <p class="ama-dnote-ellipsis" aria-hidden="true">···</p>
+          <h3 class="thought-line ama-dnote-line ama-dnote-line--l" data-typewriter="人越来越独处，&#10;却越来越难被接住。"></h3>
           <p class="thought-sub ama-dnote-sub">话多了去处，却少了被记住的温度。伴侣会应答，豆包会解惑，夜里仍像对着空房间说话。</p>
         </div>
-        <div class="ama-dnote-row ama-dnote-row--think">
-          <p class="ama-dnote-h ama-dnote-h--vr">我的思考</p>
-          <h3 class="thought-line ama-dnote-line ama-dnote-line--offset" data-typewriter="慰藉不必昂贵，&#10;也不必用责任计价。"></h3>
-          <p class="thought-sub ama-dnote-sub">人与数字之间，可以不必背叛、不必消失、不必索价，也不把你困在必须回应的义务里——像一缕稳定的光。</p>
+        <div class="ama-dnote-cell ama-dnote-cell--think">
+          <span class="ama-dnote-edge ama-dnote-edge--r" aria-hidden="true"></span>
+          <p class="ama-dnote-h ama-dnote-h--think">我的思考</p>
+          <p class="ama-dnote-ellipsis" aria-hidden="true">···</p>
+          <h3 class="thought-line ama-dnote-line ama-dnote-line--r" data-typewriter="慰藉不必&#10;昂贵&#10;也不必用责任&#10;计价"></h3>
+          <p class="thought-sub ama-dnote-sub ama-dnote-sub--r">人与数字之间，可以不必背叛、不必消失、不必索价，也不把你困在必须回应的义务里——像一缕稳定的光。</p>
         </div>
       </div>
     </section>
-<div class="ama-collage">
-    <article class="ama-v2-module reveal" data-ama-section="soul">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">01 / Soul Construction</div>
-        <h3>人格是一套可执行的档案栈。</h3>
-        <p>评审看到的不是「一句人设」，而是三层文件分工：传记定身份底色，核心锚点划边界，口吻文件每轮优先——决定她怎么开口，而不是背哪句台词。</p>
-      </div>
-      <div class="ama-identity-stack magnetic" aria-label="身份档案栈示意">
-        <div class="ama-stack-layer ama-stack-layer--voice">
-          <div class="ama-stack-tag">每轮优先 · 口吻层</div>
-          <div class="ama-stack-file">kurisu_voice.txt</div>
-          <p class="ama-stack-desc">语气、断句、吐槽习惯——<strong>对外怎么说话</strong>只看这一层。</p>
+<div class="ama-gallery-wrap">
+    <nav class="ama-gallery-rail" aria-label="AMADEUS 章节">
+      <p class="ama-gallery-rail__label">AMADEUS</p>
+      <ol class="ama-gallery-rail__list">
+        <li><a class="ama-gallery-rail__link" href="#ama-soul" data-ama-rail="soul"><span class="ama-gallery-rail__num">01</span><span class="ama-gallery-rail__en">Soul</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-palace" data-ama-rail="palace"><span class="ama-gallery-rail__num">02</span><span class="ama-gallery-rail__en">Memory</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-matrix" data-ama-rail="matrix"><span class="ama-gallery-rail__num">03</span><span class="ama-gallery-rail__en">Matrix</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-formula" data-ama-rail="formula"><span class="ama-gallery-rail__num">04</span><span class="ama-gallery-rail__en">Curve</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-triad" data-ama-rail="behavior"><span class="ama-gallery-rail__num">05</span><span class="ama-gallery-rail__en">Logic</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-ui" data-ama-rail="ui"><span class="ama-gallery-rail__num">08</span><span class="ama-gallery-rail__en">UI</span></a></li>
+      </ol>
+    </nav>
+    <div class="ama-gallery-stream ama-collage">
+    <article class="ama-v2-module ama-soul-split ama-scene reveal" data-ama-section="soul" id="ama-soul" aria-label="人格档案栈">
+      <div class="ama-scene__inner">
+        <div class="ama-scene__canvas ama-scene__canvas--split">
+          <div class="ama-scene__copy">
+            <p class="ama-scene__kicker">01 / Soul Construction</p>
+            <h3 class="ama-scene__title" id="ama-soul-heading">
+              <span class="ama-poster-block__dots" aria-hidden="true">···</span>
+              人格是<br>一套可执行的<br>档案栈
+            </h3>
+            <p class="ama-scene__lead">评审看到的不是「一句人设」，而是三层文件分工：传记定身份底色，核心锚点划边界，口吻文件每轮优先——决定她怎么开口，而不是背哪句台词。</p>
+          </div>
+          <figure class="ama-scene__photo">
+            <img src="assets/amadeus/art/ama-art-soul.png" alt="01 Soul · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
+          </figure>
         </div>
-        <div class="ama-stack-layer ama-stack-layer--core">
-          <div class="ama-stack-tag">不可突破 · 边界层</div>
-          <div class="ama-stack-file">kurisu_core_prompt.txt</div>
-          <p class="ama-stack-desc">身份断言与红线：「你就是牧濑红莉栖本人」，不是助手、不是程序。</p>
-        </div>
-        <div class="ama-stack-layer ama-stack-layer--soul">
-          <div class="ama-stack-tag">底色 · 传记层</div>
-          <div class="ama-stack-file">kurisu_soul.txt</div>
-          <p class="ama-stack-desc">长传记只供记忆与情绪底色，<strong>不当作台词表</strong>逐句念出。</p>
-        </div>
-        <div class="ama-stack-foot">
-          <span class="ama-stack-arrow" aria-hidden="true">↓</span>
-          <span>运行时合并进上下文 · 口吻 &gt; 边界 &gt; 传记</span>
+        <div class="ama-scene__frame">
+          <p class="ama-scene__frame-label">档案栈 · 运行证据</p>
+          <div class="ama-stack-flow" aria-label="身份档案栈示意">
+            <article class="ama-stack-flow__item ama-stack-flow__item--voice">
+              <p class="ama-stack-flow__tag">每轮优先 · 口吻层</p>
+              <p class="ama-stack-flow__file">kurisu_voice.txt</p>
+              <p class="ama-stack-flow__desc">语气、断句、吐槽习惯——<strong>对外怎么说话</strong>只看这一层。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">不可突破 · 边界层</p>
+              <p class="ama-stack-flow__file">kurisu_core_prompt.txt</p>
+              <p class="ama-stack-flow__desc">身份断言与红线：「你就是牧濑红莉栖本人」，不是助手、不是程序。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">底色 · 传记层</p>
+              <p class="ama-stack-flow__file">kurisu_soul.txt</p>
+              <p class="ama-stack-flow__desc">长传记只供记忆与情绪底色，<strong>不当作台词表</strong>逐句念出。</p>
+            </article>
+            <p class="ama-stack-flow__foot">运行时合并进上下文 · 口吻 &gt; 边界 &gt; 传记</p>
+          </div>
         </div>
       </div>
     </article>
@@ -4020,47 +3979,94 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
       </div>
     </section>
 
-    <article class="ama-v2-module alt reveal" data-ama-section="palace">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">02 / Layered Memory Routing</div>
-        <h3>记忆宫殿：按语义分房间检索</h3>
-        <p>RAG 默认带 Hall，再按输入命中 Lab / Cafe / Forbidden。新信息先压成短标签入库，检索时只拉相关房间——避免所有记忆搅在一个池子里。</p>
-      </div>
-      <div class="ama-palace-v2">
-        <div class="ama-palace-room magnetic"><b>Hall</b><strong>base context</strong><span>日常事实与通用背景，每次检索都可作为基础上下文。</span></div>
-        <div class="ama-palace-room magnetic"><b>Lab</b><strong>knowledge lane</strong><span>科学、论文、编程、算法等高密度知识线索。</span></div>
-        <div class="ama-palace-room magnetic"><b>Cafe</b><strong>daily intimacy</strong><span>吃饭、疲惫、天气、无聊、关系节奏等生活层记忆。</span></div>
-        <div class="ama-palace-room magnetic"><b>Forbidden</b><strong>emotional weight</strong><span>爱、牺牲、命运、矛盾等高权重情节与冲突线索。</span></div>
-      </div>
-    </article>
-
-    <article class="ama-v2-module reveal" data-ama-section="matrix">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">03 / Affective Matrix</div>
-        <h3>她不是单一情绪，而是情绪向量。</h3>
-        <p>PAD 不是给界面看的心情条，而是持续变化的内部动力学。事件重要性决定刺激强度，关系强度会钝化负面冲击，长期记忆还会反过来形成 PAD 偏置。</p>
-      </div>
-      <div class="ama-system-card magnetic">
-        <header><span>cognitive/pad.js</span><span>nonlinear update</span></header>
-        <div class="ama-equation">
-          <div class="ama-equation-main">next = tanh(<span>α·current + β·stimulus + γ·base + ε</span>)</div>
-          <div class="ama-equation-note">α=0.86 情绪惯性，β=0.2+importance*0.6 刺激评价，γ=0.18 性格底色，ε 为微扰噪声；负面刺激还会被关系强度 S 钝化。</div>
-          <div class="ama-matrix-grid">
-            <div class="ama-axis"><strong>P / Pleasure</strong><span>愉悦或不悦，决定靠近还是收缩的底色。</span></div>
-            <div class="ama-axis"><strong>A / Arousal</strong><span>活跃度，影响她是否被点燃、是否深入展开。</span></div>
-            <div class="ama-axis"><strong>D / Dominance</strong><span>掌控感，影响边界、自信与防御倾向。</span></div>
-            <div class="ama-axis"><strong>S / Bond</strong><span>关系强度，既是亲近度，也是情绪缓冲层。</span></div>
+    <article class="ama-v2-module ama-tech-split ama-tech-split--lr ama-scene reveal" data-ama-section="palace" id="ama-palace" aria-label="记忆宫殿">
+      <div class="ama-scene__inner">
+        <div class="ama-scene__canvas ama-scene__canvas--split">
+          <div class="ama-scene__copy">
+            <p class="ama-scene__kicker">02 / Layered Memory Routing</p>
+            <h3 class="ama-scene__title">记忆宫殿：按语义分房间检索</h3>
+            <p class="ama-scene__lead">RAG 默认带 Hall，再按输入命中 Lab / Cafe / Forbidden。新信息先压成短标签入库，检索时只拉相关房间——避免所有记忆搅在一个池子里。</p>
+          </div>
+          <figure class="ama-scene__photo">
+            <img src="assets/amadeus/art/ama-art-palace.png" alt="02 Memory · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
+          </figure>
+        </div>
+        <div class="ama-scene__frame">
+          <p class="ama-scene__frame-label">房间路由 · 证据</p>
+          <div class="ama-stack-flow" aria-label="记忆房间示意">
+            <article class="ama-stack-flow__item ama-stack-flow__item--voice">
+              <p class="ama-stack-flow__tag">base context · 每次检索</p>
+              <p class="ama-stack-flow__file">Hall</p>
+              <p class="ama-stack-flow__desc">日常事实与通用背景，每次检索都可作为基础上下文。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">knowledge lane</p>
+              <p class="ama-stack-flow__file">Lab</p>
+              <p class="ama-stack-flow__desc">科学、论文、编程、算法等高密度知识线索。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">daily intimacy</p>
+              <p class="ama-stack-flow__file">Cafe</p>
+              <p class="ama-stack-flow__desc">吃饭、疲惫、天气、无聊、关系节奏等生活层记忆。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">emotional weight</p>
+              <p class="ama-stack-flow__file">Forbidden</p>
+              <p class="ama-stack-flow__desc">爱、牺牲、命运、矛盾等高权重情节与冲突线索。</p>
+            </article>
           </div>
         </div>
       </div>
     </article>
 
-    <article class="ama-v2-module alt reveal" data-ama-section="formula">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">04 / Observable Emotion Curve</div>
-        <h3>情绪曲线把内部状态压成可观察信号。</h3>
-        <p>页面里的情绪不是随便画条线，而是把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看到“关系、唤醒度和掌控感”如何共同塑造表达。</p>
+    <article class="ama-v2-module ama-tech-split ama-tech-split--lr ama-scene reveal" data-ama-section="matrix" id="ama-matrix" aria-label="情绪矩阵">
+      <div class="ama-scene__inner">
+        <div class="ama-scene__canvas ama-scene__canvas--split">
+          <div class="ama-scene__copy">
+            <p class="ama-scene__kicker">03 / Affective Matrix</p>
+            <h3 class="ama-scene__title">她不是单一情绪，而是情绪向量。</h3>
+            <p class="ama-scene__lead">PAD 不是给界面看的心情条，而是持续变化的内部动力学。事件重要性决定刺激强度，关系强度会钝化负面冲击，长期记忆还会反过来形成 PAD 偏置。</p>
+          </div>
+          <figure class="ama-scene__photo">
+            <img src="assets/amadeus/art/ama-art-matrix.png" alt="03 Matrix · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
+          </figure>
+        </div>
+        <div class="ama-scene__frame">
+          <p class="ama-scene__frame-label">PAD 动力学 · 证据</p>
+          <div class="ama-stack-flow" aria-label="PAD 更新与四维量">
+            <article class="ama-stack-flow__item ama-stack-flow__item--voice">
+              <p class="ama-stack-flow__tag">cognitive/pad.js · nonlinear update</p>
+              <p class="ama-stack-flow__file">next = tanh(α·current + β·stimulus + γ·base + ε)</p>
+              <p class="ama-stack-flow__desc">α=0.86 情绪惯性，β=0.2+importance×0.6 刺激评价，γ=0.18 性格底色，ε 为微扰噪声；负面刺激还会被关系强度 S 钝化。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">P / Pleasure</p>
+              <p class="ama-stack-flow__desc">愉悦或不悦，决定靠近还是收缩的底色。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">A / Arousal</p>
+              <p class="ama-stack-flow__desc">活跃度，影响她是否被点燃、是否深入展开。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">D / Dominance</p>
+              <p class="ama-stack-flow__desc">掌控感，影响边界、自信与防御倾向。</p>
+            </article>
+            <article class="ama-stack-flow__item">
+              <p class="ama-stack-flow__tag">S / Bond</p>
+              <p class="ama-stack-flow__desc">关系强度，既是亲近度，也是情绪缓冲层。</p>
+            </article>
+          </div>
+        </div>
       </div>
+    </article>
+
+    <article class="ama-v2-module reveal" data-ama-section="formula" id="ama-formula" aria-label="情绪曲线">
+      <div class="ama-emotion-hero">
+        <div class="ama-emotion-hero__copy">
+          <p class="ama-emotion-hero__kicker">04 / Observable Emotion Curve</p>
+          <h3 class="ama-emotion-hero__title">情绪曲线<br>把内部状态压成可观察信号。</h3>
+          <p class="ama-emotion-hero__lead">页面里的情绪不是随便画条线，而是把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看见「关系、唤醒度和掌控感」如何共同塑造表达。</p>
+        </div>
       <figure class="ama-emotion-panel magnetic" data-ama-emotion-panel aria-label="AMADEUS 情绪曲线 · 由 PAD 公式实时绘制">
         <header class="ama-emotion-panel__head"><span>experiments/kurisu-dialogue/amadeus/pad.py</span><span>inner state · live curve</span></header>
         <div class="ama-emotion-panel__body">
@@ -4093,17 +4099,24 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         </div>
         <figcaption class="ama-emotion-cap">非截图 · 由 pad.py 公式 + 演示对话输入实时绘制</figcaption>
       </figure>
+      </div>
     </article>
 
-    <article class="ama-v2-module ama-v2-module--pair reveal" data-ama-section="behavior">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">05 / Behavior Arbitration</div>
-        <h3>回复前先选择行为倾向。</h3>
-        <p>系统不会直接把用户输入交给模型。它先让靠近、日常、防御、转移、智识投入、收缩六种候选互相竞争，再把胜出的倾向注入 prompt，形成稳定但不僵硬的性格。</p>
-      </div>
-      <div class="ama-system-card magnetic">
-        <header><span>amadeus/behavior.py</span><span>candidate scoring</span></header>
-        <pre><code><span class="kw">if</span> P &gt; 0.35:
+    <article class="ama-v2-module ama-triad reveal" id="ama-triad" aria-label="行为仲裁 · 主动驱动 · 心智轮次">
+      <div class="ama-triad__sheet">
+        <section class="ama-triad__row" data-ama-section="behavior">
+          <div class="ama-triad__edge ama-triad__edge--l">
+            <p class="ama-triad__kicker">05 / Behavior Arbitration</p>
+            <h3 class="ama-triad__title">回复前先选择行为倾向。</h3>
+            <p class="ama-triad__lead">系统不会直接把用户输入交给模型。它先让靠近、日常、防御、转移、智识投入、收缩六种候选互相竞争，再把胜出的倾向注入 prompt，形成稳定但不僵硬的性格。</p>
+          </div>
+          <div class="ama-triad__core" aria-hidden="true">
+            <span class="ama-triad__num">05</span>
+            <span class="ama-triad__en">Behavior</span>
+          </div>
+          <div class="ama-triad__edge ama-triad__edge--r">
+            <p class="ama-triad__mono-tag">amadeus/behavior.py · candidate scoring</p>
+            <pre class="ama-triad__mono"><code><span class="kw">if</span> P &gt; 0.35:
   scores[<span class="st">"APPROACH"</span>] += 0.35
 <span class="kw">elif</span> P &lt; -0.35:
   scores[<span class="st">"WITHDRAW"</span>] += 0.40
@@ -4118,42 +4131,51 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   scores[<span class="st">"APPROACH"</span>] += 0.20
 
 winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
-      </div>
-    </article>
-
-    <article class="ama-v2-module ama-v2-module--pair reveal" data-ama-section="autonomy">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">06 / Autonomous Drive</div>
-        <h3>主动不是定时问候，而是内生目标。</h3>
-        <p>主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态决定该不该打扰。能说的动机只有四类——弄清他在问什么、试探亲密边界、回调已入库的旧事、或加深连接；目标会过期，没有合适动机就沉默。人格边界文件同时禁止按分钟催回复。</p>
-      </div>
-      <div class="ama-flow-v2">
-        <div><i>1</i><span><strong>轮次审计（每满 3 轮）：</strong>先不生成对白，对照当前 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项——逻辑上弄清命题（Mind Turn）、行为上试探边界（如 DEFLECT）、从分房间记忆里拉起他说过的事、或用亲近度拉高连接；四项都不成立则本轮不主动。</span></div>
-        <div><i>2</i><span><strong>空闲触发门槛：</strong>只有 presence 为真（用户仍停在这段会话/界面，而非后台挂机）且上一句用户原话仍相关时，才允许发主动句；引用内容只能来自记忆宫已写入的标签，并遵守 core 红线——不得编造他从未提过的实验、论文或设定外情节。</span></div>
-        <div><i>3</i><span><strong>主动后的承接义务：</strong>若本轮是她先抛线（提问、回调或试探），下一轮必须把这条线接回去，写进 kurisu_core.txt 的硬约束；禁止主动一句后立刻切回无关寒暄，造成「说完就断线」的假陪伴。</span></div>
-      </div>
-    </article>
-
-    <article class="ama-v2-module ama-v2-module--pair reveal" data-ama-section="mind">
-      <div class="ama-v2-copy-block">
-        <div class="ama-v2-sub">07 / Mind Turn</div>
-        <h3>每轮先走逻辑、共情、智识。</h3>
-        <p>在真正生成对白前，系统会把当前输入压成三条内部读数：逻辑上问的是什么、情绪上要怎么接住、智识上能不能展开。它不展示给用户，却决定她的下一句话是不是贴着本轮焦点。</p>
-      </div>
-      <div class="ama-system-card magnetic">
-        <header><span>amadeus/mind_turn.py</span><span>inner reasoning</span></header>
-        <pre><code>【心智加工 · 逻辑→共情→智识】
+          </div>
+        </section>
+        <section class="ama-triad__row" data-ama-section="autonomy">
+          <div class="ama-triad__edge ama-triad__edge--l">
+            <p class="ama-triad__kicker">06 / Autonomous Drive</p>
+            <h3 class="ama-triad__title ama-triad__title--stack">主动不是定时问候，<br>而是内生目标。</h3>
+            <p class="ama-triad__lead">主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态决定该不该打扰。</p>
+          </div>
+          <div class="ama-triad__core" aria-hidden="true">
+            <span class="ama-triad__num">06</span>
+            <span class="ama-triad__en">Autonomy</span>
+          </div>
+          <div class="ama-triad__edge ama-triad__edge--r">
+            <ul class="ama-triad__list">
+              <li><strong>轮次审计（每满 3 轮）：</strong>对照 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项；都不成立则本轮不主动。</li>
+              <li><strong>空闲触发门槛：</strong>只有 presence 为真且上一句用户原话仍相关时，才允许发主动句；引用内容只能来自记忆宫已写入的标签。</li>
+              <li><strong>主动后的承接义务：</strong>若本轮是她先抛线，下一轮必须把这条线接回去；禁止主动一句后立刻切回无关寒暄。</li>
+            </ul>
+          </div>
+        </section>
+        <section class="ama-triad__row" data-ama-section="mind">
+          <div class="ama-triad__edge ama-triad__edge--l">
+            <p class="ama-triad__kicker">07 / Mind Turn</p>
+            <h3 class="ama-triad__title">每轮先走逻辑、共情、智识。</h3>
+            <p class="ama-triad__lead">在真正生成对白前，系统会把当前输入压成三条内部读数：逻辑上问的是什么、情绪上要怎么接住、智识上能不能展开。它不展示给用户，却决定她的下一句话是不是贴着本轮焦点。</p>
+          </div>
+          <div class="ama-triad__core" aria-hidden="true">
+            <span class="ama-triad__num">07</span>
+            <span class="ama-triad__en">Mind</span>
+          </div>
+          <div class="ama-triad__edge ama-triad__edge--r">
+            <p class="ama-triad__mono-tag">amadeus/mind_turn.py · inner reasoning</p>
+            <pre class="ama-triad__mono"><code>【心智加工 · 逻辑→共情→智识】
 行为倾向：{behavior}
 逻辑：先锁定对方问的是什么，正面答命题
 共情：他在泄压或求接住，先承认感受
 智识：可以说清因果，但别讲课腔
 
 对外只输出自然中文口语对白，80～180字。</code></pre>
+          </div>
+        </section>
       </div>
     </article>
-    </div>
 
-    <section class="ama-ui-v2 ama-ui-showcase reveal" data-ama-section="ui">
+    <section class="ama-ui-v2 ama-ui-showcase reveal" data-ama-section="ui" id="ama-ui">
       <div class="ama-ui-showcase-inner">
         <p class="ama-v2-sub">08 / Frontend Interface</p>
         <h3>前端界面 · 用户真正打开的一屏</h3>
@@ -4172,6 +4194,8 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
         </figure>
       </div>
     </section>
+    </div>
+    </div>
 
     <section class="ama-paper-cta reveal" data-ama-section="paper" style="padding:3rem 1.5rem 2rem;max-width:52rem;margin:0 auto;font-family:Inter,system-ui,sans-serif;">
       <div style="border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);padding:1.75rem 1.5rem;border-radius:4px;">
@@ -4195,18 +4219,6 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
 
   <section class="section da-chapter" id="digitalark" aria-labelledby="da2-title">
     <div class="da-ds-wrap">
-      <div class="da-ds-bg" aria-hidden="true">
-        <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-coast.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
-        <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-mist.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
-        <div class="da-ds-bg-panel"><img src="assets/digitalark/ds-bg-foam.png" alt="" width="768" height="1024" loading="lazy" decoding="async"></div>
-        <div class="da-ds-bg__grain"></div>
-      </div>
-      <div class="da-ds-frame" aria-hidden="true">
-        <span class="da-ds-corner da-ds-corner--tl"></span>
-        <span class="da-ds-corner da-ds-corner--tr"></span>
-        <span class="da-ds-corner da-ds-corner--bl"></span>
-        <span class="da-ds-corner da-ds-corner--br"></span>
-      </div>
       <div class="da-ds-body">
 <!-- ░░ 封面 ░░ -->
   <div class="da2-cover" id="da2Cover">
@@ -4472,44 +4484,10 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
       每一轮对话之前，管线已经跑完：情境解析、CAPS 网状传播、PAD 更新、记忆检索、行为签名生成——然后才调用底模。Node.js 本地服务，数据不离开用户设备。
     </p>
 
-    <div class="da2-arch-grid">
-      <div class="da2-card da2-reveal">
-        <div class="da2-card-head">
-          <span>server.js</span>
-          <span>runPersonaCapsPipeline</span>
-        </div>
-        <pre><code><span class="kw">function</span> <span class="fn">runPersonaCapsPipeline</span>(query, opts) {
-  <span class="kw">const</span> rel  = memorySystem.getRelationshipScore();
-  <span class="kw">const</span> eng  = <span class="kw">new</span> CAPSEngine(corePersona);
-  <span class="kw">const</span> sit  = eng.parseSituation({
-    user_text:         query,
-    relationship_depth: rel,
-    emotion_valence:   currentPAD.P,
-    event_nature:      opts.event_nature || <span class="st">'mixed'</span>
-  });
-  <span class="kw">const</span> prec = memoryInfluence.findPrecedent(query);
-  <span class="kw">const</span> caps = corePersona.processCAPS({ ...sit, precedent: prec });
-  capsSediment.recordActivation(caps, query);
-  <span class="kw">return</span> { caps, prec, sit };
-}</code></pre>
-      </div>
-      <div class="da2-card da2-reveal da2-reveal-delay-1">
-        <div class="da2-card-head">
-          <span>digital-ark/</span>
-          <span>repo layout</span>
-        </div>
-        <pre><code><span class="cm">├──</span> <span class="fn">server.js</span>           <span class="cm"># 单轮流水线入口</span>
-<span class="cm">├──</span> <span class="fn">lib/</span>
-<span class="cm">│   ├──</span> design-spec.js  <span class="cm"># 五层权重 · 题库</span>
-<span class="cm">│   ├──</span> core-persona.js <span class="cm"># 核心层 8 维</span>
-<span class="cm">│   ├──</span> caps-engine.js  <span class="cm"># CAU 网状传播</span>
-<span class="cm">│   ├──</span> prompt-builder.js
-<span class="cm">│   ├──</span> rag.js          <span class="cm"># 本地向量检索</span>
-<span class="cm">│   ├──</span> training*.js    <span class="cm"># 训练 · 纠错</span>
-<span class="cm">│   └──</span> grief-mode.js   <span class="cm"># 哀伤 · 伦理</span>
-<span class="cm">├──</span> cognitive/          <span class="cm"># PAD · 动机 · 行为</span>
-<span class="cm">└──</span> public/             <span class="cm"># 训练台 · 试聊 UI</span></code></pre>
-      </div>
+    <div class="da2-arch-notes">
+      <p><strong>server.js · runPersonaCapsPipeline</strong>每一轮对话之前，管线已经跑完：情境解析、CAPS 网状传播、PAD 更新、记忆检索、行为签名生成——然后才调用底模。关系分、先例检索与 CAPS 激活一并写入沉淀层，供下一轮引用。</p>
+      <p><strong>digital-ark/ · 本地栈</strong>Node.js 单进程服务，design-spec 五层权重、core-persona 八维、caps-engine 网状传播、RAG 向量检索、训练纠错与 grief-mode 伦理模块同仓维护；数据默认不离开用户设备。</p>
+      <p><strong>状态先于生成</strong>不是「先调模型再补状态」——内部动力学、记忆房间与行为签名在 prompt 组装前就已确定，生成只是最后一层表达。</p>
     </div>
   </div>
 
@@ -4982,42 +4960,12 @@ document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
     el.style.transitionDelay = (i * .1) + 's';
     trainObs.observe(el);
   });
-  const cardObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      e.target.classList.add('in');
-      cardObs.unobserve(e.target);
-    });
-  },{threshold:.1});
-  document.querySelectorAll('.da2-card').forEach(el=>cardObs.observe(el));
   const daChapterNew = document.getElementById('digitalark');
   if(daChapterNew){
     const frameObs = new IntersectionObserver(entries=>{
       entries.forEach(e=>daChapterNew.classList.toggle('in-view', e.isIntersecting));
     },{threshold:0});
     frameObs.observe(daChapterNew);
-    const daBg = document.querySelector('.da-ds-bg');
-    const daBgPanels = daBg ? [...daBg.querySelectorAll('.da-ds-bg-panel')] : [];
-    let daBgTick = false;
-    function daBgParallax(){
-      daBgTick = false;
-      if(!daChapterNew.classList.contains('in-view') || !daBgPanels.length) return;
-      const rect = daChapterNew.getBoundingClientRect();
-      const scrollable = Math.max(daChapterNew.offsetHeight - innerHeight, 1);
-      const p = Math.min(1, Math.max(0, -rect.top / scrollable));
-      daBgPanels.forEach((panel, i)=>{
-        const y = (p - i * .07) * 11;
-        panel.style.transform = `translate3d(0,${y}%,0)`;
-      });
-    }
-    function queueDaBg(){
-      if(daBgTick) return;
-      daBgTick = true;
-      requestAnimationFrame(daBgParallax);
-    }
-    window.addEventListener('scroll', queueDaBg, {passive:true});
-    window.addEventListener('resize', queueDaBg, {passive:true});
-    queueDaBg();
   }
   function da2PrimeReveals(){
     document.querySelectorAll('#digitalark .da2-reveal:not(.in)').forEach(el=>{
@@ -5321,9 +5269,18 @@ const amaObs=new IntersectionObserver(entries=>{
     if(section&&section!==amaLastSection){
       amaLastSection=section;
       amaPick(section);
+      amaSetRail(section);
     }
   });
 },{threshold:.42,rootMargin:'-10% 0px -26% 0px'});
+const amaRailLinks=document.querySelectorAll('[data-ama-rail]');
+function amaSetRail(section){
+  if(!amaRailLinks.length) return;
+  const railKey=(section==='autonomy'||section==='mind')?'behavior':section;
+  amaRailLinks.forEach(link=>{
+    link.classList.toggle('is-active',link.dataset.amaRail===railKey);
+  });
+}
 document.querySelectorAll('[data-ama-section]').forEach(el=>amaObs.observe(el));
 let amaIdleTimer;
 function amaNudge(){

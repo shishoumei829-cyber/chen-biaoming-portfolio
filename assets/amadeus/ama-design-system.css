@@ -1,0 +1,154 @@
+/* AMADEUS · 统一设计语言 · 黑白灰 editorial */
+
+body.eva-skin #amadeus{
+  --ama-bg:#fff;
+  --ama-bg-soft:#f7f7f7;
+  --ama-bg-panel:#fafafa;
+  --ama-ink:#0a0a0a;
+  --ama-muted:rgba(10,10,10,.55);
+  --ama-muted-light:rgba(10,10,10,.42);
+  --ama-rule:rgba(10,10,10,.1);
+  --ama-font-display:"Playfair Display","Bodoni Moda",var(--eva-matisse,serif),serif;
+  --ama-font-ui:Inter,"Helvetica Neue","Noto Sans SC",sans-serif;
+  --ama-font-body:"Noto Serif SC",Georgia,serif;
+  --ama-font-mono:"Share Tech Mono",ui-monospace,monospace;
+  --ama-kicker:9px;
+  --ama-kicker-track:.34em;
+  --ama-display:clamp(1.05rem,2.35vw,1.65rem);
+  --ama-display-lh:1.38;
+  --ama-body:clamp(11px,.95vw,12px);
+  --ama-body-lh:1.85;
+  --ama-caption:clamp(10px,.9vw,11px);
+}
+
+/* 区块底色 · 白 / 浅灰，不用米白 */
+body.eva-skin #amadeus,
+body.eva-skin .ama-collage{
+  background:var(--ama-bg)!important;
+  background-image:none!important;
+}
+body.eva-skin #amadeus .ama-v2-module:not(.ama-v2-module--pair){
+  transform:none!important;
+}
+
+body.eva-skin #amadeus .ama-dnote-cell--problem,
+body.eva-skin #amadeus .ama-soul-cell--title,
+body.eva-skin #amadeus .ama-tech-cell--copy,
+body.eva-skin #amadeus .ama-triad__sheet{
+  background:var(--ama-bg)!important;
+}
+body.eva-skin #amadeus .ama-dnote-cell--think{
+  background:var(--ama-bg-soft)!important;
+}
+body.eva-skin #amadeus .ama-soul-cell--stack,
+body.eva-skin #amadeus .ama-tech-cell--stack{
+  background:var(--ama-bg-panel)!important;
+}
+body.eva-skin #amadeus .ama-chapter-break{
+  background:var(--ama-bg)!important;
+  border-top:1px solid var(--ama-rule)!important;
+  border-bottom:1px solid var(--ama-rule)!important;
+}
+
+/* ── 全文黑色系，禁止红色字 ── */
+body.eva-skin #amadeus .ama-poster-block__dots,
+body.eva-skin #amadeus .ama-poster-block__line,
+body.eva-skin #amadeus .ama-poster-block__line--em,
+body.eva-skin #amadeus .ama-dnote-ellipsis,
+body.eva-skin #amadeus .ama-dnote-line--l,
+body.eva-skin #amadeus .ama-dnote-line--r,
+body.eva-skin #amadeus .ama-tech-cell__title,
+body.eva-skin #amadeus .ama-chapter-break__title,
+body.eva-skin #amadeus .ama-emotion-hero__title,
+body.eva-skin #amadeus .ama-triad__title,
+body.eva-skin #amadeus .ama-triad__title--stack,
+body.eva-skin #amadeus .ama-v2-copy-block h3,
+body.eva-skin #amadeus .ama-stack-flow__tag,
+body.eva-skin #amadeus .ama-stack-flow__desc strong,
+body.eva-skin #amadeus .ama-dnote-h,
+body.eva-skin #amadeus .ama-dnote-h--think{
+  color:var(--ama-ink)!important;
+}
+
+body.eva-skin #amadeus .ama-soul-cell__kicker,
+body.eva-skin #amadeus .ama-tech-cell__kicker,
+body.eva-skin #amadeus .ama-emotion-hero__kicker,
+body.eva-skin #amadeus .ama-triad__kicker,
+body.eva-skin #amadeus .ama-chapter-break__kicker,
+body.eva-skin #amadeus .ama-v2-sub{
+  font-family:var(--ama-font-mono)!important;
+  font-size:var(--ama-kicker)!important;
+  letter-spacing:var(--ama-kicker-track)!important;
+  text-transform:uppercase!important;
+  color:var(--ama-muted-light)!important;
+}
+
+body.eva-skin #amadeus .ama-poster-block__line,
+body.eva-skin #amadeus .ama-dnote-line--l,
+body.eva-skin #amadeus .ama-dnote-line--r,
+body.eva-skin #amadeus .ama-tech-cell__title,
+body.eva-skin #amadeus .ama-chapter-break__title,
+body.eva-skin #amadeus .ama-emotion-hero__title,
+body.eva-skin #amadeus .ama-triad__title,
+body.eva-skin #amadeus .ama-triad__title--stack{
+  font-family:var(--ama-font-display)!important;
+  font-weight:700!important;
+  font-size:var(--ama-display)!important;
+  line-height:var(--ama-display-lh)!important;
+  letter-spacing:-.01em!important;
+  transform:none!important;
+  text-shadow:none!important;
+}
+
+body.eva-skin #amadeus .ama-soul-cell__lead,
+body.eva-skin #amadeus .ama-tech-cell__lead,
+body.eva-skin #amadeus .ama-emotion-hero__lead,
+body.eva-skin #amadeus .ama-triad__lead,
+body.eva-skin #amadeus .ama-triad__list li,
+body.eva-skin #amadeus .ama-dnote-sub,
+body.eva-skin #amadeus .ama-dnote-sub--r,
+body.eva-skin #amadeus .ama-stack-flow__desc,
+body.eva-skin #amadeus .ama-chapter-break__sub{
+  font-family:var(--ama-font-body)!important;
+  font-size:var(--ama-body)!important;
+  line-height:var(--ama-body-lh)!important;
+  color:var(--ama-muted)!important;
+}
+
+body.eva-skin #amadeus .ama-stack-flow__file{
+  font-family:var(--ama-font-mono)!important;
+  font-size:var(--ama-body)!important;
+  color:var(--ama-ink)!important;
+}
+body.eva-skin #amadeus .ama-stack-flow__item--voice{
+  border-left-color:var(--ama-ink)!important;
+}
+
+body.eva-skin #amadeus .ama-dnote-split,
+body.eva-skin #amadeus .ama-v2-module.ama-soul-split,
+body.eva-skin #amadeus .ama-v2-module.ama-tech-split,
+body.eva-skin #amadeus .ama-emotion-hero{
+  border-color:var(--ama-rule)!important;
+}
+body.eva-skin #amadeus .ama-v2-module.ama-soul-split,
+body.eva-skin #amadeus .ama-v2-module.ama-tech-split,
+body.eva-skin #amadeus .ama-v2-module[data-ama-section="formula"]{
+  border-bottom:1px solid var(--ama-rule)!important;
+}
+body.eva-skin #amadeus .ama-dnote-split{border-top:1px solid var(--ama-rule)!important}
+
+/* 04 叠层渐变改为白，不用米白 */
+body.eva-skin #amadeus .ama-emotion-hero::before{
+  background:
+    linear-gradient(128deg,rgba(255,255,255,.94) 0%,rgba(255,255,255,.72) 32%,rgba(255,255,255,.12) 56%,transparent 72%),
+    linear-gradient(180deg,rgba(8,8,10,.45) 0%,transparent 38%)!important;
+}
+body.eva-skin #amadeus .ama-emotion-hero__kicker,
+body.eva-skin #amadeus .ama-emotion-hero__title,
+body.eva-skin #amadeus .ama-emotion-hero__lead{
+  text-shadow:none!important;
+}
+
+body.eva-skin #amadeus .ama-triad__sheet{
+  font-family:var(--ama-font-ui)!important;
+}
