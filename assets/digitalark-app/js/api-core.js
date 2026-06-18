@@ -2,15 +2,10 @@
 
 window.DA = (function () {
   const API = window.location.origin;
-  const appBase = (function () {
-    const p = location.pathname;
-    if (p.includes('/apps/')) return p.replace(/\/apps\/[^/]*$/, '');
-    return p.replace(/\/?$/, '');
-  })();
   const APPS = {
-    sanctuary: appBase + '/apps/sanctuary.html',
-    training: appBase + '/apps/training.html',
-    companion: appBase + '/apps/companion.html'
+    sanctuary: '/apps/sanctuary.html',
+    training: '/apps/training.html',
+    companion: '/apps/companion.html'
   };
 
   let chatHistory = [];
@@ -37,7 +32,7 @@ window.DA = (function () {
   function getGuideTask() { return guideTask; }
 
   async function fetchGuideOverview() {
-    return api('GET', '/training/guide');
+    return api('GET', '/training/guide?_=' + Date.now(), undefined, { timeout: 15000 });
   }
 
   async function fetchModuleGuide(module) {
@@ -62,29 +57,21 @@ window.DA = (function () {
     return home || mg || null;
   }
 
-  /** 提交/跳过后强制同步主页与专项引导题 */
+  /** 提交/跳过后强制同步主页与专项引导题（专项页以 module 为准，避免被主页题覆盖） */
   async function refreshGuideState(module) {
-    const home = await api('GET', '/training/home?_=' + Date.now());
     let latest = null;
-    if (home.success && home.data) {
-      latest = home.data;
-      if (latest.task_id) setGuideTask(latest);
-    }
     if (module) {
       const mg = await api('GET', '/training/guide/' + module + '?_=' + Date.now());
       if (mg.success && mg.data) {
-        if (mg.data.task_id) {
-          setGuideTask(mg.data);
-          latest = mg.data;
-        } else if (latest?.task_id && latest.module === module) {
-          setGuideTask(latest);
-        } else if (!mg.data.task_id && !mg.data.locked && !mg.data.all_done) {
-          setGuideTask(mg.data);
-          latest = mg.data;
-        } else {
-          setGuideTask(mg.data);
-          latest = mg.data;
-        }
+        setGuideTask(mg.data);
+        latest = mg.data;
+      }
+    }
+    const home = await api('GET', '/training/home?_=' + Date.now());
+    if (home.success && home.data) {
+      if (!module || !latest?.task_id) {
+        if (home.data.task_id) setGuideTask(home.data);
+        latest = home.data.task_id ? home.data : latest;
       }
     }
     return latest;
@@ -118,17 +105,33 @@ window.DA = (function () {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  async function api(method, path, body) {
-    const res = await fetch(API + path, {
-      method,
-      headers: body ? { 'Content-Type': 'application/json' } : {},
-      body: body ? JSON.stringify(body) : undefined
-    });
-    const json = await res.json().catch(() => ({}));
-    if (!res.ok && !json.error) json.error = json.message || '请求失败';
-    json._status = res.status;
-    if (json.success === undefined) json.success = res.ok;
-    return json;
+  async function api(method, path, body, opts = {}) {
+    const timeoutMs = opts.timeout ?? 20000;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetch(API + path, {
+        method,
+        headers: body ? { 'Content-Type': 'application/json' } : {},
+        body: body ? JSON.stringify(body) : undefined,
+        signal: ctrl.signal
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok && !json.error) json.error = json.message || '请求失败';
+      json._status = res.status;
+      if (json.success === undefined) json.success = res.ok;
+      return json;
+    } catch (err) {
+      const timedOut = err && err.name === 'AbortError';
+      return {
+        success: false,
+        error: timedOut
+          ? '连接超时：请确认电脑已开机、数字方舟在运行、Tailscale 已连接'
+          : (err?.message || '网络错误')
+      };
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   function openApp(name) {
@@ -190,24 +193,30 @@ window.DA = (function () {
   function renderChat(boxEl, withFeedback, opts = {}) {
     if (!boxEl) return;
     const useCards = opts.messageCards || boxEl.classList.contains('da-msg-cards');
-    const avatarAi = opts.avatarAi || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL';
+    const avatarAi = opts.avatarAi || twinAvatarSrc() || '';
     const aiName = opts.aiName || '数字分身';
+    const useStick = !opts.avatarAi && !!twinAvatarSrc();
 
     boxEl.innerHTML = chatHistory.map(m => {
       let fb = '';
       if (withFeedback && m.role === 'assistant' && m.showFeedback) {
-        fb = `<div class="feedback-row">
-          <button type="button" data-like="1" data-id="${m.id}">很像我</button>
-          <button type="button" data-like="0" data-id="${m.id}">不像我</button>
+        fb = `<div class="da-calibration-row" data-msg-id="${m.id}">
+          <button type="button" class="da-cal-btn da-cal-no" data-tier="no" data-id="${m.id}">不像我</button>
+          <button type="button" class="da-cal-btn da-cal-partial" data-tier="partial" data-id="${m.id}">有点像</button>
+          <button type="button" class="da-cal-btn da-cal-yes" data-tier="yes" data-id="${m.id}">很像我</button>
         </div>`;
       }
       if (useCards) {
         const isMe = m.role === 'user';
+        const layerHtml = !isMe && m.layerExplanation && window.DALayerExplain
+          ? window.DALayerExplain.renderExplanation(m.layerExplanation, { collapsed: true })
+          : '';
         return `<div class="msg-card ${isMe ? 'me' : ''}" data-msg-id="${m.id}">
-          ${isMe ? '' : `<img class="msg-avatar" src="${avatarAi}" alt=""/>`}
+          ${isMe ? '' : (useStick ? twinAvatarHtml() : `<img class="msg-avatar" src="${avatarAi}" alt=""/>`)}
           <div class="msg-body">
             <div class="msg-name">${isMe ? '我' : aiName}</div>
             <div class="msg-text" data-archive="${m.content}">${esc(m.content)}</div>
+            ${layerHtml}
             ${fb}
           </div>
         </div>`;
@@ -216,14 +225,22 @@ window.DA = (function () {
       return `<div class="chat-bubble ${cls}">${esc(m.content)}</div>${fb}`;
     }).join('');
 
-    boxEl.querySelectorAll('[data-like]').forEach(btn => {
+    if (useStick) {
+      boxEl.querySelectorAll('.msg-avatar.da-stick-avatar').forEach(img => {
+        window.DAAvatar?.applyImg(img, twinAvatarPresetId());
+      });
+    }
+
+    boxEl.querySelectorAll('.da-calibration-row .da-cal-btn').forEach(btn => {
       btn.onclick = () => {
-        const like = btn.dataset.like === '1';
+        const tier = btn.dataset.tier;
         const id = btn.dataset.id;
-        if (like) sendFeedback(true, id);
-        else promptFeedbackCorrection(false, id, false);
+        if (tier === 'yes') sendFeedback(true, id);
+        else openCalibrationSheet(id, tier);
       };
     });
+
+    window.DALayerExplain?.wireExplainToggles(boxEl);
 
     if (opts.onArchive) {
       boxEl.querySelectorAll('.msg-text[data-archive]').forEach(el => {
@@ -236,10 +253,34 @@ window.DA = (function () {
     boxEl.scrollTop = boxEl.scrollHeight;
   }
 
+  let twinSetupCache = null;
+
   async function refreshTrainingSetupState() {
     const r = await api('GET', '/training/setup');
-    if (r.success) trainingSetupComplete = !!r.data?.setup_complete;
+    if (r.success) {
+      trainingSetupComplete = !!r.data?.setup_complete;
+      twinSetupCache = r.data;
+    }
     return r;
+  }
+
+  function twinAvatarSrc() {
+    const id = twinAvatarPresetId();
+    if (window.DAAvatar?.srcFor) return window.DAAvatar.srcFor(id);
+    const base = window.DAAvatar?.assetBase?.() || '/assets/avatars/';
+    return `${base}avatar-${id}.png`;
+  }
+
+  function twinAvatarPresetId() {
+    return window.DAAvatar?.resolveId(twinSetupCache) || 'm';
+  }
+
+  function twinAvatarHtml(extraClass = '') {
+    const src = twinAvatarSrc();
+    const id = twinAvatarPresetId();
+    if (!src) return '';
+    const cls = ['msg-avatar', 'da-stick-avatar', `da-stick-avatar--${id}`, extraClass].filter(Boolean).join(' ');
+    return `<img class="${cls}" src="${src}" alt=""/>`;
   }
 
   function isTrainingSetupComplete() {
@@ -335,11 +376,15 @@ window.DA = (function () {
       const data = finalData;
       assistantMsg.id = 'a' + Date.now();
       assistantMsg.showFeedback = opts.feedback && !useCompanion;
+      assistantMsg.layerExplanation = data.layer_explanation || data.caps?.layer_explanation || null;
       lastMsgId = assistantMsg.id;
       renderChat(boxEl, opts.feedback, opts);
       
       if (opts.onPad && data.pad_state) opts.onPad(data.pad_state, data.strategy);
       if (opts.onCaps && data.caps) opts.onCaps(data.caps);
+      if (opts.onLayerExplain && assistantMsg.layerExplanation) {
+        opts.onLayerExplain(assistantMsg.layerExplanation);
+      }
       if (data.safety_alert && useCompanion) showSafetyAlert(data.safety_alert);
       if (!opts.noTts && data.reply) speakReply(data.reply);
       
@@ -349,25 +394,73 @@ window.DA = (function () {
     }
   }
 
-  async function sendFeedback(like, msgId, comment, correction) {
-    const lastUser = [...chatHistory].reverse().find(m => m.role === 'user');
-    const lastAsst = [...chatHistory].reverse().find(m => m.role === 'assistant' && !m.pending);
-    await api('POST', '/chat/feedback', {
-      like: !!like,
-      message_id: msgId,
-      comment: comment || (like ? '很像我' : (correction ? '用户修正' : '不像我')),
-      user_text: lastUser?.content,
-      reply_text: lastAsst?.content,
-      correction: correction || undefined,
-      preferred_reply: correction || undefined
-    });
-    toast(like ? '已记录：很像你' : (correction ? '已记录修正，下次会参考' : (comment === '部分相似' ? '已记录：部分相似' : '已记录：会继续调整')));
-    const m = chatHistory.find(x => x.id === msgId);
-    if (m) m.showFeedback = false;
+  const CALIBRATION_DEVIATIONS = [
+    { id: 'tone', label: '语气不像' },
+    { id: 'ai_like', label: '说得太像 AI' },
+    { id: 'opinion', label: '观点不对' },
+    { id: 'too_soft', label: '太温柔' },
+    { id: 'too_cold', label: '太冷淡' },
+    { id: 'proactive_wrong', label: '不会这样主动关心' },
+    { id: 'boundary', label: '关系边界不对' }
+  ];
+
+  function showTwinChangeCard(changes, version) {
+    if (!changes?.length) return;
+    const host = document.querySelector('.da-home-shell') || document.querySelector('#p0');
+    if (!host) return;
+    let el = host.querySelector('.da-twin-change-card');
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'da-twin-change-card';
+      const anchor = host.querySelector('.da-segment');
+      if (anchor) anchor.before(el);
+      else host.prepend(el);
+    }
+    el.className = 'da-twin-change-card on';
+    el.innerHTML = `
+      <div class="da-twin-change-inner">
+        <span class="mi" aria-hidden="true">auto_awesome</span>
+        <div class="da-twin-change-body">
+          <strong>数字人已更新${version ? ' · ' + esc(version) : ''}</strong>
+          <ul>${changes.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+        </div>
+        <button type="button" class="da-twin-change-close" aria-label="关闭">×</button>
+      </div>`;
+    el.querySelector('.da-twin-change-close')?.addEventListener('click', () => el.classList.remove('on'));
   }
 
-  /** 不像/有点像时弹出「应该怎么说」 */
-  function promptFeedbackCorrection(like, msgId, partial) {
+  async function sendFeedback(like, msgId, opts = {}) {
+    const lastUser = [...chatHistory].reverse().find(m => m.role === 'user');
+    const lastAsst = [...chatHistory].reverse().find(m => m.role === 'assistant' && !m.pending);
+    const partial = !!opts.partial && !like;
+    const r = await api('POST', '/chat/feedback', {
+      like: !!like,
+      partial,
+      message_id: msgId,
+      comment: opts.comment || (like ? '很像我' : (partial ? '部分相似' : '不像我')),
+      user_text: lastUser?.content,
+      reply_text: lastAsst?.content,
+      correction: opts.correction || undefined,
+      preferred_reply: opts.correction || undefined,
+      deviation_tags: opts.deviation_tags || []
+    });
+    if (r.success) {
+      const allChanges = [...(r.changes || []), ...(r.layer_updates || [])];
+      if (allChanges.length) showTwinChangeCard(allChanges, r.twin_version);
+      toast(r.message || (like ? '已记录：很像你' : '已记录校准'));
+    } else {
+      toast(r.error || '反馈失败', 'error');
+    }
+    const m = chatHistory.find(x => x.id === msgId);
+    if (m) m.showFeedback = false;
+    const row = document.querySelector(`.da-calibration-row[data-msg-id="${msgId}"]`);
+    if (row) row.remove();
+    return r;
+  }
+
+  /** 不像我 / 有点像：哪里不像 + 我会怎么说 */
+  function openCalibrationSheet(msgId, tier) {
+    const partial = tier === 'partial';
     const lastAsst = [...chatHistory].reverse().find(m => m.role === 'assistant' && !m.pending);
     let overlay = document.getElementById('daFeedbackOverlay');
     if (!overlay) {
@@ -376,32 +469,55 @@ window.DA = (function () {
       overlay.className = 'da-feedback-overlay';
       document.body.appendChild(overlay);
     }
+    const chips = CALIBRATION_DEVIATIONS.map(d =>
+      `<button type="button" class="da-dev-chip" data-dev="${d.id}">${d.label}</button>`
+    ).join('');
     overlay.innerHTML = `
       <div class="da-feedback-sheet">
-        <h3>${partial ? '哪里像、哪里不像？' : 'TA 应该怎么说？'}</h3>
-        <p>写下更贴近 ${partial ? '真实' : 'TA'} 的原话，系统会用来调整后续回复与训练语料。</p>
+        <h3>${partial ? '哪里像、哪里不像？' : '哪里不像？'}</h3>
+        <p class="t-body-sm">点选偏差类型（可多选），并写下你会怎么说。校准会立刻影响下次试聊。</p>
         ${lastAsst ? `<div class="da-feedback-preview">当前回复：${esc(lastAsst.content.slice(0, 160))}${lastAsst.content.length > 160 ? '…' : ''}</div>` : ''}
-        <textarea id="daFeedbackCorrection" placeholder="例：我会更直接，先说「别急，我们看看哪里卡住了」"></textarea>
+        <p class="da-setup-label" style="margin-top:12px;">哪里不像</p>
+        <div class="da-dev-chips">${chips}</div>
+        <p class="da-setup-label">我会怎么说 <span class="opt">选填</span></p>
+        <textarea id="daFeedbackCorrection" rows="3" placeholder="例：我会更直接，先说「别急，我们看看哪里卡住了」"></textarea>
         <div class="da-feedback-actions">
           <button type="button" id="daFbSkip" class="da-feedback-skip">跳过</button>
-          <button type="button" id="daFbSave" class="da-feedback-save">保存反馈</button>
+          <button type="button" id="daFbSave" class="da-feedback-save">保存校准</button>
         </div>
       </div>`;
     overlay.style.display = 'flex';
+    const selected = new Set();
+    overlay.querySelectorAll('.da-dev-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const id = chip.dataset.dev;
+        if (selected.has(id)) { selected.delete(id); chip.classList.remove('on'); }
+        else { selected.add(id); chip.classList.add('on'); }
+      });
+    });
     overlay.onclick = e => { if (e.target === overlay) overlay.style.display = 'none'; };
+    overlay.querySelector('.da-feedback-sheet')?.addEventListener('click', e => e.stopPropagation());
     overlay.querySelector('#daFbSkip').onclick = () => {
       overlay.style.display = 'none';
-      sendFeedback(!!like, msgId, partial ? '部分相似' : '不像我');
+      sendFeedback(false, msgId, { partial, deviation_tags: [...selected] });
     };
     overlay.querySelector('#daFbSave').onclick = () => {
       const fix = overlay.querySelector('#daFeedbackCorrection')?.value?.trim();
       overlay.style.display = 'none';
-      sendFeedback(!!like, msgId, partial ? '部分相似' : '不像我', fix || undefined);
+      sendFeedback(false, msgId, {
+        partial,
+        deviation_tags: [...selected],
+        correction: fix || undefined
+      });
     };
   }
 
+  function promptFeedbackCorrection(like, msgId, partial) {
+    openCalibrationSheet(msgId, partial ? 'partial' : 'no');
+  }
+
   async function fetchHomeTraining() {
-    return api('GET', '/training/home?_=' + Date.now());
+    return api('GET', '/training/home?_=' + Date.now(), undefined, { timeout: 15000 });
   }
 
   async function submitHomeTraining(payload) {
@@ -410,15 +526,38 @@ window.DA = (function () {
     return r;
   }
 
+  function skipAdvanceResult(module, prevId, data, message) {
+    const next = applyGuideAdvanceFromResponse(data, module);
+    const nextId = next?.task_id || null;
+    const advanced = !!(nextId && nextId !== prevId);
+    if (nextId && nextId === prevId) {
+      toast('已跳过，但题库暂无新题（可能本题库较小）', 'error');
+    } else if (!next?.all_done) {
+      toast(message || data?.feedback || (nextId ? '已跳过，进入下一题' : '已跳过'));
+    } else {
+      toast(message || data?.feedback || '本模块题目已完成');
+    }
+    return { ok: true, module, next, advanced, prevId };
+  }
+
   /** 没印象 / 想不起：跳过当前引导题并进入下一题 */
   async function skipGuideTask(opts = {}) {
-    const gt = getGuideTask();
-    const module = opts.module || gt?.module;
-    const task_id = opts.task_id || gt?.task_id;
-    if (!module || !task_id) {
+    const module = opts.module || getGuideTask()?.module;
+    if (!module) {
       toast('当前没有可跳过的题目，请刷新页面', 'error');
-      return false;
+      return { ok: false };
     }
+    let task_id = opts.task_id;
+    if (!task_id) {
+      const gr = await fetchModuleGuide(module);
+      task_id = gr.data?.task_id || getGuideTask()?.task_id;
+    }
+    if (!task_id) {
+      toast('当前没有可跳过的题目，请刷新页面', 'error');
+      return { ok: false };
+    }
+    const prevId = task_id;
+    const gt = getGuideTask();
     const payload = {
       module,
       task_id,
@@ -428,10 +567,7 @@ window.DA = (function () {
 
     let r = await api('POST', '/training/home/submit', payload);
     if (r.success) {
-      const adv = applyGuideAdvanceFromResponse(r.data, module);
-      toast(r.message || r.data?.feedback || (adv?.task_id ? '已进入下一题' : '已跳过'));
-      await refreshGuideState(module);
-      return true;
+      return skipAdvanceResult(module, prevId, r.data, r.message);
     }
 
     const modulePaths = {
@@ -455,15 +591,12 @@ window.DA = (function () {
       }
       r = await api('POST', path, body);
       if (r.success) {
-        applyGuideAdvanceFromResponse(r.data, module);
-        toast(r.message || r.data?.feedback || '已跳过，进入下一题');
-        await refreshGuideState(module);
-        return true;
+        return skipAdvanceResult(module, prevId, r.data, r.message);
       }
     }
 
     toast(r.error || '跳过失败，请刷新后重试', 'error');
-    return false;
+    return { ok: false };
   }
 
   async function ingestChatTraining(userText, assistantText, saveAs) {
@@ -520,7 +653,7 @@ window.DA = (function () {
       if (keys[i]) el.textContent = shortLabels[keys[i]];
     });
 
-    root.querySelectorAll('.da-module-list .module-row[data-module]').forEach(row => {
+    root.querySelectorAll('.da-module-list .module-row[data-module], .da-hub-mod-list .module-row[data-module]').forEach(row => {
       const k = row.dataset.module;
       const p = pct(k);
       row.style.setProperty('--mod-pct', p);
@@ -558,12 +691,14 @@ window.DA = (function () {
       chip.classList.toggle('chip-o', p < 70);
     });
 
-    const heroChip = root.querySelector('.da-hero-pct-chip');
-    if (heroChip) {
-      heroChip.textContent = data.stage?.name
-        ? data.stage.name + ' · 拟合 ' + overall + '%'
-        : '拟合 ' + overall + '%';
-    }
+    root.querySelectorAll('.da-home-tagline').forEach(tag => {
+      const cur = (tag.textContent || '').trim();
+      if (/训练进行中|内心平静|心情愉悦|心情略低|静心沉思/.test(cur)) {
+        tag.textContent = overall > 0 ? `拟合 ${overall}%` : '随手记一句话，最快让分身像你';
+      } else if (overall > 0 && !cur.includes('拟合')) {
+        tag.textContent = `拟合 ${overall}% · ${cur}`;
+      }
+    });
     root.querySelectorAll('.da-home-hero-ring').forEach(ring => {
       ring.style.setProperty('--pct', overall);
     });
@@ -644,7 +779,7 @@ window.DA = (function () {
     });
     if (success) {
       applyGuideAdvanceFromResponse(data, 'voice');
-      toast(`相似度 ${Math.round(data.similarity_score * 100)}% · ${data.feedback || '已进入下一题'}`);
+      toast(data.feedback || `已记录 · 相似度 ${Math.round(data.similarity_score * 100)}%`);
       voiceAudioB64 = null;
       voiceAudioFeatures = null;
       await refreshGuideState('voice');
@@ -716,7 +851,7 @@ window.DA = (function () {
       return false;
     }
     if (!content?.trim()) {
-      toast(gt?.task_id ? '想不起可以点上方「没印象，跳过」' : '请描述记忆', 'error');
+      toast('写几个字，或点「有印象」「跳过」', 'error');
       return false;
     }
     const { success, data } = await api('POST', '/training/memory', {
@@ -728,13 +863,18 @@ window.DA = (function () {
       people: extra.people,
       emotion: extra.emotion,
       photos: extra.photos,
+      save_only: !!extra.save_only,
       task_id: gt?.task_id
     });
     if (success) {
-      applyGuideAdvanceFromResponse(data, 'memory');
-      toast(data.feedback || '已保存，进入下一题');
-      if (data.rest_hint) toast(data.rest_hint);
-      await refreshGuideState('memory');
+      if (extra.save_only) {
+        toast(data.feedback || '已记下');
+      } else {
+        applyGuideAdvanceFromResponse(data, 'memory');
+        toast(data.feedback || '已保存');
+        if (data.rest_hint) toast(data.rest_hint);
+        await refreshGuideState('memory');
+      }
       return true;
     }
     return false;
@@ -755,7 +895,7 @@ window.DA = (function () {
     });
     if (success) {
       applyGuideAdvanceFromResponse(data, 'relationship');
-      toast(data.feedback || '已记录，进入下一题');
+      toast(data.feedback || '已记录');
       await refreshGuideState('relationship');
       return true;
     }
@@ -768,17 +908,21 @@ window.DA = (function () {
       toast(gt?.task_id ? '想不起可以点「没印象，跳过」' : '请写下回应', 'error');
       return false;
     }
-    if (!(await ensureDeepUnlock('emotion'))) return false;
-    const { success, data } = await api('POST', '/training/emotion', {
+    const res = await api('POST', '/training/emotion', {
       scenario: gt?.scenario || '情绪场景',
       response: text.trim(),
       stress_reaction: gt?.stress_reaction || 'rational',
       comfort_style: gt?.comfort_style || 'accompany_first',
       task_id: gt?.task_id
     });
+    if (!res.success && res.gate) {
+      if (await ensureDeepUnlock(res.gate)) return submitEmotion(text);
+      return false;
+    }
+    const { success, data } = res;
     if (success) {
       applyGuideAdvanceFromResponse(data, 'emotion');
-      toast(data.feedback || '已记录，进入下一题');
+      toast(data.feedback || '已记录');
       await refreshGuideState('emotion');
       return true;
     }
@@ -786,16 +930,20 @@ window.DA = (function () {
   }
 
   async function submitCognition(values, extra = {}) {
-    if (!(await ensureDeepUnlock('cognition_conflict'))) return false;
     const gt = await ensureModuleGuideTask('cognition');
-    const { success, data } = await api('POST', '/training/cognition', {
+    const res = await api('POST', '/training/cognition', {
       values_ranking: values,
       conflict_choices: extra.conflict_choices || cogChoices,
       task_id: gt?.task_id
     });
+    if (!res.success && res.gate) {
+      if (await ensureDeepUnlock(res.gate)) return submitCognition(values, extra);
+      return false;
+    }
+    const { success, data } = res;
     if (success) {
       applyGuideAdvanceFromResponse(data, 'cognition');
-      toast(data.feedback || '已记录，进入下一题');
+      toast(data.feedback || '已记录');
       cogChoices = [];
       await refreshGuideState('cognition');
       return true;
@@ -857,6 +1005,10 @@ window.DA = (function () {
     return api('GET', '/training/setup');
   }
 
+  async function fetchTrainingDashboard() {
+    return api('GET', '/training/dashboard');
+  }
+
   async function saveTrainingSetup(payload) {
     return api('POST', '/training/setup', payload);
   }
@@ -865,16 +1017,34 @@ window.DA = (function () {
     return api('POST', '/training/setup/demo');
   }
 
+  async function fetchFineTuneStatus(personaId = 'user') {
+    return api('GET', '/fine-tune/status?persona_id=' + encodeURIComponent(personaId));
+  }
+
+  async function exportFineTuneCorpus(personaId = 'user') {
+    return api('POST', '/fine-tune/export', { persona_id: personaId });
+  }
+
+  async function runFineTune(personaId = 'user') {
+    return api('POST', '/fine-tune/run', { persona_id: personaId });
+  }
+
+  async function fetchFineTuneJob(jobId) {
+    return api('GET', '/fine-tune/job/' + encodeURIComponent(jobId));
+  }
+
   return {
-    API, APPS, openApp, toast, api, injectAppMenu,
+    API, APPS, openApp, toast, api, injectAppMenu, toggleAppMenu,
     chatHistory, get lastMsgId() { return lastMsgId; },
     renderChat, renderCapsPanel, sendChat, sendFeedback, sendPartialFeedback, promptFeedbackCorrection,
     get lastCapsSnapshot() { return lastCapsSnapshot; },
     fetchHomeTraining, submitHomeTraining, skipGuideTask, refreshGuideState, ingestChatTraining,
+    loadProgress, applyProgress,
     toggleRecord, submitVoice, submitMemory, submitRelationship,
     submitEmotion, submitCognition, pickConflict,
     setGuideTask, getGuideTask, fetchGuideOverview, fetchModuleGuide,
-    fetchTrainingSetup, saveTrainingSetup, enableDemoSetup,
+    fetchTrainingSetup, saveTrainingSetup, enableDemoSetup, fetchTrainingDashboard,
+    fetchFineTuneStatus, exportFineTuneCorpus, runFineTune, fetchFineTuneJob,
     refreshTrainingSetupState, isTrainingSetupComplete,
     loadCompanionStatus, saveCompanionSettings, speakReply, startVoiceInput,
     padToChips, archiveMessage, setCompanionUserId, getCompanionUserId,

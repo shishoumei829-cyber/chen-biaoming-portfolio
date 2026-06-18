@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>陈彪明 · 把感知做成产品</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./septiembre-clone.css">
+</head>
+<body>
+  <svg class="svg-filters" aria-hidden="true" focusable="false">
+    <filter id="ink-roughen">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.07" numOctaves="2" seed="18" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.25" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+  <div class="progress" aria-hidden="true"></div>
+
+  <div class="identity-back" aria-hidden="true">
+    <h1 class="identity-wordmark"><span>陈</span><span>彪</span><span>明</span></h1>
+    <p class="identity-subtitle">把感知做成产品 · 体验设计 / 产品设计 / PM</p>
+  </div>
+
+  <div class="identity-layer" aria-hidden="true">
+    <h1 class="identity-wordmark"><span>陈</span><span>彪</span><span>明</span></h1>
+    <p class="identity-subtitle">把感知做成产品 · 体验设计 / 产品设计 / PM</p>
+  </div>
+
+  <header class="site-header" aria-label="Site header">
+    <a class="brand" href="#top">陈彪明<br>作品集</a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#about">个人档案</a>
+      <a href="#projects">项目</a>
+      <a href="#archive">索引</a>
+      <a href="#team">生活档案</a>
+      <a href="#contact">联系</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Portfolio hero">
+      <div class="hero-media-wrap">
+        <img class="hero-media hero-layer hero-layer-a" src="../assets/self/gallery/wv-03.jpg" alt="山地摄影">
+        <img class="hero-media hero-layer hero-layer-b" src="../assets/self/gallery/wv-04.jpg" alt="荒漠公路摄影">
+        <img class="hero-media hero-layer hero-layer-c" src="../assets/self/gallery/wv-05.jpg" alt="湖面摄影">
+        <img class="hero-media hero-layer hero-layer-d" src="../assets/self/gallery/travel-coast.png" alt="海岸摄影">
+        <img class="hero-media hero-layer hero-layer-e" src="../assets/self/gallery/ming-sha-shan.png" alt="鸣沙山摄影">
+      </div>
+      <p class="scroll-cue">Scroll</p>
+    </section>
+
+    <div class="about-stage">
+      <section id="about" class="about reveal">
+        <p class="about-kicker">about me</p>
+        <p class="about-copy">
+          <span>我相信设计不是把功能排列清楚，</span>
+          而是让一个人愿意靠近、理解、停留，并在反复使用中形成自己的关系。
+          好的产品不只解决任务，也会处理感知、情绪、信任、节奏和记忆。
+          我关心那些不容易被写进功能列表的部分：
+          为什么它让人安心，为什么它能被记住，为什么它值得继续使用。
+        </p>
+      </section>
+
+      <section class="about-panel" aria-label="Design statement">
+        <div class="bg-div" aria-hidden="true"></div>
+        <div class="about-panel-inner">
+          <p class="statement-title">
+            <span class="line-mask"><span class="line-inner">我相信</span></span>
+            <span class="line-mask"><span class="line-inner em">把感知做成产品</span></span>
+            <span class="line-mask"><span class="line-inner">这件事本身。</span></span>
+          </p>
+          <figure class="statement-visual">
+            <img src="../assets/self/gallery/personal-photography.jpg" alt="陈彪明摄影">
+          </figure>
+        </div>
+      </section>
+    </div>
+
+    <section id="projects" class="featured-projects">
+      <div class="section-kicker reveal">
+        <span>项目</span>
+        <span>独立完成</span>
+      </div>
+
+      <div class="project-track">
+        <article class="project-card reveal">
+          <a class="project-image tall" href="../amadeus/amadeus_work.html">
+            <img src="../cpt/amadeus.png" alt="虚拟女友 AMADEUS">
+          </a>
+          <div class="project-meta">
+            <h2>虚拟女友</h2>
+            <p>AMADEUS / AI 情感实验系统 / 已完成 / GitHub 开源</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal offset">
+          <a class="project-image" href="../digitalark/app/index.html">
+            <img src="../cpt/数字方舟.png" alt="数字方舟">
+          </a>
+          <div class="project-meta">
+            <h2>数字方舟</h2>
+            <p>本地分身系统 / 基础版本完整 / 待验证迭代</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal narrow">
+          <a class="project-image" href="#mozou">
+            <img src="../cpt/墨舟.png" alt="墨舟">
+          </a>
+          <div class="project-meta">
+            <h2>墨舟</h2>
+            <p>旅行文化体验产品 / 可准备落地</p>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <a class="project-image wide" href="#team">
+            <img src="../assets/site/personal-portrait.jpg" alt="陈彪明">
+          </a>
+          <div class="project-meta">
+            <h2>我这个人</h2>
+            <p>观察 / 旅行 / 摄影 / 手绘 / 生活经验</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="project-thumbs" aria-hidden="true">
+        <button class="is-active"><img src="../cpt/amadeus.png" alt=""><span>01</span></button>
+        <button><img src="../cpt/数字方舟.png" alt=""><span>02</span></button>
+        <button><img src="../cpt/墨舟.png" alt=""><span>03</span></button>
+        <button><img src="../assets/site/personal-portrait.jpg" alt=""><span>04</span></button>
+      </div>
+    </section>
+
+    <section id="archive" class="archive reveal">
+      <div class="archive-list">
+        <a class="archive-row" href="../amadeus/amadeus_work.html" data-preview="../cpt/amadeus.png">
+          <span class="archive-year">01</span>
+          <span class="archive-title">虚拟女友</span>
+          <span class="archive-kind">已完成 / 开源</span>
+        </a>
+        <a class="archive-row" href="../digitalark/app/index.html" data-preview="../cpt/数字方舟.png">
+          <span class="archive-year">02</span>
+          <span class="archive-title">数字方舟</span>
+          <span class="archive-kind">基础版本完整</span>
+        </a>
+        <a class="archive-row" id="mozou" href="#" data-preview="../cpt/墨舟.png">
+          <span class="archive-year">03</span>
+          <span class="archive-title">墨舟</span>
+          <span class="archive-kind">准备落地</span>
+        </a>
+        <a class="archive-row" href="#team" data-preview="../assets/site/personal-portrait.jpg">
+          <span class="archive-year">04</span>
+          <span class="archive-title">我这个人</span>
+          <span class="archive-kind">经验 / 观察 / 生活档案</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="team" class="studio reveal">
+      <p>
+        我希望作品集里不只有项目结果，也能看见我如何形成判断。
+        旅行让我观察地方和人的关系，摄影让我理解光线和情绪，手绘让我快速把模糊感受落到形状里。
+        这些经验会回到产品里，变成对场景、节奏、情感和长期使用的判断。
+      </p>
+      <h2>观察<br>感知<br>成型</h2>
+      <div class="team-grid">
+        <p><strong>旅行</strong><span>在地文化 / 即时理解</span></p>
+        <p><strong>摄影</strong><span>光线 / 情绪 / 场景</span></p>
+        <p><strong>手绘</strong><span>想法草图 / 叙事碎片</span></p>
+        <p><strong>观察</strong><span>人、物与关系</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="site-footer">
+    <p>©2026 陈彪明 · 体验设计 / 产品设计 / PM</p>
+    <nav>
+      <a href="../index.html">返回旧版</a>
+      <a href="mailto:">联系</a>
+      <a href="#top" class="back-top">BACK TO TOP</a>
+    </nav>
+  </footer>
+
+  <div class="hover-preview" aria-hidden="true">
+    <img src="../assets/amadeus/art/bg/amadeus-hero-garden.png" alt="">
+  </div>
+
+  <script src="./septiembre-clone-assets/vendor/gsap.min.js"></script>
+  <script src="./septiembre-clone-assets/vendor/ScrollTrigger.min.js"></script>
+  <script src="./septiembre-clone.js"></script>
+</body>
+</html>

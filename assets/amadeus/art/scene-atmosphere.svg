@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" fill="none" role="img" aria-label="Neural atmosphere editorial illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1200">
+      <stop offset="0%" stop-color="#fafafa"/>
+      <stop offset="45%" stop-color="#eceef2"/>
+      <stop offset="100%" stop-color="#dfe3ea"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset="55%" stop-color="#e8ecf4" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#dfe3ea" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0">
+      <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".08"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+  <rect width="1600" height="1200" fill="url(#glow)"/>
+  <g stroke="#0a0a0a" stroke-opacity=".08" stroke-width=".6">
+    <path d="M120 980 Q420 620 800 540 T1480 180"/>
+    <path d="M80 820 Q380 480 760 420 T1420 120"/>
+    <path d="M200 1100 Q520 760 900 680 T1560 320"/>
+  </g>
+  <g fill="#0a0a0a" fill-opacity=".12">
+    <circle cx="800" cy="520" r="2.2"/><circle cx="640" cy="580" r="1.6"/><circle cx="920" cy="470" r="1.8"/>
+    <circle cx="520" cy="720" r="1.4"/><circle cx="1080" cy="610" r="2"/><circle cx="1180" cy="440" r="1.5"/>
+    <circle cx="380" cy="860" r="1.3"/><circle cx="1240" cy="780" r="1.7"/><circle cx="980" cy="340" r="2.1"/>
+  </g>
+  <g stroke="#0a0a0a" stroke-opacity=".06" stroke-width=".45">
+    <line x1="800" y1="520" x2="640" y2="580"/><line x1="800" y1="520" x2="920" y2="470"/>
+    <line x1="640" y1="580" x2="520" y2="720"/><line x1="920" y1="470" x2="1080" y2="610"/>
+    <line x1="1080" y1="610" x2="1180" y2="440"/><line x1="520" y1="720" x2="380" y2="860"/>
+    <line x1="1080" y1="610" x2="1240" y2="780"/><line x1="920" y1="470" x2="980" y2="340"/>
+  </g>
+  <ellipse cx="800" cy="500" rx="280" ry="180" stroke="#0a0a0a" stroke-opacity=".04" stroke-width="1" fill="none"/>
+  <ellipse cx="800" cy="500" rx="420" ry="260" stroke="#0a0a0a" stroke-opacity=".025" stroke-width=".8" fill="none"/>
+  <rect width="1600" height="1200" filter="url(#grain)" opacity=".55"/>
+</svg>

@@ -177,6 +177,8 @@ body {
   background: rgba(247, 243, 237, 0.96);
   backdrop-filter: blur(16px);
   border-top: 1px solid rgba(198, 199, 192, 0.22);
+  position: relative;
+  z-index: 120;
 }
 
 .nav-btn {

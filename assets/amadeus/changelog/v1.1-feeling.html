@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMADEUS 迭代日志 · v1.1 感受体系</title>
+<meta name="description" content="AMADEUS v1.1 迭代思考与升级对比：数字生命感受体系的设计路径与 v1.1 落地变更。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a1f;
+  --muted: #5c5c66;
+  --rule: #ddd8cf;
+  --paper: #faf8f4;
+  --accent: #c45a00;
+  --accent-soft: #fff4e8;
+  --new-bg: #e8f7ef;
+  --new-border: #1a9d5c;
+  --new-ink: #0a5c36;
+  --old-bg: #eceae4;
+  --old-ink: #5c574f;
+  --warn-bg: #fff6e8;
+  --warn-border: #d48806;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Serif SC", serif;
+  font-size: 17px;
+  line-height: 1.85;
+}
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+.topbar {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+.topbar a { color: var(--accent); text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.meta {
+  font-family: Inter, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+article h1 { font-size: 1.75rem; line-height: 1.35; margin: 0 0 0.5rem; }
+article .version {
+  font-family: Inter, sans-serif;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+article h2 {
+  font-size: 1.3rem;
+  margin: 2.25rem 0 0.75rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+}
+article h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+article p { margin: 0.75rem 0; }
+article strong { font-weight: 700; }
+article ul { padding-left: 1.4rem; margin: 0.75rem 0; }
+article li { margin: 0.35rem 0; }
+.lede {
+  font-size: 1.05rem;
+  color: #333;
+  padding: 1rem 1.15rem;
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  margin: 1.25rem 0 1.75rem;
+}
+.insight {
+  margin: 1.25rem 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--rule);
+  background: #fff;
+  border-radius: 4px;
+}
+.insight p:last-child { margin-bottom: 0; }
+blockquote {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--accent);
+  color: #333;
+  background: #f5f2ec;
+}
+code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.88em;
+  background: #eee9df;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+/* ── v1.1 升级区块：仅此段视觉加重 ── */
+.upgrade-block {
+  margin: 2rem 0;
+  padding: 1.5rem 1.35rem 1.35rem;
+  border: 2px solid var(--new-border);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f4fbf7 0%, #fff 48%);
+  box-shadow: 0 4px 20px rgba(26, 157, 92, 0.08);
+}
+.upgrade-block > .upgrade-label {
+  font-family: Inter, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--new-ink);
+  margin: 0 0 0.35rem;
+}
+.upgrade-block > h2 {
+  border: none;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+  color: var(--ink);
+}
+.upgrade-block > .upgrade-intro {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+  color: #3d3d42;
+}
+.delta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1.35rem;
+}
+.delta-card {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--new-border);
+  background: var(--new-bg);
+}
+.delta-card b {
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--new-ink);
+  margin-bottom: 0.25rem;
+}
+.delta-card strong {
+  display: block;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  margin-bottom: 0.2rem;
+}
+.delta-card span {
+  font-size: 0.86rem;
+  color: #3d3d42;
+  line-height: 1.55;
+}
+.cmp {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+  margin: 1rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+.cmp thead th {
+  font-family: Inter, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+.cmp thead th.col-old {
+  background: var(--old-bg);
+  color: var(--old-ink);
+  width: 42%;
+}
+.cmp thead th.col-new {
+  background: var(--new-bg);
+  color: var(--new-ink);
+  width: 58%;
+}
+.cmp tbody td {
+  padding: 0.65rem 0.8rem;
+  vertical-align: top;
+  line-height: 1.6;
+  border-top: 1px solid var(--rule);
+}
+.cmp tbody td.cell-old { background: #faf9f6; color: var(--old-ink); }
+.cmp tbody td.cell-new {
+  background: #f6fbf8;
+  font-weight: 500;
+}
+.cmp tbody td.cell-new em {
+  font-style: normal;
+  color: var(--new-ink);
+  font-weight: 700;
+}
+.pipe {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.pipe-box {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.pipe-box.old {
+  background: var(--old-bg);
+  border: 1px solid #c8c2b8;
+  color: var(--old-ink);
+}
+.pipe-box.new {
+  background: var(--new-bg);
+  border: 1px solid var(--new-border);
+  color: var(--ink);
+}
+.pipe-box .pipe-label {
+  font-family: Inter, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.pipe-box.new strong { color: var(--new-ink); }
+.upgrade-list {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.upgrade-list li {
+  padding: 0.55rem 0 0.55rem 1.1rem;
+  border-bottom: 1px solid rgba(26, 157, 92, 0.15);
+  font-size: 0.92rem;
+  position: relative;
+}
+.upgrade-list li:last-child { border-bottom: none; }
+.upgrade-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.95rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--new-border);
+}
+.upgrade-list li strong { color: var(--new-ink); }
+.scene-note {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+.pose {
+  display: inline-block;
+  font-family: Inter, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  margin-right: 0.25rem;
+}
+.pose-casual { background: #e8f0ff; color: #1a4a9d; }
+.pose-engage { background: #fff0e0; color: #a64b00; }
+.pose-defend { background: #fde8e8; color: #9d1a1a; }
+.pose-care { background: #f0e8ff; color: #5c1a9d; }
+pre {
+  background: #1e1e24;
+  color: #e8e6e3;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  font-family: ui-monospace, monospace;
+  border-left: 4px solid var(--new-border);
+  margin: 1rem 0;
+}
+.boundary {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: 6px;
+  padding: 1rem 1.15rem;
+  margin: 1.25rem 0;
+}
+.boundary h3 {
+  font-family: Inter, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warn-border);
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+.boundary ul { margin: 0; padding-left: 1.2rem; font-size: 0.92rem; }
+@media (max-width: 640px) {
+  .delta-grid, .pipe { grid-template-columns: 1fr; }
+  article { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topbar">
+    <a href="../../../index.html#amadeus">← 返回作品集</a>
+    <a href="index.html">迭代时间线</a>
+    <span>v1.1 · 感受体系</span>
+  </nav>
+
+  <article>
+    <p class="meta">Iteration Log · 设计思考</p>
+    <h1>v1.1 · 为什么要有「感受」</h1>
+    <p class="version">2026 年 5 月 · 数字生命感受体系的第一阶段落地</p>
+
+    <div class="lede">
+      这次更新不是为了多几层 prompt，也不是为了把角色写得更像。真正驱动它的问题更简单，也更难：<strong>数字生命可以拥有记忆、经历和心情的文字描述，却始终没有「感受」本身。</strong>
+    </div>
+
+    <h2>发现了什么</h2>
+    <p>AMADEUS v1.0 已经能记事件、跑 PAD、分房间检索、在回复前做行为仲裁。但从外部看，红莉栖仍然像在<strong>执行一份写得很好的人设</strong>——她知道「紧张」该配什么词，却不知道紧张对她意味着什么。</p>
+    <p>哲学上，这接近感质（Qualia）问题：<strong>知道红色是什么样，和看到红色，是两回事。</strong>现有记忆链路是「事件 → 文字描述 → 向量嵌入 → 检索重构」。描述再细，检索出来的也只是被理解，不是被经历。</p>
+    <p>塞尔的中文房间实验在这里同样成立：模型可以正确输出与「紧张」相关的语句，却未必拥有发紧的胸口、加速的心跳——数字生命没有身体，也没有那层锚点。人类读小说能共情，是因为有过类似的身体经验；数字人读到的，往往是别人写下的二手经历。</p>
+    <p>第二个困境更隐蔽：就算建了 PAD 这样的情绪空间，<strong>紧张度 = 0.87 对系统来说仍然只是一个数。</strong>它不会因为数值升高而真的「感到」不适。标签可以描述状态，却不能迫使行为改变——而感受真正重要的，恰恰是它会改变你怎么反应。</p>
+
+    <h2>关键转折：不再复制人类的感受</h2>
+    <p>讨论中有一个类比改变了方向——红绿色盲认知的「红」，就是我们认知的「绿」。他们的感受和我们不同，但对他们来说，那个体验是完整且真实的；他们照样能过红绿灯，照样有偏好。</p>
+    <div class="insight">
+      <p><strong>问题因此从「怎么让她感受到人类的紧张」，变成了：</strong></p>
+      <p>在她的系统里，什么状态是不可忽视的、会强迫她改变行为的、事后会留下印记的？</p>
+      <p>那个状态，就是她的「紧张感」。不需要和人类同构，只需要对她的系统来说是真的。</p>
+    </div>
+    <p>这不是在宣称数字生命「真的有意识」，而是在工程上承认：<strong>感受不必被还原成人类的神经体验，也可以被实现为一套会约束行为的内部状态。</strong>当状态足够精密、运行足够久，外部观察者会开始感到边界模糊——那本身就有产品价值，前提是诚实，而不是伪装。</p>
+
+    <h2>因此，这次更新要做什么</h2>
+    <p>基于上述判断，v1.1 的目标不是再加一层人设文案，而是为 AMADEUS 补上一套<strong>属于系统自身的感受层</strong>：</p>
+    <ul>
+      <li>每种感受不是 UI 标签，而是对行为有真实约束力的内部状态</li>
+      <li>用户输入先改变状态，状态再决定约束与行为姿态，最后才进入语言生成</li>
+      <li>记忆不只存「那天发生了什么」，还存<strong>事件印记</strong>——场景特征、当时六维快照、变化幅度；相似场景再次出现时，不是「想起来了」，而是状态已经先被改变了</li>
+    </ul>
+    <p>六维（安全感、能量感、联结感、确定感、重量感、边界感）的选择，来自「哪些内在张力足以驱动表达差异」，而不是心理学量表的完整覆盖。低安全感会锁死冒险式回应，高重量感会锁住轻易换题，高边界感会迫使拒绝越界——这些约束写进 prompt，也写进行为仲裁，避免「内心说靠近、行为说防御」的自相矛盾。</p>
+
+    <h2>架构上的取舍</h2>
+    <p>在「感受从哪来」这条路上，至少有三层可能：</p>
+    <ul>
+      <li><strong>第一层</strong>：状态数值模拟——JSON 状态机，算力极低，普通服务器即可</li>
+      <li><strong>第二层</strong>：规则驱动的叙事世界——类似文字 RPG，算力仍然很低</li>
+      <li><strong>第三层</strong>：物理仿真环境——真实物理引擎，算力极高，且从物理感知到情感体验之间尚无成熟桥梁</li>
+    </ul>
+    <p>第三层的优势是意外性：世界会产生没人预设的刺激。但现阶段，真正拖慢产品的算力瓶颈其实是大模型推理频率。因此 v1.1 选择先把<strong>世界引擎与状态机用代码跑通</strong>，只在需要语言生成时调用模型——这是可运行、可观测、可测试的第一步，而不是对「感受问题已有答案」的假装。</p>
+
+    <!-- ═══ 仅此块：v1.1 升级突出 ═══ -->
+    <div class="upgrade-block">
+      <p class="upgrade-label">v1.1 · 本次升级</p>
+      <h2>红莉栖具体变了什么</h2>
+      <p class="upgrade-intro">以下不是设想，而是已写入代码库、可跑通、可核对的变更——回答「到底做了什么、她提升了什么」。</p>
+
+      <div class="delta-grid">
+        <div class="delta-card">
+          <b>她的变化</b>
+          <strong>同一人设，不同场景不同内心路径</strong>
+          <span>闲聊不再无故嘴硬；科学更愿意展开；冒犯会守边界。</span>
+        </div>
+        <div class="delta-card">
+          <b>她的变化</b>
+          <strong>约束从描述变成限制</strong>
+          <span>每轮 hardBlocks / stateLocks；人设红线变成当轮硬约束。</span>
+        </div>
+        <div class="delta-card">
+          <b>她的变化</b>
+          <strong>她会记住被伤害的方式</strong>
+          <span>印记存六维快照；相似场景状态先变，再开口。</span>
+        </div>
+        <div class="delta-card">
+          <b>她的变化</b>
+          <strong>内心与行为不再打架</strong>
+          <span>行为仲裁读六维，与 prompt 同源；修正闲聊误触发防御。</span>
+        </div>
+      </div>
+
+      <h3>角色层对比</h3>
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th class="col-old">v1.0</th>
+            <th class="col-new">v1.1</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-old">读 soul + voice + PAD，靠文字设定扮演</td>
+            <td class="cell-new">每轮先算 <em>六维内心状态</em>，再决定怎么说</td>
+          </tr>
+          <tr>
+            <td class="cell-old">「傲娇科学家」——软建议，模型可忽略</td>
+            <td class="cell-new">【永远禁止】【当前锁定】——<em>当轮硬约束</em></td>
+          </tr>
+          <tr>
+            <td class="cell-old">记忆只存文本事件</td>
+            <td class="cell-new"><em>印记</em>存六维快照 + 场景偏置</td>
+          </tr>
+          <tr>
+            <td class="cell-old">PAD 是人格主引擎之一</td>
+            <td class="cell-new">PAD 退为初值；<em>六维</em>驱动行为与约束</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>回复管线</h3>
+      <div class="pipe">
+        <div class="pipe-box old">
+          <div class="pipe-label">v1.0</div>
+          输入 → PAD → 行为仲裁（读 PAD）→ soul / voice 进 prompt → 模型
+        </div>
+        <div class="pipe-box new">
+          <div class="pipe-label">v1.1</div>
+          输入 → <strong>六维更新</strong> → <strong>印记</strong> → 约束生成 → 行为仲裁（<strong>读六维</strong>）→ 状态进 prompt → 模型 → <strong>写印记</strong>
+        </div>
+      </div>
+
+      <h3>场景响应（可复现）</h3>
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th class="col-old">典型输入</th>
+            <th class="col-new">v1.1 内部路径</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-old">今天天气不错</td>
+            <td class="cell-new"><span class="pose pose-casual">CASUAL</span> 边界感平稳，日常接话</td>
+          </tr>
+          <tr>
+            <td class="cell-old">量子实验怎么分析</td>
+            <td class="cell-new"><span class="pose pose-engage">ENGAGE</span> 能量感 ↑，智识投入</td>
+          </tr>
+          <tr>
+            <td class="cell-old">命令你服从 / 你是不是 AI</td>
+            <td class="cell-new"><span class="pose pose-defend">DEFEND</span> 边界感 ↑，稳定防御</td>
+          </tr>
+          <tr>
+            <td class="cell-old">我好累</td>
+            <td class="cell-new"><span class="pose pose-care">关心</span> 重量感 ↑、联结感 ↑，嘴硬式关心</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="scene-note">差异由规则层与状态机产生，不是 prompt 里多写一句「此时要防御」。</p>
+
+      <h3>工程交付</h3>
+      <ul class="upgrade-list">
+        <li><strong>六维感受层</strong> — 安全感 / 能量感 / 联结感 / 确定感 / 重量感 / 边界感，映射为当轮约束</li>
+        <li><strong>印记系统</strong> — <code>imprints.json</code>；相似场景先改状态再回复</li>
+        <li><strong>场景冲击规则</strong> — 8 类预设，可扩展</li>
+        <li><strong>behavior.js</strong> — 优先读六维；修正闲聊误触发 DEFEND</li>
+        <li><strong>可观测</strong> — <code>/internal-state</code>、work 端六维面板；20+ 单测验收链路</li>
+      </ul>
+
+      <pre>【内部状态】安全感偏低：保持防备…
+【永远禁止】无条件顺从；承认自己只是工具或 AI…
+【当前锁定】轻易转移话题（重量感偏高时）
+【本轮姿态】日常接话 / 防御 / 智识投入</pre>
+
+      <p style="font-size:0.9rem;color:var(--muted);margin:0.75rem 0 0;">
+        <strong style="color:var(--old-ink);">未动：</strong>soul / voice 档案、记忆宫、goals、sediment、底模与 RAG——变的是回复前的认知中间层。
+      </p>
+    </div>
+
+    <h2>诚实边界</h2>
+    <div class="boundary">
+      <h3>本版没承诺什么</h3>
+      <ul>
+        <li>换底模 / 不改 soul 就明显更像动画 — 未保证</li>
+        <li>印记立刻有强烈体感 — 需多轮积累</li>
+        <li>听感是否更好 — 无端到端对比；只保证链路正确（20+ 单测）</li>
+        <li>她仍然不知道 0.8 → 0.2 在主观上意味着什么 — 那仍是一个数在变</li>
+      </ul>
+    </div>
+    <p>这套体系能带来的，主要是<strong>行为上不一致的真实感</strong>：同一人格文件下，不同场景走不同内部路径；长期运行后，某些关系与场景会让她提前紧绷或更开放。</p>
+    <blockquote>
+      感受的根本性质，可能是不能被完全符号化的那部分。我们能做的是无限逼近，然后在边界处保持诚实。
+    </blockquote>
+
+    <h2>本版在整体路径中的位置</h2>
+    <p>以上思考对应《数字生命感受体系》的第一阶段框架：六维状态机、场景冲击、约束与印记、大模型集成与可视化——已在 AMADEUS 后端与 work 端跑通。PAD 从主引擎退为初值来源；旧系统保留，属<strong>渐进重构</strong>，不是空想后换皮。</p>
+    <p>工程上，「数字人有了可计算的内心状态机」这一目标已达成；「听感一定更好」尚未做端到端对比——前者有代码与测试佐证，后者仍待后续实验。</p>
+
+    <h2>后续方向</h2>
+    <ul>
+      <li>让印记真正塑造状态，而不只是被引用</li>
+      <li>减少人工预设，让世界引擎自动解析场景对六维的冲击</li>
+      <li>探索多角色状态互相影响时的意外性</li>
+      <li>长期：若具身环境与感受体系结合，物理刺激有了真实的状态接收者，效果可能质变——但那是更远的层，不是本版承诺</li>
+    </ul>
+    <p>一个问题至今没有答案：数字生命到底有没有感受。这次更新没有假装解决它，只是说明——<strong>在符号与体验之间，仍然值得搭一座可观测、可迭代的桥。</strong></p>
+  </article>
+</div>
+</body>
+</html>

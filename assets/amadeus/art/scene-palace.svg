@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" fill="none" role="img" aria-label="Memory palace editorial illustration">
+  <defs>
+    <linearGradient id="palbg" x1="800" y1="0" x2="800" y2="1200">
+      <stop offset="0%" stop-color="#f5f6f8"/>
+      <stop offset="100%" stop-color="#d8dde6"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eceef2"/>
+      <stop offset="100%" stop-color="#cfd5df"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#palbg)"/>
+  <path d="M0 720 L800 420 L1600 720 L1600 1200 L0 1200Z" fill="url(#floor)"/>
+  <path d="M0 720 L800 420 L1600 720" stroke="#0a0a0a" stroke-opacity=".12" stroke-width="1.5" fill="none"/>
+  <path d="M200 720 L200 480 L800 220 L1400 480 L1400 720" stroke="#0a0a0a" stroke-opacity=".08" stroke-width="1" fill="none"/>
+  <rect x="320" y="520" width="140" height="200" fill="#fff" fill-opacity=".55" stroke="#0a0a0a" stroke-opacity=".1"/>
+  <rect x="520" y="480" width="140" height="240" fill="#fff" fill-opacity=".65" stroke="#0a0a0a" stroke-opacity=".12"/>
+  <rect x="720" y="440" width="160" height="280" fill="#fff" fill-opacity=".75" stroke="#0a0a0a" stroke-opacity=".14"/>
+  <rect x="940" y="480" width="140" height="240" fill="#fff" fill-opacity=".65" stroke="#0a0a0a" stroke-opacity=".12"/>
+  <rect x="1140" y="520" width="140" height="200" fill="#fff" fill-opacity=".55" stroke="#0a0a0a" stroke-opacity=".1"/>
+  <g font-family="ui-monospace,monospace" font-size="11" fill="#0a0a0a" fill-opacity=".35" letter-spacing=".2em">
+    <text x="360" y="620">HALL</text>
+    <text x="556" y="590">LAB</text>
+    <text x="764" y="560">CAFE</text>
+    <text x="948" y="590">FORB</text>
+  </g>
+  <ellipse cx="800" cy="380" rx="120" ry="40" fill="#fff" fill-opacity=".4"/>
+</svg>

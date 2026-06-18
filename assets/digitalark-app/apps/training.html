@@ -6,7 +6,7 @@
 <title>数字方舟训练端</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="../css/sanctuary-shell.css"/>
+<link rel="stylesheet" href="/css/sanctuary-shell.css"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -72,8 +72,11 @@
   /* ── Top bar ── */
   .topbar {
     flex-shrink: 0;
-    padding: 60px 24px 14px;
-    display: flex; align-items: center; justify-content: space-between;
+    padding: var(--da-topbar-pad-top, 56px) 14px 12px;
+    display: grid;
+    grid-template-columns: minmax(40px, auto) 1fr minmax(40px, auto);
+    align-items: center;
+    gap: 8px;
     background: rgba(253,249,243,0.9);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(198,199,192,0.28);
@@ -94,6 +97,8 @@
     background: rgba(247,243,237,0.96);
     backdrop-filter: blur(16px);
     border-top: 1px solid rgba(198,199,192,0.22);
+    position: relative;
+    z-index: 120;
   }
   .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 7px 8px; border-radius: 99px; border: none; background: transparent; transition: background 0.2s; min-width: 0; }
   .nav-btn.on { background: #dae2d8; }
@@ -156,8 +161,8 @@
   .stage-badge { display: inline-block; margin-top: 10px; padding: 6px 14px; border-radius: 99px; background: #dae2d8; font-size: 12px; font-weight: 600; color: #596059; }
   .mic-record { width: 86px; height: 86px; border-radius: 50%; border: none; background: #596059; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 12px 32px rgba(89,96,89,0.34); }
 </style>
-<link rel="stylesheet" href="../js/app-shell.css"/>
-<link rel="stylesheet" href="../css/digital-ark-ui.css"/>
+<link rel="stylesheet" href="/js/app-shell.css"/>
+<link rel="stylesheet" href="/css/digital-ark-ui.css"/>
 </head>
 <body>
 <div class="phone">
@@ -165,59 +170,16 @@
 <!-- ─────────── TOP BAR ─────────── -->
 <header class="topbar">
   <div class="topbar-avatar">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9CoAWFz6hMRGOhuFmcuf1GHNeVfSH2zLbrtfNdU4txcJclXi6DkYCaPiabLusTHGedU3EHqjNSzSLKEL7CYSvE--n7Mt2-j-72cPi20p5hgWyEUmPgSTsqL_yxGXTSVHpLeSbTwzdqnfEW_gSoUQEg4hv4m8Z2TnmzBebpctdchgCJdYZ-w_h2AcVbzcHPYnotKWOWnaUIaICREgPnS9Og-kq70jW_pn5KNvZkCMymFge4kmsKNRh_Tj3xpG87Qkbno4Tmguh-I7i"
-      style="width:100%;height:100%;object-fit:cover;" alt=""/>
+    <img src="../assets/avatars/avatar-m.png" style="width:100%;height:100%;object-fit:contain;padding:4px;background:#f3efe8;" alt=""/>
   </div>
   <span class="topbar-title">训练端</span>
-  <span class="mi" style="cursor:pointer;" title="切换应用">apps</span>
+  <span class="mi topbar-apps" title="切换应用">apps</span>
 </header>
 
 <!-- ═══════════════════════════
   PAGE 1 · 伴侣
 ═══════════════════════════ -->
-<div id="p0" class="page on da-home-page">
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:24px 24px 32px;">
-    <!-- Avatar orb -->
-    <div style="position:relative;margin-bottom:28px;">
-      <div class="breathing" style="position:absolute;inset:-28px;background:rgba(193,201,191,0.22);border-radius:50%;filter:blur(32px);z-index:0;"></div>
-      <div style="width:210px;height:210px;border-radius:50%;overflow:hidden;position:relative;z-index:1;box-shadow:0 20px 60px rgba(0,0,0,0.13);">
-        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL"
-          style="width:100%;height:100%;object-fit:cover;opacity:0.88;" alt=""/>
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,#f7f3ed,transparent 55%);"></div>
-      </div>
-    </div>
-    <!-- Message -->
-    <div style="text-align:center;margin-bottom:28px;">
-      <p class="t-title" style="margin-bottom:14px;">和数字人对话校准</p>
-      <div style="display:flex;gap:8px;justify-content:center;">
-        <span class="chip chip-g">验证语气</span><span class="chip chip-o">给出反馈</span>
-      </div>
-    </div>
-    <!-- Input -->
-    <div style="width:100%;">
-      <div style="position:relative;margin-bottom:18px;">
-        <input type="text" placeholder="输入一个场景，测试它会怎么回应…"
-          style="width:100%;background:#fff;border:1px solid #e6e2dc;border-radius:99px;padding:14px 52px 14px 22px;font-size:15px;color:#1c1c18;outline:none;font-family:'Noto Sans SC',sans-serif;"/>
-        <span class="mi mi-f" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#596059;font-size:20px;">send</span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <span class="t-label">点击说话</span>
-        <button style="width:70px;height:70px;border-radius:50%;background:#596059;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 28px rgba(89,96,89,0.32);">
-          <span class="mi mi-f" style="font-size:28px;color:#fff;">mic</span>
-        </button>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:18px 0 12px;">
-        <button class="btn-o" style="padding:10px 8px;font-size:12px;">不像我</button>
-        <button class="btn-o" style="padding:10px 8px;font-size:12px;">有点像</button>
-        <button class="btn-p" style="padding:10px 8px;font-size:12px;">很像我</button>
-      </div>
-      <div style="background:#fffaf8;border:1px solid #d4c4b0;border-radius:14px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;">
-        <span class="mi" style="font-size:18px;color:#685d4c;flex-shrink:0;margin-top:1px;">rate_review</span>
-        <p class="t-body-sm">对话后请标记它像不像你。你的反馈会用于调整表达习惯、判断逻辑和主动关心方式。</p>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="p0" class="page on da-home-page" aria-busy="true"></div>
 
 <!-- ═══════════════════════════
   PAGE 2 · 价值卡片游戏（冷启动）
@@ -275,7 +237,7 @@
       </div>
       <span class="t-label" style="margin:16px 0 6px;">训练总览</span>
       <p class="t-title" style="text-align:center;margin-bottom:10px;">数字人完成度</p>
-      <p class="t-body-sm" style="text-align:center;max-width:280px;">这里汇总 5 个专项训练进度。点击任一模块，进入对应的专项训练页面继续校准。</p>
+      <p class="t-body-sm" style="text-align:center;max-width:280px;">五层人格决定每一句话；下方训练是为各层采集样本，不是五个独立功能。</p>
     </div>
 
     <section class="da-module-list">
@@ -289,7 +251,7 @@
     <section class="da-module-list">
       <div class="da-module-list-head">
         <span class="da-module-list-title">专项深化</span>
-        <span class="da-module-list-sub">与主页引导同步 · 同一套题目</span>
+        <span class="da-module-list-sub">为五层人格供料 · 与主页情境答题同步</span>
       </div>
       <button class="module-row da-mod-voice" data-module="voice" onclick="go(2)"><div class="icon-pill"><span class="mi mi-sm">settings_voice</span></div><div class="da-mod-text"><strong>音色训练</strong><small>声音、语速、停顿和语气</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">—</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
       <button class="module-row da-mod-memory" data-module="memory" onclick="go(3)"><div class="icon-pill"><span class="mi mi-sm">history_edu</span></div><div class="da-mod-text"><strong>记忆训练</strong><small>人生片段、照片、文件和经历</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">—</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
@@ -469,30 +431,10 @@
   </div>
 </div>
 
-<!-- PAGE 8 · 我的 -->
-<div id="p7" class="page">
+<!-- PAGE 8 · 我的（内容由 profile-center.js 渲染） -->
+<div id="p7" class="page da-profile-page">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-label">账户与数字人</span>
-      <span class="t-section">我的训练档案</span>
-      <p class="t-body-sm" style="text-align:center;max-width:250px;">管理资料授权、训练目标和数字人发布状态。</p>
-    </div>
-    <div class="card-w" style="margin-bottom:14px;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:54px;height:54px;border-radius:50%;overflow:hidden;flex-shrink:0;">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9CoAWFz6hMRGOhuFmcuf1GHNeVfSH2zLbrtfNdU4txcJclXi6DkYCaPiabLusTHGedU3EHqjNSzSLKEL7CYSvE--n7Mt2-j-72cPi20p5hgWyEUmPgSTsqL_yxGXTSVHpLeSbTwzdqnfEW_gSoUQEg4hv4m8Z2TnmzBebpctdchgCJdYZ-w_h2AcVbzcHPYnotKWOWnaUIaICREgPnS9Og-kq70jW_pn5KNvZkCMymFge4kmsKNRh_Tj3xpG87Qkbno4Tmguh-I7i" style="width:100%;height:100%;object-fit:cover;" alt=""/>
-        </div>
-        <div>
-          <p class="t-body" style="font-weight:600;">训练者本人</p>
-          <p class="t-body-sm">数字人版本 v0.68 · 未发布</p>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:9px;">
-      <button class="module-row" type="button"><div class="icon-pill" style="background:#dae2d8;"><span class="mi mi-sm" style="color:#596059;">verified_user</span></div><div style="flex:1;"><strong>授权对象</strong><small>谁可以在陪护端与你的数字人对话</small></div><span class="mi mi-sm">chevron_right</span></button>
-      <button class="module-row" type="button"><div class="icon-pill" style="background:#f0e0cb;"><span class="mi mi-sm" style="color:#685d4c;">inventory_2</span></div><div style="flex:1;"><strong>资料库</strong><small>上传记录、聊天样本、照片与文件</small></div><span class="mi mi-sm">chevron_right</span></button>
-      <button type="button" class="module-row" id="daReviewPersona"><div class="icon-pill" style="background:#dae2d8;"><span class="mi mi-sm" style="color:#596059;">fact_check</span></div><div style="flex:1;"><strong>训练数据审查</strong><small>查看/重新导入 Persona 五维数据与 LoRA 语料</small></div><span class="mi mi-sm">chevron_right</span></button>
-    </div>
+    <div class="da-profile-host"></div>
   </div>
 </div>
 
@@ -511,7 +453,10 @@
 
 </div><!-- /phone -->
 <div id="toast" class="toast"></div>
-<script src="../js/api-core.js"></script>
+<script src="/js/api-core.js"></script>
+<script src="/js/layer-explain.js"></script>
+<script src="/js/avatar-preset.js"></script>
+<script src="/js/profile-center.js"></script>
 <script>
   let cur = 0;
   const navMap = { 0: 0, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 2, 8: 1 };
@@ -667,6 +612,6 @@
     setTimeout(() => t.classList.remove('on'), 3000);
   }
 </script>
-<script src="../js/apps-bridge.js"></script>
+<script src="/js/apps-bridge.js"></script>
 </body>
 </html>

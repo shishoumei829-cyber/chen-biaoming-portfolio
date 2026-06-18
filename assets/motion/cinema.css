@@ -1,0 +1,88 @@
+/* ============================================================
+   白场放映厅 · Cinema spine (Phase 1: 地基)
+   - Lenis 平滑滚动 + Orwell 式离散切章「胶片闸门」转场
+   - 简约 / 洁白 / 文艺：纸白闸门 + 大幕号 + 衬线幕名 + 极轻颗粒
+   ============================================================ */
+
+:root{
+  --cv-paper:#f4f1ea;
+  --cv-paper-soft:#ece6db;
+  --cv-ink:#15130e;
+  --cv-ink-soft:#5a554a;
+  --cv-accent:#b4452f;
+  --cv-mono:'Barlow Condensed','Inter','Noto Sans SC',sans-serif;
+  --cv-serif:'Bodoni Moda','Noto Serif SC',serif;
+}
+
+/* ── 胶片闸门转场层 ───────────────────────────── */
+#cinema-veil{
+  position:fixed; inset:0; z-index:9000;
+  pointer-events:none; overflow:hidden;
+  --cv-accent:#b4452f;
+}
+#cinema-veil .cv-panel{
+  position:absolute; left:0; width:100%; height:51.5%;
+  background:var(--cv-paper);
+  transform:scaleY(0); will-change:transform;
+}
+#cinema-veil .cv-panel--t{ top:0; transform-origin:top center; }
+#cinema-veil .cv-panel--b{ bottom:0; transform-origin:bottom center; }
+
+#cinema-veil .cv-stage{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:clamp(10px,1.6vh,18px);
+  opacity:0; will-change:opacity,transform;
+}
+#cinema-veil .cv-en{
+  font-family:var(--cv-mono); font-weight:600;
+  font-size:clamp(.66rem,1.4vw,.95rem);
+  letter-spacing:.62em; text-transform:uppercase;
+  color:var(--cv-accent); padding-left:.62em;
+}
+#cinema-veil .cv-num{
+  font-family:var(--cv-mono); font-weight:800;
+  font-size:clamp(5.2rem,23vw,17rem); line-height:.78;
+  letter-spacing:.01em; color:var(--cv-ink);
+}
+#cinema-veil .cv-rule{
+  width:clamp(80px,18vw,150px); height:1px;
+  background:var(--cv-accent);
+  transform:scaleX(0); transform-origin:center;
+}
+#cinema-veil .cv-cn{
+  font-family:var(--cv-serif); font-weight:500;
+  font-size:clamp(1.3rem,4vw,2.5rem);
+  letter-spacing:.2em; color:var(--cv-ink);
+  padding-left:.2em;
+}
+#cinema-veil .cv-grain{
+  position:absolute; inset:0; z-index:3; pointer-events:none;
+  opacity:.05; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── 章节 HUD（角标，跨明暗背景可读）──────────── */
+#cinema-hud{
+  position:fixed; z-index:8000; pointer-events:none;
+  left:clamp(14px,2.4vw,30px); bottom:clamp(14px,2.4vh,26px);
+  display:flex; align-items:baseline; gap:.55em;
+  font-family:var(--cv-mono); font-weight:600;
+  font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+  color:#cfcabd; mix-blend-mode:difference;
+}
+#cinema-hud .hud-num{ font-size:13px; }
+#cinema-hud .hud-sep{ opacity:.5; }
+#cinema-hud .hud-cn{ letter-spacing:.2em; }
+
+/* ── 全站极轻胶片颗粒（文艺质感，不暗沉）────────── */
+body.cinema::after{
+  content:""; position:fixed; inset:0; z-index:7000;
+  pointer-events:none; opacity:.035; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce){
+  #cinema-veil .cv-grain, body.cinema::after{ display:none; }
+}

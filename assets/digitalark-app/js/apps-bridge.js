@@ -17,6 +17,38 @@
     6: '认知训练'
   };
 
+  function isPortfolioEmbed() {
+    if (/embed=portfolio/.test(location.search)) return true;
+    if (document.documentElement.classList.contains('da-portfolio-embed')) return true;
+    try {
+      return !!window.frameElement?.closest?.('.da2-product-frame');
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function bootstrapPortfolioEmbed() {
+    if (!isPortfolioEmbed()) return false;
+    trainingSetupReady = true;
+    trainingSetupCache = {
+      setup_complete: true,
+      subject_name: '艾莉莎',
+      trainer_name: '艾莉莎',
+      curriculum_mode: 'demo',
+      avatar_preset: 'f'
+    };
+    const overlay = document.getElementById('daSetupOverlay');
+    if (overlay) overlay.style.display = 'none';
+    document.getElementById('daSetupBanner')?.remove();
+    window.DAAvatar?.applyAll?.(trainingSetupCache);
+    updateTrainingUiGate();
+    return true;
+  }
+
+  function portfolioDemoToast() {
+    DA.toast('演示模式 · 全屏打开可体验完整训练管线');
+  }
+
   function installNavChrome(pageIndex) {
     const nav = document.querySelector('.bottom-nav');
     const topbar = document.querySelector('.topbar');
@@ -97,12 +129,48 @@
     if (r.success) {
       trainingSetupCache = r.data;
       trainingSetupReady = !!r.data.setup_complete;
+      window.DAAvatar?.applyAll(trainingSetupCache);
+      applyHomeHeroAvatar();
+    } else if (isPortfolioEmbed()) {
+      bootstrapPortfolioEmbed();
     }
     updateTrainingUiGate();
     return r;
   }
 
+  window.daApplyHomeHeroAvatar = function () {
+    const img = document.querySelector('.da-home-shell .da-home-hero-orb img');
+    if (img && window.DAAvatar) {
+      window.DAAvatar.applyImg(img, window.DAAvatar.resolveId(trainingSetupCache));
+    }
+  };
+
+  function applyHomeHeroAvatar() {
+    window.daApplyHomeHeroAvatar();
+  }
+
+  function ensureSetupBanner() {
+    if (isPortfolioEmbed()) {
+      document.getElementById('daSetupBanner')?.remove();
+      return;
+    }
+    if (trainingSetupReady) {
+      document.getElementById('daSetupBanner')?.remove();
+      return;
+    }
+    let bar = document.getElementById('daSetupBanner');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'daSetupBanner';
+      bar.className = 'da-setup-banner';
+      bar.innerHTML = '<span>尚未完成身份设定，大部分功能不可用</span><button type="button" class="da-setup-banner-btn">去设定</button>';
+      bar.querySelector('.da-setup-banner-btn')?.addEventListener('click', showTrainingSetupWizard);
+      document.querySelector('.phone')?.prepend(bar);
+    }
+  }
+
   function updateTrainingUiGate() {
+    ensureSetupBanner();
     document.querySelectorAll('.da-module-list .module-row, #p1 .module-row').forEach(btn => {
       btn.classList.toggle('da-module-locked', !trainingSetupReady);
       btn.setAttribute('aria-disabled', trainingSetupReady ? 'false' : 'true');
@@ -132,7 +200,32 @@
     });
   }
 
+  function openAvatarPicker() {
+    if (!window.DAAvatar) return;
+    window.DAAvatar.showPickerSheet({
+      selectedId: window.DAAvatar.resolveId(trainingSetupCache),
+      onSave: async (id) => {
+        const av = window.DAAvatar.presetPayload(id);
+        const r = await DA.saveTrainingSetup({
+          ...av,
+          setup_complete: trainingSetupCache?.setup_complete ?? true
+        });
+        if (!r.success) {
+          DA.toast(r.error || '保存失败', 'error');
+          return;
+        }
+        await refreshTrainingSetupState();
+        renderHomeTraining(document.getElementById('p0'));
+        DA.toast('分身形象已更新');
+      }
+    });
+  }
+
   function showTrainingSetupWizard() {
+    if (isPortfolioEmbed()) {
+      portfolioDemoToast();
+      return;
+    }
     let overlay = document.getElementById('daSetupOverlay');
     if (!overlay) {
       overlay = document.createElement('div');
@@ -166,6 +259,8 @@
           <label class="da-setup-label">怎么称呼您 <span class="req">*</span></label>
           <input type="text" class="da-setup-field" id="daSetupName" placeholder="例如：小明、张先生"
             value="${esc(draft.subject_name || draft.trainer_name)}" autocomplete="name"/>
+          <label class="da-setup-label">分身形象 <span class="req">*</span></label>
+          <div class="da-avatar-pick-row da-setup-avatar-pick">${window.DAAvatar?.pickerMarkup(draft.avatar_preset || (draft.subject_gender === 'female' ? 'f' : draft.subject_gender === 'male' ? 'm' : '')) || ''}</div>
           <label class="da-setup-label">一句话介绍自己 <span class="opt">选填</span></label>
           <textarea class="da-setup-field" id="daSetupBrief" rows="2"
             placeholder="性格、职业或生活状态，帮助分身更像您">${draft.subject_brief || ''}</textarea>
@@ -197,11 +292,27 @@
     };
     renderPeople();
 
+    let setupAvatarPreset = draft.avatar_preset || (draft.subject_gender === 'female' ? 'f' : draft.subject_gender === 'male' ? 'm' : 'm');
+    window.DAAvatar?.wirePicker(overlay.querySelector('.da-setup-avatar-pick'), {
+      selectedId: setupAvatarPreset,
+      onChange: id => { setupAvatarPreset = id; }
+    });
+
     overlay.querySelector('.da-setup-close')?.addEventListener('click', () => {
+      if (!trainingSetupReady) {
+        DA.toast('请先完成身份设定，或点「先体验演示」', 'error');
+        return;
+      }
       overlay.style.display = 'none';
     });
     overlay.addEventListener('click', e => {
-      if (e.target === overlay) overlay.style.display = 'none';
+      if (e.target === overlay) {
+        if (!trainingSetupReady) {
+          DA.toast('请填写称呼并开始训练，才能使用其他功能', 'error');
+          return;
+        }
+        overlay.style.display = 'none';
+      }
     });
     sheet?.addEventListener('click', e => e.stopPropagation());
 
@@ -228,13 +339,16 @@
     overlay.querySelector('#daSetupSubmit')?.addEventListener('click', async () => {
       const name = overlay.querySelector('#daSetupName')?.value?.trim();
       if (!name) { DA.toast('请填写您的称呼', 'error'); overlay.querySelector('#daSetupName')?.focus(); return; }
+      if (!setupAvatarPreset) { DA.toast('请选择分身形象', 'error'); return; }
+      const av = window.DAAvatar?.presetPayload(setupAvatarPreset) || {};
       trainingSetupCache = {
         mode: 'self',
         subject_name: name,
         trainer_name: name,
         trainer_role: 'self',
         subject_brief: overlay.querySelector('#daSetupBrief')?.value?.trim() || '',
-        key_people: keyPeople
+        key_people: keyPeople,
+        ...av
       };
       await finishSetup(overlay);
     });
@@ -250,6 +364,8 @@
       trainer_name: trainingSetupCache.trainer_name || trainingSetupCache.subject_name,
       trainer_role: 'self',
       key_people: trainingSetupCache.key_people || [],
+      subject_gender: trainingSetupCache.subject_gender || '',
+      avatar_preset: trainingSetupCache.avatar_preset || '',
       setup_complete: true
     };
     const btn = overlay?.querySelector('#daSetupSubmit');
@@ -266,7 +382,7 @@
     await renderGuideHub();
     if (path.includes('sanctuary') || path.includes('training')) renderHomeTraining(document.getElementById('p0'));
     updateTrainingUiGate();
-    DA.toast('欢迎，' + (payload.subject_name || '') + '！今日引导已就绪');
+    DA.toast('欢迎，' + (payload.subject_name || '') + '！可以开始情境答题了');
   }
 
   async function refreshProgress(root) {
@@ -322,15 +438,16 @@
       const btn = wrap.querySelector('.da-module-skip');
       btn.disabled = true;
       btn.textContent = '跳过中…';
-      const ok = await DA.skipGuideTask({ module });
+      const result = await DA.skipGuideTask({ module });
       btn.disabled = false;
       btn.textContent = '没印象，跳过';
-      if (ok && afterSkip) await afterSkip();
+      if (result?.ok && afterSkip) await afterSkip(result);
     });
   }
 
-  /** 教练层：为什么做、怎么答、示例、避免什么 */
+  /** 教练层：默认隐藏，轮播题不展示 */
   function renderCoachBlock(t) {
+    if (t?.rotation || !t?.purpose) return '';
     if (!t?.purpose && !t?.steps?.length) return '';
     let html = '<div class="da-coach">';
     if (t.coach_headline) html += `<p class="t-label" style="margin-bottom:8px;">${t.coach_headline}</p>`;
@@ -347,232 +464,350 @@
     return html;
   }
 
+  function moduleDayMeta(t) {
+    if (!t) return '';
+    if (t.rotation) return '巩固训练';
+    return t.day ? `第 ${t.day} 天` : '';
+  }
+
+  function fillModuleChoices(container, items, onPick) {
+    if (!container) return;
+    container.innerHTML = '';
+    items.forEach((item, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'choice';
+      btn.innerHTML = `<p class="t-body-sm">${typeof item === 'string' ? item : item.text}</p>`;
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('.choice').forEach(x => x.classList.remove('selected'));
+        btn.classList.add('selected');
+        onPick(item, i, btn);
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  function renderModuleV2Page(module, page, t) {
+    page.querySelector('.da-guide-bar')?.remove();
+    const meta = page.querySelector('.da-mod-v2-meta');
+    const q = page.querySelector('.da-mod-v2-q');
+    const input = page.querySelector('.da-mod-v2-input:not(.da-mod-v2-voice-fallback)');
+    const actions = page.querySelector('.da-mod-v2-actions');
+    if (meta) {
+      if (!meta.dataset.label) meta.dataset.label = meta.textContent.trim();
+      const day = moduleDayMeta(t);
+      meta.textContent = day ? `${day} · ${meta.dataset.label}` : meta.dataset.label;
+    }
+
+    if (t.setup_required) {
+      if (q) q.textContent = '请先完成身份设定 · 点下方「提交」去填写称呼';
+      page.dataset.blocked = 'setup';
+      return;
+    }
+    if (t.all_done || t.locked) {
+      if (q) q.textContent = t.message || '本题已完成';
+      page.dataset.blocked = 'done';
+      return;
+    }
+    delete page.dataset.blocked;
+
+    if (module === 'voice') {
+      const lit = t.literary_text || t.title || '用你平常的语气读一段话';
+      const qEl = page.querySelector('.da-voice-text');
+      if (qEl) qEl.textContent = lit;
+      const fb = page.querySelector('.da-mod-v2-voice-fallback');
+      if (fb) { fb.value = ''; fb.placeholder = '没麦克风？把要读的话贴在这里'; }
+    }
+
+    if (module === 'memory') {
+      if (q) q.textContent = t.prompt || '回忆一帧画面';
+      const ta = page.querySelector('.da-mem-input');
+      if (ta) ta.value = '';
+      page._memQueueCount = 0;
+      const queue = page.querySelector('.da-mod-v2-queue');
+      const list = page.querySelector('.da-mod-queue-list');
+      const n = page.querySelector('.da-mod-queue-n');
+      if (queue) queue.hidden = true;
+      if (list) list.innerHTML = '';
+      if (n) n.textContent = '0';
+    }
+
+    if (module === 'relationship') {
+      if (q) q.textContent = t.scene || t.scenario || '关系场景';
+      const ta = page.querySelector('.da-rel-input');
+      if (ta) ta.value = '';
+      page.dataset.relType = 'emotional';
+      fillModuleChoices(page.querySelector('.da-rel-dynamic-choices'), t.choices || [], (c) => {
+        if (ta) ta.value = c.text || '';
+        page.dataset.relType = c.type || 'emotional';
+        ta.focus();
+      });
+    }
+
+    if (module === 'emotion') {
+      if (q) q.textContent = t.scenario || '情绪场景';
+      const ta = page.querySelector('.da-emo-input');
+      if (ta) ta.value = '';
+    }
+
+    if (module === 'cognition') {
+      const qEl = page.querySelector('.da-cog-question');
+      const optHost = page.querySelector('.da-cog-options');
+      const note = page.querySelector('.da-cog-note');
+      const submit = page.querySelector('.da-mod-submit');
+      const vague = page.querySelector('.da-mod-vague');
+      const rankExtra = page.querySelector('.da-cog-rank-extra');
+      if (t.question && t.options?.length) {
+        if (qEl) qEl.textContent = t.question;
+        fillModuleChoices(optHost, t.options, () => {});
+        if (note) note.hidden = true;
+        if (submit) { submit.hidden = true; submit.textContent = '提交'; }
+        if (vague) vague.hidden = true;
+        if (rankExtra) rankExtra.hidden = true;
+      } else {
+        if (qEl) qEl.textContent = t.question || '你更看重什么？';
+        if (optHost) optHost.innerHTML = '';
+        if (note) note.hidden = true;
+        if (submit) { submit.hidden = false; submit.textContent = '提交排序'; }
+        if (vague) vague.hidden = true;
+        if (rankExtra) rankExtra.hidden = false;
+        wireDragRows(page.querySelector('.da-cog-drag-host'));
+      }
+    }
+
+    DA.setGuideTask(t);
+  }
+
   async function applyModuleGuide(module) {
     const pageMap = { voice: 'p2', memory: 'p3', relationship: 'p4', emotion: 'p5', cognition: 'p6' };
     const page = document.getElementById(pageMap[module]);
     if (!page) return;
     const r = await DA.fetchModuleGuide(module);
-    if (!r.success) return;
-    const t = r.data;
-    const bar = ensureGuideBar(page);
-    if (t.setup_required) {
-      bar.innerHTML = `<span class="t-label">需要身份设定</span><p class="t-body-sm">${t.message}</p>
-        <button type="button" class="btn-o da-open-setup" style="margin-top:8px;">去设定</button>`;
-      bar.querySelector('.da-open-setup')?.addEventListener('click', showTrainingSetupWizard);
+    if (!r.success) {
+      const q = page.querySelector('.da-mod-v2-q');
+      if (q) q.textContent = r.error || '加载失败，请重试';
       return;
     }
-    if (t.all_done || t.locked) {
-      bar.innerHTML = `<span class="t-label">${guideDayLabel(t)}</span><p class="t-body-sm">${t.message}</p>`;
-      if (t.coach_purpose) bar.innerHTML += renderCoachBlock({ purpose: t.coach_purpose });
-      return;
-    }
-    bar.innerHTML = `<span class="t-label">${guideDayLabel(t)}${t.rotation ? ' · 轮播' : ''}</span>`;
-    bar.innerHTML += renderCoachBlock(t);
-
-    if (module === 'voice') {
-      bar.innerHTML += `<p class="t-body-sm" style="margin-top:6px;">${t.hint || ''}</p>`;
-      const litEl = page.querySelector('.da-voice-text');
-      if (litEl && t.literary_text) litEl.textContent = `"${t.literary_text}"`;
-      const hintEl = page.querySelector('.da-voice-hint');
-      if (hintEl && t.hint) hintEl.textContent = t.hint;
-    }
-
-    if (module === 'memory') {
-      const promptEl = page.querySelector('.da-mem-prompt');
-      if (promptEl && t.prompt) promptEl.textContent = `"${t.prompt}"`;
-      const memTa = page.querySelector('.da-mem-input');
-      if (memTa && t.prompt) memTa.placeholder = (t.answer_guide && t.answer_guide[0]) || t.hint || (t.prompt + '…');
-      const tierSel = document.getElementById('daMemTier');
-      if (tierSel && t.tier) tierSel.value = t.tier;
-      // 隐藏与引导重复的静态占位
-      page.querySelectorAll('.da-static-mem').forEach(el => { el.style.display = 'none'; });
-      bar.innerHTML += `<p class="t-body" style="margin-top:10px;font-weight:600;line-height:1.45;">${t.prompt}</p>`;
-    }
-
-    if (module === 'relationship') {
-      const titleEl = page.querySelector('.da-rel-title');
-      if (titleEl && t.scene) titleEl.textContent = t.scene;
-      const labelEl = page.querySelector('.da-rel-label');
-      if (labelEl && (t.scenario || t.scene)) labelEl.textContent = '当前场景：' + (t.scenario || t.scene);
-      const detailEl = page.querySelector('.da-rel-detail');
-      if (detailEl && t.scene_detail) detailEl.textContent = `"${t.scene_detail}"`;
-      else if (detailEl && t.scene) detailEl.textContent = `"${t.scene}"`;
-      bar.innerHTML += `<p class="t-body" style="margin-top:10px;font-weight:600;">${t.scene}</p>`;
-      if (t.scene_detail && t.scene_detail !== t.scene) {
-        bar.innerHTML += `<p class="t-body-sm" style="margin-top:4px;color:#596059;">${t.scene_detail}</p>`;
-      }
-      if (t.choices?.length) {
-        const host = page.querySelector('.da-rel-choices');
-        if (host) {
-          const choicesWrap = host.querySelector('.da-dynamic-choices') || (() => {
-            const w = document.createElement('div');
-            w.className = 'da-dynamic-choices';
-            w.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin-bottom:8px;';
-            host.insertBefore(w, host.firstChild);
-            return w;
-          })();
-          choicesWrap.innerHTML = '';
-          t.choices.forEach((c, i) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'choice';
-            btn.innerHTML = `<p class="t-body-sm" style="color:#1c1c18;margin-bottom:4px;">"${c.text}"</p><span class="t-label" style="color:#596059;font-size:10px;">${c.label}</span>`;
-            btn.onclick = () => {
-              choicesWrap.querySelectorAll('.choice').forEach(x => x.classList.remove('selected'));
-              btn.classList.add('selected');
-              const ta = page.querySelector('textarea');
-              if (ta) ta.value = c.text;
-              page.dataset.relType = c.type;
-            };
-            if (i === 0) page.dataset.relType = c.type;
-            choicesWrap.appendChild(btn);
-          });
-        }
-      }
-    }
-
-    if (module === 'emotion') {
-      const label = page.querySelector('.da-emo-label');
-      if (label && t.scenario) label.textContent = '当前场景：' + t.scenario;
-      const sceneP = page.querySelector('.da-emo-scene');
-      if (sceneP && t.hint) sceneP.textContent = t.hint;
-      else if (sceneP && t.scenario) sceneP.textContent = t.scenario;
-      bar.innerHTML += `<p class="t-body" style="margin-top:10px;font-weight:600;">${t.scenario}</p>`;
-    }
-
-    if (module === 'cognition' && t.question) {
-      page.querySelector('.da-cog-static')?.style && (page.querySelector('.da-cog-static').style.display = 'none');
-      page.querySelector('.da-conflict-list')?.style && (page.querySelector('.da-conflict-list').style.display = 'none');
-      bar.innerHTML += `<p class="t-body" style="margin-top:8px;font-weight:600;">${t.question}</p>`;
-      let cogWrap = page.querySelector('.da-guide-cog');
-      if (!cogWrap) {
-        cogWrap = document.createElement('div');
-        cogWrap.className = 'da-guide-cog';
-        cogWrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin-top:10px;';
-        bar.appendChild(cogWrap);
-      } else cogWrap.innerHTML = '';
-      (t.options || []).forEach((opt, i) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'btn-o';
-        b.style.fontSize = '13px';
-        b.textContent = opt;
-        b.onclick = async () => {
-          cogWrap.querySelectorAll('.btn-o').forEach(x => { x.disabled = true; });
-          if (t.task_id) {
-            const r2 = await DA.submitHomeTraining({
-              module: 'cognition', task_id: t.task_id, content: opt, choice_index: i
-            });
-            if (r2.success) {
-              DA.toast(r2.data?.feedback || '已提交');
-              await afterGuideAction('cognition');
-            } else DA.toast(r2.error || '提交失败', 'error');
-          } else {
-            DA.pickConflict(t.question + ' → ' + opt);
-            cogWrap.querySelectorAll('.btn-o').forEach(x => x.style.borderColor = '#c6c7c0');
-            b.style.borderColor = '#596059';
-          }
-          cogWrap.querySelectorAll('.btn-o').forEach(x => { x.disabled = false; });
-        };
-        cogWrap.appendChild(b);
-      });
-    }
-
-    appendGuideSkipBar(bar, module, async () => {
-      await afterGuideAction(module);
-    });
+    renderModuleV2Page(module, page, r.data);
   }
 
-  async function afterGuideAction(module) {
+  async function afterGuideAction(module, opts = {}) {
     await DA.refreshGuideState(module);
     await refreshProgress();
-    if (module) await applyModuleGuide(module);
+    if (module && !opts.uiRendered) await applyModuleGuide(module);
     await renderGuideHub();
     if (typeof window.daReloadHomeGuided === 'function') await window.daReloadHomeGuided();
   }
 
-  async function renderGuideHub() {
-    const p1 = document.getElementById('p1');
-    if (!p1) return;
-    hideP1StaticPlaceholders();
-    let hub = p1.querySelector('.da-guide-hub');
-    if (!hub) {
-      hub = document.createElement('div');
-      hub.className = 'da-guide-hub card-w';
-      p1.querySelector('.pc')?.prepend(hub);
-    }
-    const r = await DA.fetchGuideOverview();
+  function escHtml(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  async function renderTrainingDashboard(p1) {
+    const host = p1?.querySelector('.da-training-dashboard');
+    if (!host) return;
+    const r = await DA.fetchTrainingDashboard();
     if (!r.success) return;
-    const g = r.data;
+    const d = r.data;
+    const status = d.twin_status || {};
+    const layersRing = (d.layers || []).map(l =>
+      `<div class="da-dash-layer" title="${escHtml(l.short)}">
+        <span class="da-dash-layer-label">${l.label.replace('层', '')}</span>
+        <div class="da-dash-layer-ring" style="--pct:${l.progress_pct}"><span>${l.progress_pct}%</span></div>
+      </div>`
+    ).join('');
+    const mods = (d.modules || []).map(m =>
+      `<div class="da-dash-mod">
+        <span class="da-dash-mod-label">${m.label}</span>
+        <div class="pbar-wrap" style="max-width:none;height:4px;"><div class="pbar-fill" style="width:${m.progress_pct}%"></div></div>
+        <span class="da-dash-mod-pct">${m.progress_pct}%</span>
+      </div>`
+    ).join('');
+    const recent = (d.recent_changes || []).map(e =>
+      `<li>${escHtml(e.summary || e.changes?.[0] || '已更新')}</li>`
+    ).join('') || '<li class="da-dash-empty">完成训练或试聊校准后，这里会显示数字人的变化</li>';
+    host.innerHTML = `
+      <div class="da-dash-status chip ${status.id === 'published' ? 'chip-s' : 'chip-g'}">${status.label || '训练中'}</div>
+      <p class="da-dash-fit"><span class="da-dash-fit-num">${d.personality_fit_pct ?? d.layer_quality_pct ?? 0}%</span> 层质量 · 题库 ${d.module_completion_pct ?? '—'}% · ${d.version || 'v0.1'}</p>
+      ${d.core_layer_blocked ? '<p class="t-body-sm" style="color:#b45309;margin:8px 0;">核心层未建立：请先完成价值卡片排序游戏。</p>' : ''}
+      <div class="da-dash-layers-ring">${layersRing}</div>
+      <p class="t-body-sm da-dash-suggest"><strong>今日建议：</strong>${d.today_suggestion || ''}</p>
+      <p class="t-label" style="margin:12px 0 6px;">训练采集进度（为各层供料）</p>
+      <div class="da-dash-modules">${mods}</div>
+      <p class="t-label" style="margin:14px 0 8px;">最近更新</p>
+      <ul class="da-dash-recent">${recent}</ul>
+      ${d.next_recommended?.page ? `<button type="button" class="btn-o da-dash-next" style="margin-top:12px;">下一步 · ${d.next_recommended.label}</button>` : ''}`;
+    host.querySelector('.da-dash-next')?.addEventListener('click', () => {
+      if (d.next_recommended?.page) window.go(d.next_recommended.page);
+    });
+    const hero = p1.querySelector('.da-overall-progress .hero-pct');
+    if (hero) {
+      hero.textContent = (d.personality_fit_pct ?? 0) + '%';
+      hero.classList.remove('da-pct-pending');
+    }
+    const bar = p1.querySelector('.da-overall-progress .pbar-fill');
+    if (bar) bar.style.width = (d.personality_fit_pct ?? 0) + '%';
+    const stage = p1.querySelector('.da-stage-name');
+    if (stage) stage.textContent = status.label || '训练中';
+  }
+
+  const HUB_MODS = [
+    { key: 'voice', page: 2, icon: 'settings_voice', label: '音色' },
+    { key: 'memory', page: 3, icon: 'history_edu', label: '记忆' },
+    { key: 'relationship', page: 4, icon: 'diversity_3', label: '关系' },
+    { key: 'emotion', page: 5, icon: 'favorite', label: '情感' },
+    { key: 'cognition', page: 6, icon: 'bolt', label: '认知' }
+  ];
+
+  function hubDegradeNote() {
+    return '进度同步中，可先点下方模块答题';
+  }
+
+  function hubModuleRowsHtml(prog) {
+    const modPct = k => Math.round((prog?.modules?.[k]?.progress ?? 0) * 100);
+    return HUB_MODS.map(m =>
+      `<button type="button" class="module-row da-mod-${m.key}" data-page="${m.page}" data-module="${m.key}">
+        <div class="icon-pill"><span class="mi mi-sm">${m.icon}</span></div>
+        <div class="da-mod-text"><strong>${m.label}</strong><small>专项训练</small></div>
+        <span class="da-mod-pct">${modPct(m.key)}%</span>
+        <span class="mi mi-sm da-mod-chevron">chevron_right</span>
+      </button>`
+    ).join('');
+  }
+
+  function wireHubModuleNav(host) {
+    host.querySelectorAll('[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => window.go(Number(btn.dataset.page)));
+    });
+    host.querySelector('.da-retry-hub')?.addEventListener('click', () => renderGuideHub());
+  }
+
+  function defaultHubProgress() {
+    const modules = {};
+    HUB_MODS.forEach(m => { modules[m.key] = { progress: 0 }; });
+    return { personality_fit: 0, overall_progress: 0, modules };
+  }
+
+  function normalizeHubGuide(guideR) {
+    const raw = guideR?.success && guideR.data ? guideR.data : null;
+    if (raw?.setup_required) return { g: raw, degraded: false };
+    if (raw && !raw.error && !raw.degraded) return { g: raw, degraded: false };
+    const g = raw && typeof raw === 'object' ? { ...raw } : {};
+    return {
+      degraded: true,
+      g: {
+        setup_required: false,
+        subject_name: g.subject_name,
+        progress: g.progress || { completed: 0, total: 0, ratio: 0 },
+        today: g.today || { day_title: '今日训练', tasks: [], next: null },
+        current_day: g.current_day || 1,
+        phase: g.phase || 'initial_7day'
+      }
+    };
+  }
+
+  function renderHubShell({ overall, g, p, nextPage, degraded }) {
+    const dayLine = g.phase === 'consolidation' ? '巩固期' : `第 ${g.current_day || 1} 天`;
+    const syncNote = degraded ? `<p class="da-hub-sync">${hubDegradeNote()}</p>` : '';
+    const cta = nextPage
+      ? `<button type="button" class="btn-p da-hub-cta" data-page="${nextPage}">继续答题</button>`
+      : '';
+
+    return `
+      <div class="da-hub-card da-overall-progress">
+        ${syncNote}
+        <div class="da-hub-progress-head">
+          <span class="t-label">分身完成度</span>
+          <span class="hero-pct">${overall}%</span>
+        </div>
+        <div class="pbar-wrap da-hub-pbar"><div class="pbar-fill" style="width:${overall}%"></div></div>
+        <p class="da-hub-meta">${dayLine} · 今日 ${g.progress?.completed || 0}/${g.progress?.total || 0}</p>
+        ${cta}
+        ${degraded ? '<button type="button" class="btn-o da-retry-hub da-hub-refresh">刷新</button>' : ''}
+      </div>
+      <div class="da-hub-mod-list da-module-list">${hubModuleRowsHtml(p)}</div>`;
+  }
+
+  async function renderGuideHub() {
+    if (isPortfolioEmbed()) return;
+    const host = document.querySelector('.da-training-hub-host');
+    if (!host) return;
+    host.innerHTML = '<div class="da-empty-card da-hub-loading"><span class="mi">hourglass_empty</span><p>加载训练总览…</p></div>';
+
+    const slowTimer = setTimeout(() => {
+      if (!host.querySelector('.da-hub-loading')) return;
+      const p = defaultHubProgress();
+      host.innerHTML = renderHubShell({
+        overall: 0, g: { current_day: 1, progress: { completed: 0, total: 0 } },
+        p, nextPage: 3, degraded: true
+      });
+      wireHubModuleNav(host);
+    }, 6000);
+
+    let guideR;
+    let prog = null;
+    const progPromise = typeof DA.loadProgress === 'function'
+      ? DA.loadProgress().catch(() => null)
+      : Promise.resolve(null);
+    try {
+      [guideR, prog] = await Promise.all([DA.fetchGuideOverview(), progPromise]);
+    } catch {
+      guideR = { success: false };
+    }
+    clearTimeout(slowTimer);
+
+    const { g, degraded } = normalizeHubGuide(guideR);
     if (g.setup_required) {
-      hub.innerHTML = `
-        <div class="da-hub-body" style="padding-top:18px;">
-          <div class="da-empty-card" style="border:none;box-shadow:none;">
-            <span class="mi">face_3</span>
-            <p style="font-weight:600;color:#1c1c18;margin-bottom:8px;">先创建您的数字分身</p>
-            <p>只需填写您的称呼，系统会围绕您本人生成 7 日训练题目。</p>
-            <button type="button" class="da-btn-primary" id="daOpenSetup" style="margin-top:14px;">填写基本信息</button>
-          </div>
-        </div>`;
-      hub.querySelector('#daOpenSetup')?.addEventListener('click', showTrainingSetupWizard);
+      host.innerHTML = `<div class="da-hub-card da-empty-card">
+        <span class="mi">face_3</span>
+        <p style="font-weight:600;margin:8px 0">先填写称呼</p>
+        <p class="t-body-sm">填写后即可开始训练</p>
+        <button type="button" class="da-btn-primary" id="daOpenSetup" style="margin-top:14px;width:100%">开始设定</button>
+      </div>`;
+      host.querySelector('#daOpenSetup')?.addEventListener('click', showTrainingSetupWizard);
       return;
     }
-    const pct = Math.round((g.progress?.ratio || 0) * 100);
-    const today = g.today || {};
-    const ctxLine = g.subject_name
-      ? (g.trainer_role === 'self' || g.subject_name === g.trainer_name
-        ? `${g.subject_name} 的数字分身${g.curriculum_mode === 'demo' ? ' · 演示' : ''}`
-        : `为「${g.subject_name}」训练 · 记录者 ${g.trainer_name}${g.curriculum_mode === 'demo' ? ' · 演示' : ''}`)
-      : '';
-    const m2p = {voice:2, memory:3, relationship:4, emotion:5, cognition:6};
-    const taskRows = (today.tasks || []).map(t => `
-      <li class="da-hub-task ${t.done ? 'done' : ''}" ${t.module ? `onclick="window.go(${m2p[t.module]})" style="cursor:pointer;"` : ''}>
-        <span class="da-hub-task-check">${t.done ? '✓' : ''}</span>
-        <div>
-          <div class="da-hub-task-label">${t.short_label}</div>
-          ${!t.done && t.purpose ? `<div class="da-hub-task-purpose">${t.purpose.slice(0, 80)}${t.purpose.length > 80 ? '…' : ''}</div>` : ''}
-        </div>
-      </li>`).join('');
-    const nextBtn = today.next
-      ? `<button type="button" class="da-btn-primary da-start-next" data-page="${today.next.module_page}">继续训练 · ${today.next.module_label}</button>`
-      : (g.phase === 'consolidation'
-        ? '<p class="t-body-sm" style="margin-top:12px;text-align:center;color:#596059;">初训已完成，进入各维度巩固训练。</p>'
-        : '<p class="t-body-sm" style="margin-top:12px;text-align:center;color:#596059;">今日题目已全部完成，将自动解锁下一天。</p>');
 
-    hub.innerHTML = `
-      <div class="da-hub-head">
-        ${ctxLine ? `<p class="da-hub-context">${ctxLine}</p>` : ''}
-        <div class="da-hub-row">
-          <span class="da-hub-title">${g.title || '7日训练'}</span>
-          <span class="da-hub-day">${g.phase === 'consolidation' ? '巩固期' : '第 ' + g.current_day + ' 天'}</span>
-        </div>
-        <div class="da-hub-progress">
-          <div class="pbar-wrap"><div class="pbar-fill" style="width:${pct}%"></div></div>
-          <div class="da-hub-progress-label">
-            <span>今日任务 ${g.progress?.completed || 0}/${g.progress?.total || 0}</span>
-            <span>${pct}%</span>
-          </div>
-        </div>
-      </div>
-      <div class="da-hub-body">
-        ${today.intro ? `<p class="da-hub-intro">${today.intro}</p>` : ''}
-        ${taskRows ? `<p class="da-hub-checklist-title">今日清单 · ${today.day_title || ''}</p><ul style="list-style:none;margin:0;padding:0;">${taskRows}</ul>` : ''}
-        ${nextBtn}
-        <div class="da-hub-days">${(g.days || []).map(d =>
-          `<span class="chip da-hub-day-chip ${d.current ? 'chip-s' : d.locked ? 'chip-o' : 'chip-g'}">第${d.day}天 ${d.done}/${d.total}</span>`
-        ).join('')}</div>
-      </div>`;
-    hub.querySelector('.da-start-next')?.addEventListener('click', e => {
-      const pg = Number(e.currentTarget.dataset.page);
-      if (pg) window.go(pg);
+    const p = prog || defaultHubProgress();
+    const overall = Math.round((p.personality_fit ?? p.overall_progress ?? g.progress?.ratio ?? 0) * 100);
+    const today = g.today || {};
+    const m2p = { voice: 2, memory: 3, relationship: 4, emotion: 5, cognition: 6 };
+    const nextPage = today.next?.module_page || m2p[today.tasks?.find(t => !t.done)?.module] || 0;
+    host.innerHTML = renderHubShell({ overall, g, p, nextPage, degraded });
+    wireHubModuleNav(host);
+    if (typeof DA.applyProgress === 'function') DA.applyProgress(p, host);
+  }
+
+  function renderPortfolioHubStub() {
+    if (!isPortfolioEmbed()) return;
+    const host = document.querySelector('.da-training-hub-host');
+    if (!host) return;
+    const p = defaultHubProgress();
+    p.personality_fit = 0.68;
+    host.innerHTML = renderHubShell({
+      overall: 68,
+      g: {
+        current_day: 3,
+        progress: { completed: 12, total: 18, ratio: 0.68 },
+        subject_name: '艾莉莎',
+        curriculum_mode: 'demo',
+        today: { tasks: [] }
+      },
+      p,
+      nextPage: 3,
+      degraded: true
     });
-    await refreshProgress(p1);
+    wireHubModuleNav(host);
+    if (typeof DA.applyProgress === 'function') DA.applyProgress(p, host);
   }
 
   const MODULE_BY_PAGE = { 2: 'voice', 3: 'memory', 4: 'relationship', 5: 'emotion', 6: 'cognition' };
 
   function onTrainingPage(i) {
-    if (i === 1) renderGuideHub();
+    if (i === 1) {
+      if (isPortfolioEmbed()) renderPortfolioHubStub();
+      else renderGuideHub();
+    }
     if (MODULE_BY_PAGE[i]) applyModuleGuide(MODULE_BY_PAGE[i]);
   }
 
@@ -604,26 +839,166 @@
     });
   }
 
+  async function ensureGuideTask(module) {
+    let gt = DA.getGuideTask();
+    if (!gt?.task_id || gt.module !== module) {
+      const gr = await DA.fetchModuleGuide(module);
+      gt = gr.data || gt;
+    }
+    return gt;
+  }
+
   function wireTrainingPages(onProgress) {
     const refresh = () => (onProgress ? onProgress() : refreshProgress());
     const afterSubmit = async (module) => afterGuideAction(module);
 
-    // 音色 p2
-    const p2 = document.getElementById('p2');
-    const lit = p2?.querySelector('.da-voice-text')?.textContent?.replace(/[""「」]/g, '') || '';
-    p2?.querySelector('.mic-record')?.addEventListener('click', () => DA.toggleRecord(p2.querySelector('.mic-record')));
-    if (p2 && !p2.querySelector('.da-voice-submit')) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'btn-p da-voice-submit';
-      btn.style.marginTop = '12px';
-      btn.textContent = '提交语音样本';
-      btn.onclick = async () => {
-        const text = p2.querySelector('.da-voice-text')?.textContent?.replace(/[""「」]/g, '') || '';
-        if (await DA.submitVoice(text)) afterSubmit('voice');
-      };
-      (p2.querySelector('.card:last-of-type') || p2.querySelector('.card-w') || p2.querySelector('.pc'))?.appendChild(btn);
-    }
+    document.querySelectorAll('.da-module-v2').forEach(page => {
+      if (page.dataset.v2Wired) return;
+      page.dataset.v2Wired = '1';
+      const module = page.dataset.module;
+      const mic = page.querySelector('.mic-record');
+      if (mic) mic.addEventListener('click', () => DA.toggleRecord(mic));
+
+      page.querySelector('.da-mod-skip')?.addEventListener('click', async () => {
+        if (page.dataset.blocked === 'setup') { showTrainingSetupWizard(); return; }
+        if (page.dataset.blocked === 'done') return;
+        const btn = page.querySelector('.da-mod-skip');
+        if (btn) { btn.disabled = true; btn.textContent = '跳过中…'; }
+        const result = await DA.skipGuideTask({ module });
+        if (btn) { btn.disabled = false; btn.textContent = '没印象，跳过'; }
+        if (!result?.ok) return;
+        if (result.next) renderModuleV2Page(module, page, result.next);
+        await afterGuideAction(module, { uiRendered: !!result.next });
+      });
+
+      page.querySelector('.da-mod-vague')?.addEventListener('click', async () => {
+        if (page.dataset.blocked === 'setup') { showTrainingSetupWizard(); return; }
+        if (page.dataset.blocked === 'done') return;
+        const gt = await ensureGuideTask(module);
+        if (module === 'memory') {
+          const ta = page.querySelector('.da-mem-input');
+          const { success, data } = await DA.api('POST', '/training/memory', {
+            impression_only: true,
+            content: ta?.value?.trim() || '',
+            task_id: gt?.task_id
+          });
+          if (success) { DA.applyGuideAdvanceFromResponse?.(data, 'memory'); await afterSubmit('memory'); }
+          return;
+        }
+        if (module === 'relationship') {
+          const ta = page.querySelector('.da-rel-input');
+          const text = ta?.value?.trim() || '[有印象但说不清]';
+          if (await DA.submitRelationship(page.dataset.relType || 'emotional', text)) await afterSubmit('relationship');
+          return;
+        }
+        if (module === 'emotion') {
+          const ta = page.querySelector('.da-emo-input');
+          const text = ta?.value?.trim() || '[有印象但说不清]';
+          if (await DA.submitEmotion(text)) await afterSubmit('emotion');
+          return;
+        }
+        if (module === 'voice') {
+          const fb = page.querySelector('.da-mod-v2-voice-fallback');
+          const text = fb?.value?.trim() || page.querySelector('.da-voice-text')?.textContent?.trim() || '有印象';
+          if (await DA.submitVoice(text)) await afterSubmit('voice');
+        }
+      });
+
+      page.querySelector('.da-mod-submit')?.addEventListener('click', async () => {
+        if (page.dataset.blocked === 'setup') { showTrainingSetupWizard(); return; }
+        if (page.dataset.blocked === 'done') return;
+        if (module === 'voice') {
+          const fb = page.querySelector('.da-mod-v2-voice-fallback')?.value?.trim();
+          const text = fb || page.querySelector('.da-voice-text')?.textContent?.trim() || '';
+          if (!text) { DA.toast('可贴文字或点「有印象」「跳过」', 'error'); return; }
+          if (await DA.submitVoice(text)) await afterSubmit('voice');
+          return;
+        }
+        if (module === 'memory') {
+          const ta = page.querySelector('.da-mem-input');
+          if (!ta?.value?.trim()) { DA.toast('写几个字，或点「有印象」「跳过」', 'error'); return; }
+          const people = document.getElementById('daMemPeople')?.value?.split(/[,，]/).map(s => s.trim()).filter(Boolean);
+          const extras = page._collectMemoryExtras?.() || {};
+          const text = ta.value.trim();
+          if (await DA.submitMemory(text, {
+            tier: 'daily',
+            save_only: true,
+            time: document.getElementById('daMemTime')?.value,
+            place: document.getElementById('daMemPlace')?.value,
+            people,
+            emotion: document.getElementById('daMemEmotion')?.value,
+            tags: extras.tags,
+            photos: extras.photos
+          })) {
+            page._memQueueCount = (page._memQueueCount || 0) + 1;
+            const queue = page.querySelector('.da-mod-v2-queue');
+            const list = page.querySelector('.da-mod-queue-list');
+            const n = page.querySelector('.da-mod-queue-n');
+            if (queue) queue.hidden = false;
+            if (n) n.textContent = String(page._memQueueCount);
+            if (list) {
+              const li = document.createElement('li');
+              li.textContent = text.slice(0, 60) + (text.length > 60 ? '…' : '');
+              list.appendChild(li);
+            }
+            ta.value = '';
+            delete page.dataset.memPhoto;
+          }
+          return;
+        }
+        if (module === 'relationship') {
+          const ta = page.querySelector('.da-rel-input');
+          const content = ta?.value?.trim();
+          if (!content) { DA.toast('写几句，或点「有印象」「跳过」', 'error'); return; }
+          if (await DA.submitRelationship(page.dataset.relType || 'emotional', content)) await afterSubmit('relationship');
+          return;
+        }
+        if (module === 'emotion') {
+          const ta = page.querySelector('.da-emo-input');
+          if (!ta?.value?.trim()) { DA.toast('写几句，或点「有印象」「跳过」', 'error'); return; }
+          if (await DA.submitEmotion(ta.value)) { ta.value = ''; await afterSubmit('emotion'); }
+          return;
+        }
+        if (module === 'cognition') {
+          const values = [...page.querySelectorAll('.da-cog-drag-host .drag-row .t-body')].map(el => el.textContent.trim());
+          if (await DA.submitCognition(values)) await afterSubmit('cognition');
+        }
+      });
+
+      page.querySelector('.da-mod-add-another')?.addEventListener('click', () => {
+        page.querySelector('.da-mem-input')?.focus();
+        DA.toast('写完点「提交」，结束本题点「下一题」');
+      });
+      page.querySelector('.da-mod-next')?.addEventListener('click', async () => {
+        const gt = await ensureGuideTask('memory');
+        if (gt?.task_id) {
+          await DA.api('POST', '/training/guide/complete', { task_id: gt.task_id, module: 'memory' });
+        }
+        await afterSubmit('memory');
+      });
+
+      if (module === 'cognition') {
+        const optHost = page.querySelector('.da-cog-options');
+        optHost?.addEventListener('click', async (e) => {
+          const btn = e.target.closest('.choice');
+          if (!btn) return;
+          const gt = await ensureGuideTask('cognition');
+          const idx = [...optHost.querySelectorAll('.choice')].indexOf(btn);
+          const opt = gt?.options?.[idx];
+          if (!gt?.task_id || !opt) return;
+          const r2 = await DA.submitHomeTraining({ module: 'cognition', task_id: gt.task_id, content: opt, choice_index: idx });
+          if (r2.success) { DA.toast(r2.data?.feedback || '已提交'); await afterSubmit('cognition'); }
+        });
+        wireDragRows(page.querySelector('.da-cog-drag-host'));
+        page.querySelector('.da-cog-rank-submit')?.addEventListener('click', async () => {
+          const values = [...page.querySelectorAll('.da-cog-drag-host .drag-row .t-body')].map(el => el.textContent.trim());
+          if (await DA.submitCognition(values)) await afterSubmit('cognition');
+        });
+      }
+    });
+
+    const p3 = document.getElementById('p3');
+    wireMemoryTagsAndPhoto(p3, p3?.querySelector('.da-mem-input'));
 
     refreshProgress().then(data => {
       if (!data?.blind_test?.ready) return;
@@ -652,170 +1027,11 @@
       };
       host.appendChild(btn);
     });
-
-    // 记忆 p3
-    const p3 = document.getElementById('p3');
-    const memTa = p3?.querySelector('.da-mem-input');
-    if (p3 && !p3.querySelector('.da-memory-extra')) {
-      const extra = document.createElement('div');
-      extra.className = 'da-memory-extra';
-      extra.innerHTML = `
-        <select id="daMemTier">
-          <option value="core">核心记忆</option>
-          <option value="relationship">关系记忆</option>
-          <option value="daily">日常记忆</option>
-          <option value="emotional">情绪记忆</option>
-          <option value="shared">共同记忆</option>
-          <option value="wish">未来愿望</option>
-        </select>
-        <input type="text" id="daMemTime" placeholder="时间（如 2008 年夏天）"/>
-        <input type="text" id="daMemPlace" placeholder="地点"/>
-        <input type="text" id="daMemPeople" placeholder="相关人物（逗号分隔）"/>
-        <input type="text" id="daMemEmotion" placeholder="情感（如 温暖、怀念）"/>`;
-      memTa?.before(extra);
-    }
-    wireMemoryTagsAndPhoto(p3, memTa);
-    if (p3 && !p3.querySelector('.btn-p')) {
-      const sb = document.createElement('button');
-      sb.type = 'button';
-      sb.className = 'btn-p';
-      sb.style.marginTop = '14px';
-      sb.textContent = '提交这段记忆';
-      p3.querySelector('.pc')?.appendChild(sb);
-    }
-    const submitMemory = async () => {
-      const people = document.getElementById('daMemPeople')?.value?.split(/[,，]/).map(s => s.trim()).filter(Boolean);
-      const extras = p3?._collectMemoryExtras?.() || {};
-      if (await DA.submitMemory(memTa?.value, {
-        tier: document.getElementById('daMemTier')?.value || 'core',
-        time: document.getElementById('daMemTime')?.value,
-        place: document.getElementById('daMemPlace')?.value,
-        people,
-        emotion: document.getElementById('daMemEmotion')?.value,
-        tags: extras.tags,
-        photos: extras.photos
-      })) {
-        if (memTa) memTa.value = '';
-        delete p3.dataset.memPhoto;
-        p3.querySelectorAll('.da-mem-tag').forEach(el => el.remove());
-        afterSubmit('memory');
-      }
-    };
-    p3?.querySelector('.btn-p')?.addEventListener('click', submitMemory);
-    p3?.querySelector('.da-mem-send-btn')?.addEventListener('click', submitMemory);
-    p3?.querySelector('.da-mem-voice-btn')?.addEventListener('click', () => {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SR) { DA.toast('不支持语音识别', 'error'); return; }
-      const rec = new SR();
-      rec.lang = 'zh-CN';
-      rec.onresult = e => {
-        if (memTa) memTa.value = (memTa.value + ' ' + e.results[0][0].transcript).trim();
-        DA.toast('语音已填入');
-      };
-      rec.start();
-      DA.toast('请说话…');
-    });
-
-    // 关系 p4
-    const p4 = document.getElementById('p4');
-    let relType = 'emotional';
-    const relTa = p4?.querySelector('.da-rel-input');
-    if (p4 && !p4.querySelector('.btn-p')) {
-      const sb = document.createElement('button');
-      sb.type = 'button';
-      sb.className = 'btn-p';
-      sb.style.marginTop = '12px';
-      sb.textContent = '提交本次关系回应';
-      p4.querySelector('.pc')?.appendChild(sb);
-    }
-    p4?.querySelector('.btn-p')?.addEventListener('click', async () => {
-      const content = relTa?.value?.trim() || p4.querySelector('.choice.selected .t-body-sm')?.textContent?.trim();
-      const type = p4.dataset.relType || relType;
-      if (!content) {
-        DA.toast('没有印象可点教练区「没印象，跳过」', 'error');
-        return;
-      }
-      if (await DA.submitRelationship(type, content)) afterSubmit('relationship');
-    });
-
-    // 情感 p5
-    const p5 = document.getElementById('p5');
-    const emoInput = p5?.querySelector('.da-emo-input');
-    p5?.querySelector('.btn-p')?.addEventListener('click', async () => {
-      const text = emoInput?.value;
-      if (!text?.trim()) {
-        DA.toast('想不起可以点教练区「没印象，跳过」', 'error');
-        return;
-      }
-      if (await DA.submitEmotion(text)) { if (emoInput) emoInput.value = ''; afterSubmit('emotion'); }
-    });
-
-    // 认知 p6
-    const p6 = document.getElementById('p6');
-    const dragHost = p6?.querySelector('.da-cog-drag-host');
-    wireDragRows(dragHost);
-    DA.api('GET', '/training/cognition/scenarios?_=' + Date.now()).then(r => {
-      if (!r.success || !p6) return;
-      const gt = DA.getGuideTask();
-      if (gt?.module === 'cognition' && gt?.task_id && gt?.question) return;
-      if (p6.querySelector('.da-conflict-list')) return;
-      const list = r.data || [];
-      if (!list.length) return;
-      const wrap = document.createElement('div');
-      wrap.className = 'da-conflict-list';
-      wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin-bottom:12px;max-height:160px;overflow-y:auto;';
-      const label = document.createElement('p');
-      label.className = 't-label';
-      label.textContent = r.source === 'question-bank' ? '题库情境（自选参考，当前进度以教练区题目为准）' : '参考情境';
-      wrap.appendChild(label);
-      list.slice(0, 12).forEach(s => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'btn-o';
-        b.style.fontSize = '12px';
-        const txt = s.text || s.question || '';
-        b.textContent = txt.slice(0, 36) + (txt.length > 36 ? '…' : '');
-        b.title = txt;
-        b.onclick = () => DA.pickConflict(txt);
-        wrap.appendChild(b);
-      });
-      p6.querySelector('.da-cog-static')?.after(wrap);
-    });
-    if (p6 && !p6.querySelector('.btn-p')) {
-      const sb = document.createElement('button');
-      sb.type = 'button';
-      sb.className = 'btn-p';
-      sb.style.marginTop = '8px';
-      sb.textContent = '提交价值排序';
-      p6.querySelector('.pc')?.appendChild(sb);
-    }
-    p6?.querySelector('.btn-p')?.addEventListener('click', async () => {
-      const values = [...p6.querySelectorAll('.drag-row .t-body')].map(el => el.textContent.trim());
-      if (await DA.submitCognition(values)) afterSubmit('cognition');
-    });
-
-    p2?.addEventListener('dblclick', async () => {
-      const text = p2.querySelector('.da-voice-text')?.textContent?.replace(/[""「」]/g, '') || '';
-      if (await DA.submitVoice(text)) afterSubmit('voice');
-    });
   }
 
   function wireProfileRows() {
-    const p7 = document.getElementById('p7');
-    if (!p7) return;
-    const rows = p7.querySelectorAll('.module-row');
-    rows[0]?.addEventListener('click', () => {
-      window.go(7);
-      setTimeout(() => document.querySelector('.da-ethics-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
-    });
-    rows[1]?.addEventListener('click', () => DA.toast('资料库：可在记忆训练中上传照片与文字'));
-    rows[2]?.addEventListener('click', () => {
-      window.go(7);
-      setTimeout(() => document.getElementById('daTraineeName')?.focus(), 120);
-    });
-    document.getElementById('daReviewPersona')?.addEventListener('click', () => {
-      location.href = '/apps/persona-review.html';
-    });
+    window.DAProfile?.installProfilePage?.();
+    window.DAProfile?.installTopbar?.();
   }
 
   function wireChatPage(pageEl, opts) {
@@ -946,7 +1162,7 @@
       const ep = document.createElement('div');
       ep.className = 'da-ethics-panel card-w';
       ep.innerHTML = `
-        <p class="t-body" style="font-weight:600;">伦理与安全</p>
+        <p class="t-body" style="font-weight:600;">隐私与授权</p>
         <input type="text" id="daTraineeName" placeholder="训练者显示名"/>
         <button type="button" class="btn-o" id="daReSetup" style="margin-bottom:8px;">修改我的基本信息</button>
         <input type="text" id="daAuthName" placeholder="新增授权关系人姓名"/>
@@ -1018,12 +1234,15 @@
     DA.injectAppMenu('训练端');
     initTrainingEthics();
     wireProfileRows();
+    window.DAProfile?.installTopbar?.();
+    window.DAProfile?.installProfilePage?.();
     const origGo = window.go;
     window.go = wrapGo(origGo, i => {
       if (i === 0 && (path.includes('sanctuary') || path.includes('training'))) {
         renderHomeTraining(document.getElementById('p0'));
       }
       if (i === 1 || i === 7) refreshProgress();
+      if (i === 7) window.DAProfile?.refreshProfilePage?.();
       onTrainingPage(i);
     });
     installNavChrome(typeof cur !== 'undefined' ? cur : 0);
@@ -1076,10 +1295,11 @@
   }
 
   /** 主页：引导训练 + 自由聊天双模式（与专项页共享 task_id） */
-  let homeMode = 'guided';
+  let homeMode = 'ingest';
 
   async function renderHomeTraining(p0) {
     if (!p0) return;
+    p0.removeAttribute('aria-busy');
     let shell = p0.querySelector('.da-home-shell');
     if (!shell) {
       const inner = p0.querySelector('[style*="flex:1"]') || p0;
@@ -1092,34 +1312,29 @@
           <div class="da-home-hero-orb">
             <div class="da-home-hero-ring" style="--pct:0"></div>
             <div class="breathing"></div>
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL" alt=""/>
+            <img class="da-stick-avatar da-avatar-solo da-stick-avatar--f" src="../assets/avatars/avatar-f.png" data-da-stick alt="数字分身"/>
           </div>
+          <p class="da-home-hero-hint">点击形象可更换</p>
           <p class="da-home-hero-title da-home-subject">数字分身</p>
-          <p class="da-home-hero-sub da-home-tagline">完成今日引导，让 TA 更像本人</p>
-          <div class="da-home-hero-chips">
-            <span class="chip chip-g da-pad-chip">内心平静</span>
-            <span class="chip chip-o da-hero-pct-chip">训练进行中</span>
-          </div>
+          <p class="da-home-hero-sub da-home-tagline">随手记一句话，最快让分身像你</p>
         </div>
-        <div class="da-segment">
-          <button type="button" class="da-segment-btn on da-home-tab-guided"><span class="mi">edit_note</span>今日引导</button>
-          <button type="button" class="da-segment-btn da-home-tab-chat"><span class="mi">forum</span>试聊校准</button>
-          <button type="button" class="da-segment-btn da-home-tab-ingest"><span class="mi">upload</span>直接录入</button>
+        <div class="da-segment da-segment--triple" role="tablist" aria-label="主页训练方式">
+          <button type="button" class="da-segment-btn da-home-tab-guided" role="tab" aria-selected="false"><span class="mi">playlist_add_check</span><span class="da-segment-label">情境答题</span></button>
+          <button type="button" class="da-segment-btn on da-home-tab-ingest" role="tab" aria-selected="true"><span class="mi">sticky_note_2</span><span class="da-segment-label">随手记</span></button>
+          <button type="button" class="da-segment-btn da-home-tab-chat" role="tab" aria-selected="false"><span class="mi">forum</span><span class="da-segment-label">试聊</span></button>
         </div>
-        <div class="da-home-guided"></div>
+        <div class="da-home-ingest-wrap">
+          <textarea id="daDirectIngestNote" class="da-home-note-input" rows="4" placeholder="写一句习惯或事实…"></textarea>
+          <button type="button" class="btn-p" id="daDirectIngestSave" style="width:100%;margin-top:10px">保存</button>
+        </div>
+        <div class="da-home-guided" style="display:none"></div>
         <div class="da-home-chat-wrap" style="display:none;">
           <div class="da-chat-msgs da-msg-cards"></div>
           <div class="da-caps-mount" style="display:none;"></div>
           <div class="da-chat-input-wrap">
-            <input type="text" class="da-home-chat-input" placeholder="试聊：说点什么，看 TA 怎么回应…"/>
+            <input type="text" class="da-home-chat-input" placeholder="说点什么，看分身怎么回…"/>
             <button type="button" class="da-home-send" aria-label="发送"><span class="mi">send</span></button>
           </div>
-        </div>
-        <div class="da-home-ingest-wrap" style="display:none;padding:16px;background:#fff;border-radius:20px;margin-top:12px;">
-          <p class="t-body" style="font-weight:600;margin-bottom:8px;">直接录入习惯与事实</p>
-          <p class="t-body-sm" style="margin-bottom:12px;color:#767872;">不用试聊，在这里写下“我讨厌早八”、“我不吃香菜”等内容，直接教给数字人。</p>
-          <textarea id="daDirectIngestNote" rows="4" style="width:100%;border:1px solid #e6e2dc;border-radius:12px;padding:12px;margin-bottom:12px;font-family:inherit;font-size:14px;outline:none;" placeholder="在这里写下你的生活习惯或事实..."></textarea>
-          <button type="button" class="btn-p" id="daDirectIngestSave">保存内容</button>
         </div>`;
       shell.querySelector('.da-home-tab-guided').onclick = () => setHomeMode('guided');
       shell.querySelector('.da-home-tab-chat').onclick = () => setHomeMode('chat');
@@ -1142,15 +1357,33 @@
         feedback: true, noTts: true, messageCards: true,
         aiName: shell.querySelector('.da-home-subject')?.textContent || '数字分身',
         onSetupRequired: showTrainingSetupWizard,
-        onPad: pad => {
-          const chip = shell.querySelector('.da-pad-chip');
-          if (chip) DA.padToChips(pad, [chip]);
-        },
-        onCaps: caps => DA.renderCapsPanel(caps, capsMount)
+        onCaps: caps => {
+          if (!capsMount) return;
+          if (caps?.layer_explanation) {
+            capsMount.style.display = 'block';
+            capsMount.innerHTML = `<p class="t-body-sm" style="padding:8px 0;color:#596059;">本轮五层加工见<strong>每条回复下方</strong>的「为什么这样回应」。</p>`;
+          } else {
+            DA.renderCapsPanel(caps, capsMount);
+          }
+        }
       };
       shell.querySelector('.da-home-send')?.addEventListener('click', () => DA.sendChat(chatInput, chatBox, chatOpts));
       chatInput?.addEventListener('keydown', e => { if (e.key === 'Enter') DA.sendChat(chatInput, chatBox, chatOpts); });
+      const heroOrb = shell.querySelector('.da-home-hero-orb');
+      if (heroOrb && !heroOrb.dataset.avatarWired) {
+        heroOrb.dataset.avatarWired = '1';
+        heroOrb.classList.add('da-hero-tappable');
+        heroOrb.tabIndex = 0;
+        heroOrb.setAttribute('role', 'button');
+        heroOrb.setAttribute('aria-label', '更换分身形象');
+        heroOrb.addEventListener('click', () => openAvatarPicker());
+        heroOrb.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAvatarPicker(); }
+        });
+      }
     }
+
+    applyHomeHeroAvatar();
 
     async function refreshHeroMeta(g) {
       const data = await DA.loadProgress();
@@ -1160,54 +1393,104 @@
       if (ring) ring.style.setProperty('--pct', pct);
       const subj = shell.querySelector('.da-home-subject');
       if (subj && g?.subject_name) subj.textContent = g.subject_name;
+      applyHomeHeroAvatar();
       const tag = shell.querySelector('.da-home-tagline');
       if (tag) {
-        tag.textContent = g?.task_id
-          ? `第 ${g.day} 天 · ${g.module_label || '训练'} · 与专项页同步`
-          : (g?.message || '切换模式继续训练或试聊');
-      }
-      const progChip = shell.querySelector('.da-hero-pct-chip');
-      if (progChip) {
-        progChip.textContent = data?.stage?.name
-          ? `${data.stage.name} · 拟合 ${pct}%`
-          : (pct > 0 ? `拟合 ${pct}%` : '训练进行中');
+        const fit = pct > 0 ? `拟合 ${pct}%` : '';
+        if (g?.task_id) {
+          const task = [fit, g.module_label || '情境答题', g.day ? `第 ${g.day} 天` : ''].filter(Boolean).join(' · ');
+          tag.textContent = task;
+        } else if (g?.progress?.ratio >= 1) {
+          tag.textContent = fit ? `${fit} · 本轮题库已完成` : '本轮题库已完成，可试聊或做五模块专项';
+        } else if (g?.message && g.message !== '可继续答题、试聊或随手记') {
+          tag.textContent = fit ? `${fit} · ${g.message}` : g.message;
+        } else {
+          tag.textContent = fit || '随手记一句话，最快让分身像你';
+        }
       }
     }
 
     async function setHomeMode(mode) {
       homeMode = mode;
-      shell.querySelector('.da-home-tab-guided').classList.toggle('on', mode === 'guided');
-      shell.querySelector('.da-home-tab-chat').classList.toggle('on', mode === 'chat');
-      shell.querySelector('.da-home-tab-ingest')?.classList.toggle('on', mode === 'ingest');
-      shell.querySelector('.da-home-guided').style.display = mode === 'guided' ? 'block' : 'none';
-      shell.querySelector('.da-home-chat-wrap').style.display = mode === 'chat' ? 'flex' : 'none';
+      const tabGuided = shell.querySelector('.da-home-tab-guided');
+      const tabChat = shell.querySelector('.da-home-tab-chat');
+      const tabIngest = shell.querySelector('.da-home-tab-ingest');
+      tabGuided?.classList.toggle('on', mode === 'guided');
+      tabChat?.classList.toggle('on', mode === 'chat');
+      tabIngest?.classList.toggle('on', mode === 'ingest');
+      tabGuided?.setAttribute('aria-selected', mode === 'guided' ? 'true' : 'false');
+      tabChat?.setAttribute('aria-selected', mode === 'chat' ? 'true' : 'false');
+      tabIngest?.setAttribute('aria-selected', mode === 'ingest' ? 'true' : 'false');
+      const guidedEl = shell.querySelector('.da-home-guided');
+      const chatEl = shell.querySelector('.da-home-chat-wrap');
       const iw = shell.querySelector('.da-home-ingest-wrap');
+      if (guidedEl) {
+        guidedEl.style.display = mode === 'guided' ? 'flex' : 'none';
+        guidedEl.classList.toggle('da-home-panel-on', mode === 'guided');
+      }
+      if (chatEl) {
+        chatEl.style.display = mode === 'chat' ? 'flex' : 'none';
+        chatEl.classList.toggle('da-home-panel-on', mode === 'chat');
+      }
       if (iw) iw.style.display = mode === 'ingest' ? 'block' : 'none';
-      if (mode === 'guided') await loadGuided();
+      if (mode === 'ingest') {
+        requestAnimationFrame(() => shell.querySelector('.da-home-note-input')?.focus());
+      } else if (mode === 'guided') {
+        await loadGuided();
+      }
+    }
+
+    function renderGuidedError(host, message) {
+      host.innerHTML = `<div class="da-empty-card">
+        <span class="mi">wifi_off</span>
+        <p style="font-weight:600;color:#1c1c18;margin-bottom:8px;">题目加载失败</p>
+        <p>${message || '无法连接电脑上的数字方舟服务'}</p>
+        <button type="button" class="da-btn-primary da-retry-guided" style="margin-top:14px;">重试</button>
+        <button type="button" class="btn-o da-open-setup-retry" style="margin-top:8px;width:100%;">填写基本信息</button>
+      </div>`;
+      host.querySelector('.da-retry-guided')?.addEventListener('click', () => loadGuided());
+      host.querySelector('.da-open-setup-retry')?.addEventListener('click', showTrainingSetupWizard);
     }
 
     async function loadGuided() {
       const host = shell.querySelector('.da-home-guided');
+      if (!host) return;
       host.innerHTML = '<div class="da-empty-card"><span class="mi">hourglass_empty</span><p>加载中…</p></div>';
       const r = await DA.fetchHomeTraining();
-      if (!r.success) return;
+      if (!r.success) {
+        renderGuidedError(host, r.error || '请检查电脑是否保持 Digital-Ark-Server 窗口打开');
+        return;
+      }
       const g = r.data;
-      await refreshHeroMeta(g);
+      refreshHeroMeta(g).catch(() => {});
 
       if (g.setup_required) {
         host.innerHTML = `<div class="da-empty-card">
           <span class="mi">face_3</span>
           <p style="font-weight:600;color:#1c1c18;margin-bottom:8px;">先填写您的称呼</p>
-          <p>${g.message || '创建数字分身后即可开始今日引导与试聊。'}</p>
+          <p>${g.message || '创建数字分身后即可开始情境答题与试聊。'}</p>
           <button type="button" class="da-btn-primary da-open-setup" style="margin-top:16px;">填写基本信息</button></div>`;
         host.querySelector('.da-open-setup')?.addEventListener('click', showTrainingSetupWizard);
         return;
       }
       if (!g.task_id) {
-        host.innerHTML = `<div class="da-empty-card">
-          <span class="mi">celebration</span>
-          <p>${g.message || '今日引导已完成'}</p>
-          <p style="margin-top:8px;font-size:13px;">可切到「自由聊天」试聊，或打开「训练」Tab 做专项。</p></div>`;
+        const done = g.progress?.completed ?? 0;
+        const reallyDone = done > 0 && String(g.message || '').includes('初训已完成');
+        if (reallyDone) {
+          host.innerHTML = `<div class="da-empty-card">
+            <span class="mi">celebration</span>
+            <p>${g.message}</p>
+            <p style="margin-top:8px;font-size:13px;">可切到「试聊」感受分身，或打开底部「训练」做巩固题。</p></div>`;
+        } else {
+          host.innerHTML = `<div class="da-empty-card">
+            <span class="mi">edit_note</span>
+            <p style="font-weight:600;color:#1c1c18;margin-bottom:8px;">${g.message || '还没有情境题'}</p>
+            <p style="margin-top:8px;font-size:13px;color:#767872;">点下面按钮去训练页答题，或刷新重试。</p>
+            <button type="button" class="da-btn-primary da-go-training" style="margin-top:14px;">去训练页答题</button>
+            <button type="button" class="btn-o da-retry-guided" style="margin-top:8px;width:100%;">刷新题目</button></div>`;
+          host.querySelector('.da-go-training')?.addEventListener('click', () => window.go(1));
+          host.querySelector('.da-retry-guided')?.addEventListener('click', () => loadGuided());
+        }
         return;
       }
 
@@ -1216,59 +1499,44 @@
       if (hp.choices?.length) {
         choicesHtml = `<div class="da-guide-choices">${hp.choices.map((c, i) =>
           `<button type="button" class="choice da-home-choice" data-i="${i}" data-type="${c.type}" data-text="${c.text.replace(/"/g, '&quot;')}">
-            <p class="t-body-sm" style="margin-bottom:4px;color:#1c1c18;">「${c.text}」</p>
-            <span class="t-label" style="color:#596059;">${c.label}</span></button>`).join('')}</div>
-          <p class="t-body-sm" style="color:#767872;margin:8px 0 4px;">这些选项只是参考；都不像 TA 可以跳过。</p>`;
+            <p class="t-body-sm" style="color:#1c1c18;">${c.text}</p></button>`).join('')}</div>`;
       }
       if (hp.options?.length) {
         choicesHtml = `<div class="da-guide-choices">${hp.options.map((o, i) =>
-          `<button type="button" class="choice da-home-cog" data-i="${i}">
-            <p class="t-body-sm" style="color:#1c1c18;">${o}</p></button>`).join('')}</div>
-          <p class="t-body-sm" style="color:#767872;margin:8px 0 4px;">拿不准选哪项可以点下方「没印象，跳过」。</p>`;
+          `<button type="button" class="choice da-home-cog" data-i="${i}"><p class="t-body-sm">${o}</p></button>`).join('')}</div>`;
       }
 
       const showTextSubmit = hp.input_type !== 'voice' && hp.input_type !== 'cognition_choice';
       const inputBlock = showTextSubmit ? `
-        <textarea class="da-home-answer" rows="4" placeholder="在这里回答…想到什么写什么。没有印象可以点下面跳过。"></textarea>
-        <div class="da-guide-actions" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-          <button type="button" class="da-btn-primary da-home-submit" style="flex:1;min-width:140px;">提交 · 下一题</button>
-          <button type="button" class="btn-o da-home-skip" style="min-width:108px;padding:12px 10px;">没印象，跳过</button>
-        </div>
-        ${guideSkipNoteHtml()}` : '';
+        <textarea class="da-home-answer" rows="4" placeholder="随便写，碎片也行"></textarea>
+        <div class="da-guide-actions-v2">
+          <button type="button" class="da-btn-primary da-home-submit">提交</button>
+          <button type="button" class="btn-o da-home-vague">有印象</button>
+          <button type="button" class="btn-o da-home-skip">跳过</button>
+        </div>` : '';
       const cognitionBlock = hp.input_type === 'cognition_choice' ? `
-        <div class="da-guide-actions" style="margin-top:10px;">
-          <button type="button" class="btn-o da-home-skip" style="width:100%;padding:12px;">没印象，跳过</button>
-        </div>
-        ${guideSkipNoteHtml()}` : '';
+        <div class="da-guide-actions-v2" style="margin-top:10px;">
+          <button type="button" class="btn-o da-home-skip" style="grid-column:1/-1;">跳过</button>
+        </div>` : '';
       const voiceBlock = hp.input_type === 'voice' ? `
-        <button type="button" class="da-btn-primary da-home-voice-text da-voice-text-btn">提交朗读文字<span class="da-voice-text-sub">无麦克风可先跳过录音</span></button>
-        <button type="button" class="btn-o da-home-skip" style="width:100%;margin-top:8px;padding:12px;">没印象，跳过</button>
-        <button type="button" class="da-btn-ghost da-go-voice" style="margin-top:8px;"><span class="mi" style="vertical-align:middle;font-size:18px;">mic</span> 去专项页录音</button>
-        ${guideSkipNoteHtml()}` : '';
+        <div class="da-guide-actions-v2">
+          <button type="button" class="da-btn-primary da-home-voice-text">提交文字</button>
+          <button type="button" class="btn-o da-home-skip">跳过</button>
+          <button type="button" class="btn-o da-go-voice">去录音</button>
+        </div>` : '';
+      const hintFold = hp.hint ? `<details class="da-guide-hint-fold"><summary>需要提示？</summary><p>${hp.hint}</p></details>` : '';
 
       host.innerHTML = `
-        <article class="da-guide-card">
-          <header class="da-guide-card-head">
-            ${modIconHtml(g.module)}
-            <div class="da-guide-card-meta">
-              <span class="da-guide-day-badge">第 ${g.day} 天 · ${g.module_label}</span>
-              <h2 class="da-guide-card-headline">${hp.headline || g.day_title || '训练'}</h2>
-              ${g.scene_label ? `<p class="t-label" style="margin-top:4px;color:#767872;">当前情境：${g.scene_label}</p>` : ''}
-            </div>
-          </header>
-          <div class="da-guide-card-body">
-            <p class="da-guide-ask">${hp.ask || ''}</p>
-            ${hp.literary_text ? `<blockquote class="da-guide-quote">${hp.literary_text}</blockquote>` : ''}
-            ${hp.hint ? `<div class="da-guide-hint"><span class="mi">lightbulb</span><span>${hp.hint}</span></div>` : ''}
-            ${choicesHtml}
-            ${inputBlock}
-            ${cognitionBlock}
-            ${voiceBlock}
-            ${g.coach?.purpose ? `<div class="da-guide-hint" style="margin-top:12px;margin-bottom:0;"><span class="mi">psychology</span><span>${g.coach.purpose}</span></div>` : ''}
-            <p class="da-sync-note">${g.sync_note || ''}</p>
-          </div>
-        </article>
-        <button type="button" class="da-btn-ghost da-go-module">在专项页深化本题 →</button>`;
+        <article class="da-guide-card-v2">
+          <p class="da-guide-meta-v2">第 ${g.day} 天 · ${g.module_label}</p>
+          <h2 class="da-guide-q-v2">${hp.ask || hp.headline || g.day_title || '训练'}</h2>
+          ${hp.literary_text ? `<blockquote class="da-guide-quote">${hp.literary_text}</blockquote>` : ''}
+          ${choicesHtml}
+          ${inputBlock}
+          ${cognitionBlock}
+          ${voiceBlock}
+          ${hintFold}
+        </article>`;
 
       let selectedChoice = null;
       host.querySelectorAll('.da-home-choice').forEach(btn => {
@@ -1299,32 +1567,39 @@
           btn.disabled = true;
           const prev = btn.textContent;
           btn.textContent = '跳过中…';
-          const ok = await DA.skipGuideTask({ module: g.module, task_id: g.task_id });
+          const result = await DA.skipGuideTask({ module: g.module, task_id: g.task_id });
           btn.disabled = false;
           btn.textContent = prev;
-          if (ok) await afterGuideAction(g.module);
+          if (result?.ok) await afterGuideAction(g.module);
         });
       });
 
       host.querySelector('.da-home-submit')?.addEventListener('click', async () => {
         const content = host.querySelector('.da-home-answer')?.value?.trim();
-        if (!content) {
-          DA.toast('想不起可以点「没印象，跳过」', 'error');
-          return;
-        }
+        if (!content) { DA.toast('写几个字，或点「有印象」「跳过」', 'error'); return; }
         const btn = host.querySelector('.da-home-submit');
         btn.disabled = true;
-        btn.textContent = '提交中…';
         const r2 = await DA.submitHomeTraining({
           module: g.module, task_id: g.task_id, content,
           response_type: selectedChoice?.type, choice_index: selectedChoice?.index
         });
         btn.disabled = false;
-        btn.textContent = '提交 · 进入下一题';
-        if (r2.success) {
-          DA.toast(r2.data?.feedback || '已提交，进入下一题');
-          await afterGuideAction(g.module);
-        } else DA.toast(r2.error || '提交失败', 'error');
+        if (r2.success) { DA.toast(r2.data?.feedback || '已提交'); await afterGuideAction(g.module); }
+        else DA.toast(r2.error || '提交失败', 'error');
+      });
+      host.querySelector('.da-home-vague')?.addEventListener('click', async () => {
+        const content = host.querySelector('.da-home-answer')?.value?.trim() || '';
+        if (g.module === 'memory') {
+          const r2 = await DA.api('POST', '/training/memory', { impression_only: true, content, task_id: g.task_id });
+          if (r2.success) { DA.toast(r2.data?.feedback || '已记下模糊印象'); await afterGuideAction(g.module); }
+          else DA.toast(r2.error || '提交失败', 'error');
+          return;
+        }
+        const r2 = await DA.submitHomeTraining({
+          module: g.module, task_id: g.task_id,
+          content: content || '[有印象但说不清]', skipped: false
+        });
+        if (r2.success) await afterGuideAction(g.module);
       });
       host.querySelector('.da-go-voice')?.addEventListener('click', () => {
         sessionStorage.setItem('da_training_page', String(g.module_page || 2));
@@ -1364,26 +1639,39 @@
   }
 
   function initSanctuary() {
+    const portfolioEmbed = bootstrapPortfolioEmbed();
+    if (window.matchMedia('(max-width: 640px), (hover: none) and (pointer: coarse)').matches) {
+      document.documentElement.classList.add('da-native');
+      document.body.classList.add('da-native-mobile');
+    }
     DA.injectAppMenu('数字方舟');
     initTrainingEthics();
     wireProfileRows();
+    window.DAProfile?.installTopbar?.();
+    window.DAProfile?.installProfilePage?.();
     const origGo = window.go;
     window.go = wrapGo(origGo, i => {
       if (i === 0) renderHomeTraining(document.getElementById('p0'));
       if (i === 1 || i === 7) refreshProgress();
+      if (i === 7) window.DAProfile?.refreshProfilePage?.();
       onTrainingPage(i);
     });
     installNavChrome(typeof cur !== 'undefined' ? cur : 0);
 
     renderHomeTraining(document.getElementById('p0'));
+    if (isPortfolioEmbed()) renderPortfolioHubStub();
+    else renderGuideHub();
 
     refreshTrainingSetupState().then(() => {
+      if (portfolioEmbed || isPortfolioEmbed()) bootstrapPortfolioEmbed();
       wireModuleRowsGate();
-      if (!trainingSetupReady) setTimeout(showTrainingSetupWizard, 300);
-      refreshProgress().then(() => {
-        renderGuideHub();
-        if (typeof cur !== 'undefined' && MODULE_BY_PAGE[cur]) applyModuleGuide(MODULE_BY_PAGE[cur]);
-      });
+      if (!trainingSetupReady && !isPortfolioEmbed()) setTimeout(showTrainingSetupWizard, 300);
+      if (!isPortfolioEmbed()) {
+        refreshProgress().then(() => {
+          renderGuideHub();
+          if (typeof cur !== 'undefined' && MODULE_BY_PAGE[cur]) applyModuleGuide(MODULE_BY_PAGE[cur]);
+        });
+      }
     });
     wireTrainingPages(refreshProgress);
     window.daShowSetup = showTrainingSetupWizard;
@@ -1400,6 +1688,7 @@
 
   function initCompanion() {
     DA.injectAppMenu('陪护端');
+    window.DAProfile?.installTopbar?.();
     DA.companionMode = 'normal';
 
     initCompanionConsent().then(ok => {
@@ -1416,41 +1705,6 @@
       onAccessDenied: () => initCompanionConsent()
     });
 
-    const p1 = document.getElementById('p1');
-    if (p1 && !p1.querySelector('.da-companion-settings')) {
-      const panel = document.createElement('div');
-      panel.className = 'card-w da-companion-settings';
-      panel.style.marginTop = '14px';
-      panel.innerHTML = `
-        <p class="t-body" style="font-weight:600;margin-bottom:12px;">陪伴偏好</p>
-        <label class="t-body-sm" style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <input type="checkbox" id="daAutoGreeting" checked/> 允许主动问候
-        </label>
-        <label class="t-body-sm" style="display:block;margin-bottom:6px;">问候频率</label>
-        <select id="daGreetingFreq" style="width:100%;padding:10px;border-radius:12px;border:1px solid #e6e2dc;margin-bottom:12px;font-family:inherit;">
-          <option value="low">较少</option>
-          <option value="medium">适中</option>
-          <option value="high">较多</option>
-        </select>
-        <label class="t-body-sm" style="display:block;margin-bottom:6px;">安静时段</label>
-        <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <input type="time" id="daQuietStart" value="23:00" style="flex:1;padding:8px;border-radius:10px;border:1px solid #e6e2dc;"/>
-          <span class="t-body-sm" style="align-self:center;">至</span>
-          <input type="time" id="daQuietEnd" value="08:00" style="flex:1;padding:8px;border-radius:10px;border:1px solid #e6e2dc;"/>
-        </div>
-        <button type="button" class="btn-p da-save-settings" style="width:100%;padding:12px;border:none;border-radius:99px;background:#596059;color:#fff;font-weight:600;cursor:pointer;">保存设置</button>`;
-      p1.querySelector('.pc')?.appendChild(panel);
-      panel.querySelector('.da-save-settings')?.addEventListener('click', async () => {
-        await DA.saveCompanionSettings({
-          auto_greeting: document.getElementById('daAutoGreeting').checked,
-          greeting_frequency: document.getElementById('daGreetingFreq').value,
-          quiet_hours: {
-            start: document.getElementById('daQuietStart').value,
-            end: document.getElementById('daQuietEnd').value
-          }
-        });
-      });
-    }
 
     DA.loadCompanionStatus().then(res => {
       if (!res.success) return;

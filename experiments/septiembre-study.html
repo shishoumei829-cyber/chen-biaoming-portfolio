@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Septiembre Study · 陈彪明作品集结构原型</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="septiembre-study.css">
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <div class="hover-preview" aria-hidden="true">
+    <img src="../assets/hero/home-mood.png" alt="">
+  </div>
+
+  <nav class="topbar" aria-label="作品集导航">
+    <a class="brand" href="#top">陈彪明. Portfolio</a>
+    <div class="topbar-links">
+      <a href="#about">关于</a>
+      <a href="#projects">项目</a>
+      <a href="#method">方法</a>
+      <a href="#contact">联系</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="sa-hero" data-section="hero">
+      <figure class="sa-hero-image" data-speed=".08">
+        <img src="../assets/hero/home-mood.png" alt="抽象纸页情绪图">
+      </figure>
+      <h1>陈彪明.</h1>
+      <p class="hero-note">industrial design / ux / product</p>
+      <a class="scroll-cue" href="#about">Scroll</a>
+    </section>
+
+    <section class="statement" id="about">
+      <p>
+        <span>陈彪明</span>
+        是一个把观察、审美和产品逻辑放在同一张纸上工作的人。
+        我关心的问题不是界面是否足够完整，而是一个系统能不能在真实生活里留下温度、方向和可被继续使用的秩序。
+      </p>
+    </section>
+
+    <section class="project-gallery" id="projects">
+      <div class="gallery-copy">
+        <p class="kicker">Selected work</p>
+        <h2>三个正在成形的系统</h2>
+        <p>不是把项目包装成独立产品广告，而是像展览索引一样，让每个作品以图像、状态和一句判断进入。</p>
+      </div>
+      <div class="project-cards">
+        <a class="project-card" href="../index.html#amadeus" data-preview="../assets/amadeus/art/bg/amadeus-hero-garden.png">
+          <img src="../assets/amadeus/art/bg/amadeus-hero-garden.png" alt="AMADEUS">
+          <span>01</span>
+          <strong>AMADEUS</strong>
+          <em>已实现开源 · AI 人格系统</em>
+        </a>
+        <a class="project-card" href="../index.html#timewalker" data-preview="../assets/timewalker/ink-night-boat.png">
+          <img src="../assets/timewalker/ink-night-boat.png" alt="墨舟">
+          <span>02</span>
+          <strong>墨舟</strong>
+          <em>准备落地 · 文旅交互原型</em>
+        </a>
+        <a class="project-card" href="../index.html#digitalark" data-preview="../assets/digitalark/ds-hero-poster.png">
+          <img src="../assets/digitalark/ds-hero-poster.png" alt="数字方舟">
+          <span>03</span>
+          <strong>数字方舟</strong>
+          <em>基础版完成 · 本地人格产品</em>
+        </a>
+      </div>
+    </section>
+
+    <section class="archive" id="method">
+      <div class="archive-head">
+        <p>Project index</p>
+        <div class="filters" aria-label="项目分类">
+          <button class="is-active" data-filter="all">全部</button>
+          <button data-filter="system">系统</button>
+          <button data-filter="travel">文旅</button>
+          <button data-filter="presence">在场</button>
+        </div>
+      </div>
+
+      <div class="archive-list">
+        <a href="../index.html#amadeus" class="archive-row" data-kind="system" data-preview="../assets/amadeus/art/bg/amadeus-hero-garden.png">
+          <span>2026</span>
+          <strong>AMADEUS</strong>
+          <em>把“像一个人在场”做成可运行的系统</em>
+        </a>
+        <a href="../index.html#timewalker" class="archive-row" data-kind="travel" data-preview="../assets/timewalker/ink-night-boat.png">
+          <span>2026</span>
+          <strong>墨舟</strong>
+          <em>让行走本身成为阅读世界的方式</em>
+        </a>
+        <a href="../index.html#digitalark" class="archive-row" data-kind="presence" data-preview="../assets/digitalark/ds-hero-poster.png">
+          <span>2026</span>
+          <strong>数字方舟</strong>
+          <em>留下来的不是台词，而是判断结构</em>
+        </a>
+      </div>
+    </section>
+
+    <section class="detail-bridge">
+      <p>Full case studies</p>
+      <h2>详情页不在这里重写。这个 study 只验证首页、索引和交互骨架。</h2>
+      <div>
+        <a href="../index.html#amadeus">进入 AMADEUS 详情</a>
+        <a href="../index.html#timewalker">进入墨舟详情</a>
+        <a href="../index.html#digitalark">进入数字方舟详情</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <span>© 2026 Chen Biaoming</span>
+    <a href="mailto:1310258735@qq.com">1310258735@qq.com</a>
+  </footer>
+
+  <script src="septiembre-study.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+  "name": "amadeus-project",
+  "version": "1.0.0",
+  "description": "本地 AI 伴侣雏形：情感连续性、长期记忆、主动陪伴。非工具型/百科型对话，而是私人化、可延续关系的数字陪伴实验。",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "node server.js",
+    "dist": "electron-builder",
+    "ingest": "node ingest.js",
+    "ingest:kurisu": "node scripts/prepare_kurisu_ja_rag.js && node ingest.js",
+    "test": "node --test tests/pad.test.js tests/chatTurns.test.js tests/oocGuard.test.js tests/startupCheck.test.js tests/mindTurn.test.js tests/workRouter.test.js tests/skillsRegistry.test.js tests/logicCoherence.test.js tests/dialogueFocus.test.js tests/openPresence.test.js tests/backendBase.test.js tests/progressStage.test.js tests/memorySediment.test.js",
+    "release:win": "electron-builder --win",
+    "check:install": "scripts\\install-check.bat"
+  },
+  "build": {
+    "appId": "com.amadeus.kurisu",
+    "productName": "Amadeus",
+    "directories": {
+      "output": "dist"
+    },
+    "electronDist": "node_modules/electron/dist",
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!Amadeus_Project/**",
+      "!design_outputs/**",
+      "!tests/**",
+      "!**/*.log",
+      "!error.log",
+      "!output.log"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/hnswlib-node/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Amadeus",
+      "installerLanguages": [
+        "zh_CN",
+        "en_US"
+      ]
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^40.8.0",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "@langchain/community": "^1.1.27",
+    "@langchain/core": "^1.1.41",
+    "@langchain/ollama": "^1.2.6",
+    "@langchain/textsplitters": "^1.0.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "hnswlib-node": "^3.0.0",
+    "langchain": "^1.3.4"
+  }
+}

@@ -1,0 +1,138 @@
+id="ama-formula" aria-label="情绪曲线">
+      <div class="ama-emotion-hero">
+        <div class="ama-emotion-hero__copy">
+          <p class="ama-emotion-hero__kicker">04 / Observable Emotion Curve</p>
+          <h3 class="ama-emotion-hero__title">情绪曲线<br>把内部状态压成可观察信号。</h3>
+          <p class="ama-emotion-hero__lead">页面里的情绪不是随便画条线，而是把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看见「关系、唤醒度和掌控感」如何共同塑造表达。</p>
+        </div>
+      <figure class="ama-emotion-panel magnetic" data-ama-emotion-panel aria-label="AMADEUS 情绪曲线 · 由 PAD 公式实时绘制">
+        <header class="ama-emotion-panel__head"><span>experiments/kurisu-dialogue/amadeus/pad.py</span><span>inner state · live curve</span></header>
+        <div class="ama-emotion-panel__body">
+          <div class="ama-emotion-panel__meta">
+            <span>INNER STATE</span>
+            <strong>emotion <span data-ama-emotion-score>+0.000</span></strong>
+          </div>
+          <svg class="ama-emotion-panel__svg" viewBox="0 0 600 280" role="img" aria-label="PAD 综合情绪分数曲线">
+            <defs>
+              <pattern id="amaEmotionGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+                <path d="M24 0H0V24" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="280" fill="url(#amaEmotionGrid)"/>
+            <line x1="36" y1="140" x2="564" y2="140" stroke="rgba(255,255,255,.14)" stroke-width="1" stroke-dasharray="4 6"/>
+            <text x="40" y="24" fill="rgba(255,255,255,.28)" font-family="monospace" font-size="10">+1.0</text>
+            <text x="40" y="152" fill="rgba(255,255,255,.22)" font-family="monospace" font-size="10">0</text>
+            <text x="40" y="268" fill="rgba(255,255,255,.28)" font-family="monospace" font-size="10">−1.0</text>
+            <path class="ama-emotion-curve-path" d="M36,140"/>
+            <circle class="ama-emotion-cursor" r="5" cx="36" cy="140"/>
+          </svg>
+          <div class="ama-emotion-stats" aria-label="当前 PAD 向量">
+            <span>P <b data-ama-pad="P">+0.10</b></span>
+            <span>A <b data-ama-pad="A">+0.00</b></span>
+            <span>D <b data-ama-pad="D">+0.20</b></span>
+            <span>S <b data-ama-pad="S">0.35</b></span>
+          </div>
+          <p class="ama-emotion-formula">score = 0.40·P + 0.25·A + 0.20·D + 0.15·(2S−1) · turn <span data-ama-emotion-turn>0</span>/14</p>
+          <p class="ama-emotion-caption" data-ama-emotion-caption>滚动到此面板后，按实验栈同款 update_pad 逐句推演</p>
+        </div>
+        <figcaption class="ama-emotion-cap">非截图 · 由 pad.py 公式 + 演示对话输入实时绘制</figcaption>
+      </figure>
+      </div>
+    </article>
+
+    <article class="ama-v2-module ama-triad reveal" id="ama-triad" aria-label="行为仲裁 · 主动驱动 · 心智轮次">
+      <div class="ama-triad__sheet">
+        <section class="ama-triad__row" data-ama-section="behavior">
+          <div class="ama-triad__edge ama-triad__edge--l">
+            <p class="ama-triad__kicker">05 / Behavior Arbitration</p>
+            <h3 class="ama-triad__title">回复前先选择行为倾向。</h3>
+            <p class="ama-triad__lead">系统不会直接把用户输入交给模型。它先让靠近、日常、防御、转移、智识投入、收缩六种候选互相竞争，再把胜出的倾向注入 prompt，形成稳定但不僵硬的性格。</p>
+          </div>
+          <div class="ama-triad__core" aria-hidden="true">
+            <span class="ama-triad__num">05</span>
+            <span class="ama-triad__en">Behavior</span>
+          </div>
+          <div class="ama-triad__edge ama-triad__edge--r">
+            <p class="ama-triad__mono-tag">amadeus/behavior.py · candidate scoring</p>
+            <pre class="ama-triad__mono"><code><span class="kw">if</span> P &gt; 0.35:
+  scores[<span class="st">"APPROACH"</span>] += 0.35
+<span class="kw">elif</span> P &lt; -0.35:
+  scores[<span class="st">"WITHDRAW"</span>] += 0.40
+
+<span class="kw">if</span> A &gt; 0.5:
+  scores[<span class="st">"ENGAGE"</span>] += 0.35
+<span class="kw">if</span> S &gt; 0.5:
+  scores[<span class="st">"APPROACH"</span>] += 0.20
+
+<span class="kw">if</span> re.search(<span class="st">r"喜欢你|爱你|靠近"</span>, user_input):
+  scores[<span class="st">"DEFLECT"</span>] += 0.45
+  scores[<span class="st">"APPROACH"</span>] += 0.20
+
+winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
+          </div>
+        </section>
+        <section class="ama-triad__row" data-ama-section="autonomy">
+          <div class="ama-triad__edge ama-triad__edge--l">
+            <p class="ama-triad__kicker">06 / Autonomous Drive</p>
+            <h3 class="ama-triad__title ama-triad__title--stack">主动不是定时问候，<br>而是内生目标。</h3>
+            <p class="ama-triad__lead">主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态决定该不该打扰。</p>
+          </div>
+          <div class="ama-triad__core" aria-hidden="true">
+            <span class="ama-triad__num">06</span>
+            <span class="ama-triad__en">Autonomy</span>
+          </div>
+          <div class="ama-triad__edge ama-triad__edge--r">
+            <ul class="ama-triad__list">
+              <li><strong>轮次审计（每满 3 轮）：</strong>对照 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项；都不成立则本轮不主动。</li>
+              <li><strong>空闲触发门槛：</strong>只有 presence 为真且上一句用户原话仍相关时，才允许发主动句；引用内容只能来自记忆宫已写入的标签。</li>
+              <li><strong>主动后的承接义务：</strong>若本轮是她先抛线，下一轮必须把这条线接回去；禁止主动一句后立刻切回无关寒暄。</li>
+            </ul>
+          </div>
+        </section>
+        <section class="ama-triad__row" data-ama-section="mind">
+          <div class="ama-triad__edge ama-triad__edge--l">
+            <p class="ama-triad__kicker">07 / Mind Turn</p>
+            <h3 class="ama-triad__title">每轮先走逻辑、共情、智识。</h3>
+            <p class="ama-triad__lead">在真正生成对白前，系统会把当前输入压成三条内部读数：逻辑上问的是什么、情绪上要怎么接住、智识上能不能展开。它不展示给用户，却决定她的下一句话是不是贴着本轮焦点。</p>
+          </div>
+          <div class="ama-triad__core" aria-hidden="true">
+            <span class="ama-triad__num">07</span>
+            <span class="ama-triad__en">Mind</span>
+          </div>
+          <div class="ama-triad__edge ama-triad__edge--r">
+            <p class="ama-triad__mono-tag">amadeus/mind_turn.py · inner reasoning</p>
+            <pre class="ama-triad__mono"><code>【心智加工 · 逻辑→共情→智识】
+行为倾向：{behavior}
+逻辑：先锁定对方问的是什么，正面答命题
+共情：他在泄压或求接住，先承认感受
+智识：可以说清因果，但别讲课腔
+
+对外只输出自然中文口语对白，80～180字。</code></pre>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <section class="ama-ui-v2 ama-ui-showcase reveal" data-ama-section="ui" id="ama-ui">
+      <div class="ama-ui-showcase-inner">
+        <p class="ama-v2-sub">08 / Frontend Interface</p>
+        <h3>前端界面 · 用户真正打开的一屏</h3>
+        <p class="ama-ui-lead">前面的拆解，是为了证明系统在场；这一屏才是日常会盯着看、会打字进去的那一面——神经链、记忆宫、PAD 与对话输入轨收进同一块 HUD，而不是另起一套演示壳。</p>
+        <figure class="ama-ui-figure ama-ui-figure--live magnetic">
+          <div class="ama-work-live">
+            <iframe
+              class="ama-work-iframe"
+              src="assets/amadeus-work/index.html"
+              title="AMADEUS SYSTEM · 牧濑红莉栖神经链 HUD"
+              loading="lazy"
+              allow="clipboard-write"
+            ></iframe>
+          </div>
+          <figcaption class="ama-ui-cap">AMADEUS SYSTEM · v1.0 · Neural Link Established · 网页版可对话（无语音/视频）</figcaption>
+        </figure>
+      </div>
+    </section>
+    </div>
+    </div>
+
+    <section class="

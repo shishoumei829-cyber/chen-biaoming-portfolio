@@ -1,0 +1,219 @@
+/* AMADEUS · 04–07 · 两页 · 小图居中 + 左右贴边叠字 · 完整正文 */
+
+body.eva-skin #amadeus .ama-v2-module.ama-editorial{
+  display:block!important;max-width:none!important;padding:0!important;margin:0!important;
+  min-height:auto!important;transform:none!important;border:0!important;
+  background:transparent!important;overflow:visible!important;
+}
+
+body.eva-skin .ama-editorial__sheet{
+  --ama-edit-ink:#0a0a0a;
+  --ama-edit-muted:rgba(10,10,10,.58);
+  --ama-edit-faint:rgba(10,10,10,.4);
+  --ama-plate-w:clamp(200px,34vw,380px);
+  --ama-edge-pad:clamp(14px,2.8vw,32px);
+  --ama-side-gap:clamp(12px,2vw,28px);
+  width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);
+  padding:clamp(28px,4vh,40px) 0 clamp(32px,4.5vh,48px);
+  background:#fff;
+  font-family:Inter,"Helvetica Neue","Noto Sans SC",sans-serif;
+  border-top:1px solid rgba(10,10,10,.07);
+  border-bottom:1px solid rgba(10,10,10,.07);
+}
+
+/* 每一页：贴边正文 + 居中小图，同层叠加 */
+body.eva-skin .ama-editorial__spread{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  min-height:clamp(320px,72vh,640px);
+  margin-bottom:clamp(24px,4vh,40px);
+  padding:clamp(20px,3vh,36px) 0;
+  background:#fff;
+}
+body.eva-skin .ama-editorial__spread--b{margin-bottom:0}
+
+body.eva-skin .ama-editorial__panel{
+  position:relative;z-index:1;flex-shrink:0;
+}
+
+body.eva-skin .ama-editorial__plate{
+  position:relative;margin:0;
+  width:var(--ama-plate-w);
+  aspect-ratio:16/10;
+  overflow:hidden;background:#f4f4f4;
+}
+body.eva-skin .ama-editorial__plate img{
+  display:block;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+}
+body.eva-skin .ama-editorial__plate--shift{
+  transform:translateX(clamp(16px,4vw,48px));
+}
+
+/* 左右贴网页边 · 叠在插图层上 */
+body.eva-skin .ama-editorial__side{
+  position:absolute;top:0;bottom:0;
+  z-index:2;
+  width:calc(50% - var(--ama-plate-w)/2 - var(--ama-side-gap));
+  max-width:min(420px,44vw);
+  margin:0;padding:clamp(16px,2.5vh,28px) 0;
+  display:flex;flex-direction:column;justify-content:center;
+  pointer-events:none;
+}
+body.eva-skin .ama-editorial__side--l{
+  left:var(--ama-edge-pad);text-align:left;align-items:flex-start;
+}
+body.eva-skin .ama-editorial__side--r{
+  right:var(--ama-edge-pad);text-align:right;align-items:flex-end;
+}
+body.eva-skin .ama-editorial__side--l::before,
+body.eva-skin .ama-editorial__side--r::before{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  top:clamp(-6px,-.8vh,0);bottom:clamp(-6px,-.8vh,0);
+  width:calc(100% + clamp(20px,3vw,36px));
+}
+body.eva-skin .ama-editorial__side--l::before{
+  left:clamp(-8px,-1.2vw,0);
+  background:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.9) 78%,rgba(255,255,255,0) 100%);
+}
+body.eva-skin .ama-editorial__side--r::before{
+  right:clamp(-8px,-1.2vw,0);
+  background:linear-gradient(270deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.9) 78%,rgba(255,255,255,0) 100%);
+}
+
+body.eva-skin .ama-editorial__tag{
+  margin:0 0 10px;
+  font-family:Inter,"Helvetica Neue",sans-serif;
+  font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ama-edit-faint);
+}
+body.eva-skin .ama-editorial__title{
+  margin:0 0 clamp(10px,1.4vw,14px);
+  font-family:"Playfair Display","Bodoni Moda",Georgia,serif;
+  font-weight:700;font-size:clamp(1rem,2vw,1.45rem);
+  line-height:1.38;letter-spacing:-.01em;
+  text-transform:none;color:var(--ama-edit-ink);
+}
+body.eva-skin .ama-editorial__title--stack{max-width:11em}
+body.eva-skin .ama-editorial__side--r .ama-editorial__title--stack{margin-left:auto}
+
+body.eva-skin .ama-editorial__lead{
+  margin:0 0 clamp(12px,1.6vw,16px);
+  max-width:min(100%,22em);
+  font-family:"Noto Serif SC",Georgia,serif;
+  font-size:clamp(11px,1.05vw,13px);font-weight:400;
+  line-height:1.88;letter-spacing:.02em;
+  text-transform:none;color:var(--ama-edit-muted);
+}
+body.eva-skin .ama-editorial__side--r .ama-editorial__lead{margin-left:auto}
+
+body.eva-skin .ama-editorial__stats{
+  margin:0 0 8px;
+  font-family:"Share Tech Mono",ui-monospace,monospace;
+  font-size:clamp(9px,.82vw,10px);letter-spacing:.06em;
+  text-transform:none;color:var(--ama-edit-faint);
+}
+body.eva-skin .ama-editorial__stats b{color:var(--ama-edit-ink);font-weight:500}
+
+body.eva-skin .ama-editorial__formula{
+  margin:0 0 10px;
+  font-family:"Share Tech Mono",ui-monospace,monospace;
+  font-size:clamp(8px,.75vw,9px);letter-spacing:.04em;
+  line-height:1.7;text-transform:none;color:var(--ama-edit-faint);
+}
+
+body.eva-skin .ama-editorial__live{
+  margin:0;
+  font-family:Inter,sans-serif;
+  font-size:clamp(8px,.72vw,9px);letter-spacing:.08em;
+  line-height:1.65;text-transform:none;color:var(--ama-edit-faint);
+  max-width:min(100%,20em);
+}
+body.eva-skin .ama-editorial__side--r .ama-editorial__live{margin-left:auto}
+
+body.eva-skin .ama-editorial__mono-tag{
+  margin:0 0 8px;
+  font-family:Inter,sans-serif;
+  font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ama-edit-faint);
+}
+
+body.eva-skin .ama-editorial__mono{
+  margin:0;padding:clamp(10px,1.2vw,14px) clamp(10px,1.4vw,16px);
+  max-width:min(100%,20em);
+  background:rgba(10,10,10,.04);
+  border:1px solid rgba(10,10,10,.08);
+  border-radius:2px;
+  font-family:"Share Tech Mono",ui-monospace,monospace;
+  font-size:clamp(8px,.72vw,9px);line-height:1.65;
+  letter-spacing:0;text-transform:none;color:rgba(10,10,10,.72);
+  white-space:pre-wrap;overflow-x:auto;
+}
+body.eva-skin .ama-editorial__side--r .ama-editorial__mono{margin-left:auto;text-align:left}
+
+body.eva-skin .ama-editorial__mono .kw{color:#7a3e00}
+body.eva-skin .ama-editorial__mono .st{color:#0a5c36}
+body.eva-skin .ama-editorial__mono .fn{color:#1a4a8a}
+
+body.eva-skin .ama-editorial__list{
+  margin:0;padding:0;list-style:none;
+  max-width:min(100%,22em);
+}
+body.eva-skin .ama-editorial__list li{
+  margin:0 0 clamp(10px,1.2vw,14px);padding:0;
+  font-family:"Noto Serif SC",Georgia,serif;
+  font-size:clamp(10px,.95vw,12px);line-height:1.82;
+  letter-spacing:.02em;text-transform:none;color:var(--ama-edit-muted);
+}
+body.eva-skin .ama-editorial__list li:last-child{margin-bottom:0}
+body.eva-skin .ama-editorial__list strong{color:var(--ama-edit-ink);font-weight:600}
+
+body.eva-skin .ama-editorial__curve{
+  position:absolute;left:0;right:0;bottom:0;height:44%;z-index:2;pointer-events:none;
+}
+body.eva-skin .ama-editorial__curve .ama-emotion-panel__svg{width:100%;height:100%;display:block}
+body.eva-skin .ama-editorial__glyph{
+  position:absolute;left:50%;top:50%;z-index:3;
+  transform:translate(-50%,-50%);
+  margin:0;padding:0;pointer-events:none;
+  font-family:"Noto Serif SC",Georgia,serif;
+  font-size:clamp(.9rem,2.4vw,1.5rem);font-weight:400;
+  letter-spacing:.28em;white-space:nowrap;
+}
+body.eva-skin .ama-editorial__glyph-back,
+body.eva-skin .ama-editorial__glyph-front{display:block}
+body.eva-skin .ama-editorial__glyph-back{color:rgba(10,10,10,.1);transform:translate(3px,5px)}
+body.eva-skin .ama-editorial__glyph-front{color:var(--ama-edit-ink);margin-top:-1.08em}
+
+body.eva-skin .ama-editorial .ama-emotion-curve-path{
+  fill:none!important;stroke:rgba(10,10,10,.62)!important;
+  stroke-width:1.05!important;stroke-linecap:round!important;
+}
+body.eva-skin .ama-editorial .ama-emotion-cursor{
+  fill:var(--ama-edit-ink)!important;stroke:#fff!important;stroke-width:1.5!important;
+}
+
+@media(max-width:900px){
+  body.eva-skin .ama-editorial__spread{
+    flex-direction:column;align-items:stretch;
+    min-height:auto;padding-bottom:0;
+  }
+  body.eva-skin .ama-editorial__side{
+    position:relative;top:auto;bottom:auto;
+    width:100%;max-width:none;
+    padding:0 var(--ama-edge-pad) clamp(18px,3vh,24px);
+    order:2;
+  }
+  body.eva-skin .ama-editorial__side--l{order:1;padding-top:0}
+  body.eva-skin .ama-editorial__side--r{align-items:flex-start;text-align:left;order:3}
+  body.eva-skin .ama-editorial__side--r .ama-editorial__lead,
+  body.eva-skin .ama-editorial__side--r .ama-editorial__title--stack,
+  body.eva-skin .ama-editorial__side--r .ama-editorial__live,
+  body.eva-skin .ama-editorial__side--r .ama-editorial__mono{margin-left:0}
+  body.eva-skin .ama-editorial__panel,
+  body.eva-skin .ama-editorial__plate--shift{
+    order:2;margin:0 auto clamp(8px,2vh,16px);
+    transform:none;
+  }
+  body.eva-skin .ama-editorial__sheet{--ama-plate-w:min(72vw,320px)}
+}

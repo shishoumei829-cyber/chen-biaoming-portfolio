@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 600" fill="none" role="img" aria-label="Mind turn editorial illustration">
+  <defs>
+    <linearGradient id="mindbg" x1="0" y1="0" x2="1600" y2="600">
+      <stop offset="0%" stop-color="#f9f9f9"/>
+      <stop offset="100%" stop-color="#eceef2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="600" fill="url(#mindbg)"/>
+  <path d="M120 420 Q400 120 800 300 T1480 180" stroke="#0a0a0a" stroke-opacity=".08" stroke-width="1.5" fill="none"/>
+  <path d="M120 480 Q420 280 800 380 T1480 320" stroke="#0a0a0a" stroke-opacity=".06" stroke-width="1.2" fill="none"/>
+  <path d="M120 540 Q440 360 800 460 T1480 420" stroke="#0a0a0a" stroke-opacity=".05" stroke-width="1" fill="none"/>
+  <g font-family="ui-monospace,monospace" font-size="10" fill="#0a0a0a" fill-opacity=".35" letter-spacing=".25em">
+    <text x="140" y="400">LOGIC</text>
+    <text x="140" y="460">EMPATHY</text>
+    <text x="140" y="520">INTELLECT</text>
+  </g>
+  <circle cx="1320" cy="260" r="5" fill="#0a0a0a" fill-opacity=".12"/>
+</svg>

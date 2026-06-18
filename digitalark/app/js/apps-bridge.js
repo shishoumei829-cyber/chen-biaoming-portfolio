@@ -97,9 +97,22 @@
     if (r.success) {
       trainingSetupCache = r.data;
       trainingSetupReady = !!r.data.setup_complete;
+      window.DAAvatar?.applyAll(trainingSetupCache);
+      applyHomeHeroAvatar();
     }
     updateTrainingUiGate();
     return r;
+  }
+
+  window.daApplyHomeHeroAvatar = function () {
+    const img = document.querySelector('.da-home-shell .da-home-hero-orb img');
+    if (img && window.DAAvatar) {
+      window.DAAvatar.applyImg(img, window.DAAvatar.resolveId(trainingSetupCache));
+    }
+  };
+
+  function applyHomeHeroAvatar() {
+    window.daApplyHomeHeroAvatar();
   }
 
   function updateTrainingUiGate() {
@@ -129,6 +142,27 @@
         }
         window.go(target);
       });
+    });
+  }
+
+  function openAvatarPicker() {
+    if (!window.DAAvatar) return;
+    window.DAAvatar.showPickerSheet({
+      selectedId: window.DAAvatar.resolveId(trainingSetupCache),
+      onSave: async (id) => {
+        const av = window.DAAvatar.presetPayload(id);
+        const r = await DA.saveTrainingSetup({
+          ...av,
+          setup_complete: trainingSetupCache?.setup_complete ?? true
+        });
+        if (!r.success) {
+          DA.toast(r.error || '保存失败', 'error');
+          return;
+        }
+        await refreshTrainingSetupState();
+        renderHomeTraining(document.getElementById('p0'));
+        DA.toast('分身形象已更新');
+      }
     });
   }
 
@@ -166,6 +200,8 @@
           <label class="da-setup-label">怎么称呼您 <span class="req">*</span></label>
           <input type="text" class="da-setup-field" id="daSetupName" placeholder="例如：小明、张先生"
             value="${esc(draft.subject_name || draft.trainer_name)}" autocomplete="name"/>
+          <label class="da-setup-label">分身形象 <span class="req">*</span></label>
+          <div class="da-avatar-pick-row da-setup-avatar-pick">${window.DAAvatar?.pickerMarkup(draft.avatar_preset || (draft.subject_gender === 'female' ? 'f' : draft.subject_gender === 'male' ? 'm' : '')) || ''}</div>
           <label class="da-setup-label">一句话介绍自己 <span class="opt">选填</span></label>
           <textarea class="da-setup-field" id="daSetupBrief" rows="2"
             placeholder="性格、职业或生活状态，帮助分身更像您">${draft.subject_brief || ''}</textarea>
@@ -196,6 +232,12 @@
       });
     };
     renderPeople();
+
+    let setupAvatarPreset = draft.avatar_preset || (draft.subject_gender === 'female' ? 'f' : draft.subject_gender === 'male' ? 'm' : '');
+    window.DAAvatar?.wirePicker(overlay.querySelector('.da-setup-avatar-pick'), {
+      selectedId: setupAvatarPreset,
+      onChange: id => { setupAvatarPreset = id; }
+    });
 
     overlay.querySelector('.da-setup-close')?.addEventListener('click', () => {
       overlay.style.display = 'none';
@@ -228,13 +270,16 @@
     overlay.querySelector('#daSetupSubmit')?.addEventListener('click', async () => {
       const name = overlay.querySelector('#daSetupName')?.value?.trim();
       if (!name) { DA.toast('请填写您的称呼', 'error'); overlay.querySelector('#daSetupName')?.focus(); return; }
+      if (!setupAvatarPreset) { DA.toast('请选择分身形象', 'error'); return; }
+      const av = window.DAAvatar?.presetPayload(setupAvatarPreset) || {};
       trainingSetupCache = {
         mode: 'self',
         subject_name: name,
         trainer_name: name,
         trainer_role: 'self',
         subject_brief: overlay.querySelector('#daSetupBrief')?.value?.trim() || '',
-        key_people: keyPeople
+        key_people: keyPeople,
+        ...av
       };
       await finishSetup(overlay);
     });
@@ -250,6 +295,8 @@
       trainer_name: trainingSetupCache.trainer_name || trainingSetupCache.subject_name,
       trainer_role: 'self',
       key_people: trainingSetupCache.key_people || [],
+      subject_gender: trainingSetupCache.subject_gender || '',
+      avatar_preset: trainingSetupCache.avatar_preset || '',
       setup_complete: true
     };
     const btn = overlay?.querySelector('#daSetupSubmit');
@@ -266,7 +313,7 @@
     await renderGuideHub();
     if (path.includes('sanctuary') || path.includes('training')) renderHomeTraining(document.getElementById('p0'));
     updateTrainingUiGate();
-    DA.toast('欢迎，' + (payload.subject_name || '') + '！今日引导已就绪');
+    DA.toast('欢迎，' + (payload.subject_name || '') + '！可以开始情境答题了');
   }
 
   async function refreshProgress(root) {
@@ -801,21 +848,8 @@
   }
 
   function wireProfileRows() {
-    const p7 = document.getElementById('p7');
-    if (!p7) return;
-    const rows = p7.querySelectorAll('.module-row');
-    rows[0]?.addEventListener('click', () => {
-      window.go(7);
-      setTimeout(() => document.querySelector('.da-ethics-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
-    });
-    rows[1]?.addEventListener('click', () => DA.toast('资料库：可在记忆训练中上传照片与文字'));
-    rows[2]?.addEventListener('click', () => {
-      window.go(7);
-      setTimeout(() => document.getElementById('daTraineeName')?.focus(), 120);
-    });
-    document.getElementById('daReviewPersona')?.addEventListener('click', () => {
-      location.href = '/apps/persona-review.html';
-    });
+    window.DAProfile?.installProfilePage?.();
+    window.DAProfile?.installTopbar?.();
   }
 
   function wireChatPage(pageEl, opts) {
@@ -946,7 +980,7 @@
       const ep = document.createElement('div');
       ep.className = 'da-ethics-panel card-w';
       ep.innerHTML = `
-        <p class="t-body" style="font-weight:600;">伦理与安全</p>
+        <p class="t-body" style="font-weight:600;">隐私与授权</p>
         <input type="text" id="daTraineeName" placeholder="训练者显示名"/>
         <button type="button" class="btn-o" id="daReSetup" style="margin-bottom:8px;">修改我的基本信息</button>
         <input type="text" id="daAuthName" placeholder="新增授权关系人姓名"/>
@@ -1018,12 +1052,15 @@
     DA.injectAppMenu('训练端');
     initTrainingEthics();
     wireProfileRows();
+    window.DAProfile?.installTopbar?.();
+    window.DAProfile?.installProfilePage?.();
     const origGo = window.go;
     window.go = wrapGo(origGo, i => {
       if (i === 0 && (path.includes('sanctuary') || path.includes('training'))) {
         renderHomeTraining(document.getElementById('p0'));
       }
       if (i === 1 || i === 7) refreshProgress();
+      if (i === 7) window.DAProfile?.refreshProfilePage?.();
       onTrainingPage(i);
     });
     installNavChrome(typeof cur !== 'undefined' ? cur : 0);
@@ -1092,32 +1129,28 @@
           <div class="da-home-hero-orb">
             <div class="da-home-hero-ring" style="--pct:0"></div>
             <div class="breathing"></div>
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL" alt=""/>
+            <img class="da-stick-avatar" data-da-stick src="../assets/avatars/stick-duo-source.png" alt="数字分身"/>
           </div>
           <p class="da-home-hero-title da-home-subject">数字分身</p>
-          <p class="da-home-hero-sub da-home-tagline">完成今日引导，让 TA 更像本人</p>
-          <div class="da-home-hero-chips">
-            <span class="chip chip-g da-pad-chip">内心平静</span>
-            <span class="chip chip-o da-hero-pct-chip">训练进行中</span>
-          </div>
+          <p class="da-home-hero-sub da-home-tagline">按题库答题、试聊或随手记，让分身更像本人</p>
         </div>
-        <div class="da-segment">
-          <button type="button" class="da-segment-btn on da-home-tab-guided"><span class="mi">edit_note</span>今日引导</button>
-          <button type="button" class="da-segment-btn da-home-tab-chat"><span class="mi">forum</span>试聊校准</button>
-          <button type="button" class="da-segment-btn da-home-tab-ingest"><span class="mi">upload</span>直接录入</button>
+        <div class="da-segment da-segment--triple" role="tablist" aria-label="主页训练方式">
+          <button type="button" class="da-segment-btn on da-home-tab-guided" role="tab" aria-selected="true"><span class="mi">playlist_add_check</span><span class="da-segment-label">情境答题</span></button>
+          <button type="button" class="da-segment-btn da-home-tab-chat" role="tab" aria-selected="false"><span class="mi">forum</span><span class="da-segment-label">试聊</span></button>
+          <button type="button" class="da-segment-btn da-home-tab-ingest" role="tab" aria-selected="false"><span class="mi">sticky_note_2</span><span class="da-segment-label">随手记</span></button>
         </div>
         <div class="da-home-guided"></div>
         <div class="da-home-chat-wrap" style="display:none;">
           <div class="da-chat-msgs da-msg-cards"></div>
           <div class="da-caps-mount" style="display:none;"></div>
           <div class="da-chat-input-wrap">
-            <input type="text" class="da-home-chat-input" placeholder="试聊：说点什么，看 TA 怎么回应…"/>
+            <input type="text" class="da-home-chat-input" placeholder="说点什么，看分身怎么回…"/>
             <button type="button" class="da-home-send" aria-label="发送"><span class="mi">send</span></button>
           </div>
         </div>
         <div class="da-home-ingest-wrap" style="display:none;padding:16px;background:#fff;border-radius:20px;margin-top:12px;">
-          <p class="t-body" style="font-weight:600;margin-bottom:8px;">直接录入习惯与事实</p>
-          <p class="t-body-sm" style="margin-bottom:12px;color:#767872;">不用试聊，在这里写下“我讨厌早八”、“我不吃香菜”等内容，直接教给数字人。</p>
+          <p class="t-body" style="font-weight:600;margin-bottom:8px;">随手记一条习惯或事实</p>
+          <p class="t-body-sm" style="margin-bottom:12px;color:#767872;">不走题库、不上传文件，用一句话补充 TA 该记住的事，例如「我不吃香菜」。</p>
           <textarea id="daDirectIngestNote" rows="4" style="width:100%;border:1px solid #e6e2dc;border-radius:12px;padding:12px;margin-bottom:12px;font-family:inherit;font-size:14px;outline:none;" placeholder="在这里写下你的生活习惯或事实..."></textarea>
           <button type="button" class="btn-p" id="daDirectIngestSave">保存内容</button>
         </div>`;
@@ -1142,15 +1175,25 @@
         feedback: true, noTts: true, messageCards: true,
         aiName: shell.querySelector('.da-home-subject')?.textContent || '数字分身',
         onSetupRequired: showTrainingSetupWizard,
-        onPad: pad => {
-          const chip = shell.querySelector('.da-pad-chip');
-          if (chip) DA.padToChips(pad, [chip]);
-        },
         onCaps: caps => DA.renderCapsPanel(caps, capsMount)
       };
       shell.querySelector('.da-home-send')?.addEventListener('click', () => DA.sendChat(chatInput, chatBox, chatOpts));
       chatInput?.addEventListener('keydown', e => { if (e.key === 'Enter') DA.sendChat(chatInput, chatBox, chatOpts); });
+      const heroOrb = shell.querySelector('.da-home-hero-orb');
+      if (heroOrb && !heroOrb.dataset.avatarWired) {
+        heroOrb.dataset.avatarWired = '1';
+        heroOrb.classList.add('da-hero-tappable');
+        heroOrb.tabIndex = 0;
+        heroOrb.setAttribute('role', 'button');
+        heroOrb.setAttribute('aria-label', '更换分身形象');
+        heroOrb.addEventListener('click', () => openAvatarPicker());
+        heroOrb.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAvatarPicker(); }
+        });
+      }
     }
+
+    applyHomeHeroAvatar();
 
     async function refreshHeroMeta(g) {
       const data = await DA.loadProgress();
@@ -1160,25 +1203,34 @@
       if (ring) ring.style.setProperty('--pct', pct);
       const subj = shell.querySelector('.da-home-subject');
       if (subj && g?.subject_name) subj.textContent = g.subject_name;
+      applyHomeHeroAvatar();
       const tag = shell.querySelector('.da-home-tagline');
       if (tag) {
-        tag.textContent = g?.task_id
-          ? `第 ${g.day} 天 · ${g.module_label || '训练'} · 与专项页同步`
-          : (g?.message || '切换模式继续训练或试聊');
-      }
-      const progChip = shell.querySelector('.da-hero-pct-chip');
-      if (progChip) {
-        progChip.textContent = data?.stage?.name
-          ? `${data.stage.name} · 拟合 ${pct}%`
-          : (pct > 0 ? `拟合 ${pct}%` : '训练进行中');
+        const fit = pct > 0 ? `拟合 ${pct}%` : '';
+        if (g?.task_id) {
+          const task = [fit, g.module_label || '情境答题', g.day ? `第 ${g.day} 天` : ''].filter(Boolean).join(' · ');
+          tag.textContent = task;
+        } else if (g?.progress?.ratio >= 1) {
+          tag.textContent = fit ? `${fit} · 本轮题库已完成` : '本轮题库已完成，可试聊或做五模块专项';
+        } else if (g?.message && g.message !== '可继续答题、试聊或随手记') {
+          tag.textContent = fit ? `${fit} · ${g.message}` : g.message;
+        } else {
+          tag.textContent = fit || '按题库答题、试聊或随手记';
+        }
       }
     }
 
     async function setHomeMode(mode) {
       homeMode = mode;
-      shell.querySelector('.da-home-tab-guided').classList.toggle('on', mode === 'guided');
-      shell.querySelector('.da-home-tab-chat').classList.toggle('on', mode === 'chat');
-      shell.querySelector('.da-home-tab-ingest')?.classList.toggle('on', mode === 'ingest');
+      const tabGuided = shell.querySelector('.da-home-tab-guided');
+      const tabChat = shell.querySelector('.da-home-tab-chat');
+      const tabIngest = shell.querySelector('.da-home-tab-ingest');
+      tabGuided?.classList.toggle('on', mode === 'guided');
+      tabChat?.classList.toggle('on', mode === 'chat');
+      tabIngest?.classList.toggle('on', mode === 'ingest');
+      tabGuided?.setAttribute('aria-selected', mode === 'guided' ? 'true' : 'false');
+      tabChat?.setAttribute('aria-selected', mode === 'chat' ? 'true' : 'false');
+      tabIngest?.setAttribute('aria-selected', mode === 'ingest' ? 'true' : 'false');
       shell.querySelector('.da-home-guided').style.display = mode === 'guided' ? 'block' : 'none';
       shell.querySelector('.da-home-chat-wrap').style.display = mode === 'chat' ? 'flex' : 'none';
       const iw = shell.querySelector('.da-home-ingest-wrap');
@@ -1198,7 +1250,7 @@
         host.innerHTML = `<div class="da-empty-card">
           <span class="mi">face_3</span>
           <p style="font-weight:600;color:#1c1c18;margin-bottom:8px;">先填写您的称呼</p>
-          <p>${g.message || '创建数字分身后即可开始今日引导与试聊。'}</p>
+          <p>${g.message || '创建数字分身后即可开始情境答题与试聊。'}</p>
           <button type="button" class="da-btn-primary da-open-setup" style="margin-top:16px;">填写基本信息</button></div>`;
         host.querySelector('.da-open-setup')?.addEventListener('click', showTrainingSetupWizard);
         return;
@@ -1206,8 +1258,8 @@
       if (!g.task_id) {
         host.innerHTML = `<div class="da-empty-card">
           <span class="mi">celebration</span>
-          <p>${g.message || '今日引导已完成'}</p>
-          <p style="margin-top:8px;font-size:13px;">可切到「自由聊天」试聊，或打开「训练」Tab 做专项。</p></div>`;
+          <p>${g.message || '本轮情境题已完成'}</p>
+          <p style="margin-top:8px;font-size:13px;">可切到「试聊」感受分身，或打开底部「训练」做五模块专项。</p></div>`;
         return;
       }
 
@@ -1367,10 +1419,13 @@
     DA.injectAppMenu('数字方舟');
     initTrainingEthics();
     wireProfileRows();
+    window.DAProfile?.installTopbar?.();
+    window.DAProfile?.installProfilePage?.();
     const origGo = window.go;
     window.go = wrapGo(origGo, i => {
       if (i === 0) renderHomeTraining(document.getElementById('p0'));
       if (i === 1 || i === 7) refreshProgress();
+      if (i === 7) window.DAProfile?.refreshProfilePage?.();
       onTrainingPage(i);
     });
     installNavChrome(typeof cur !== 'undefined' ? cur : 0);
@@ -1400,6 +1455,7 @@
 
   function initCompanion() {
     DA.injectAppMenu('陪护端');
+    window.DAProfile?.installTopbar?.();
     DA.companionMode = 'normal';
 
     initCompanionConsent().then(ok => {

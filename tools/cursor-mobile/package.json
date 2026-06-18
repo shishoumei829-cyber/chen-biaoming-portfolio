@@ -1,0 +1,10 @@
+{
+  "name": "cursor-mobile-relay",
+  "private": true,
+  "version": "1.0.0",
+  "description": "手机端 Cursor Cloud Agent 指令中继",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

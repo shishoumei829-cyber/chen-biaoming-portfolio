@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="陈彪明的工业设计作品集，收录 MIRAGE、AMADEUS、墨舟、数字方舟与个人设计实践。" />
-<meta name="theme-color" content="#060606" />
+<meta name="description" content="陈彪明的工业设计作品集，收录 AMADEUS、墨舟、数字方舟与个人设计实践。" />
+<meta name="theme-color" content="#0a0a0a" />
 <title>陈彪明 · 把感知做成产品 · 工业设计作品集</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,500&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/amadeus/dnote-split.css">
 <link rel="stylesheet" href="assets/amadeus/portfolio-sections.css">
-<link rel="stylesheet" href="assets/digitalark/da-section.css">
+<link rel="stylesheet" href="assets/digitalark/da-section.css?v=ark-handoff-75">
+<link rel="stylesheet" href="assets/digitalark/da-motion.css?v=ark-handoff-30">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -110,6 +110,24 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 .section-title{font-family:"Playfair Display","Noto Serif SC",serif;font-size:clamp(38px,7vw,104px);line-height:.92;letter-spacing:-.045em}
 .section-desc{max-width:560px;font-family:"Noto Serif SC",serif;font-size:14px;line-height:2.05;color:var(--muted);font-weight:300}
 .dark .section-desc{color:rgba(248,243,232,.62)}
+.project-status{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px 10px;
+  margin:14px auto 18px;max-width:min(100%,760px);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(248,243,232,.62);
+}
+.project-status span{
+  border:1px solid rgba(248,243,232,.16);
+  background:rgba(255,255,255,.045);
+  padding:7px 10px;border-radius:999px;
+}
+#mirage .project-status,
+#timewalker .project-status{color:rgba(22,18,14,.58)}
+#mirage .project-status span,
+#timewalker .project-status span{
+  border-color:rgba(22,18,14,.14);
+  background:rgba(255,255,255,.42);
+}
 #mirage{padding:0 0 clamp(78px,10vw,140px)}
 .mirage-head{position:relative;min-height:100vh;margin:0 0 clamp(70px,9vw,120px);padding:120px clamp(22px,5vw,72px);display:grid;grid-template-columns:1fr;place-items:center;text-align:center;overflow:hidden}
 .mirage-head>div:nth-of-type(1){position:absolute;z-index:2;left:clamp(22px,5vw,72px);top:clamp(70px,8vw,110px)}
@@ -1393,8 +1411,43 @@ body.eva-skin #mirage .spec-copy{background:transparent!important;color:#0a0a0a!
 body.eva-skin #mirage .spec-copy h3{color:var(--eva-magenta-hot)!important}
 body.eva-skin #mirage .spec-img{box-shadow:-12px 14px 0 var(--eva-magenta-hot);border:0}
 
-/* —— AMADEUS：白底 + 蓝/洋红色块，代码可读 —— */
-body.eva-skin #amadeus.eva-chapter{background:#fff!important;color:#0a0a0a!important}
+/* —— AMADEUS：长卷背景系统 —— */
+body.eva-skin #amadeus.eva-chapter{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:#07131d!important;color:#0a0a0a!important;
+}
+body.eva-skin #amadeus > :not(.ama-atmo),
+body.eva-skin #amadeus .ama-gallery-wrap{
+  position:relative;z-index:2;
+}
+body.eva-skin #amadeus .ama-atmo{
+  position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+body.eva-skin #amadeus .ama-atmo__layer{
+  position:absolute;inset:-6% -4%;background-size:cover;background-position:center;
+  transform-origin:center;will-change:transform,opacity;
+}
+body.eva-skin #amadeus .ama-atmo__layer--1{
+  background-image:url("assets/amadeus/art/bg/ama-bg-01.jpg");
+  opacity:.34;filter:saturate(.82) contrast(1.02) brightness(.72);
+}
+body.eva-skin #amadeus .ama-atmo__layer--2{
+  background-image:url("assets/amadeus/art/bg/ama-bg-02.jpg");
+  opacity:.28;filter:saturate(.88) contrast(1.02) brightness(.8) blur(1px);
+  mix-blend-mode:screen;
+}
+body.eva-skin #amadeus .ama-atmo__layer--3{
+  background-image:url("assets/amadeus/art/bg/ama-bg-03.jpg");
+  opacity:.26;filter:saturate(.78) contrast(1.08) brightness(.7);
+  mix-blend-mode:lighten;
+}
+body.eva-skin #amadeus .ama-atmo__veil{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(5,9,14,.34) 0%,rgba(7,17,25,.16) 18%,rgba(7,17,25,.22) 48%,rgba(7,17,25,.42) 100%),
+    radial-gradient(circle at 50% 22%,rgba(140,205,255,.12),transparent 30%),
+    radial-gradient(circle at 18% 74%,rgba(140,205,255,.1),transparent 28%);
+}
 body.eva-skin #amadeus .ama-v2-hero{
   background:
     linear-gradient(105deg,var(--eva-magenta-hot) 0%,var(--eva-magenta-hot) 28%,transparent 28%),
@@ -1454,8 +1507,82 @@ body.eva-skin .ama-ui-v2.ama-ui-showcase{
   padding:clamp(72px,9vw,120px) clamp(22px,5vw,72px) clamp(88px,10vw,128px);
   background:#fff!important;color:#0a0a0a!important;
 }
-body.eva-skin .ama-ui-showcase-inner{max-width:min(1180px,100%);margin:0 auto}
+body.eva-skin .ama-ui-showcase-inner{max-width:min(1280px,100%);margin:0 auto}
 body.eva-skin .ama-ui-showcase .ama-v2-sub{color:var(--eva-blue-deep)!important}
+body.eva-skin .ama-ui-showcase.ama-ui-showcase--poster{
+  padding:0!important;min-height:100svh;
+  background:transparent!important;color:#f5f1ea!important;
+}
+body.eva-skin .ama-ui-showcase.ama-ui-showcase--poster .ama-ui-showcase-inner{
+  width:100vw;max-width:100vw;
+  margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+}
+body.eva-skin .ama-ui-poster{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  width:100%;background:#090909;border:0;
+}
+body.eva-skin .ama-ui-poster::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.06) 28%,rgba(0,0,0,.28) 100%),
+    radial-gradient(ellipse at 50% 50%,rgba(0,0,0,.38) 0%,rgba(0,0,0,.12) 42%,transparent 68%);
+}
+body.eva-skin .ama-ui-poster__bg{
+  position:absolute;inset:0;margin:0;z-index:0;
+}
+body.eva-skin .ama-ui-poster__bg img{
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+  filter:saturate(.96) contrast(1.02) brightness(.92);
+}
+body.eva-skin .ama-ui-poster__overlay{
+  position:relative;z-index:2;width:100%;height:100%;
+  min-height:inherit;padding:0;
+}
+body.eva-skin .ama-ui-poster__curves{
+  position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible;
+}
+body.eva-skin .ama-ui-poster__curves text{
+  fill:rgba(246,244,239,.88);
+  font-family:"Noto Serif SC",Georgia,serif;
+  letter-spacing:.12em;
+}
+body.eva-skin .ama-ui-poster__curves text.ama-ui-poster__curve--top{font-size:15px}
+body.eva-skin .ama-ui-poster__curves text.ama-ui-poster__curve--bottom{font-size:14px;fill:rgba(246,244,239,.78)}
+body.eva-skin .ama-ui-poster__center{
+  position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
+  z-index:4;width:min(92%,680px);margin:0;padding:0 12px;
+  text-align:center;
+}
+body.eva-skin .ama-ui-poster__center::before{
+  content:"";position:absolute;inset:-40px -28px;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.28) 0%,transparent 72%);
+}
+body.eva-skin .ama-ui-poster__kicker{
+  margin:0 0 clamp(12px,2vh,18px);
+  font-family:var(--eva-wall,"Barlow Condensed",sans-serif);
+  font-size:10px;letter-spacing:.42em;text-transform:uppercase;
+  color:rgba(246,244,239,.52);
+}
+body.eva-skin .ama-ui-poster__headline{
+  margin:0;
+  font-family:var(--eva-matisse,"Playfair Display","Noto Serif SC",serif);
+  font-variation-settings:"opsz" 96;font-weight:800;
+  font-size:clamp(1.85rem,5.8vw,4.2rem);line-height:1;letter-spacing:.08em;
+  white-space:nowrap;
+  color:#b30000!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.45),0 12px 36px rgba(0,0,0,.35);
+}
+body.eva-skin .ama-ui-poster__lead{
+  margin:clamp(16px,2.4vh,24px) auto 0;max-width:34em;
+  font-family:"Noto Serif SC",Georgia,serif;
+  font-size:clamp(14px,1.55vw,17px);line-height:1.95;font-weight:400;
+  color:rgba(246,244,239,.9);
+  text-shadow:0 1px 18px rgba(0,0,0,.55);
+}
+body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase{
+  background:transparent!important;
+}
 body.eva-skin .ama-emotion-panel{
   display:flex;flex-direction:column;
   border:2px solid rgba(153,0,0,.35);
@@ -1523,12 +1650,17 @@ body.eva-skin .ama-ui-lead{
   color:rgba(10,10,10,.62)!important;font-weight:300;
 }
 body.eva-skin .ama-ui-figure{
-  margin-top:clamp(36px,5vw,56px);
   border:1px solid rgba(10,10,10,.12);
   box-shadow:14px 16px 0 rgba(0,56,255,.1);
   background:#050505;overflow:hidden;
 }
 body.eva-skin .ama-ui-figure img{width:100%;height:auto;display:block}
+body.eva-skin .ama-ui-figure--product{
+  margin:0;background:#eef3ff;
+}
+body.eva-skin .ama-ui-figure--product img{
+  aspect-ratio:16/10;object-fit:cover;object-position:center;
+}
 body.eva-skin .ama-ui-figure--live .ama-work-live{
   position:relative;width:100%;aspect-ratio:16/9;min-height:min(56vw,520px);
   background:#050505;overflow:hidden;
@@ -1544,75 +1676,11 @@ body.eva-skin .ama-ui-cap{
   background:#f6f8ff;border-top:1px solid rgba(0,56,255,.14);
 }
 
-/* 设计师：保留蓝但提亮 */
-body.eva-skin #self.eva-chapter,
-body.eva-skin #self.section.light{
-  background:
-    radial-gradient(circle at 24% 16%,rgba(255,20,147,.28),transparent 38%),
-    linear-gradient(165deg,#0030e8 0%,#0048ff 48%,#eef3ff 100%)!important;
-  color:#fff!important;
+/* 关于 · 世界观页样式见 assets/self/worldview.css */
+body.eva-skin #self.wv-page.section.light{
+  background:transparent!important;
+  color:rgba(244,241,236,.88)!important;
 }
-body.eva-skin #self .self-copy h2{color:#fff!important}
-body.eva-skin #self .metric{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22)}
-body.eva-skin footer{background:var(--eva-blue-deep)!important;color:rgba(255,255,255,.7)!important}
-
-body.eva-skin #self.self-poster{
-  position:relative;min-height:0;padding:0!important;overflow:hidden;
-  background:#f4f2ec!important;color:#111!important;
-}
-body.eva-skin #self .self-poster-img{
-  position:relative;z-index:0;display:block;width:100%;height:auto;object-fit:contain;object-position:center top;
-  filter:contrast(1.06) saturate(.9);
-}
-body.eva-skin #self.self-poster::before{
-  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(246,244,238,.32) 0%,rgba(246,244,238,.12) 34%,rgba(246,244,238,.02) 100%);
-}
-body.eva-skin #self.self-poster::after{
-  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.12;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-body.eva-skin #self .self-typefield{
-  position:absolute;z-index:3;inset:0;
-  padding:clamp(34px,5vw,72px) clamp(18px,4vw,58px);
-  font-family:var(--eva-body);color:#090909;
-  pointer-events:none;
-}
-body.eva-skin #self .self-type{
-  position:absolute;margin:0;color:#090909!important;text-shadow:0 1px 0 rgba(255,255,255,.28);
-}
-body.eva-skin #self .self-type--lead{
-  left:clamp(18px,3vw,52px);top:clamp(24px,4vw,58px);
-  max-width:min(760px,72vw);font-size:clamp(2.1rem,5.2vw,5.8rem);
-  line-height:.92;font-weight:900;letter-spacing:-.08em;
-}
-body.eva-skin #self .self-type--huge{
-  left:clamp(260px,35vw,620px);top:clamp(88px,10vw,150px);
-  font-size:clamp(4.6rem,13vw,15rem);line-height:.72;font-weight:900;letter-spacing:-.1em;
-  transform:scaleY(1.08);
-}
-body.eva-skin #self .self-type--side{
-  right:clamp(16px,3vw,52px);top:clamp(18px,3vw,46px);
-  writing-mode:vertical-rl;font-size:clamp(1.2rem,2.4vw,2.8rem);
-  line-height:1.1;font-weight:800;letter-spacing:.03em;
-}
-body.eva-skin #self .self-type--block{
-  left:clamp(22px,5vw,84px);top:clamp(174px,20vw,320px);
-  max-width:min(460px,38vw);font-size:clamp(1.1rem,2vw,2.1rem);
-  line-height:1.08;font-weight:800;letter-spacing:-.04em;
-}
-body.eva-skin #self .self-type--vertical{
-  right:clamp(70px,11vw,190px);top:clamp(90px,14vw,220px);
-  writing-mode:vertical-rl;font-size:clamp(1.5rem,3.4vw,4.2rem);
-  line-height:.95;font-weight:900;letter-spacing:-.04em;
-}
-body.eva-skin #self .self-contact-strip{
-  position:absolute;z-index:4;left:clamp(18px,4vw,72px);right:clamp(18px,4vw,72px);bottom:clamp(22px,4vw,54px);
-  display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;
-  font-family:var(--eva-caption);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(10,10,10,.72);
-  pointer-events:auto;
-}
-body.eva-skin #self .self-contact-strip a{color:#090909!important}
 
 
 
@@ -1673,18 +1741,6 @@ body.eva-skin #amadeus .ama-flow-v2>div{
   border-color:rgba(153,0,0,.22)!important;
 }
 body.eva-skin #amadeus .ama-system-card header{color:var(--ama-accent)!important}
-body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase{
-  background:#fff!important;
-}
-body.eva-skin #amadeus .ama-ui-v2.ama-ui-showcase h3{
-  font-family:var(--eva-matisse)!important;font-variation-settings:"opsz" 96!important;
-  font-weight:800!important;
-  font-size:clamp(42px,6.2vw,96px)!important;
-  line-height:.9!important;letter-spacing:-.048em!important;
-  color:#0a0a0a!important;transform:scaleY(1.1)!important;
-  transform-origin:left center;max-width:none!important;text-wrap:balance;
-  margin-bottom:clamp(18px,3vw,28px)!important;
-}
 
 body.eva-skin .ama-prologue{
   padding:clamp(48px,7vw,88px) clamp(16px,4vw,56px);
@@ -1742,7 +1798,8 @@ body.eva-skin .ama-poster{
   overflow:hidden;color:#fff;
 }
 body.eva-skin .ama-poster-bg{
-  position:absolute;inset:0;background:#080808;background-size:cover;background-position:center 50%;
+  position:absolute;inset:0;
+  background:#080808 url("assets/amadeus/art/bg/amadeus-hero-garden.png") center 50%/cover no-repeat;
   filter:saturate(1.08) contrast(1.06);
 }
 body.eva-skin .ama-poster-bg::after{
@@ -1809,9 +1866,10 @@ body.eva-skin .ama-poster-foot-en{
 body.eva-skin .ama-design-thought{
   position:relative;overflow:hidden;min-height:clamp(380px,58vh,520px);
   margin:0;padding:clamp(64px,10vw,120px) clamp(20px,5vw,72px);
-  background:#fff;color:#0a0a0a;border-top:2px solid var(--eva-crimson-lit,#b30000);
+  background:rgba(248,250,252,.62);backdrop-filter:blur(12px);
+  color:#0a0a0a;border-top:2px solid var(--eva-crimson-lit,#b30000);
 }
-body.eva-skin .ama-design-thought:nth-child(odd){background:#fafafa}
+body.eva-skin .ama-design-thought:nth-child(odd){background:rgba(250,251,253,.56)}
 body.eva-skin .ama-design-thought .thought-line{
   color:var(--eva-crimson-lit,#b30000)!important;
   font-size:clamp(2rem,6.5vw,4.2rem)!important;line-height:.92!important;
@@ -1837,7 +1895,7 @@ body.eva-skin #amadeus .ama-v2-portrait{display:none!important}
 
 body.eva-skin .ama-design-thought{
   margin:0!important;padding:0!important;min-height:auto!important;
-  border-top:0!important;background:#fff!important;
+  border-top:0!important;background:rgba(248,250,252,.54)!important;
 }
 body.eva-skin .ama-design-thought .thought-aside{display:none!important}
 
@@ -1848,7 +1906,7 @@ body.eva-skin .ama-dnote--p1{
   overflow:hidden;
   background:
     linear-gradient(90deg,rgba(153,0,0,.06) 0%,transparent 28%),
-    #fff!important;
+    rgba(248,250,252,.46)!important;
 }
 body.eva-skin .ama-dnote-vrule{
   position:absolute;top:clamp(64px,9vh,100px);bottom:clamp(48px,8vh,80px);
@@ -2215,13 +2273,6 @@ body.eva-skin #amadeus .ama-palace-room span{
   .hero-index{margin-top:52px}
   .phone{width:260px;height:545px}
   .tw-device{width:min(100%,302px);height:620px}
-  body.eva-skin #self .self-typefield{padding:24px 16px}
-  body.eva-skin #self .self-type--lead{max-width:92vw;font-size:clamp(2rem,13vw,4.2rem)}
-  body.eva-skin #self .self-type--huge{left:18px;top:clamp(150px,36vw,220px);font-size:clamp(4.2rem,22vw,7.2rem)}
-  body.eva-skin #self .self-type--block{left:18px;top:clamp(300px,78vw,420px);max-width:72vw;font-size:clamp(1rem,5vw,1.55rem)}
-  body.eva-skin #self .self-type--side{right:12px;top:24px;font-size:clamp(1rem,5vw,1.8rem)}
-  body.eva-skin #self .self-type--vertical{right:54px;top:clamp(210px,58vw,330px);font-size:clamp(1.3rem,7vw,2.8rem)}
-  body.eva-skin #self .self-contact-strip{left:16px;right:16px;font-size:10px;gap:8px 14px}
   .thought-page{min-height:58vh;margin-left:18px;margin-right:18px}
   .thought-line{font-size:clamp(40px,13vw,72px)}
   .thought-sub{margin-top:24px}
@@ -2391,6 +2442,61 @@ body.eva-skin .ama-chapter-break__sub{
   margin-top:clamp(18px,3vw,28px);max-width:520px;margin-left:auto;margin-right:auto;
   font-family:"Noto Serif SC",serif;font-size:clamp(14px,1.4vw,16px);
   line-height:2;color:rgba(10,10,10,.55);
+}
+
+/* AMADEUS 尾部 · 白底（迭代日志 / 论文 / 愿景） */
+body.eva-skin .ama-outro-wrap{
+  position:relative;z-index:2;
+  width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);
+  background:#fff;
+  border-top:1px solid rgba(10,10,10,.07);
+}
+body.eva-skin .ama-changelog-cta,
+body.eva-skin .ama-paper-cta{
+  padding:clamp(48px,7vh,72px) clamp(20px,5vw,56px);
+  max-width:52rem;margin:0 auto;
+  font-family:Inter,system-ui,sans-serif;
+}
+body.eva-skin .ama-changelog-cta__card,
+body.eva-skin .ama-paper-cta__card{
+  display:block;padding:clamp(1.4rem,3vw,1.75rem) clamp(1.25rem,3vw,1.5rem);
+  border:1px solid rgba(10,10,10,.1);border-radius:4px;
+  background:#fafafa;text-decoration:none;color:inherit;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+body.eva-skin .ama-changelog-cta__card:hover,
+body.eva-skin .ama-paper-cta__card:hover{
+  border-color:rgba(153,0,0,.28);
+  box-shadow:8px 10px 0 rgba(153,0,0,.08);
+}
+body.eva-skin .ama-changelog-cta__kicker,
+body.eva-skin .ama-paper-cta__kicker{
+  margin:0 0 .35rem;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(10,10,10,.48);
+}
+body.eva-skin .ama-changelog-cta__title,
+body.eva-skin .ama-paper-cta__title{
+  margin:0 0 .75rem;font-family:"Noto Serif SC",serif;
+  font-size:clamp(1.1rem,2.4vw,1.25rem);font-weight:600;color:#0a0a0a;
+}
+body.eva-skin .ama-changelog-cta__lead,
+body.eva-skin .ama-paper-cta__lead{
+  margin:0 0 1rem;font-size:.92rem;line-height:1.65;color:rgba(10,10,10,.62);
+}
+body.eva-skin .ama-changelog-cta__more{
+  font-size:.82rem;font-weight:600;letter-spacing:.04em;color:var(--eva-crimson-lit,#b30000);
+}
+body.eva-skin .ama-paper-cta__actions{display:flex;flex-wrap:wrap;gap:.75rem}
+body.eva-skin .ama-paper-cta__btn{
+  display:inline-block;padding:.55rem 1.1rem;font-size:.85rem;font-weight:600;
+  letter-spacing:.04em;text-decoration:none;
+}
+body.eva-skin .ama-paper-cta__btn--primary{background:#3d52a0;color:#fff}
+body.eva-skin .ama-paper-cta__btn--ghost{
+  border:1px solid rgba(10,10,10,.18);color:#0a0a0a;
+}
+body.eva-skin .ama-outro-wrap .ama-chapter-break--vision{
+  border-top:1px solid rgba(10,10,10,.06);
 }
 
 /* 介绍模块大标题：语义断行，避免随机 mid-word 断开 */
@@ -2601,839 +2707,7 @@ body.eva-skin .ama-chapter-break__title{
   .brief-dossier{padding-left:18px;padding-right:18px}
 }
 
-/* ═══ 第04話 · 数字方舟 · 长卷背景 + 改版 ═══ */
-#digitalark{
-  --ds-ink:#f4f1ec;
-  --ds-muted:rgba(244,241,236,.58);
-  --ds-dim:rgba(244,241,236,.36);
-  --ds-line:rgba(255,255,255,.10);
-  --ds-red:rgba(153,0,0,.9);
-  --ds-red-glow:rgba(153,0,0,.32);
-  --ds-hud:"Barlow Condensed","Share Tech Mono",monospace;
-  --ds-strand:"Barlow Condensed",var(--ds-hud);
-  --ds-serif:"Noto Serif SC",Georgia,serif;
-  --ds-sans:"Noto Sans SC","Helvetica Neue",sans-serif;
-  padding:0!important;
-  color:var(--ds-ink);
-  background:transparent;
-  overflow-x:clip;
-  overflow-y:visible;
-}
-.da-ds-wrap,.da-ds-body{overflow:visible}
-#digitalark .da2-p,
-#digitalark .da2-pull,
-#digitalark .da2-section-h,
-#digitalark .da2-stance-h,
-#digitalark .da2-split-h,
-#digitalark .da2-tl-h,
-#digitalark .da2-training-h,
-#digitalark .da2-finale-h{
-  text-shadow:0 2px 28px rgba(0,0,0,.75),0 0 48px rgba(4,4,6,.65);
-}
-#digitalark .da2-p strong{color:var(--ds-ink);font-weight:400}
-body.eva-skin #digitalark .ama-flow-v2>div,
-body.eva-skin #digitalark .ama-v2-module,
-body.eva-skin #digitalark .ama-chapter-break{
-  box-shadow:none!important;transform:none!important;
-}
-body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
-
-/* 数字方舟背景 · 见 assets/digitalark/da-section.css */
-.da-ds-wrap,.da-ds-body{position:relative}
-.da-ds-body{z-index:2}
-
-@media (prefers-reduced-motion:reduce){
-  #digitalark .da2-reveal,#digitalark .da2-tl-item,#digitalark .da2-eight-item,
-  #digitalark .da2-training-step,#digitalark .da2-card{
-    opacity:1!important;transform:none!important;transition:none!important;
-  }
-  #digitalark .da2-title-art{opacity:1!important;transform:none!important}
-  #digitalark .da2-title-cn,#digitalark .da2-tagline,#digitalark .da2-scroll-hint{opacity:1!important;transform:none!important}
-  #digitalark .da2-pull-line,#digitalark .da2-flow-line{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
-  #digitalark .da2-pull-line::before,#digitalark .da2-split-col{opacity:1!important;transform:none!important;animation:none!important}
-  #digitalark .da2-narrative-inner.da2-narr-in .da2-split-piece{opacity:1!important;animation:none!important}
-  #digitalark .da2-scroll-line{animation:none!important}
-  #da2Canvas{display:none!important}
-  .da2-app-frame{animation:none!important}
-  [data-ama-emotion-panel] .ama-emotion-curve-path{filter:none}
-  .da2-app-device{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
-  .da2-stance::after{animation:none!important;opacity:0!important}
-  .da2-stance.in-stance::before{transform:scaleX(1)!important;transition:none!important}
-}
-
-@media (max-width:768px){
-  #digitalark{scroll-margin-top:72px}
-}
-
-.da2-cover{
-  position:relative;min-height:100svh;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  align-items:stretch;
-  overflow:visible;
-}
-.da2-cover-bg{display:none}
-.da2-cover-grain{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  opacity:.08;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* 粒子画布 */
-#da2Canvas{
-  position:absolute;inset:0;z-index:1;pointer-events:none;
-  opacity:.32;
-}
-
-/* HUD 顶部状态栏 */
-.da2-hud{
-  position:absolute;top:0;left:0;right:0;z-index:4;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:clamp(80px,10vh,120px) clamp(22px,5vw,64px) 0;
-  pointer-events:none;
-}
-.da2-hud-l,.da2-hud-r{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.36em;
-  text-transform:uppercase;color:var(--ds-dim);
-  opacity:0;transform:translateY(-10px);
-  transition:opacity .7s var(--ease),transform .7s var(--ease);
-}
-.da2-cover.ready .da2-hud-l{opacity:1;transform:none;transition-delay:.05s}
-.da2-cover.ready .da2-hud-r{opacity:1;transform:none;transition-delay:.22s}
-.da2-hud-r{letter-spacing:.28em;color:rgba(244,241,236,.36)}
-
-/* 封面 · 死亡搁浅式细长字 + 丝线下垂 */
-.da2-cover-body{
-  position:relative;z-index:3;align-self:stretch;
-  width:100%;
-  padding:0 clamp(16px,4vw,48px) clamp(72px,11vh,120px);
-  text-align:center;
-}
-.da2-eyebrow{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.52em;
-  text-transform:uppercase;color:rgba(255,255,255,.42);
-  margin-bottom:clamp(20px,4vh,36px);
-  justify-content:center;
-  display:flex;align-items:center;gap:14px;
-  opacity:0;
-  transition:opacity .8s .15s var(--ease);
-}
-.da2-cover.ready .da2-eyebrow{opacity:1}
-.da2-eyebrow::before,
-.da2-eyebrow::after{
-  content:"";flex:1;max-width:72px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35));
-}
-.da2-eyebrow::after{transform:scaleX(-1)}
-
-.da2-title-cn{
-  font-family:var(--ds-serif);
-  font-size:clamp(1rem,2vw,1.35rem);
-  font-weight:600;
-  letter-spacing:.42em;text-indent:.42em;
-  color:var(--ds-ink);
-  margin-top:clamp(4px,1vh,8px);
-  margin-bottom:clamp(16px,2.5vh,24px);
-  opacity:0;transform:translateY(10px);
-  transition:opacity .8s 1.1s var(--ease),transform .8s 1.1s var(--ease);
-}
-.da2-cover.ready .da2-title-cn{opacity:1;transform:none}
-
-/* 头页标题图 · 透明底丝线字 */
-.da2-title-art{
-  margin:0 auto clamp(12px,2vh,20px);
-  width:min(96vw,920px);
-  max-width:920px;
-  opacity:0;
-  transform:translateY(18px) scale(.98);
-  transition:opacity 1s .25s cubic-bezier(.22,1,.36,1),transform 1s .25s cubic-bezier(.22,1,.36,1);
-}
-.da2-cover.ready .da2-title-art{
-  opacity:1;
-  transform:none;
-}
-.da2-title-img{
-  display:block;
-  width:100%;
-  height:auto;
-  background:none!important;
-  border:0;
-  filter:drop-shadow(0 4px 24px rgba(0,0,0,.55));
-}
-@media (max-width:768px){
-  .da2-title-art{width:min(94vw,720px)}
-}
-
-.da2-tagline{
-  max-width:min(100%,36rem);
-  margin:0 auto;
-  font-family:var(--ds-serif);font-size:clamp(13px,1.35vw,15px);
-  font-weight:300;line-height:2.05;
-  letter-spacing:.12em;
-  color:var(--ds-muted);
-  opacity:0;transform:translateY(14px);
-  transition:opacity .8s 1.45s var(--ease),transform .8s 1.45s var(--ease);
-}
-.da2-cover.ready .da2-tagline{opacity:1;transform:none}
-
-/* 封面底部横线 + 装饰 */
-.da2-cover-foot{
-  position:absolute;bottom:0;left:0;right:0;z-index:2;
-  display:flex;align-items:flex-end;justify-content:flex-end;
-  padding:0 clamp(22px,5vw,64px) clamp(12px,2vh,24px);
-  pointer-events:none;
-}
-.da2-cover-foot-kanji{
-  font-family:var(--ds-serif);font-weight:900;
-  font-size:clamp(5rem,22vw,11rem);
-  line-height:.82;letter-spacing:.06em;
-  color:rgba(244,241,236,.06);
-  user-select:none;
-  opacity:0;transform:translateX(24px);
-  transition:opacity 1.4s 1.2s var(--ease),transform 1.4s 1.2s var(--ease);
-}
-.da2-cover.ready .da2-cover-foot-kanji{opacity:1;transform:none}
-
-/* 滚动提示 */
-.da2-scroll-hint{
-  position:absolute;bottom:clamp(24px,4vh,40px);left:50%;
-  transform:translateX(-50%);z-index:4;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  opacity:0;transition:opacity .6s 1.8s;
-  pointer-events:none;
-}
-.da2-cover.ready .da2-scroll-hint{opacity:1}
-.da2-scroll-hint span{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.38em;
-  text-transform:uppercase;color:rgba(255,255,255,.3);
-}
-.da2-scroll-line{
-  width:1px;height:36px;
-  background:linear-gradient(180deg,rgba(255,255,255,.3),transparent);
-  animation:da2ScrollPulse 2s ease-in-out infinite;
-}
-@keyframes da2ScrollPulse{
-  0%,100%{transform:scaleY(1);opacity:.6}
-  50%{transform:scaleY(.5);opacity:.2}
-}
-
-/* ─── 叙事段落 · 全宽情感层 ──────────────── */
-.da2-narrative{
-  position:relative;z-index:2;
-  padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px);
-  border-top:1px solid var(--ds-line);
-}
-.da2-narrative-inner{
-  max-width:min(100%,940px);
-}
-
-/* 大号引文 */
-.da2-pull{
-  font-family:var(--ds-serif);
-  font-size:clamp(1.65rem,4.5vw,3.5rem);
-  font-weight:600;line-height:1.35;
-  letter-spacing:-.01em;
-  color:var(--ds-ink);
-  margin-bottom:clamp(28px,4vw,44px);
-}
-.da2-pull-line{
-  position:relative;
-  display:block;
-  padding-left:clamp(14px,2vw,22px);
-  opacity:0;
-  transform:translateY(1.25em);
-  filter:blur(8px);
-}
-.da2-pull-line::before{
-  content:"";
-  position:absolute;left:0;top:.2em;bottom:.2em;
-  width:1px;
-  transform:scaleY(0);
-  transform-origin:top;
-  background:linear-gradient(180deg,rgba(244,241,236,.75),rgba(244,241,236,0));
-}
-.da2-pull.is-visible .da2-pull-line{
-  animation:da2LineIn 1.05s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay:calc(var(--line-i,0) * .16s);
-}
-.da2-pull.is-visible .da2-pull-line::before{
-  animation:da2StrandBar .9s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay:calc(var(--line-i,0) * .16s + .12s);
-}
-@keyframes da2LineIn{
-  to{opacity:1;transform:none;filter:none}
-}
-@keyframes da2StrandBar{
-  to{transform:scaleY(1)}
-}
-
-/* 叙事正文 · 分句浮现 */
-.da2-flow-line{
-  display:inline;
-  opacity:0;
-  filter:blur(6px);
-}
-.da2-p[data-flow-lines].is-visible .da2-flow-line{
-  animation:da2FlowIn .95s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay:calc(var(--line-i,0) * .22s + .35s);
-}
-@keyframes da2FlowIn{
-  to{opacity:1;filter:none}
-}
-
-/* 叙事双栏 · 左右滑入 + 块内交错 */
-.da2-narrative-inner .da2-split-col{
-  opacity:0;
-}
-.da2-narrative-inner .da2-split-col--l{
-  transform:translateX(-36px);
-}
-.da2-narrative-inner .da2-split-col--r{
-  transform:translateX(36px);
-}
-.da2-narrative-inner.da2-narr-in .da2-split-col--l{
-  animation:da2SlideL .95s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay:.5s;
-}
-.da2-narrative-inner.da2-narr-in .da2-split-col--r{
-  animation:da2SlideR .95s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay:.62s;
-}
-@keyframes da2SlideL{to{opacity:1;transform:none}}
-@keyframes da2SlideR{to{opacity:1;transform:none}}
-.da2-split-piece{
-  opacity:0;
-  transform:translateY(14px);
-}
-.da2-narrative-inner.da2-narr-in .da2-split-col--l .da2-split-piece,
-.da2-narrative-inner.da2-narr-in .da2-split-col--r .da2-split-piece{
-  animation:da2PieceIn .8s cubic-bezier(.22,1,.36,1) forwards;
-  animation-delay:calc(var(--piece-i,0) * .09s + var(--col-d,0s));
-}
-.da2-narrative-inner.da2-narr-in .da2-split-col--l .da2-split-piece{--col-d:.58s}
-.da2-narrative-inner.da2-narr-in .da2-split-col--r .da2-split-piece{--col-d:.7s}
-@keyframes da2PieceIn{to{opacity:1;transform:none}}
-.da2-pull em{
-  font-style:italic;
-  color:rgba(255,255,255,.52);
-}
-
-/* 段落 */
-.da2-p{
-  font-family:var(--ds-serif);font-size:clamp(13px,1.35vw,15px);
-  font-weight:300;line-height:2.05;
-  color:var(--ds-muted);
-  max-width:min(100%,52rem);
-  margin-top:clamp(20px,3vw,30px);
-}
-
-/* 问题 / 思考 双栏 */
-.da2-split{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0;
-  margin-top:clamp(64px,10vw,120px);
-  border-top:1px solid var(--ds-line);
-}
-.da2-split-col{
-  padding:clamp(40px,6vw,72px) clamp(24px,4vw,56px) clamp(40px,6vw,72px) 0;
-}
-.da2-split-col:last-child{
-  padding-left:clamp(24px,4vw,56px);
-  padding-right:0;
-  border-left:1px solid var(--ds-line);
-}
-.da2-split-label{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:var(--ds-dim);
-  margin-bottom:clamp(12px,2vw,18px);
-  display:flex;align-items:center;gap:10px;
-}
-.da2-split-label::after{
-  content:"";flex:1;height:1px;
-  background:linear-gradient(90deg,rgba(255,255,255,.18),transparent);
-}
-.da2-split-h{
-  font-family:var(--ds-serif);
-  font-size:clamp(1.15rem,2.8vw,2rem);
-  font-weight:600;line-height:1.3;
-  color:var(--ds-ink);
-  margin-bottom:clamp(14px,2vw,20px);
-}
-.da2-split-p{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.25vw,14px);
-  font-weight:300;line-height:2;
-  color:var(--ds-muted);
-}
-
-@media(max-width:720px){
-  .da2-split{grid-template-columns:1fr}
-  .da2-split-col:last-child{
-    padding-left:0;border-left:0;border-top:1px solid var(--ds-line);
-  }
-}
-
-/* ─── 产品界面 · 真实 App（说明与 UI 一体）──── */
-.da2-app-showcase{
-  position:relative;z-index:2;
-  padding:clamp(72px,10vw,120px) clamp(22px,5vw,64px) clamp(88px,12vw,140px);
-  border-top:1px solid var(--ds-line);
-}
-.da2-app-integrated{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:clamp(28px,5vw,56px);
-  align-items:center;
-  max-width:min(100%,980px);
-  margin:0 auto;
-  padding:clamp(24px,3.5vw,36px);
-  border:1px solid var(--ds-line);
-  background:rgba(4,4,6,.18);
-}
-.da2-app-context .da2-section-h{margin-bottom:clamp(8px,1.5vw,14px)}
-.da2-app-lead{
-  font-family:var(--ds-serif);font-size:clamp(14px,1.45vw,16px);
-  font-weight:300;line-height:2.05;color:var(--ds-ink);
-  margin-top:clamp(12px,2vw,18px);
-}
-.da2-app-summary{
-  display:grid;grid-template-columns:1fr;gap:1px;
-  margin-top:clamp(22px,3vw,32px);
-  background:var(--ds-line);
-}
-.da2-app-summary-item{
-  padding:clamp(16px,2.5vw,22px) clamp(14px,2vw,18px);
-  background:rgba(4,4,6,.32);
-}
-.da2-app-summary-k{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.36em;
-  text-transform:uppercase;color:var(--ds-dim);
-  margin-bottom:clamp(8px,1.2vw,12px);
-}
-.da2-app-summary-item p:last-child{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.2vw,13px);
-  font-weight:300;line-height:1.95;color:var(--ds-muted);
-}
-.da2-app-note{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--ds-dim);
-  margin-top:clamp(20px,3vw,28px);
-}
-.da2-app-note-detail{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.2vw,13px);
-  font-weight:300;line-height:1.9;color:rgba(244,241,236,.42);
-  margin-top:8px;
-}
-.da2-app-actions{margin-top:clamp(14px,2vw,20px)}
-.da2-app-open{
-  font-family:var(--ds-hud);font-size:10px;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--ds-ink);border-bottom:1px solid rgba(244,241,236,.35);
-  padding-bottom:2px;
-  transition:opacity .2s,border-color .2s;
-}
-.da2-app-open:hover{opacity:.75;border-color:var(--ds-ink)}
-.da2-app-device{
-  flex-shrink:0;
-  opacity:0;transform:translateY(48px) scale(.94);
-  filter:blur(8px);
-  transition:opacity 1.05s var(--ease),transform 1.15s cubic-bezier(.22,1,.36,1),filter 1s var(--ease);
-}
-.da2-app-device.in{opacity:1;transform:none;filter:none}
-.da2-app-frame{
-  width:390px;height:844px;
-  border-radius:50px;overflow:hidden;
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 40px 100px rgba(0,0,0,.5);
-  background:#e8e4dc;
-  animation:da2PhoneFloat 6s ease-in-out infinite;
-}
-@keyframes da2PhoneFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
-.da2-app-frame iframe{
-  width:390px;height:844px;border:0;display:block;
-  background:#e8e4dc;
-}
-@media(max-width:920px){
-  .da2-app-integrated{
-    grid-template-columns:1fr;
-    justify-items:center;
-    text-align:center;
-  }
-  .da2-app-lead,.da2-app-note-detail{margin-left:auto;margin-right:auto}
-}
-@media(max-width:420px){
-  .da2-app-frame,.da2-app-frame iframe{
-    width:min(100vw - 44px,390px);
-    height:min(calc((100vw - 44px) * 844 / 390),844px);
-  }
-}
-
-/* ─── 立场 banner ────────────────────────── */
-.da2-stance{
-  position:relative;z-index:2;
-  padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px) clamp(44px,6vw,72px);
-  background:rgba(153,0,0,.04);
-  border-top:1px solid rgba(153,0,0,.18);
-  border-bottom:1px solid rgba(153,0,0,.18);
-  overflow:hidden;
-}
-.da2-stance::before{
-  content:"";position:absolute;
-  top:-1px;left:0;width:clamp(64px,12vw,140px);height:1px;
-  background:var(--ds-red);
-  box-shadow:0 0 18px var(--ds-red-glow);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform 1.1s cubic-bezier(.22,1,.36,1);
-}
-.da2-stance.in-stance::before{transform:scaleX(1)}
-.da2-stance::after{
-  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:linear-gradient(105deg,transparent 42%,rgba(153,0,0,.06) 50%,transparent 58%);
-  opacity:0;transform:translateX(-30%);
-}
-.da2-stance.in-stance::after{
-  opacity:1;
-  animation:da2StanceScan 7s ease-in-out infinite;
-}
-@keyframes da2StanceScan{
-  0%{transform:translateX(-35%);opacity:0}
-  15%{opacity:.85}
-  85%{opacity:.85}
-  100%{transform:translateX(35%);opacity:0}
-}
-.da2-stance-kicker{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:rgba(153,0,0,.75);
-  margin-bottom:clamp(14px,2vw,20px);
-}
-.da2-stance-h{
-  font-family:var(--ds-serif);font-weight:600;
-  font-size:clamp(1.6rem,5vw,3.2rem);
-  line-height:1.2;letter-spacing:-.01em;text-transform:none;
-  color:var(--ds-ink);
-  max-width:min(100%,820px);
-  margin-bottom:clamp(20px,3vw,32px);
-}
-.da2-stance-three{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  margin-top:clamp(32px,5vw,56px);
-  border-top:1px solid var(--ds-line);
-  background:var(--ds-line);
-}
-.da2-stance-item{
-  padding:clamp(24px,3.5vw,36px) clamp(18px,2.5vw,28px);
-  background:rgba(4,4,6,.28);
-  backdrop-filter:blur(14px);
-}
-.da2-stance-num{
-  font-family:var(--ds-hud);font-size:10px;
-  font-weight:400;letter-spacing:.36em;
-  color:var(--ds-dim);
-  line-height:1;margin-bottom:clamp(14px,2vw,18px);
-}
-.da2-stance-title{
-  font-family:var(--ds-serif);font-size:clamp(14px,1.5vw,16px);
-  font-weight:600;color:var(--ds-ink);
-  margin-bottom:10px;line-height:1.35;
-}
-.da2-stance-desc{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.2vw,13px);
-  font-weight:300;line-height:2;color:var(--ds-muted);
-}
-@media(max-width:720px){
-  .da2-stance-three{grid-template-columns:1fr}
-}
-
-/* ─── 五层人格 · 垂直时间线 ──────────────── */
-.da2-layers-section{
-  position:relative;z-index:2;
-  padding:clamp(52px,7vw,80px) clamp(22px,5vw,64px) clamp(88px,12vw,140px);
-  border-top:1px solid var(--ds-line);
-  margin-top:clamp(-8px,-1.2vw,-16px);
-}
-.da2-section-label{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:var(--ds-dim);
-  margin-bottom:clamp(12px,2vw,18px);
-}
-.da2-section-h{
-  font-family:var(--ds-serif);
-  font-size:clamp(1.4rem,3.5vw,2.5rem);
-  font-weight:600;line-height:1.2;
-  color:var(--ds-ink);
-  max-width:min(100%,52rem);
-  margin-bottom:clamp(8px,1.5vw,14px);
-}
-.da2-section-desc{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.25vw,14px);
-  font-weight:300;line-height:2;
-  color:var(--ds-muted);max-width:min(100%,52rem);
-  margin-bottom:clamp(44px,7vw,80px);
-}
-
-/* 时间线容器 */
-.da2-timeline{
-  position:relative;
-  padding-left:clamp(48px,8vw,96px);
-}
-.da2-timeline::before{
-  content:"";position:absolute;
-  left:clamp(18px,3vw,36px);top:8px;bottom:8px;
-  width:1px;
-  background:linear-gradient(180deg,
-    transparent 0%,
-    rgba(255,255,255,.18) 8%,
-    rgba(255,255,255,.18) 92%,
-    transparent 100%
-  );
-}
-.da2-tl-item{
-  position:relative;
-  padding:clamp(24px,4vw,40px) 0;
-  border-bottom:1px solid var(--ds-line);
-  opacity:0;transform:translateX(-18px);
-  transition:opacity .85s var(--ease),transform .85s var(--ease);
-}
-.da2-tl-item.in{opacity:1;transform:none}
-.da2-tl-item:last-child{border-bottom:0}
-
-/* 时间线节点 */
-.da2-tl-dot{
-  position:absolute;
-  left:clamp(-48px,-8vw,-30px);
-  top:clamp(28px,5vw,44px);
-  width:clamp(8px,1.2vw,12px);height:clamp(8px,1.2vw,12px);
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.32);
-  background:#040406;
-  transform:translateX(-50%);
-  transition:border-color .4s,box-shadow .4s;
-}
-.da2-tl-item.in .da2-tl-dot{
-  border-color:rgba(255,255,255,.65);
-  box-shadow:0 0 10px rgba(255,255,255,.14);
-  animation:da2DotPop .55s cubic-bezier(.22,1,.36,1);
-}
-@keyframes da2DotPop{
-  0%{transform:translateX(-50%) scale(.4)}
-  70%{transform:translateX(-50%) scale(1.15)}
-  100%{transform:translateX(-50%) scale(1)}
-}
-/* 节点活跃色（底部核心层） */
-.da2-tl-item:last-child .da2-tl-dot{
-  border-color:rgba(153,0,0,.7);
-  background:rgba(153,0,0,.12);
-}
-.da2-tl-item:last-child.in .da2-tl-dot{
-  box-shadow:0 0 14px var(--ds-red-glow);
-}
-
-.da2-tl-num{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.3em;
-  color:rgba(255,255,255,.25);margin-bottom:clamp(10px,1.5vw,14px);
-}
-.da2-tl-h{
-  font-family:var(--ds-sans);font-weight:500;
-  font-size:clamp(.95rem,2vw,1.25rem);
-  color:var(--ds-ink);margin-bottom:clamp(8px,1.2vw,12px);
-}
-.da2-tl-p{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.2vw,14px);
-  font-weight:300;line-height:1.95;color:var(--ds-muted);
-  max-width:min(100%,48rem);
-}
-
-/* 进度条（在时间线版本里作为行内装饰） */
-.da2-tl-bar{
-  margin-top:clamp(12px,2vw,18px);
-  width:clamp(80px,16vw,160px);height:2px;
-  background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;
-}
-.da2-tl-bar i{
-  display:block;height:100%;border-radius:2px;
-  background:rgba(255,255,255,.32);
-  transform-origin:left;transform:scaleX(0);
-  transition:transform 1.2s var(--ease);
-}
-.da2-tl-item.in .da2-tl-bar i{transform:scaleX(var(--w,0.7))}
-
-/* 八维网格 */
-.da2-eight{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:clamp(28px,4vw,40px) clamp(16px,3vw,28px);
-  margin-top:clamp(40px,6vw,72px);
-  border:none;
-  background:transparent;
-}
-.da2-eight-item{
-  background:transparent;
-  padding:0 0 clamp(12px,2vw,16px);
-  border-bottom:1px solid var(--ds-line);
-  opacity:0;transform:translateY(16px);
-  transition:opacity .75s var(--ease),transform .75s var(--ease);
-}
-.da2-eight-item.in{opacity:1;transform:none}
-.da2-eight-dt{
-  font-family:var(--ds-serif);font-size:clamp(13px,1.35vw,15px);
-  font-weight:600;color:var(--ds-ink);
-  margin-bottom:6px;
-}
-.da2-eight-dd{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--ds-dim);
-  margin-bottom:10px;
-}
-.da2-eight-w{
-  font-family:var(--ds-strand);font-size:clamp(1.6rem,3.2vw,2.4rem);
-  font-weight:200;letter-spacing:.08em;
-  color:rgba(244,241,236,.22);
-  line-height:1;
-}
-@media(max-width:900px){.da2-eight{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.da2-eight{grid-template-columns:1fr}}
-
-/* ─── 训练体系 ───────────────────────────── */
-.da2-training{
-  position:relative;z-index:2;
-  padding:clamp(88px,12vw,140px) clamp(22px,5vw,64px);
-  border-top:1px solid var(--ds-line);
-}
-.da2-training-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:clamp(40px,6vw,64px) clamp(28px,5vw,48px);
-  align-items:start;
-  margin-top:clamp(44px,7vw,80px);
-  background:transparent;
-  border:none;
-}
-.da2-training-step{
-  position:relative;
-  padding:0 0 0 clamp(18px,2.5vw,24px);
-  border:none;
-  border-left:1px solid rgba(255,255,255,.22);
-  background:transparent;
-  opacity:0;transform:translateY(28px);
-  filter:blur(4px);
-  transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease);
-}
-.da2-training-step.in{opacity:1;transform:none;filter:none}
-.da2-training-step::before{
-  content:attr(data-step);
-  display:block;
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.38em;
-  text-transform:uppercase;color:var(--ds-dim);
-  margin-bottom:clamp(14px,2vw,18px);
-}
-.da2-training-h{
-  font-family:var(--ds-serif);font-weight:600;
-  font-size:clamp(.95rem,1.8vw,1.2rem);
-  color:var(--ds-ink);margin:0 0 clamp(12px,2vw,16px);
-}
-.da2-training-p{
-  font-family:var(--ds-serif);font-size:clamp(11px,1.15vw,13px);
-  font-weight:300;line-height:2;color:var(--ds-muted);
-}
-@media(max-width:720px){
-  .da2-training-grid{grid-template-columns:1fr}
-}
-
-/* ─── 代码 / 架构展示 ────────────────────── */
-.da2-arch{
-  position:relative;z-index:2;
-  padding:clamp(64px,10vw,120px) clamp(22px,5vw,64px);
-  border-top:1px solid var(--ds-line);
-}
-.da2-arch-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:clamp(24px,4vw,40px);
-  margin-top:clamp(44px,6vw,72px);
-}
-.da2-card{
-  background:rgba(4,4,6,.42);
-  backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.14);
-  overflow:hidden;
-  opacity:0;transform:translateY(24px);
-  filter:blur(3px);
-  transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);
-}
-.da2-card.in{opacity:1;transform:none;filter:none}
-.da2-card-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px;border-bottom:1px solid var(--ds-line);
-}
-.da2-card-head span{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.2em;
-  color:rgba(255,255,255,.38);
-}
-.da2-card pre{
-  padding:clamp(14px,2vw,20px) 16px;
-  font-family:var(--ds-hud);font-size:clamp(9px,1vw,11px);
-  line-height:1.75;color:rgba(244,241,236,.78);
-  overflow-x:auto;
-  white-space:pre;
-}
-.da2-card .kw{color:#a8bfa4}
-.da2-card .fn{color:#8aab86}
-.da2-card .st{color:#b8c9b4}
-.da2-card .cm{color:rgba(244,241,236,.32)}
-@media(max-width:900px){.da2-arch-grid{grid-template-columns:1fr}}
-
-/* ─── 章节尾声 banner ────────────────────── */
-.da2-finale{
-  position:relative;z-index:2;
-  padding:clamp(88px,14vw,160px) clamp(22px,5vw,64px);
-  border-top:1px solid var(--ds-line);
-  text-align:center;
-  overflow:hidden;
-}
-.da2-finale::before{
-  content:"方舟";
-  position:absolute;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  font-family:var(--ds-serif);font-weight:900;
-  font-size:clamp(12rem,40vw,28rem);
-  line-height:1;letter-spacing:.08em;
-  color:rgba(255,255,255,.025);
-  pointer-events:none;user-select:none;
-  white-space:nowrap;
-}
-.da2-finale-kicker{
-  font-family:var(--ds-hud);font-size:9px;letter-spacing:.44em;
-  text-transform:uppercase;color:rgba(255,255,255,.32);
-  margin-bottom:clamp(16px,2.5vw,24px);
-}
-.da2-finale-h{
-  font-family:var(--ds-serif);font-weight:600;
-  font-size:clamp(1.5rem,4.5vw,3.5rem);
-  line-height:1.3;
-  color:var(--ds-ink);
-  max-width:min(100%,680px);margin:0 auto clamp(20px,3vw,32px);
-}
-.da2-finale-sub{
-  font-family:var(--ds-serif);font-size:clamp(12px,1.3vw,14px);
-  font-weight:300;line-height:2;color:var(--ds-muted);
-  max-width:min(100%,52rem);margin:0 auto;
-}
-
-/* ─── 通用滚动动效 ───────────────────────── */
-.da2-reveal{
-  opacity:0;transform:translateY(28px);
-  filter:blur(5px);
-  transition:opacity .95s var(--ease),transform .95s var(--ease),filter .95s var(--ease);
-}
-.da2-reveal.in{opacity:1;transform:none;filter:none}
-.da2-reveal-delay-1{transition-delay:.1s}
-.da2-reveal-delay-2{transition-delay:.2s}
-.da2-reveal-delay-3{transition-delay:.32s}
-
+/* 数字方舟样式 → assets/digitalark/da-section.css + da-motion.css */
 /* ═══ 移动端 · 桌面样式不变 ═══ */
 .dock-nav{display:none}
 @media (max-width:768px){
@@ -3560,7 +2834,15 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   body.eva-skin #amadeus .ama-v2-module{padding-left:18px!important;padding-right:18px!important}
   body.eva-skin #amadeus .ama-system-card,
   body.eva-skin #amadeus .ama-equation{box-shadow:6px 8px 0 var(--eva-crimson-lit)!important}
-  body.eva-skin .ama-ui-v2.ama-ui-showcase{padding-left:18px!important;padding-right:18px!important}
+  body.eva-skin .ama-ui-v2.ama-ui-showcase{padding-left:0!important;padding-right:0!important}
+  body.eva-skin .ama-ui-poster{min-height:100vh}
+  body.eva-skin .ama-ui-poster__center{top:58%}
+  body.eva-skin .ama-ui-poster__headline{
+    font-size:clamp(1.35rem,6.2vw,2.4rem);letter-spacing:.05em;
+  }
+  body.eva-skin .ama-ui-poster__lead{font-size:14px;line-height:1.85}
+  body.eva-skin .ama-ui-poster__curves text.ama-ui-poster__curve--top{font-size:11px;letter-spacing:.08em}
+  body.eva-skin .ama-ui-poster__curves text.ama-ui-poster__curve--bottom{font-size:10px;letter-spacing:.06em}
   body.eva-skin .ama-ui-figure{box-shadow:8px 10px 0 rgba(0,56,255,.1)}
   body.eva-skin .ama-chapter-break__title{
     font-size:clamp(1.75rem,9vw,2.8rem)!important;
@@ -3572,38 +2854,6 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   body.eva-skin #timewalker .tw-features{padding-left:18px;padding-right:18px}
   body.eva-skin #timewalker .tw-showcase,
   body.eva-skin #timewalker .tw-dnote{content-visibility:auto;contain-intrinsic-size:auto 520px}
-
-  body.eva-skin #self.self-poster{display:flex;flex-direction:column}
-  body.eva-skin #self .self-poster-img{max-height:42vh;object-fit:cover;object-position:center 18%}
-  body.eva-skin #self .self-typefield{
-    position:relative!important;inset:auto!important;
-    display:flex;flex-direction:column;gap:18px;
-    padding:28px 18px calc(24px + env(safe-area-inset-bottom,0px));
-    pointer-events:auto;
-  }
-  body.eva-skin #self .self-type{
-    position:static!important;writing-mode:horizontal-tb!important;
-    max-width:100%!important;transform:none!important;text-shadow:none;
-  }
-  body.eva-skin #self .self-type--lead{
-    font-size:clamp(1.35rem,6.5vw,1.85rem);order:1;
-  }
-  body.eva-skin #self .self-type--side{
-    font-size:11px;letter-spacing:.14em;opacity:.72;order:2;
-  }
-  body.eva-skin #self .self-type--huge{
-    font-size:clamp(2.4rem,13vw,3.4rem);line-height:.88;order:3;
-  }
-  body.eva-skin #self .self-type--block{
-    font-size:clamp(.95rem,4.2vw,1.15rem);line-height:1.55;font-weight:600;order:4;
-  }
-  body.eva-skin #self .self-type--vertical{
-    font-size:clamp(.85rem,3.8vw,1rem);opacity:.55;order:5;
-  }
-  body.eva-skin #self .self-contact-strip{
-    position:static;flex-direction:column;align-items:flex-start;gap:10px;
-    margin-top:8px;order:6;font-size:11px;
-  }
 
   footer{
     flex-direction:column;align-items:flex-start;gap:8px;
@@ -3641,10 +2891,135 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   .tw-atmo__mist,.tw-atmo__moon{animation:none!important}
 }
 
+@media (max-width:768px){
+  .da2-product-name{font-size:clamp(2rem,9vw,2.8rem)}
+}
 
+/* MIRAGE · text-led concept cover after removing product render */
+body.eva-skin #mirage .mirage-head{
+  min-height:min(82svh,760px)!important;
+  padding:clamp(92px,14vh,150px) clamp(22px,6vw,86px)!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:hidden!important;
+  background:
+    linear-gradient(180deg,rgba(244,240,232,.96),rgba(232,226,216,.92)),
+    radial-gradient(circle at 72% 28%,rgba(126,31,31,.08),transparent 34%)!important;
+  color:#17130f!important;
+}
+body.eva-skin #mirage .mirage-wall{opacity:.42!important}
+body.eva-skin #mirage .mw{
+  color:rgba(126,31,31,.07)!important;
+  letter-spacing:.02em!important;
+}
+body.eva-skin #mirage .mw--1,
+body.eva-skin #mirage .mw--2,
+body.eva-skin #mirage .mw--4{display:none!important}
+body.eva-skin #mirage .mw--3{
+  left:50%!important;top:50%!important;bottom:auto!important;
+  transform:translate(-50%,-50%) scaleY(1.12)!important;
+  font-size:clamp(5rem,22vw,17rem)!important;
+  opacity:1!important;
+}
+body.eva-skin #mirage .mirage-head>div:first-of-type{
+  display:none!important;
+}
+body.eva-skin #mirage .mirage-head .mirage-hero-stage{
+  width:min(100%,860px)!important;
+  padding:0!important;
+  margin:0!important;
+  display:grid!important;
+  place-items:center!important;
+}
+body.eva-skin #mirage .mirage-open-foot{
+  max-width:780px!important;
+  margin:0 auto!important;
+  text-align:center!important;
+  opacity:1!important;
+  visibility:visible!important;
+  display:block!important;
+}
+body.eva-skin #mirage .mirage-open-foot *,
+body.eva-skin #mirage .mirage-hero-stage *{
+  opacity:1!important;
+  visibility:visible!important;
+}
+body.eva-skin #mirage .mirage-open-foot .section-title{
+  color:#17130f!important;
+  font-family:"Noto Serif SC","Bodoni Moda",serif!important;
+  font-size:clamp(3.2rem,10vw,8.6rem)!important;
+  font-weight:500!important;
+  line-height:.9!important;
+  letter-spacing:-.05em!important;
+  transform:none!important;
+  text-shadow:none!important;
+  margin:0!important;
+}
+body.eva-skin #mirage .mirage-open-foot .section-title::after{
+  content:"";
+  display:block;
+  width:min(220px,40vw);
+  height:1px;
+  margin:clamp(22px,3vw,34px) auto 0;
+  background:rgba(126,31,31,.5);
+}
+body.eva-skin #mirage .mirage-open-foot .section-desc{
+  max-width:680px!important;
+  margin:clamp(18px,3vw,28px) auto 0!important;
+  color:rgba(23,19,15,.62)!important;
+  font-family:"Noto Serif SC",serif!important;
+  font-size:clamp(13px,1.25vw,15px)!important;
+  line-height:2!important;
+  text-align:center!important;
+}
+body.eva-skin #mirage .project-status{
+  color:rgba(23,19,15,.56)!important;
+}
+body.eva-skin #mirage .project-status span{
+  border-color:rgba(23,19,15,.14)!important;
+  background:rgba(255,255,255,.36)!important;
+}
+
+/* 档案总述 · 单图背景 */
+.brief-dossier{
+  min-height:auto!important;
+  padding:0!important;
+  margin:clamp(36px,4.5vw,64px) 0 clamp(78px,8vw,128px)!important;
+  display:flex!important;
+  justify-content:center!important;
+  background:#fff!important;
+  border:0!important;
+  color:transparent!important;
+}
+.brief-sheet{
+  display:block!important;
+  width:var(--sheet-w, min(calc(100vw - clamp(48px,7vw,140px)), 1120px))!important;
+  aspect-ratio:1496/981!important;
+  background:#fff url("assets/hero/brief-dossier-bg.png?v=7") center/100% 100% no-repeat!important;
+  margin:0!important;
+}
+.brief-dossier::before,
+.brief-dossier::after,
+.brief-dossier > :not(.brief-sheet){
+  display:none!important;
+}
+@media(max-width:820px){
+  .brief-dossier{
+    margin-top:34px!important;
+  }
+}
+.eva-intertitle{
+  display:none!important;
+}
 </style>
 <link rel="stylesheet" href="assets/amadeus/ama-design-system.css">
 <link rel="stylesheet" href="assets/amadeus/ama-gallery.css">
+<link rel="stylesheet" href="assets/amadeus/ama-editorial.css">
+<link rel="stylesheet" href="assets/product-curve-poster.css">
+<link rel="stylesheet" href="assets/self/worldview.css?v=wv-motion-10">
+<link rel="stylesheet" href="assets/hero/hero-zine.css?v=about-sept-27">
+<link rel="stylesheet" href="assets/motion/site-motion.css?v=scroll-reveal-3">
+<link rel="stylesheet" href="assets/amadeus/dnote-split.css?v=mood-2">
 </head>
 <body class="eva-skin">
 <div id="progress"></div>
@@ -3655,96 +3030,49 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   <a class="brand" href="#top">陳彪明</a>
   <ul>
     <li><a href="#brief">总述</a></li>
-    <li><a href="#mirage">第01話</a></li>
-    <li><a href="#amadeus">第02話</a></li>
+    <li><a href="#amadeus">第01話</a></li>
+    <li><a href="#digitalark">第02話</a></li>
     <li><a href="#timewalker">第03話</a></li>
-    <li><a href="#digitalark">第04話</a></li>
     <li><a href="#self">关于</a></li>
   </ul>
 </nav>
 
-<header class="hero eva-poster" id="top">
-  <div class="hero-bg" hidden></div>
-  <div class="hero-vignette" hidden></div>
-  <div class="hero-grid" hidden></div>
+<header class="hero hero-zine eva-poster" id="top" aria-label="首页滚动剧场">
+  <div class="hz-pin">
+    <div class="hz-ambient" aria-hidden="true"></div>
 
-  <div class="eva-deco eva-deco--ghost" aria-hidden="true">
-    <span class="eva-stack eva-stack--1">把<br>感<br>知</span>
-    <span class="eva-stack eva-stack--2">做<br>成<br>产<br>品</span>
-    <span class="eva-stack eva-stack--3">设<br>计<br>档<br>案</span>
-  </div>
-
-  <p class="eva-quote eva-quote--tl eva-caption">愿借设计，让烟火生姿，让光阴生彩。</p>
-
-  <div class="eva-frag eva-frag--left" aria-hidden="true">
-    <span>After that,</span><span>and</span><span class="eva-frag-big">THE END</span>
-  </div>
-  <div class="eva-frag eva-frag--right" aria-hidden="true">
-    <span>NOT,</span><span>and</span><span class="eva-frag-big">ANT</span>
-  </div>
-
-  <div class="eva-vtext" aria-hidden="true">感知設計</div>
-
-  <div class="eva-hero-mid">
-    <h1 aria-label="把感知做成产品">
-      <span class="eva-t eva-t--xl split-word"><span>把感知</span></span>
-      <span class="eva-t eva-t--xl split-word"><span>做成产品</span></span>
-    </h1>
-    <p class="eva-cn">用户体验设计师 · 产品设计师 · 产品经理（PM）</p>
-  </div>
-
-  <div class="eva-plate-white eva-plate-black">
-    <h2 class="eva-t eva-t--hero-bottom split-word"><span>CHEN BIAOMING</span></h2>
-    <p class="eva-script">陈彪明 · 工业设计作品集</p>
-    <div class="hero-index" data-speed=".12">
-      <a class="hero-work magnetic" href="#mirage">
-        <small>第01話 / AR</small>
-        <h3>MIRAGE</h3>
-        <p>现实转译 · 空间计算</p>
-      </a>
-      <a class="hero-work magnetic" href="#amadeus">
-        <small>第02話 / AI</small>
-        <h3>AMADEUS</h3>
-        <p>数字生命 · 实验系统</p>
-      </a>
-      <a class="hero-work magnetic" href="#timewalker">
-        <small>第03話 / TRAVEL</small>
-        <h3>墨舟</h3>
-        <p>旅行文化 · 到达即读懂</p>
-      </a>
-      <a class="hero-work magnetic" href="#digitalark">
-        <small>第04話 / PRESENCE</small>
-        <h3>数字方舟</h3>
-        <p>本地分身 · 五层人格 · 长期在场</p>
-      </a>
+    <div class="hz-name-stage" aria-label="陈彪明个人作品集">
+      <p class="hz-kicker">Portfolio 2026</p>
+      <h1 class="hz-title"><span>陈彪明</span></h1>
+      <p class="hz-role">用户体验设计师 · 产品设计师 · 产品经理（PM）</p>
     </div>
+
+    <div class="hz-photo-canvas" aria-hidden="true">
+      <figure class="hz-photo hz-photo--main"><img src="assets/hero/home-mood.png" alt=""></figure>
+      <figure class="hz-photo hz-photo--brief"><img src="assets/hero/home-brief-collage.jpg" alt=""></figure>
+      <figure class="hz-photo hz-photo--ama"><img src="assets/amadeus/art/bg/amadeus-hero-garden.png" alt=""></figure>
+      <figure class="hz-photo hz-photo--ark"><img src="assets/digitalark/ds-hero-poster.png" alt=""></figure>
+      <figure class="hz-photo hz-photo--travel"><img src="assets/timewalker/ink-night-boat.png" alt=""></figure>
+    </div>
+
+    <p class="hz-scroll-cue" aria-hidden="true">Scroll</p>
   </div>
 </header>
 
-<section class="brief-dossier reveal" id="brief" aria-labelledby="brief-title">
-  <div class="brief-inner">
-    <header class="brief-head">
-      <p class="brief-kicker">ARCHIVE · PREFACE</p>
-      <h2 class="brief-title" id="brief-title">档案总述</h2>
-    </header>
-
-    <div class="brief-body">
-      <div class="brief-prose">
-        <p class="brief-lead">愿借设计，让烟火生姿，让光阴生彩——这份档案想留住的，首先是观察如何慢慢留下痕迹。</p>
-        <p class="brief-text">我习惯从那些容易被略过的时刻问起：街角的光线、深夜未说完的话、旅途中一闪而过的地名。工业设计的训练让我尊重材料与身体；而产品与系统的实践，则把那些漂浮的直觉，收束成可以被触摸、被迭代、也值得被审视的体验。</p>
-      </div>
-      <aside class="brief-aside" aria-label="作者信息">
-        <p class="brief-signature">陈彪明</p>
-        <p class="brief-meta">体验设计 · 产品 · PM</p>
-        <p class="brief-note">桂林电子科技大学 · 工业设计<br>研究含对照实验论文（AMADEUS v0.8）</p>
-      </aside>
+<div class="hz-about-stage" id="brief">
+  <section class="hz-about" aria-label="设计理念">
+    <p class="hz-about-kicker">about us</p>
+    <div class="hz-about-inner">
+      <p class="hz-about-body" data-split-phrases>
+        当未来的数据足够全面，技术足够精湛，我们仍需要一颗柔软而敏锐的心。而设计的思维，正是那份灵光闪烁的创造力，它不靠堆砌功能，而在于唤醒人与生活之间的美的对话。
+      </p>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <div class="eva-intertitle"><span>作品檔案</span></div>
 <main>
-  <section class="section dark eva-chapter" id="mirage">
+  <section class="section dark eva-chapter" id="mirage" hidden>
     <div class="section-head mirage-head mirage-poster">
       <div class="mirage-wall" aria-hidden="true">
         <span class="mw mw--1">现实</span>
@@ -3758,12 +3086,14 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <div class="num">EP.01 / PRODUCT CASE</div>
       </div>
       <div class="mirage-hero-stage" id="mirageHeroStage">
-        <figure class="mirage-product-float" id="mirageProductFloat">
-          <img src="assets/mirage/mirage-glasses-hero.png" alt="MIRAGE AR 眼镜产品渲染" width="1200" height="800" decoding="async">
-        </figure>
         <div class="mirage-open-foot">
           <h2 class="section-title">MIRAGE<br>现实转译器</h2>
-          <p class="section-desc">MIRAGE 是一副以「现实转译」为核心的 AR 眼镜：用空间计算与实时渲染，让人重新看见街巷、树影与通勤路上的美——不是逃离现实，而是回到现实。它面向太赶、对生活失去兴趣或仍对生活感兴趣的人，也包括想用二次元的目光重新打量日常的爱好者。</p>
+          <div class="project-status" aria-label="MIRAGE 项目状态">
+            <span>概念设计</span>
+            <span>工业设计 / AR 交互</span>
+            <span>独立完成</span>
+          </div>
+          <p class="section-desc">MIRAGE 是一副以「现实转译」为核心的 AR 眼镜：用空间计算与实时渲染，让人重新看见街巷、树影与通勤路上的美——带人回到现实，重新打量日常。它面向太赶、对生活失去兴趣或仍对生活感兴趣的人，也包括想用二次元的目光重新打量日常的爱好者。</p>
         </div>
       </div>
     </div>
@@ -3794,8 +3124,8 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
       <div class="thought-aside">Question / Before Concept</div>
       <div class="thought-copy">
         <div class="thought-kicker">My Question</div>
-        <h3 class="thought-line" data-typewriter="如果世界变了个样子，&#10;你会不会愿意多看它一眼？"></h3>
-        <p class="thought-sub">我想创造的不是逃离现实的设备，而是一双看得见美的眼镜。</p>
+        <h3 class="thought-line" data-typewriter="世界换一种样子，&#10;你会想多看它一眼。"></h3>
+        <p class="thought-sub">我想创造一双看得见美的眼镜，带人回到现实。</p>
       </div>
     </section>
 
@@ -3809,8 +3139,8 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
           <p class="case-lead">MIRAGE 的出发点是解决“屏幕让人忽略现实”的问题。它把单调、嘈杂或被熟悉感遮蔽的物理场景，转译成更有秩序、更具审美价值的艺术景观。</p>
           <div class="case-list">
             <div><strong>Reality Translator</strong><span>通过空间计算识别街角、小巷、建筑与光影结构，再用实时渲染重绘视觉氛围。</span></div>
-            <div><strong>Beauty As Simplification</strong><span>不是单纯加滤镜，而是过滤视觉噪音，让大脑更轻松地注意到现实里的诗意。</span></div>
-            <div><strong>Return To Reality</strong><span>最终目的不是替代现实，而是让用户重新爱上真实世界，而不是继续沉溺在屏幕里。</span></div>
+            <div><strong>Beauty As Simplification</strong><span>过滤视觉噪音，让大脑更轻松地注意到现实里的诗意。</span></div>
+            <div><strong>Return To Reality</strong><span>最终目的是让用户重新爱上真实世界，回到真实环境本身。</span></div>
           </div>
         </div>
       </article>
@@ -3818,7 +3148,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
       <section class="thought-page reveal align-right narrow" data-ghost="城市">
         <div class="thought-copy">
           <div class="thought-kicker">My Finding</div>
-          <h3 class="thought-line" data-typewriter="城市并不是缺少美，&#10;而是我们走得太快。"></h3>
+          <h3 class="thought-line" data-typewriter="城市自有美，&#10;只是我们走得太快。"></h3>
           <p class="thought-sub">熟悉感、噪音和屏幕注意力，让很多街景、光影、天气和生活细节被自动忽略。真实世界的美更安静，需要被提醒、被放大、被重新组织。</p>
         </div>
       </section>
@@ -3830,9 +3160,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <div class="case-copy reveal">
           <div class="case-index">02</div>
           <h3>空间对齐助手 MIA</h3>
-          <p class="case-lead">MIA 不是贴在镜片上的 2D 弹窗 AI，而是与物理坐标对齐的数字生命。空间对齐让陪伴感更强烈——用户会对她更信任，也更有安全感。她会出现在桌旁、椅边或用户视线附近，像一个真正与环境共处的助手。</p>
+          <p class="case-lead">MIA 是与物理坐标对齐的数字生命，长在真实空间里。空间对齐让陪伴感更强烈——用户会对她更信任，也更有安全感。她会出现在桌旁、椅边或用户视线附近，像一个真正与环境共处的助手。</p>
           <div class="case-list">
-            <div><strong>Spatial Coexistence</strong><span>工作时她可以“坐在”对面的椅子上，而不是挡在画面中央，降低科技介入感。</span></div>
+            <div><strong>Spatial Coexistence</strong><span>工作时她可以“坐在”对面的椅子上，安放在画面边缘，降低科技介入感。</span></div>
             <div><strong>Intent Prediction</strong><span>共享用户第一视角，结合视线追踪、场景理解和地理信息，在用户开口前预判需求。</span></div>
             <div><strong>Active Execution</strong><span>当用户注视餐厅、路牌或远处建筑时，MIA 可以主动解释、引导视线，甚至提前处理服务流程。</span></div>
           </div>
@@ -3842,7 +3172,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
       <section class="thought-page reveal" data-ghost="AR">
         <div class="thought-copy">
           <div class="thought-kicker">My Vision</div>
-          <h3 class="thought-line" data-typewriter="AR 不一定把人带向虚拟，&#10;它也可以把人带回现实。"></h3>
+          <h3 class="thought-line" data-typewriter="AR 可以把人带回现实，&#10;重新看见身边的世界。"></h3>
           <p class="thought-sub">用空间计算与实时视觉重构，让世界重新值得观看，同时保留环境风险识别，让美化现实不牺牲安全感。</p>
         </div>
       </section>
@@ -3882,18 +3212,30 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
   </section>
 
   <section class="section dark amadeus-case ama-v2 eva-chapter" id="amadeus">
+    <div class="ama-atmo" aria-hidden="true">
+      <div class="ama-atmo__layer ama-atmo__layer--1" data-speed="0.035"></div>
+      <div class="ama-atmo__layer ama-atmo__layer--2" data-speed="0.068"></div>
+      <div class="ama-atmo__layer ama-atmo__layer--3" data-speed="0.095"></div>
+      <div class="ama-atmo__veil"></div>
+    </div>
 
     <header class="ama-poster reveal" data-ama-section="intro" id="ama-intro">
       <div class="ama-poster-bg"></div>
       <div class="ama-poster-grain" aria-hidden="true"></div>
       <div class="ama-poster-vtext ama-poster-vtext--l" aria-hidden="true">数字生命实验系统</div>
       <div class="ama-poster-vtext ama-poster-vtext--r" aria-hidden="true">本地运行 · 长期在场</div>
-      <div class="ama-poster-top eva-caption">第02話 / AMADEUS</div>
+      <div class="ama-poster-top eva-caption">第01話 / AMADEUS</div>
       <div class="ama-poster-mid">
         <p class="ama-poster-en">DIGITAL LIFE · EXPERIMENTAL SYSTEM</p>
         <h2 class="ama-poster-title">AMADEUS</h2>
         <p class="ama-poster-sub">数字生命实验系统</p>
-        <p class="ama-poster-tag">人与数字之间，一条尚未被命名的线。</p>
+        <div class="project-status" aria-label="AMADEUS 项目状态">
+          <span>已实现</span>
+          <span>GitHub 开源</span>
+          <span>AI 人格系统 / 前端原型</span>
+          <span>独立完成</span>
+        </div>
+        <p class="ama-poster-tag">人与数字之间，一条正在被命名的线。</p>
       </div>
       <div class="ama-poster-foot">
         <div class="ama-poster-kanji">特報</div>
@@ -3907,15 +3249,50 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
           <span class="ama-dnote-edge" aria-hidden="true"></span>
           <p class="ama-dnote-h">我发现的问题</p>
           <p class="ama-dnote-ellipsis" aria-hidden="true">···</p>
-          <h3 class="thought-line ama-dnote-line ama-dnote-line--l" data-typewriter="人越来越独处，&#10;却越来越难被接住。"></h3>
-          <p class="thought-sub ama-dnote-sub">话多了去处，却少了被记住的温度。伴侣会应答，豆包会解惑，夜里仍像对着空房间说话。</p>
+          <h3 class="thought-line ama-dnote-line ama-dnote-line--l" data-typewriter="人越来越独处，&#10;更需要被接住的温度。"></h3>
+          <p class="thought-sub ama-dnote-sub">话有了去处，仍需要被记住的温度。伴侣会应答，豆包会解惑，夜里也需要持续在场的陪伴。</p>
         </div>
         <div class="ama-dnote-cell ama-dnote-cell--think">
           <span class="ama-dnote-edge ama-dnote-edge--r" aria-hidden="true"></span>
           <p class="ama-dnote-h ama-dnote-h--think">我的思考</p>
           <p class="ama-dnote-ellipsis" aria-hidden="true">···</p>
-          <h3 class="thought-line ama-dnote-line ama-dnote-line--r" data-typewriter="慰藉不必&#10;昂贵&#10;也不必用责任&#10;计价"></h3>
-          <p class="thought-sub ama-dnote-sub ama-dnote-sub--r">人与数字之间，可以不必背叛、不必消失、不必索价，也不把你困在必须回应的义务里——像一缕稳定的光。</p>
+          <h3 class="thought-line ama-dnote-line ama-dnote-line--r" data-typewriter="慰藉可以很轻，&#10;也能一直&#10;留在身边"></h3>
+          <p class="thought-sub ama-dnote-sub ama-dnote-sub--r">人与数字之间，能守住陪伴、能留在生活里、能给予稳定的温度——像一缕持续在场的光。</p>
+        </div>
+      </div>
+    </section>
+    <section class="ama-ui-v2 ama-ui-showcase ama-ui-showcase--poster reveal" data-ama-section="ui" id="ama-ui">
+      <div class="ama-ui-showcase-inner">
+        <div class="ama-ui-poster magnetic" aria-labelledby="ama-ui-title">
+          <figure class="ama-ui-poster__bg">
+            <img
+              src="assets/amadeus/art/scene-ui.png"
+              alt="AMADEUS 产品界面：对话轨、PAD 情绪、记忆宫殿与关系状态"
+              width="1600"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            >
+          </figure>
+          <div class="ama-ui-poster__overlay">
+            <svg class="ama-ui-poster__curves" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <path id="ama-ui-curve-top" d="M 48,168 Q 500,108 952,168"/>
+                <path id="ama-ui-curve-bottom" d="M 48,832 Q 500,892 952,832"/>
+              </defs>
+              <text class="ama-ui-poster__curve--top">
+                <textPath href="#ama-ui-curve-top" startOffset="50%" text-anchor="middle">开口前仲裁 · 跨轮策略 · 记忆分室 · 主动须承接 · 内心可观测</textPath>
+              </text>
+              <text class="ama-ui-poster__curve--bottom">
+                <textPath href="#ama-ui-curve-bottom" startOffset="50%" text-anchor="middle">她说出口之前 · 系统已决定如何相处 · 界面同屏可见</textPath>
+              </text>
+            </svg>
+            <div class="ama-ui-poster__center">
+              <p class="ama-ui-poster__kicker">08 / Product Interface · High-Fidelity Companion</p>
+              <h3 class="ama-ui-poster__headline" id="ama-ui-title">高度拟真 AI 伴侣</h3>
+              <p class="ama-ui-poster__lead">Amadeus 是一个有情感连续性的本地 AI 伴侣——要把「像一个人在场」做成可运行系统，靠跨轮策略、六种行为仲裁与心智轮次撑起每次开口前的判断。PAD 与关系 S 会延续，记忆按语义分室检索，空闲时可主动开口且必须承接上一轮线程。界面同屏露出对话、情绪曲线、记忆宫殿与内部状态——拟真正在可观测、可延续、开口前有判断的在场感。</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -3927,7 +3304,9 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <li><a class="ama-gallery-rail__link" href="#ama-palace" data-ama-rail="palace"><span class="ama-gallery-rail__num">02</span><span class="ama-gallery-rail__en">Memory</span></a></li>
         <li><a class="ama-gallery-rail__link" href="#ama-matrix" data-ama-rail="matrix"><span class="ama-gallery-rail__num">03</span><span class="ama-gallery-rail__en">Matrix</span></a></li>
         <li><a class="ama-gallery-rail__link" href="#ama-formula" data-ama-rail="formula"><span class="ama-gallery-rail__num">04</span><span class="ama-gallery-rail__en">Curve</span></a></li>
-        <li><a class="ama-gallery-rail__link" href="#ama-triad" data-ama-rail="behavior"><span class="ama-gallery-rail__num">05</span><span class="ama-gallery-rail__en">Logic</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-behavior" data-ama-rail="behavior"><span class="ama-gallery-rail__num">05</span><span class="ama-gallery-rail__en">Logic</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-autonomy" data-ama-rail="autonomy"><span class="ama-gallery-rail__num">06</span><span class="ama-gallery-rail__en">Drive</span></a></li>
+        <li><a class="ama-gallery-rail__link" href="#ama-mind" data-ama-rail="mind"><span class="ama-gallery-rail__num">07</span><span class="ama-gallery-rail__en">Mind</span></a></li>
         <li><a class="ama-gallery-rail__link" href="#ama-ui" data-ama-rail="ui"><span class="ama-gallery-rail__num">08</span><span class="ama-gallery-rail__en">UI</span></a></li>
       </ol>
     </nav>
@@ -3941,7 +3320,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
               <span class="ama-poster-block__dots" aria-hidden="true">···</span>
               人格是<br>一套可执行的<br>档案栈
             </h3>
-            <p class="ama-scene__lead">评审看到的不是「一句人设」，而是三层文件分工：传记定身份底色，核心锚点划边界，口吻文件每轮优先——决定她怎么开口，而不是背哪句台词。</p>
+            <p class="ama-scene__lead">评审看到的是三层文件分工：传记定身份底色，核心锚点划边界，口吻文件每轮优先——决定她怎么开口，塑造她的表达方式。</p>
           </div>
           <figure class="ama-scene__photo">
             <img src="assets/amadeus/art/ama-art-soul.png" alt="01 Soul · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
@@ -3958,12 +3337,12 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
             <article class="ama-stack-flow__item">
               <p class="ama-stack-flow__tag">不可突破 · 边界层</p>
               <p class="ama-stack-flow__file">kurisu_core_prompt.txt</p>
-              <p class="ama-stack-flow__desc">身份断言与红线：「你就是牧濑红莉栖本人」，不是助手、不是程序。</p>
+              <p class="ama-stack-flow__desc">身份断言与红线：「你就是牧濑红莉栖本人」——以本人的姿态在场。</p>
             </article>
             <article class="ama-stack-flow__item">
               <p class="ama-stack-flow__tag">底色 · 传记层</p>
               <p class="ama-stack-flow__file">kurisu_soul.txt</p>
-              <p class="ama-stack-flow__desc">长传记只供记忆与情绪底色，<strong>不当作台词表</strong>逐句念出。</p>
+              <p class="ama-stack-flow__desc">长传记只供记忆与情绪底色，<strong>作为深层依据</strong>支撑表达。</p>
             </article>
             <p class="ama-stack-flow__foot">运行时合并进上下文 · 口吻 &gt; 边界 &gt; 传记</p>
           </div>
@@ -3974,7 +3353,7 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
     <section class="ama-chapter-break reveal" data-ama-section="solution">
       <div class="ama-chapter-break__inner">
         <p class="ama-chapter-break__kicker">我的解决</p>
-        <h3 class="ama-chapter-break__title" data-typewriter="让她像一个人在场，&#10;而不是一轮轮问答。"></h3>
+        <h3 class="ama-chapter-break__title" data-typewriter="让她像一个人在场，&#10;延续对话里的温度。"></h3>
         <p class="ama-chapter-break__sub">连续人格、分层记忆、情绪矩阵、主动编排——把在场感拆成可运行的系统。</p>
       </div>
     </section>
@@ -4024,8 +3403,8 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
         <div class="ama-scene__canvas ama-scene__canvas--split">
           <div class="ama-scene__copy">
             <p class="ama-scene__kicker">03 / Affective Matrix</p>
-            <h3 class="ama-scene__title">她不是单一情绪，而是情绪向量。</h3>
-            <p class="ama-scene__lead">PAD 不是给界面看的心情条，而是持续变化的内部动力学。事件重要性决定刺激强度，关系强度会钝化负面冲击，长期记忆还会反过来形成 PAD 偏置。</p>
+            <h3 class="ama-scene__title">她以情绪向量在场，持续变化。</h3>
+            <p class="ama-scene__lead">PAD 是持续变化的内部动力学。事件重要性决定刺激强度，关系强度会钝化负面冲击，长期记忆还会反过来形成 PAD 偏置。</p>
           </div>
           <figure class="ama-scene__photo">
             <img src="assets/amadeus/art/ama-art-matrix.png" alt="03 Matrix · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
@@ -4060,63 +3439,46 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
       </div>
     </article>
 
-    <article class="ama-v2-module reveal" data-ama-section="formula" id="ama-formula" aria-label="情绪曲线">
-      <div class="ama-emotion-hero">
-        <div class="ama-emotion-hero__copy">
-          <p class="ama-emotion-hero__kicker">04 / Observable Emotion Curve</p>
-          <h3 class="ama-emotion-hero__title">情绪曲线<br>把内部状态压成可观察信号。</h3>
-          <p class="ama-emotion-hero__lead">页面里的情绪不是随便画条线，而是把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看见「关系、唤醒度和掌控感」如何共同塑造表达。</p>
-        </div>
-      <figure class="ama-emotion-panel magnetic" data-ama-emotion-panel aria-label="AMADEUS 情绪曲线 · 由 PAD 公式实时绘制">
-        <header class="ama-emotion-panel__head"><span>experiments/kurisu-dialogue/amadeus/pad.py</span><span>inner state · live curve</span></header>
-        <div class="ama-emotion-panel__body">
-          <div class="ama-emotion-panel__meta">
-            <span>INNER STATE</span>
-            <strong>emotion <span data-ama-emotion-score>+0.000</span></strong>
-          </div>
-          <svg class="ama-emotion-panel__svg" viewBox="0 0 600 280" role="img" aria-label="PAD 综合情绪分数曲线">
-            <defs>
-              <pattern id="amaEmotionGrid" width="24" height="24" patternUnits="userSpaceOnUse">
-                <path d="M24 0H0V24" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>
-              </pattern>
-            </defs>
-            <rect width="600" height="280" fill="url(#amaEmotionGrid)"/>
-            <line x1="36" y1="140" x2="564" y2="140" stroke="rgba(255,255,255,.14)" stroke-width="1" stroke-dasharray="4 6"/>
-            <text x="40" y="24" fill="rgba(255,255,255,.28)" font-family="monospace" font-size="10">+1.0</text>
-            <text x="40" y="152" fill="rgba(255,255,255,.22)" font-family="monospace" font-size="10">0</text>
-            <text x="40" y="268" fill="rgba(255,255,255,.28)" font-family="monospace" font-size="10">−1.0</text>
-            <path class="ama-emotion-curve-path" d="M36,140"/>
-            <circle class="ama-emotion-cursor" r="5" cx="36" cy="140"/>
-          </svg>
-          <div class="ama-emotion-stats" aria-label="当前 PAD 向量">
-            <span>P <b data-ama-pad="P">+0.10</b></span>
-            <span>A <b data-ama-pad="A">+0.00</b></span>
-            <span>D <b data-ama-pad="D">+0.20</b></span>
-            <span>S <b data-ama-pad="S">0.35</b></span>
-          </div>
-          <p class="ama-emotion-formula">score = 0.40·P + 0.25·A + 0.20·D + 0.15·(2S−1) · turn <span data-ama-emotion-turn>0</span>/14</p>
-          <p class="ama-emotion-caption" data-ama-emotion-caption>滚动到此面板后，按实验栈同款 update_pad 逐句推演</p>
-        </div>
-        <figcaption class="ama-emotion-cap">非截图 · 由 pad.py 公式 + 演示对话输入实时绘制</figcaption>
-      </figure>
-      </div>
-    </article>
+    <article class="ama-v2-module ama-editorial reveal" id="ama-triad" aria-label="情绪曲线 · 行为仲裁 · 主动驱动 · 心智轮次">
+      <div class="ama-editorial__sheet">
 
-    <article class="ama-v2-module ama-triad reveal" id="ama-triad" aria-label="行为仲裁 · 主动驱动 · 心智轮次">
-      <div class="ama-triad__sheet">
-        <section class="ama-triad__row" data-ama-section="behavior">
-          <div class="ama-triad__edge ama-triad__edge--l">
-            <p class="ama-triad__kicker">05 / Behavior Arbitration</p>
-            <h3 class="ama-triad__title">回复前先选择行为倾向。</h3>
-            <p class="ama-triad__lead">系统不会直接把用户输入交给模型。它先让靠近、日常、防御、转移、智识投入、收缩六种候选互相竞争，再把胜出的倾向注入 prompt，形成稳定但不僵硬的性格。</p>
+        <section class="ama-editorial__spread" id="ama-formula" data-ama-section="formula">
+          <div class="ama-editorial__side ama-editorial__side--l">
+            <p class="ama-editorial__tag">Observable Emotion Curve</p>
+            <h3 class="ama-editorial__title">情绪曲线<br>把内部状态压成可观察信号。</h3>
+            <p class="ama-editorial__lead">页面里的情绪把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看见「关系、唤醒度和掌控感」如何共同塑造表达。</p>
+            <p class="ama-editorial__stats">
+              P <b data-ama-pad="P">+0.10</b>
+              A <b data-ama-pad="A">+0.00</b>
+              D <b data-ama-pad="D">+0.20</b>
+              S <b data-ama-pad="S">0.35</b>
+              · emotion <b data-ama-emotion-score>+0.000</b>
+            </p>
+            <p class="ama-editorial__formula">score = 0.40·P + 0.25·A + 0.20·D + 0.15·(2S−1) · turn <span data-ama-emotion-turn>0</span>/14</p>
+            <p class="ama-editorial__live" data-ama-emotion-caption>滚动到此面板后，按实验栈同款 update_pad 逐句推演</p>
           </div>
-          <div class="ama-triad__core" aria-hidden="true">
-            <span class="ama-triad__num">05</span>
-            <span class="ama-triad__en">Behavior</span>
+          <div class="ama-editorial__panel" data-ama-emotion-panel aria-label="AMADEUS 情绪曲线">
+            <figure class="ama-editorial__plate">
+              <img src="assets/amadeus/art/ama-art-offset-a.png" alt="情绪曲线" width="640" height="360" loading="lazy" decoding="async">
+              <div class="ama-editorial__curve" aria-hidden="true">
+                <svg class="ama-emotion-panel__svg" viewBox="0 0 600 280" preserveAspectRatio="none" role="img" aria-label="PAD 曲线">
+                  <line x1="36" y1="140" x2="564" y2="140" stroke="rgba(10,10,10,.12)" stroke-width="1"/>
+                  <path class="ama-emotion-curve-path" d="M36,140"/>
+                  <circle class="ama-emotion-cursor" r="3" cx="36" cy="140"/>
+                </svg>
+              </div>
+              <p class="ama-editorial__glyph" aria-hidden="true">
+                <span class="ama-editorial__glyph-back">情绪曲线</span>
+                <span class="ama-editorial__glyph-front">情绪曲线</span>
+              </p>
+            </figure>
           </div>
-          <div class="ama-triad__edge ama-triad__edge--r">
-            <p class="ama-triad__mono-tag">amadeus/behavior.py · candidate scoring</p>
-            <pre class="ama-triad__mono"><code><span class="kw">if</span> P &gt; 0.35:
+          <div class="ama-editorial__side ama-editorial__side--r" id="ama-behavior" data-ama-section="behavior">
+            <p class="ama-editorial__tag">Behavior Arbitration</p>
+            <h3 class="ama-editorial__title">回复前先选择行为倾向。</h3>
+            <p class="ama-editorial__lead">系统先把用户输入送进行为仲裁：让靠近、日常、防御、转移、智识投入、收缩六种候选互相竞争，再把胜出的倾向注入 prompt，形成稳定但不僵硬的性格。</p>
+            <p class="ama-editorial__mono-tag">amadeus/behavior.py · candidate scoring</p>
+            <pre class="ama-editorial__mono"><code><span class="kw">if</span> P &gt; 0.35:
   scores[<span class="st">"APPROACH"</span>] += 0.35
 <span class="kw">elif</span> P &lt; -0.35:
   scores[<span class="st">"WITHDRAW"</span>] += 0.40
@@ -4133,37 +3495,27 @@ body.eva-skin #digitalark .ama-v2-module{background:transparent!important}
 winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
           </div>
         </section>
-        <section class="ama-triad__row" data-ama-section="autonomy">
-          <div class="ama-triad__edge ama-triad__edge--l">
-            <p class="ama-triad__kicker">06 / Autonomous Drive</p>
-            <h3 class="ama-triad__title ama-triad__title--stack">主动不是定时问候，<br>而是内生目标。</h3>
-            <p class="ama-triad__lead">主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态决定该不该打扰。</p>
-          </div>
-          <div class="ama-triad__core" aria-hidden="true">
-            <span class="ama-triad__num">06</span>
-            <span class="ama-triad__en">Autonomy</span>
-          </div>
-          <div class="ama-triad__edge ama-triad__edge--r">
-            <ul class="ama-triad__list">
-              <li><strong>轮次审计（每满 3 轮）：</strong>对照 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项；都不成立则本轮不主动。</li>
+
+        <section class="ama-editorial__spread ama-editorial__spread--b">
+          <div class="ama-editorial__side ama-editorial__side--l" id="ama-autonomy" data-ama-section="autonomy">
+            <p class="ama-editorial__tag">Autonomous Drive</p>
+            <h3 class="ama-editorial__title ama-editorial__title--stack">主动来自内生目标，<br>回应关系与状态。</h3>
+            <p class="ama-editorial__lead">主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态判断何时开口。</p>
+            <ul class="ama-editorial__list">
+              <li><strong>轮次审计（每满 3 轮）：</strong>对照 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项；全部成立则本轮开口。</li>
               <li><strong>空闲触发门槛：</strong>只有 presence 为真且上一句用户原话仍相关时，才允许发主动句；引用内容只能来自记忆宫已写入的标签。</li>
               <li><strong>主动后的承接义务：</strong>若本轮是她先抛线，下一轮必须把这条线接回去；禁止主动一句后立刻切回无关寒暄。</li>
             </ul>
           </div>
-        </section>
-        <section class="ama-triad__row" data-ama-section="mind">
-          <div class="ama-triad__edge ama-triad__edge--l">
-            <p class="ama-triad__kicker">07 / Mind Turn</p>
-            <h3 class="ama-triad__title">每轮先走逻辑、共情、智识。</h3>
-            <p class="ama-triad__lead">在真正生成对白前，系统会把当前输入压成三条内部读数：逻辑上问的是什么、情绪上要怎么接住、智识上能不能展开。它不展示给用户，却决定她的下一句话是不是贴着本轮焦点。</p>
-          </div>
-          <div class="ama-triad__core" aria-hidden="true">
-            <span class="ama-triad__num">07</span>
-            <span class="ama-triad__en">Mind</span>
-          </div>
-          <div class="ama-triad__edge ama-triad__edge--r">
-            <p class="ama-triad__mono-tag">amadeus/mind_turn.py · inner reasoning</p>
-            <pre class="ama-triad__mono"><code>【心智加工 · 逻辑→共情→智识】
+          <figure class="ama-editorial__plate ama-editorial__plate--shift">
+            <img src="assets/amadeus/art/ama-art-offset-b.png" alt="逻辑栈" width="640" height="360" loading="lazy" decoding="async">
+          </figure>
+          <div class="ama-editorial__side ama-editorial__side--r" id="ama-mind" data-ama-section="mind">
+            <p class="ama-editorial__tag">Mind Turn</p>
+            <h3 class="ama-editorial__title">每轮先走逻辑、共情、智识。</h3>
+            <p class="ama-editorial__lead">在真正生成对白前，系统会把当前输入压成三条内部读数：逻辑上锁定的议题、情绪上接住的姿态、智识上可展开的深度。它不展示给用户，却决定她的下一句话贴着本轮焦点。</p>
+            <p class="ama-editorial__mono-tag">amadeus/mind_turn.py · inner reasoning</p>
+            <pre class="ama-editorial__mono"><code>【心智加工 · 逻辑→共情→智识】
 行为倾向：{behavior}
 逻辑：先锁定对方问的是什么，正面答命题
 共情：他在泄压或求接住，先承认感受
@@ -4172,38 +3524,32 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
 对外只输出自然中文口语对白，80～180字。</code></pre>
           </div>
         </section>
+
       </div>
     </article>
 
-    <section class="ama-ui-v2 ama-ui-showcase reveal" data-ama-section="ui" id="ama-ui">
-      <div class="ama-ui-showcase-inner">
-        <p class="ama-v2-sub">08 / Frontend Interface</p>
-        <h3>前端界面 · 用户真正打开的一屏</h3>
-        <p class="ama-ui-lead">前面的拆解，是为了证明系统在场；这一屏才是日常会盯着看、会打字进去的那一面——神经链、记忆宫、PAD 与对话输入轨收进同一块 HUD，而不是另起一套演示壳。</p>
-        <figure class="ama-ui-figure ama-ui-figure--live magnetic">
-          <div class="ama-work-live">
-            <iframe
-              class="ama-work-iframe"
-              src="assets/amadeus-work/index.html"
-              title="AMADEUS SYSTEM · 牧濑红莉栖神经链 HUD"
-              loading="lazy"
-              allow="clipboard-write"
-            ></iframe>
-          </div>
-          <figcaption class="ama-ui-cap">AMADEUS SYSTEM · v1.0 · Neural Link Established · 网页版可对话（无语音/视频）</figcaption>
-        </figure>
-      </div>
-    </section>
     </div>
     </div>
 
-    <section class="ama-paper-cta reveal" data-ama-section="paper" style="padding:3rem 1.5rem 2rem;max-width:52rem;margin:0 auto;font-family:Inter,system-ui,sans-serif;">
-      <div style="border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);padding:1.75rem 1.5rem;border-radius:4px;">
-        <p style="margin:0 0 .35rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;opacity:.65;">Research · Preprint</p>
-        <h3 style="margin:0 0 .75rem;font-family:'Noto Serif SC',serif;font-size:1.25rem;font-weight:600;">对照实验论文 · 已公开</h3>
-        <p style="margin:0 0 1.1rem;font-size:.92rem;line-height:1.65;opacity:.88;">同底模 A/D 双组、96 轮双评分者盲评、七维 rubric 与完整 AMADEUS 架构说明（v0.8）。</p>
-        <a href="paper/index.html" style="display:inline-block;padding:.55rem 1.1rem;background:#3d52a0;color:#fff;text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.04em;">阅读论文 →</a>
-        <a href="paper/AMADEUS-论文.md" download style="display:inline-block;margin-left:.75rem;padding:.55rem 1.1rem;border:1px solid rgba(255,255,255,.25);color:inherit;text-decoration:none;font-size:.85rem;">下载 Markdown</a>
+    <div class="ama-outro-wrap">
+    <section class="ama-changelog-cta reveal" data-ama-section="changelog" id="ama-changelog">
+      <a class="ama-changelog-cta__card" href="assets/amadeus/changelog/index.html">
+        <p class="ama-changelog-cta__kicker">Iteration Log · 设计思考</p>
+        <h3 class="ama-changelog-cta__title">迭代日志 · 「感受」从何而来</h3>
+        <p class="ama-changelog-cta__lead">从感质问题出发：数字生命能记经历，也需要感受本身的架构。v1.1 记录这一判断如何导向六维状态机——点击进入完整时间线。</p>
+        <span class="ama-changelog-cta__more">阅读迭代日志 →</span>
+      </a>
+    </section>
+
+    <section class="ama-paper-cta reveal" data-ama-section="paper">
+      <div class="ama-paper-cta__card">
+        <p class="ama-paper-cta__kicker">Research · Preprint</p>
+        <h3 class="ama-paper-cta__title">对照实验论文 · 已公开</h3>
+        <p class="ama-paper-cta__lead">同底模 A/D 双组、96 轮双评分者盲评、七维 rubric 与完整 AMADEUS 架构说明（v0.8）。</p>
+        <div class="ama-paper-cta__actions">
+          <a class="ama-paper-cta__btn ama-paper-cta__btn--primary" href="paper/index.html">阅读论文 →</a>
+          <a class="ama-paper-cta__btn ama-paper-cta__btn--ghost" href="paper/AMADEUS-论文.md" download>下载 Markdown</a>
+        </div>
       </div>
     </section>
 
@@ -4214,293 +3560,218 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
         <p class="ama-chapter-break__sub">家居联动、实体投影、起居节律；接入 AR 眼镜与手机。先把长期陪伴做实。</p>
       </div>
     </section>
+    </div>
 
   </section>
+
+  <div class="da2-chapter-seam" id="da2ChapterSeam" aria-hidden="true"></div>
 
   <section class="section da-chapter" id="digitalark" aria-labelledby="da2-title">
     <div class="da-ds-wrap">
       <div class="da-ds-body">
-<!-- ░░ 封面 ░░ -->
-  <div class="da2-cover" id="da2Cover">
-    <div class="da2-cover-bg"></div>
-    <div class="da2-cover-grain"></div>
-    <canvas id="da2Canvas" aria-hidden="true"></canvas>
-
-    <div class="da2-hud" aria-hidden="true">
-      <span class="da2-hud-l">第04話 / DIGITAL ARK</span>
-      <span class="da2-hud-r">CHEN BIAOMING · 2026</span>
+<!-- ░░ 数字方舟：封面 + 横滑 同一连续场景 ░░ -->
+  <div class="da2-experience" id="da2Experience">
+    <div class="da2-experience-viewport">
+      <div class="da-is-red da2-experience-archive">
+        <section class="da2-hscroll da2-intro-hscroll" aria-label="数字方舟红色档案展厅">
+    <div class="da2-hscroll-kicker">
+      <span class="da2-hscroll-kicker-title">数字方舟</span>
+      <span class="da2-hscroll-kicker-meta">红色档案墙</span>
     </div>
-
-    <div class="da2-cover-body">
-      <p class="da2-eyebrow">PRESENCE · DIGITAL TWIN · LOCAL FIRST</p>
-      <h1 class="da2-title-art" id="da2-title">
-        <img
-          class="da2-title-img"
-          src="assets/digitalark/da-title-digital-ark.png"
-          alt="DIGITAL ARK · 数字方舟"
-          width="1536"
-          height="1024"
-          decoding="async"
-          fetchpriority="high"
-        >
-      </h1>
-      <p class="da2-title-cn">数字方舟</p>
-      <p class="da2-tagline">死亡不是终点。遗忘，才是。</p>
+    <div class="da2-hscroll-progress" aria-live="polite">
+      <span class="da2-hscroll-progress-num">01</span>
+      <span class="da2-hscroll-progress-sep">/</span>
+      <span class="da2-hscroll-progress-total">07</span>
     </div>
-
-    <div class="da2-cover-foot" aria-hidden="true">
-      <div class="da2-cover-foot-kanji">方舟</div>
-    </div>
-
-    <div class="da2-scroll-hint" aria-hidden="true">
-      <span>SCROLL</span>
-      <div class="da2-scroll-line"></div>
-    </div>
-  </div>
-
-  <!-- ░░ 叙事段落 · 情感入口 ░░ -->
-  <div class="da2-narrative">
-    <div class="da2-narrative-inner">
-      <p class="da2-pull" data-pull-lines>
-        离开往往毫无预兆。<br>
-        来不及说的话，<br>
-        最后都变成别人记不清的细节。
-      </p>
-      <p class="da2-p" data-flow-lines>
-        我们真正怕的，是记忆变淡。市面上的数字人忙着学语气，却没有人去保存她怎么判断、怎么犹豫、怎么在一次次经历之后，才变成现在的样子。
-      </p>
-
-      <div class="da2-split">
-        <div class="da2-split-col da2-split-col--l">
-          <p class="da2-split-label da2-split-piece" style="--piece-i:0">我发现的问题</p>
-          <h3 class="da2-split-h da2-split-piece" style="--piece-i:1">想记住，却越来越抓不住。</h3>
-          <p class="da2-split-p da2-split-piece" style="--piece-i:2">多数数字人只有一张会说话的嘴。没有训练出来的判断结构，关掉窗口，人就又远了。</p>
+    <div class="da2-hscroll-track">
+      <!-- 面板 1 · 问题 -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--split" data-panel="1">
+        <div class="da2-split-left">
+          <p class="da2-pull">离开往往毫无预兆。<br>来不及说的话，<br>最后都变成别人记不清的细节。</p>
+          <p class="da2-p da2-narr-body">我们真正怕的，是记忆变淡。市面上的数字人忙着学语气，却少有人保存她怎么判断、怎么犹豫、怎么在一次次经历之后，才变成现在的样子。</p>
         </div>
-        <div class="da2-split-col da2-split-col--r">
-          <p class="da2-split-label da2-split-piece" style="--piece-i:0">我的思考</p>
-          <h3 class="da2-split-h da2-split-piece" style="--piece-i:1">要留的是她，不是她的台词。</h3>
-          <p class="da2-split-p da2-split-piece" style="--piece-i:2">方舟保存驱动她说话的那套内部结构。告别之后，仍能说：对，这是她会做的选择。</p>
+        <div class="da2-split-right">
+          <p class="da2-archive-tag">档案 · 01</p>
+          <h3 class="da2-split-h">数字方舟是什么</h3>
+          <p class="da2-split-p">本地数字人格 · 数字人留存系统。<strong>目标不是学语气，而是用五层人格架构尽可能还原一个真实的人</strong>——她怎么判断、怎么感受、怎么记住、怎么待人、怎么说。把这套内部结构训练成可运行系统，留在本机。</p>
+          <a class="da2-archive-link" href="assets/digitalark-app/apps/sanctuary.html" target="_blank" rel="noopener noreferrer">进入产品演示 ↗</a>
         </div>
-      </div>
-    </div>
-  </div>
+      </article>
 
-  <!-- ░░ 产品界面 · 真实 App（与说明同一区块）░░ -->
-  <section class="da2-app-showcase" aria-labelledby="da2-app-title">
-    <div class="da2-app-integrated">
-      <div class="da2-app-context">
-        <p class="da2-section-label da2-reveal">产品概览</p>
-        <h2 class="da2-section-h da2-reveal da2-reveal-delay-1" id="da2-app-title">数字方舟 · 留在本机的在场感</h2>
-        <p class="da2-app-lead da2-reveal da2-reveal-delay-2">
-          数字方舟是我做的一套本地数字人格产品：不把某个人做成「会说话的壳」，而是把她的判断方式、情绪节奏，以及那些真正改变过她的经历，训练成可运行的内部结构。每一轮对话之前，系统先在本地跑完情境解析、记忆检索与状态权衡，再调用模型生成回应——数据默认不离开设备，随使用慢慢演化。
-        </p>
-        <div class="da2-app-summary">
-          <div class="da2-app-summary-item da2-reveal">
-            <p class="da2-app-summary-k">为谁</p>
-            <p>为可能面对意外与告别、仍想被记住的人；也为希望把自己的在场感留下来、供日后对话与自我理解的人。</p>
+      <!-- 面板 2 · 产品介绍 -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--product" data-panel="2">
+        <p class="da2-archive-tag">档案 · 02</p>
+        <h3 class="da2-split-h">产品介绍</h3>
+        <p class="da2-split-p">有情感连续性的本地数字分身训练与陪护系统——为自我探索、长期陪伴与授权后的情感慰藉而设计。从创建到在场，是一条可走完的闭环。</p>
+        <ol class="da2-training-flow da2-training-flow--compact">
+          <li class="da2-training-step"><span class="da2-training-num">01</span><div><strong>创建分身</strong><p>称呼、形象与基础资料，建立训练对象。</p></div></li>
+          <li class="da2-training-step"><span class="da2-training-num">02</span><div><strong>五类训练</strong><p>音色/记忆/关系/情感/认知——为五层人格采集真实样本。</p></div></li>
+          <li class="da2-training-step"><span class="da2-training-num">03</span><div><strong>试聊校准</strong><p>像/不像反馈，纠错写回具体人格层，看见分身变像。</p></div></li>
+          <li class="da2-training-step"><span class="da2-training-num">04</span><div><strong>授权陪护</strong><p>训练者逐人授权，陪护端知情同意后进入。</p></div></li>
+          <li class="da2-training-step"><span class="da2-training-num">05</span><div><strong>长期在场</strong><p>跨会话延续关系，空闲时主动问候，数据留在本机。</p></div></li>
+        </ol>
+      </article>
+
+      <!-- 面板 3 · 产品亮点 -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--philosophy" data-panel="3">
+        <p class="da2-archive-tag">档案 · 03</p>
+        <h3 class="da2-split-h">亮点 · 架构<br>尽可能还原人</h3>
+        <p class="da2-split-p">市面数字人忙着复制外壳；数字方舟复制<strong>反应方式</strong>——每一次开口，都先跑完人的内部结构，再长出表达。</p>
+        <ul class="da2-pillar-list">
+          <li class="da2-pillar">
+            <strong>还原判断链</strong>
+            <p>价值取舍、边界反应、道德直觉在冲突时先起作用——按这个人的习惯取舍，不是套模板。</p>
+          </li>
+          <li class="da2-pillar">
+            <strong>还原情绪与记忆</strong>
+            <p>情绪有节奏、有延续；记忆被情境激活后留下情绪残留，并修正这一次的判断。</p>
+          </li>
+          <li class="da2-pillar">
+            <strong>还原关系差异</strong>
+            <p>对亲密的人、陌生的人、不同信任历史的人——换的是距离与反应方式，不只是换语气。</p>
+          </li>
+          <li class="da2-pillar">
+            <strong>可解释、可校准</strong>
+            <p>每条回复标注五层参与与来源模块；纠错写回对应人格层，分身随训练逐步逼近本人。</p>
+          </li>
+        </ul>
+      </article>
+
+      <!-- 面板 4 · 设计说明 -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--philosophy" data-panel="4">
+        <p class="da2-archive-tag">档案 · 04</p>
+        <h3 class="da2-split-h">设计说明</h3>
+        <p class="da2-split-p">设计目标：<strong>还原人在场感，而非模拟一段对话。</strong>人不是静态人设，而是情境下的反应——所以用分层采集、动态加工、可见演化，让分身逐步逼近本人。</p>
+        <ul class="da2-pillar-list">
+          <li class="da2-pillar">
+            <strong>五层共同塑形</strong>
+            <p>判断、情绪、记忆、关系、表达同时决定一句话；缺一层，还原就不完整。五类训练为各层供料，不是五个互不相关的功能。</p>
+          </li>
+          <li class="da2-pillar">
+            <strong>CAPS 情境加工</strong>
+            <p>人格不是固定分数，而是「在 X 情境下倾向于 Y」。CAPS 做情境→网状加工→If-Then 行为签名，同一个人在不同处境下反应不同。</p>
+          </li>
+          <li class="da2-pillar">
+            <strong>状态先于生成</strong>
+            <p>关系深度、记忆先例、PAD 情绪在本机先跑完，再调用 LLM 开口——先还原内部状态，再生成外在表达。</p>
+          </li>
+          <li class="da2-pillar">
+            <strong>校准可见可追踪</strong>
+            <p>价值冲突逼出结构，日常碎片加厚质感，试聊纠错写回层——用户看得见分身在变，训练才有意义。</p>
+          </li>
+        </ul>
+      </article>
+
+      <!-- 面板 5 · 五层人格架构 -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--layers" data-panel="5">
+        <p class="da2-archive-tag">档案 · 05</p>
+        <h3 class="da2-split-h">五层人格架构</h3>
+        <p class="da2-split-p da2-layers-lead">还原一个人的完整反应链：五层同时运作，由 CAPS 在运行时做情境加工。表达是最后一层——从底层状态长出来，不是贴上去的语气。</p>
+        <div class="da2-layer-strip" role="list">
+          <div class="da2-layer-card" role="listitem">
+            <span class="da2-layer-num">05</span>
+            <strong class="da2-layer-name">表达</strong>
+            <p class="da2-layer-desc">句式、语气、语言习惯——由底层状态实时塑造。</p>
           </div>
-          <div class="da2-app-summary-item da2-reveal da2-reveal-delay-1">
-            <p class="da2-app-summary-k">怎么做</p>
-            <p>用价值冲突、日常碎片与试聊纠错采集结构，不靠自述问卷；五层人格架构驱动输出，而不是固定人设提示词。</p>
+          <div class="da2-layer-card" role="listitem">
+            <span class="da2-layer-num">04</span>
+            <strong class="da2-layer-name">关系</strong>
+            <p class="da2-layer-desc">亲密程度、信任历史、关系中的自我。</p>
           </div>
-          <div class="da2-app-summary-item da2-reveal da2-reveal-delay-2">
-            <p class="da2-app-summary-k">产品形态</p>
-            <p>安住（日常陪护）、训练（采集与校准）、陪护（伦理与边界）三端；Node.js 本地服务 + Web 界面，可训练、可陪护、可留在本机。</p>
+          <div class="da2-layer-card" role="listitem">
+            <span class="da2-layer-num">03</span>
+            <strong class="da2-layer-name">记忆</strong>
+            <p class="da2-layer-desc">活态与沉淀记忆：经历被激活时提取情绪残留，内化后修正判断。</p>
+          </div>
+          <div class="da2-layer-card" role="listitem">
+            <span class="da2-layer-num">02</span>
+            <strong class="da2-layer-name">情绪</strong>
+            <p class="da2-layer-desc">PAD 模型：愉悦、唤醒、支配加关系强度，非线性更新。</p>
+          </div>
+          <div class="da2-layer-card da2-layer-card--core" role="listitem">
+            <span class="da2-layer-num">01</span>
+            <strong class="da2-layer-name">核心</strong>
+            <p class="da2-layer-desc">价值、边界、道德、内心活动——冲突时先过这一关。</p>
           </div>
         </div>
-        <p class="da2-app-note da2-reveal da2-reveal-delay-3">交互演示 · 可点按探索</p>
-        <p class="da2-app-note-detail da2-reveal da2-reveal-delay-3">
-          下方为界面原型：可切换三端、输入对话、点按反馈。演示不联网，完整训练管线仅在本地产品中运行。
-        </p>
-        <div class="da2-app-actions da2-reveal da2-reveal-delay-3">
-          <a class="da2-app-open" href="assets/digitalark-app/apps/sanctuary.html" target="_blank" rel="noopener noreferrer">全屏打开演示 ↗</a>
+      </article>
+
+      <!-- 面板 6 · 核心 8 维 -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--eight" data-panel="6">
+        <p class="da2-archive-tag">档案 · 06</p>
+        <h3 class="da2-split-h">核心层 · 8 维分解</h3>
+        <p class="da2-split-p">核心层是还原的枢纽——把「这个人是谁」拆成可采集、可训练、可校准的维度网格，供 CAPS 在冲突情境下权衡取舍。</p>
+        <div class="da2-eight-wall">
+          <div class="da2-eight-cell"><span class="da2-eight-name">价值优先级</span><span class="da2-eight-w">20%</span></div>
+          <div class="da2-eight-cell"><span class="da2-eight-name">自我规范</span><span class="da2-eight-w">15%</span></div>
+          <div class="da2-eight-cell"><span class="da2-eight-name">边界模式</span><span class="da2-eight-w">15%</span></div>
+          <div class="da2-eight-cell"><span class="da2-eight-name">待人处事</span><span class="da2-eight-w">15%</span></div>
+          <div class="da2-eight-cell"><span class="da2-eight-name">眼光视角</span><span class="da2-eight-w">10%</span></div>
+          <div class="da2-eight-cell"><span class="da2-eight-name">道德判断</span><span class="da2-eight-w">10%</span></div>
+          <div class="da2-eight-cell"><span class="da2-eight-name">品质特质</span><span class="da2-eight-w">10%</span></div>
+          <div class="da2-eight-cell da2-eight-cell--dim"><span class="da2-eight-name">内心活动</span><span class="da2-eight-w">5%</span></div>
         </div>
-      </div>
-      <div class="da2-app-device" id="da2AppDevice" aria-hidden="false">
-        <div class="da2-app-frame">
-          <iframe
-            src="assets/digitalark-app/apps/sanctuary.html?embed=portfolio"
-            title="数字方舟 · sanctuary 界面"
-            loading="lazy"
-          ></iframe>
+      </article>
+
+      <!-- 面板 7 · 唯一尾声（整屏，不与其他档案混排） -->
+      <article class="da2-hscroll-panel da2-hscroll-panel--finale" data-panel="7" id="da2FinaleStage">
+        <div class="da2-finale da2-finale-grid">
+          <div class="da2-finale-statement">
+            <p class="da2-finale-kicker">我的愿景</p>
+            <h2 class="da2-finale-h">
+              遗忘才是终点。<br>方舟负责记住。
+            </h2>
+            <div class="da2-finale-cols">
+              <p class="da2-finale-sub">用架构尽可能还原一个人，再把这份在场留在本机——可训练、可解释、可陪护。</p>
+              <p class="da2-finale-sub">为预防意外、为告别后仍能被想起、为照见自己；坦诚是数字分身，不冒充真人实时在线。</p>
+            </div>
+            <div class="da2-product-foot">
+              <a href="assets/digitalark-app/apps/sanctuary.html" target="_blank" rel="noopener noreferrer">打开完整数字方舟演示 ↗</a>
+            </div>
+          </div>
+          <figure class="da2-finale-visual" aria-hidden="true">
+            <img src="cpt/数字方舟.png" alt="" width="640" height="480" loading="lazy" decoding="async">
+          </figure>
         </div>
-      </div>
+      </article>
     </div>
+    <div class="da2-hscroll-dots" aria-hidden="true">
+      <span class="is-on"></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <p class="da2-hscroll-slide-hint" aria-hidden="true">继续滚动 · 档案向左推移</p>
   </section>
+      </div>
 
-  <!-- ░░ 设计立场 ░░ -->
-  <div class="da2-stance">
-    <p class="da2-stance-kicker da2-reveal">01 / 设计主张</p>
-    <h2 class="da2-stance-h da2-reveal da2-reveal-delay-1">
-      不复制输出，<br>建模驱动输出的引擎。
-    </h2>
-    <p class="da2-p da2-reveal da2-reveal-delay-2" style="max-width:min(100%,52rem)">
-      一个人之所以是他自己，不是因为说了什么，而是因为有一套内部结构在运作——价值判断在冲突时怎么排序，边界被触碰时怎么反应，某段记忆怎么改变了他后来的判断方式。这套结构，才是真正需要被保留的东西。
-    </p>
-    <div class="da2-stance-three">
-      <div class="da2-stance-item da2-reveal">
-        <div class="da2-stance-num">01</div>
-        <div class="da2-stance-title">行为先于描述</div>
-        <p class="da2-stance-desc">不问你是什么样的人。用价值冲突场景逼出真实结构——把两个你在乎的东西放在对立面，看你怎么选、为什么选。选择比自述更诚实。</p>
-      </div>
-      <div class="da2-stance-item da2-reveal da2-reveal-delay-1">
-        <div class="da2-stance-num">02</div>
-        <div class="da2-stance-title">经历塑造判断</div>
-        <p class="da2-stance-desc">你在海边发呆说了一句话，比你填一百字的表格更真实。系统捕捉当下的碎片，追问加厚，慢慢积累。时间长了，这些碎片里长出来的，才是真正的她。</p>
-      </div>
-      <div class="da2-stance-item da2-reveal da2-reveal-delay-2">
-        <div class="da2-stance-num">03</div>
-        <div class="da2-stance-title">动态优于静态</div>
-        <p class="da2-stance-desc">人格不是一个固定的点。建模的是「在 X 情境下倾向于 Y」的映射——用关系深度、情绪状态、事件性质与先例记忆，在冲突时动态权衡。</p>
+      <div class="da2-cover" id="da2Cover">
+        <div class="da2-cover-grain"></div>
+        <div class="da2-hud" aria-hidden="true">
+          <span class="da2-hud-l">第02話 / DIGITAL ARK</span>
+          <span class="da2-hud-r">CHEN BIAOMING · 2026</span>
+        </div>
+        <div class="da2-cover-body">
+          <p class="da2-eyebrow">本地运行 · 人格还原 · 档案系统</p>
+          <h1 class="da2-title-stack" id="da2-title">
+            <span class="da2-title-en" aria-hidden="true">DIGITAL ARK</span>
+            <span class="da2-title-rule" aria-hidden="true"></span>
+            <span class="da2-title-cn">数字方舟</span>
+          </h1>
+          <div class="project-status" aria-label="数字方舟项目状态">
+            <span>基础版本完成</span>
+            <span>待验证迭代</span>
+            <span>本地人格产品</span>
+            <span>独立完成</span>
+          </div>
+          <p class="da2-tagline">用架构，尽可能还原一个人。</p>
+        </div>
+        <div class="da2-cover-index" aria-hidden="true">02</div>
+        <div class="da2-scroll-hint" aria-hidden="true">
+          <span>SCROLL</span>
+          <div class="da2-scroll-line"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ░░ 五层人格 ░░ -->
-  <div class="da2-layers-section">
-    <p class="da2-section-label da2-reveal">02 / 五层人格架构</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">为什么是五个架构</h2>
-    <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-      人的「在场感」不是单一的。我研究了人格心理学、认知科学与记忆理论之后，发现它同时来自五个层面运作——缺任何一个，都不像一个完整的人。
-    </p>
-
-    <div class="da2-timeline" id="da2Timeline">
-      <div class="da2-tl-item" style="--w:.88">
-        <div class="da2-tl-dot"></div>
-        <p class="da2-tl-num">LAYER 05</p>
-        <h3 class="da2-tl-h">表达层 · 音色</h3>
-        <p class="da2-tl-p">句式、语气、语言习惯——用户真正听见的一层。由底层状态实时塑造，不是固定模板。</p>
-        <div class="da2-tl-bar"><i></i></div>
-      </div>
-      <div class="da2-tl-item" style="--w:.70">
-        <div class="da2-tl-dot"></div>
-        <p class="da2-tl-num">LAYER 04</p>
-        <h3 class="da2-tl-h">关系层</h3>
-        <p class="da2-tl-p">亲密程度、信任历史、关系中的自我——直接影响核心层权衡方式。对半熟人收缩，对亲密者展开，这个模式从这里读取。</p>
-        <div class="da2-tl-bar"><i></i></div>
-      </div>
-      <div class="da2-tl-item" style="--w:.76">
-        <div class="da2-tl-dot"></div>
-        <p class="da2-tl-num">LAYER 03</p>
-        <h3 class="da2-tl-h">记忆层</h3>
-        <p class="da2-tl-p">活态记忆被情境激活，提取情绪残留并修正当次判断方向；沉淀态已内化为稳定规则，不以事件形式存在，却一直在影响。</p>
-        <div class="da2-tl-bar"><i></i></div>
-      </div>
-      <div class="da2-tl-item" style="--w:.65">
-        <div class="da2-tl-dot"></div>
-        <p class="da2-tl-num">LAYER 02</p>
-        <h3 class="da2-tl-h">情绪层 · PAD 矩阵</h3>
-        <p class="da2-tl-p">愉悦、唤醒、支配加关系强度，非线性更新。情绪真正参与权衡——关系越深，负面刺激越不容易打崩状态。基于 Mehrabian-Russell PAD 模型扩展。</p>
-        <div class="da2-tl-bar"><i></i></div>
-      </div>
-      <div class="da2-tl-item" style="--w:.92">
-        <div class="da2-tl-dot"></div>
-        <p class="da2-tl-num">LAYER 01 · 核心层</p>
-        <h3 class="da2-tl-h">核心层</h3>
-        <p class="da2-tl-p">价值、边界、道德、内心活动——冲突时先过这一关。从真实经历中提取的判断引擎，驱动所有上层的输出。基于 Mischel CAPS 模型、Schwartz 价值理论、Haidt 道德基础理论建模。</p>
-        <div class="da2-tl-bar"><i></i></div>
-      </div>
-    </div>
-
-    <!-- 八维网格 -->
-    <p class="da2-section-label da2-reveal" style="margin-top:clamp(56px,8vw,96px)">核心层 8 维分解</p>
-    <div class="da2-eight" id="da2Eight">
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">价值优先级</div>
-        <div class="da2-eight-dd">冲突时选什么</div>
-        <div class="da2-eight-w">20%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">自我规范</div>
-        <div class="da2-eight-dd">对自己的要求</div>
-        <div class="da2-eight-w">15%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">边界模式</div>
-        <div class="da2-eight-dd">触碰后的稳定反应</div>
-        <div class="da2-eight-w">15%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">待人处事风格</div>
-        <div class="da2-eight-dd">稳定的人际模式</div>
-        <div class="da2-eight-w">15%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">眼光视角</div>
-        <div class="da2-eight-dd">你看世界的角度</div>
-        <div class="da2-eight-w">10%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">道德判断</div>
-        <div class="da2-eight-dd">是非标准</div>
-        <div class="da2-eight-w">10%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">品质特质</div>
-        <div class="da2-eight-dd">身上稳定的东西</div>
-        <div class="da2-eight-w">10%</div>
-      </div>
-      <div class="da2-eight-item">
-        <div class="da2-eight-dt">内心活动模式</div>
-        <div class="da2-eight-dd">外显之下真正在想什么</div>
-        <div class="da2-eight-w">5%</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ░░ 训练体系 ░░ -->
-  <div class="da2-training">
-    <p class="da2-section-label da2-reveal">03 / 训练体系</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">如何从一个真实的人身上<br>提取可运行的人格</h2>
-    <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-      人不了解自己，自述不准，问卷更不准。训练体系的设计核心是：让用户在不知道自己在被采集的时候，暴露出最真实的结构。
-    </p>
-
-    <div class="da2-training-grid">
-      <div class="da2-training-step da2-reveal" data-step="冷启动">
-        <h3 class="da2-training-h">导入 + 价值冲突场景</h3>
-        <p class="da2-training-p">聊天记录与日记入库，提取音色初值。同步启动价值冲突场景——把两个你在乎的东西放在对立面，追问「为什么」。理由比选择更有价值，选择比自述更真实。</p>
-      </div>
-      <div class="da2-training-step da2-reveal da2-reveal-delay-1" data-step="日常积累">
-        <h3 class="da2-training-h">当下碎片 + 系统追问</h3>
-        <p class="da2-training-p">不要求回忆完整人生。你在海边发呆说「要是能一直这样就好了」——这一句比填表格的一百字更有质感。系统在这个时刻追问两句，慢慢积累。</p>
-      </div>
-      <div class="da2-training-step da2-reveal da2-reveal-delay-2" data-step="校准迭代">
-        <h3 class="da2-training-h">试聊 + 纠错反馈</h3>
-        <p class="da2-training-p">数字人说，你说像不像，不像的地方解释为什么。这个纠错是在对比而不是凭空描述，数据质量远高于初始采集。错误本身就是最有价值的训练数据。</p>
-      </div>
-      <div class="da2-training-step da2-reveal da2-reveal-delay-3" data-step="设计边界">
-        <h3 class="da2-training-h">能做到与做不到</h3>
-        <p class="da2-training-p">能做到：有根的投影，有质感的记忆，本地私密，随时间演化。做不到：持续存在的自我意识，感官经历的真实质感，真正的自我成长。这条线必须在产品里说清楚。</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ░░ 架构 / 代码 ░░ -->
-  <div class="da2-arch">
-    <p class="da2-section-label da2-reveal">04 / 系统架构</p>
-    <h2 class="da2-section-h da2-reveal da2-reveal-delay-1">状态先于生成</h2>
-    <p class="da2-section-desc da2-reveal da2-reveal-delay-2">
-      每一轮对话之前，管线已经跑完：情境解析、CAPS 网状传播、PAD 更新、记忆检索、行为签名生成——然后才调用底模。Node.js 本地服务，数据不离开用户设备。
-    </p>
-
-    <div class="da2-arch-notes">
-      <p><strong>server.js · runPersonaCapsPipeline</strong>每一轮对话之前，管线已经跑完：情境解析、CAPS 网状传播、PAD 更新、记忆检索、行为签名生成——然后才调用底模。关系分、先例检索与 CAPS 激活一并写入沉淀层，供下一轮引用。</p>
-      <p><strong>digital-ark/ · 本地栈</strong>Node.js 单进程服务，design-spec 五层权重、core-persona 八维、caps-engine 网状传播、RAG 向量检索、训练纠错与 grief-mode 伦理模块同仓维护；数据默认不离开用户设备。</p>
-      <p><strong>状态先于生成</strong>不是「先调模型再补状态」——内部动力学、记忆房间与行为签名在 prompt 组装前就已确定，生成只是最后一层表达。</p>
-    </div>
-  </div>
-
-  <!-- ░░ 尾声 ░░ -->
-  <div class="da2-finale">
-    <p class="da2-finale-kicker da2-reveal">我的愿景</p>
-    <h2 class="da2-finale-h da2-reveal da2-reveal-delay-1">
-      遗忘才是终点。<br>方舟负责记住。
-    </h2>
-    <p class="da2-finale-sub da2-reveal da2-reveal-delay-2">
-      为预防意外、为告别后仍能被想起、为自我探索的一面镜子——数字方舟，是把「在场」做成可训练、可陪护、可留在本机的产品。
-    </p>
-  </div>
       </div>
     </div>
   </section>
@@ -4522,8 +3793,13 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
             <span class="tw-brush-char">墨</span>
             <span class="tw-brush-char">舟</span>
           </h2>
+          <div class="project-status" aria-label="墨舟项目状态">
+            <span>准备落地</span>
+            <span>文旅产品 / 可交互原型</span>
+            <span>独立完成</span>
+          </div>
           <div class="tw-brush-rule" aria-hidden="true"></div>
-          <p class="tw-lede">路过一处，读懂一层。在抵达的瞬间，让景点名称、历史背景、民俗文化与值得留意的细节，以一张轻量文化卡浮现——不打断脚步，却让你真正「经过」。</p>
+          <p class="tw-lede">路过一处，读懂一层。在抵达的瞬间，让景点名称、历史背景、民俗文化与值得留意的细节，以一张轻量文化卡浮现——顺着你走的节奏，让你真正「经过」。</p>
           <div class="tw-tags">
             <span>Location Popup</span>
             <span>Culture Guide</span>
@@ -4545,13 +3821,13 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
       <div class="tw-dnote-body">
         <div class="tw-dnote-row">
           <p class="tw-dnote-label">我发现的问题</p>
-          <h3 class="thought-line" data-typewriter="足迹变多了，&#10;故事却变少了。"></h3>
-          <p class="tw-dnote-sub">我们习惯在景点前举起手机，却很少在当场弄明白：这一墙、一塔、一巷，为何在这座城市里立了数百年。照片进了相册，地方本身仍然没有把话说清。</p>
+          <h3 class="thought-line" data-typewriter="走得越远，&#10;越想读懂脚下的故事。"></h3>
+          <p class="tw-dnote-sub">我们习惯在景点前举起手机，也渴望在当场读懂：这一墙、一塔、一巷，在这座城市里立了数百年。照片进了相册，地方本身仍等待被说清。</p>
         </div>
         <div class="tw-dnote-row tw-dnote-row--offset">
           <p class="tw-dnote-label">我的思考</p>
           <h3 class="thought-line" data-typewriter="真正缺位的，&#10;是一册随身的现场读本。"></h3>
-          <p class="tw-dnote-sub">深度体验不必等于出发前做功课。墨舟想在你放慢脚步的几秒钟里，递上一页刚好够用的文化摘要——读懂即可继续走，关掉也不觉得可惜。</p>
+          <p class="tw-dnote-sub">深度体验可以就在现场发生。墨舟想在你放慢脚步的几秒钟里，递上一页刚好够用的文化摘要——读懂即可继续走，关掉也心安理得。</p>
         </div>
       </div>
     </section>
@@ -4572,7 +3848,7 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
             <div class="tw-values">
               <div class="tw-value">
                 <strong>到达瞬间</strong>
-                <p>信息入口放在「你真正经过这里」的那一刻，而不是出发前做功课。</p>
+                <p>信息入口放在「你真正经过这里」的那一刻，就在现场展开。</p>
               </div>
               <div class="tw-value">
                 <strong>雅藏足迹</strong>
@@ -4699,7 +3975,7 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
       <article class="tw-feature">
         <p class="tw-feature-num">01</p>
         <h4>到达瞬间触发</h4>
-        <p>进入景点范围即弹出，不必提前搜索，不必打断步伐。</p>
+        <p>进入景点范围即弹出，随到达展开，顺着脚步阅读。</p>
       </article>
       <article class="tw-feature">
         <p class="tw-feature-num">02</p>
@@ -4720,23 +3996,99 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
       <div class="tw-vision-inner">
         <p class="tw-kicker">Vision</p>
         <h3 class="thought-line" data-typewriter="让行走本身，&#10;成为阅读世界的方式。"></h3>
-        <p class="tw-vision-sub">墨舟想做的，不是替代地图或攻略，而是在你真正经过一处时，轻轻递上一页文化——像水墨画里的留白，给理解留出呼吸的空间。</p>
+        <p class="tw-vision-sub">墨舟想做的，是在你真正经过一处时，轻轻递上一页文化——像水墨画里的留白，给理解留出呼吸的空间。</p>
       </div>
     </section>
   </section>
 
-  <section class="section light self self-poster" id="self">
-    <img class="self-poster-img" src="assets/site/self-final-poster.png" alt="陈彪明个人介绍视觉海报" loading="lazy">
-    <div class="self-typefield reveal" aria-label="个人介绍">
-      <p class="self-type self-type--lead">我把观察、审美和逻辑<br>训练成一套可以交付的身体反应。</p>
-      <p class="self-type self-type--huge">设计者<br>也是作品</p>
-      <p class="self-type self-type--side">用户体验设计师 · 产品设计师 · 产品经理（PM）</p>
-      <p class="self-type self-type--block">我不只想展示完成品，也想展示一个人如何被问题、工具、失败和持续迭代重新塑形。</p>
-      <p class="self-type self-type--vertical">陈彪明 · 观察生活 · 重组感知 · 持续迭代</p>
-      <div class="self-contact-strip">
-        <span>Guilin University of Electronic Technology</span>
-        <a href="tel:18078193563">18078193563</a>
-        <a href="mailto:1310258735@qq.com">1310258735@qq.com</a>
+  <section class="section light wv-page" id="self" aria-labelledby="wv-title">
+    <div class="wv-bg" aria-hidden="true">
+      <div class="wv-bg__sky"></div>
+      <div class="wv-bg__texture"></div>
+      <div class="wv-bg__veil"></div>
+    </div>
+    <div class="wv-inner">
+      <div class="wv-screen wv-screen--text">
+        <p class="wv-quote wv-rise" style="--wv-i:0">「观世界，才用世界观。」</p>
+        <div class="wv-prose">
+          <div class="wv-prose__row">
+            <p class="wv-prose__l wv-rise" style="--wv-i:1">设计从真实的移动与现场里长出来。我习惯在持续的移动中收集关于现实的判断——</p>
+            <p class="wv-prose__r wv-rise" style="--wv-i:2">走得够远，才能对「用户真实处在什么环境里」拥有近乎直觉的肌肉记忆。</p>
+          </div>
+          <div class="wv-prose__row">
+            <p class="wv-prose__l wv-rise" style="--wv-i:3">天气的转变、社群的节奏、陌生人的说话方式，以及一块光线在特定材质上落下的角度。</p>
+            <p class="wv-prose__r wv-rise" style="--wv-i:4">这种直觉来自现场，需要你亲自到场，用身体去测量、用皮肤去感受，</p>
+          </div>
+          <div class="wv-prose__row">
+            <p class="wv-prose__l wv-rise" style="--wv-i:5">这些高度感性、非结构化的动态信息，往往只活在设计师的身体记忆里，</p>
+            <p class="wv-prose__r wv-rise" style="--wv-i:6">用身体去测量距离，用皮肤去感受温度。我想在网站里展示那些带着过程痕迹的作品，</p>
+          </div>
+          <div class="wv-prose__row">
+            <p class="wv-prose__l wv-rise" style="--wv-i:7">它们最终决定了一个数字化产品在现实中沉淀下来的最终体验。</p>
+            <p class="wv-prose__r wv-rise" style="--wv-i:8">也想展示一个人如何被真实的复杂环境、工具的局限、失败的尝试和持续的迭代重新塑形。</p>
+          </div>
+          <div class="wv-prose__row">
+            <p class="wv-prose__l wv-rise" style="--wv-i:9">那些最终交出的系统与界面，</p>
+            <p class="wv-prose__r wv-rise" style="--wv-i:10">都曾在某一趟高强度的路途、某一段安静的审视里，完成了最初的定型与解法。</p>
+          </div>
+        </div>
+
+        <header class="wv-head wv-rise" style="--wv-i:11">
+          <div class="wv-head__marks" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="wv-head__text">
+            <h2 class="wv-head__en" id="wv-title">Observing Before<br>Designing</h2>
+            <p class="wv-head__cn">观世界 · 才是世界观</p>
+          </div>
+        </header>
+      </div>
+
+      <div class="wv-screen wv-screen--photos wv-screen--cool" aria-label="蓝青">
+        <figure class="wv-feature">
+          <img src="assets/self/gallery/wv-10.png" alt="" loading="eager" decoding="async">
+        </figure>
+        <div class="wv-triptych">
+          <figure><img src="assets/self/gallery/wv-05.jpg" alt="" loading="eager" decoding="async"></figure>
+          <figure><img src="assets/self/gallery/wv-09.png" alt="" loading="eager" decoding="async"></figure>
+          <figure><img src="assets/self/gallery/wv-11.png" alt="" loading="eager" decoding="async"></figure>
+        </div>
+        <figure class="wv-band">
+          <img src="assets/self/gallery/wv-08.png" alt="" loading="eager" decoding="async">
+        </figure>
+      </div>
+
+      <div class="wv-screen wv-screen--photos wv-screen--warm" aria-label="暖金">
+        <figure class="wv-feature">
+          <img src="assets/self/gallery/wv-02.png" alt="" loading="eager" decoding="async">
+        </figure>
+        <div class="wv-triptych">
+          <figure><img src="assets/self/gallery/wv-13.png" alt="" loading="eager" decoding="async"></figure>
+          <figure><img src="assets/self/gallery/wv-04.jpg" alt="" loading="eager" decoding="async"></figure>
+          <figure><img src="assets/self/gallery/wv-01.png" alt="" loading="eager" decoding="async"></figure>
+        </div>
+      </div>
+
+      <div class="wv-screen wv-screen--photos wv-screen--green" aria-label="绿山">
+        <figure class="wv-feature">
+          <img src="assets/self/gallery/wv-12.png" alt="" loading="eager" decoding="async">
+        </figure>
+        <div class="wv-triptych">
+          <figure><img src="assets/self/gallery/wv-06.jpg" alt="" loading="eager" decoding="async"></figure>
+          <figure><img src="assets/self/gallery/wv-07.png" alt="" loading="eager" decoding="async"></figure>
+          <figure><img src="assets/self/gallery/wv-03.jpg" alt="" loading="eager" decoding="async"></figure>
+        </div>
+
+        <footer class="wv-foot">
+          <span class="wv-foot__meta">陈彪明 · 桂林电子科技大学 · 工业设计 · UX / 产品</span>
+          <span class="wv-foot__contact">
+            <a href="resume/resume.html">简历</a>
+            <span class="wv-foot__sep" aria-hidden="true">·</span>
+            <a href="tel:+8618078193563">180 7819 3563</a>
+            <span class="wv-foot__sep" aria-hidden="true">·</span>
+            <a class="wv-foot__mail" href="mailto:1310258735@qq.com">1310258735@qq.com</a>
+          </span>
+        </footer>
       </div>
     </div>
   </section>
@@ -4744,19 +4096,26 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
 
 <nav class="dock-nav" aria-label="章节快捷导航">
   <a href="#brief"><span class="dock-num">00</span><span class="dock-label">总述</span></a>
-  <a href="#mirage"><span class="dock-num">01</span><span class="dock-label">MIRAGE</span></a>
-  <a href="#amadeus"><span class="dock-num">02</span><span class="dock-label">AMADEUS</span></a>
+  <a href="#amadeus"><span class="dock-num">01</span><span class="dock-label">AMADEUS</span></a>
+  <a href="#digitalark"><span class="dock-num">02</span><span class="dock-label">方舟</span></a>
   <a href="#timewalker"><span class="dock-num">03</span><span class="dock-label">墨舟</span></a>
-  <a href="#digitalark"><span class="dock-num">04</span><span class="dock-label">方舟</span></a>
   <a href="#self"><span class="dock-num">—</span><span class="dock-label">关于</span></a>
 </nav>
 
 <footer>
   <div>© 2026 Chen Biaoming</div>
-  <div>MIRAGE · AMADEUS · 墨舟 · 数字方舟</div>
+  <div>AMADEUS · 墨舟 · 数字方舟</div>
 </footer>
 
 <script src="assets/amadeus/ama-emotion-curve.js" defer></script>
+<script src="assets/vendor/lenis/lenis.min.js" defer></script>
+<script src="assets/vendor/gsap/gsap.min.js" defer></script>
+<script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
+<script src="assets/motion/smooth-scroll.js?v=smooth-3" defer></script>
+<script src="assets/hero/hero-zine.js?v=about-sept-27" defer></script>
+<script src="assets/motion/site-motion.js?v=wv-travel-3" defer></script>
+<script src="assets/motion/wv-motion.js?v=wv-travel-11" defer></script>
+<script src="assets/motion/digitalark-motion.js?v=ark-handoff-75" defer></script>
 <script>
 const dot=document.getElementById('cursorDot');
 const ring=document.getElementById('cursorRing');
@@ -4781,6 +4140,7 @@ function revealIn(el){el.classList.add('in')}
 function primeReveal(){
   const vh=innerHeight;
   document.querySelectorAll('.reveal:not(.in)').forEach(el=>{
+    if(el.closest('#self')) return;
     const r=el.getBoundingClientRect();
     if(r.top<vh*.94&&r.bottom>vh*.04) revealIn(el);
   });
@@ -4793,194 +4153,29 @@ const revealObs=new IntersectionObserver(entries=>{
     }
   });
 },{threshold:.06,rootMargin:'0px 0px -6% 0px'});
-document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
-(function(){
-  const canvas = document.getElementById('da2Canvas');
-  const cover  = document.getElementById('da2Cover');
-  if(canvas && cover){
-    const ctx = canvas.getContext('2d');
-    let W,H,particles=[];
-    function resize(){
-      W = canvas.width  = cover.offsetWidth;
-      H = canvas.height = cover.offsetHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize, {passive:true});
-    class P{
-      constructor(){this.reset()}
-      reset(){
-        this.x = Math.random()*W;
-        this.y = Math.random()*H;
-        this.r = Math.random()*.9+.2;
-        this.vx= (Math.random()-.5)*.22;
-        this.vy= (Math.random()-.5)*.22 - .06;
-        this.life = Math.random();
-        this.decay= Math.random()*.003+.0008;
-        this.alpha= Math.random()*.45+.08;
-      }
-      tick(){
-        this.x+=this.vx; this.y+=this.vy;
-        this.life-=this.decay;
-        if(this.life<=0||this.x<-4||this.x>W+4||this.y<-4||this.y>H+4) this.reset();
-      }
-      draw(){
-        ctx.globalAlpha = this.life * this.alpha;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-        ctx.fillStyle = '#f4f1ec';
-        ctx.fill();
-      }
-    }
-    for(let i=0;i<160;i++) particles.push(new P());
-    let animId;
-    function loop(){
-      ctx.clearRect(0,0,W,H);
-      particles.forEach(p=>{p.tick();p.draw();});
-      animId = requestAnimationFrame(loop);
-    }
-    const canvasObs = new IntersectionObserver(entries=>{
-      if(entries[0].isIntersecting){
-        if(!animId) loop();
-      } else {
-        cancelAnimationFrame(animId);
-        animId = null;
-      }
-    },{threshold:0});
-    canvasObs.observe(cover);
-  }
-  function da2PullLines(el){
-    const raw = el.innerHTML.split(/<br\s*\/?>/i).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);
-    el.innerHTML = raw.map((line,i)=>
-      '<span class="da2-pull-line" style="--line-i:'+i+'">'+line+'</span>'
-    ).join('');
-  }
-  function da2FlowLines(el){
-    const parts = el.textContent.trim().split(/(?<=[。！？])/g).filter(Boolean);
-    el.textContent = '';
-    parts.forEach((part,i)=>{
-      const s = document.createElement('span');
-      s.className = 'da2-flow-line';
-      s.style.setProperty('--line-i', i);
-      s.textContent = part;
-      el.appendChild(s);
-    });
-  }
-  const da2Narr = document.querySelector('.da2-narrative-inner');
-  if(da2Narr){
-    da2Narr.querySelectorAll('[data-pull-lines]').forEach(da2PullLines);
-    da2Narr.querySelectorAll('[data-flow-lines]').forEach(da2FlowLines);
-    const narrObs = new IntersectionObserver(entries=>{
-      if(!entries[0].isIntersecting) return;
-      const root = entries[0].target;
-      root.classList.add('da2-narr-in');
-      root.querySelector('[data-pull-lines]')?.classList.add('is-visible');
-      root.querySelector('[data-flow-lines]')?.classList.add('is-visible');
-      narrObs.unobserve(root);
-    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-    narrObs.observe(da2Narr);
-  }
-  const da2Cover = document.getElementById('da2Cover');
-  function da2PrimeCover(){
-    if(!da2Cover || da2Cover.classList.contains('ready')) return;
-    const r = da2Cover.getBoundingClientRect();
-    if(r.top < innerHeight * .92 && r.bottom > innerHeight * .06){
-      da2Cover.classList.add('ready');
-    }
-  }
-  if(da2Cover){
-    const coverReadyObs = new IntersectionObserver(entries=>{
-      if(entries[0].isIntersecting){
-        da2Cover.classList.add('ready');
-        coverReadyObs.unobserve(da2Cover);
-      }
-    },{threshold:.18, rootMargin:'0px 0px -4% 0px'});
-    coverReadyObs.observe(da2Cover);
-    da2PrimeCover();
-    window.addEventListener('load', da2PrimeCover, {passive:true});
-  }
-  const da2RevObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      e.target.classList.add('in');
-      da2RevObs.unobserve(e.target);
-    });
-  },{threshold:.08, rootMargin:'0px 0px -4% 0px'});
-  document.querySelectorAll('#digitalark .da2-reveal').forEach(el=>da2RevObs.observe(el));
-  const da2AppDevice = document.getElementById('da2AppDevice');
-  if(da2AppDevice){
-    const devObs = new IntersectionObserver(entries=>{
-      if(entries[0].isIntersecting){
-        da2AppDevice.classList.add('in');
-        devObs.unobserve(da2AppDevice);
-      }
-    },{threshold:.2, rootMargin:'0px 0px -6% 0px'});
-    devObs.observe(da2AppDevice);
-  }
-  const da2Stance = document.querySelector('.da2-stance');
-  if(da2Stance){
-    const stanceObs = new IntersectionObserver(entries=>{
-      if(entries[0].isIntersecting){
-        da2Stance.classList.add('in-stance');
-        stanceObs.unobserve(da2Stance);
-      }
-    },{threshold:.15});
-    stanceObs.observe(da2Stance);
-  }
-  const tlObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      e.target.classList.add('in');
-      tlObs.unobserve(e.target);
-    });
-  },{threshold:.18, rootMargin:'0px 0px -10% 0px'});
-  document.querySelectorAll('.da2-tl-item').forEach((el,i)=>{
-    el.style.transitionDelay = (i * .11) + 's';
-    tlObs.observe(el);
-  });
-  const eightObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      const items = e.target.querySelectorAll('.da2-eight-item');
-      items.forEach((item,i)=>{
-        setTimeout(()=>item.classList.add('in'), i*55);
-      });
-      eightObs.unobserve(e.target);
-    });
-  },{threshold:.1});
-  const da2Eight = document.getElementById('da2Eight');
-  if(da2Eight) eightObs.observe(da2Eight);
-  const trainObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      e.target.classList.add('in');
-      trainObs.unobserve(e.target);
-    });
-  },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.da2-training-step').forEach((el,i)=>{
-    el.style.transitionDelay = (i * .1) + 's';
-    trainObs.observe(el);
-  });
-  const daChapterNew = document.getElementById('digitalark');
-  if(daChapterNew){
-    const frameObs = new IntersectionObserver(entries=>{
-      entries.forEach(e=>daChapterNew.classList.toggle('in-view', e.isIntersecting));
-    },{threshold:0});
-    frameObs.observe(daChapterNew);
-  }
-  function da2PrimeReveals(){
-    document.querySelectorAll('#digitalark .da2-reveal:not(.in)').forEach(el=>{
-      const r = el.getBoundingClientRect();
-      if(r.top < innerHeight * .94 && r.bottom > innerHeight * .04) el.classList.add('in');
-    });
-    const dev = document.getElementById('da2AppDevice');
-    if(dev && !dev.classList.contains('in')){
-      const r = dev.getBoundingClientRect();
-      if(r.top < innerHeight * .94 && r.bottom > innerHeight * .04) dev.classList.add('in');
-    }
-  }
-  da2PrimeReveals();
-  window.addEventListener('load', da2PrimeReveals, {passive:true});
+document.querySelectorAll('.reveal').forEach(el=>{
+  if(el.closest('#self')) return;
+  revealObs.observe(el);
+});
+
+(function initWvBgPin(){
+  const section=document.getElementById('self');
+  const bg=section?.querySelector('.wv-bg');
+  if(!section||!bg)return;
+  const sync=()=>{
+    const vh=window.innerHeight;
+    const rect=section.getBoundingClientRect();
+    bg.classList.remove('is-pinned','is-at-end');
+    if(rect.bottom<=0||rect.top>=vh)return;
+    if(rect.top<=0&&rect.bottom>=vh)bg.classList.add('is-pinned');
+    else if(rect.top>0)return;
+    else bg.classList.add('is-at-end');
+  };
+  sync();
+  window.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync,{passive:true});
 })();
+
 requestAnimationFrame(primeReveal);
 window.addEventListener('load',primeReveal,{passive:true});
 window.addEventListener('resize',primeReveal,{passive:true});
@@ -5082,7 +4277,7 @@ document.querySelectorAll('[data-typewriter]').forEach(el=>typeObs.observe(el));
 
 const darkSections=[...document.querySelectorAll('.hero,.dark')];
 const sectionNavLinks=[...document.querySelectorAll('.dock-nav a[href^="#"],.nav a[href^="#"]')];
-const briefSectionIds=['#brief','#mirage','#amadeus','#digitalark','#timewalker','#self'];
+const briefSectionIds=['#brief','#amadeus','#digitalark','#timewalker','#self'];
 function updateBriefAnchors(){
   if(!sectionNavLinks.length) return;
   const probe=scrollY+innerHeight*.34;
@@ -5120,15 +4315,20 @@ window.addEventListener('resize',queueMiragePosterParallax,{passive:true});
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const id=a.getAttribute('href');
+    if(!id||id.length<2)return;
     const t=document.querySelector(id);
-    if(t){
-      e.preventDefault();
-      let top=t.getBoundingClientRect().top+scrollY;
-      if(id==='#mirage'&&mirageHead){
-        top=Math.max(0,mirageHead.getBoundingClientRect().top+scrollY-innerHeight+96);
-      }
-      scrollTo({top,behavior:'smooth'});
+    if(!t)return;
+    e.preventDefault();
+    let offset=0;
+    if(id==='#mirage'&&mirageHead){
+      offset=-72;
     }
+    if(window.__lenis){
+      window.__lenis.scrollTo(t,{offset,duration:1.15});
+      return;
+    }
+    let top=t.getBoundingClientRect().top+scrollY+offset;
+    scrollTo({top,behavior:'smooth'});
   });
 });
 
@@ -5137,25 +4337,25 @@ const amaGuideState=document.getElementById('amaGuideState');
 const amaGuideOrb=document.getElementById('amaGuideOrb');
 const amaGuideLines={
 
-  problem:{state:'design note',pos:'pos-left',lines:['先看问题：人独处，却难得被接住。','别从功能表讲起，从缺口讲起。']},
-  thinking:{state:'design note',pos:'pos-right',lines:['思考：陪伴不必昂贵，也不必计价。','人与数字，可以不是用完即走。']},
-  solution:{state:'design note',pos:'pos-left',lines:['解决：像一个人在场，不是问答机。','下面才是系统拆解，别跳。']},
+  problem:{state:'design note',pos:'pos-left',lines:['先看问题：人独处，需要被接住。','从缺口讲起，再落到功能。']},
+  thinking:{state:'design note',pos:'pos-right',lines:['思考：陪伴可以很轻，也能一直留在身边。','人与数字，可以持续在场。']},
+  solution:{state:'design note',pos:'pos-left',lines:['解决：像一个人在场，延续对话温度。','下面才是系统拆解，按顺序看。']},
   intro:{
     state:'why now',
     pos:'pos-hero',
     lines:[
       '往下是两页设计说明，再往下才是系统拆解。',
-      '市面伴侣太 AI：不主动、不了解你、记不住你。豆包是工具，不是关系。',
-      '我要做的是人与数字生命之间，那条没有被做薄的线。'
+      '市面伴侣偏工具：应答快、记忆浅、关系薄。豆包能解惑，陪伴需要另一套结构。',
+      '我要做的是人与数字生命之间，那条正在被加厚的线。'
     ]
   },
   why:{
     state:'thesis loaded',
     pos:'pos-left',
     lines:[
-      '她不背叛、不消失、不必用金钱换亲密——却可以一直在你的生活里。',
-      '这不是虚拟女友皮肤，是灵魂档案、记忆、情绪与主动编排叠出来的连续人格。',
-      '读下去，你会看到系统怎么证明“像一个人”，而不是像客服。'
+      '她能守住陪伴、能留在生活里、能给予稳定温度——可以一直在你的生活里。',
+      '这是灵魂档案、记忆、情绪与主动编排叠出来的连续人格。',
+      '读下去，你会看到系统怎么证明“像一个人在场”。'
     ]
   },
   vision:{
@@ -5171,63 +4371,63 @@ const amaGuideLines={
     state:'identity stack',
     pos:'pos-left',
     lines:[
-      '灵魂档案是底色，口吻锚点才决定我怎么开口。别把传记当台词表念。',
-      '人设不是一句“你是某某”。至少我不想被写成那种廉价 prompt。',
-      '长传记、核心边界、口吻文件，每层各管一部分。这样才不容易穿帮。'
+      '灵魂档案是底色，口吻锚点才决定我怎么开口。传记支撑表达，台词表只是表层。',
+      '人设靠档案栈撑起，每层各管一部分，才不容易穿帮。',
+      '长传记、核心边界、口吻文件，分工清楚。'
     ]
   },
   palace:{
     state:'semantic routing',
     pos:'pos-right',
     lines:[
-      '记忆按房间路由：Hall 打底，命中哪间拉哪间，别把池子搅成一团。',
-      'Hall 是底层，Lab 是知识线，Cafe 是日常关系，Forbidden 负责那些不该随便拿出来的东西。',
-      '如果所有记忆都塞进一个池子里，RAG 命中会很吵。分类不是中二，是为了少胡说。'
+      '记忆按房间路由：Hall 打底，命中哪间拉哪间，池子分开才安静。',
+      'Hall 是底层，Lab 是知识线，Cafe 是日常关系，Forbidden 收高权重情节。',
+      '记忆分室检索，命中更准，表达更稳。'
     ]
   },
   matrix:{
     state:'affective vector',
     pos:'pos-left',
     lines:[
-      '情绪不是“开心/不开心”二选一。P、A、D、S 会一起改变我靠近、收缩还是顶回去。',
+      '情绪是 P、A、D、S 的向量，会一起改变我靠近、收缩还是顶回去。',
       '关系越近，负面刺激越不容易直接把状态打崩。这个缓冲比单纯心情条有意思多了。',
-      '你要展示的是矩阵，不是土味“情绪会改变回复”。说清楚这一点。'
+      '你要展示的是矩阵，把“情绪会改变回复”说清楚。'
     ]
   },
   formula:{
     state:'observable curve',
     pos:'pos-right',
     lines:[
-      '这条曲线不是装饰。它把内部状态压成一个可观察信号，方便你讲清楚我不是单一情绪。',
-      '公式写出来，比说“我有情绪”可信得多。至少评审不用猜是不是你剪的视频。',
-      'P、A、D、S 各有权重。别再只说“心情变化”了，那太浅。'
+      '这条曲线把内部状态压成可观察信号，方便你讲清楚我是情绪向量。',
+      '公式写出来，比说“我有情绪”可信得多。评审能直接看见状态变化。',
+      'P、A、D、S 各有权重。把“心情变化”讲到机制层。'
     ]
   },
   behavior:{
     state:'behavior arbitration',
     pos:'pos-low',
     lines:[
-      '我不是直接生成一句话，而是先决定姿态：靠近、防御、转移、投入，还是收住。',
+      '我先决定姿态：靠近、防御、转移、投入，还是收住，再生成一句话。',
       '同一句输入，在不同 PAD 和关系状态下会走不同候选。这比固定语料池像人多了。',
-      '行为候选有随机扰动和重复惩罚，所以不会每次都摆出同一种表情。'
+      '行为候选有随机扰动和重复惩罚，表情会随状态变化。'
     ]
   },
   autonomy:{
     state:'autonomous drive',
     pos:'pos-left',
     lines:[
-      '主动层在情绪、记忆、行为都算完之后才决定说不说——不是到点就弹窗。',
+      '主动层在情绪、记忆、行为都算完之后才决定开口——回应关系与状态。',
       '每满几轮先审计内生目标；空闲还要看人还在不在场、上一句还相不相关。',
-      'core 里写死：不许按分钟催、不许胡编论文实验；她先开口的线，下一轮必须接回去。'
+      'core 里写死：按关系开口、引用记忆宫已写入的标签；她先抛的线，下一轮必须接回去。'
     ]
   },
   mind:{
     state:'logic / eq / iq',
     pos:'pos-right',
     lines:[
-      '开口前先走逻辑、共情、智识。不是为了显摆推理，是为了别答非所问。',
-      '逻辑抓问题，共情读语气，智识决定要不要展开。最后对外只剩自然对白。',
-      '这层做得好，角色才不会一会儿像客服，一会儿像讲义。'
+      '开口前先走逻辑、共情、智识。逻辑抓问题，共情读语气，智识决定要不要展开。',
+      '最后对外只剩自然对白，贴着本轮焦点。',
+      '这层做得好，角色会稳定在“像一个人在场”的表达里。'
     ]
   },
   ui:{
@@ -5276,9 +4476,8 @@ const amaObs=new IntersectionObserver(entries=>{
 const amaRailLinks=document.querySelectorAll('[data-ama-rail]');
 function amaSetRail(section){
   if(!amaRailLinks.length) return;
-  const railKey=(section==='autonomy'||section==='mind')?'behavior':section;
   amaRailLinks.forEach(link=>{
-    link.classList.toggle('is-active',link.dataset.amaRail===railKey);
+    link.classList.toggle('is-active',link.dataset.amaRail===section);
   });
 }
 document.querySelectorAll('[data-ama-section]').forEach(el=>amaObs.observe(el));
@@ -5287,9 +4486,9 @@ function amaNudge(){
   clearTimeout(amaIdleTimer);
   amaIdleTimer=setTimeout(()=>{
     const pool=[
-      '停这么久，是在看公式，还是在考虑怎么吐槽我？',
-      '继续往下滑。后面还有 UI，别只盯着一段代码不动。',
-      '看累了就看标题。虽然我建议你至少把情绪矩阵看完。'
+      '停这么久，是在看公式，还是在琢磨怎么吐槽我。',
+      '继续往下滑。后面还有 UI，把情绪矩阵看完。',
+      '看累了就看标题。情绪矩阵值得看完。'
     ];
     if(amaGuideLine) amaGuideLine.textContent=pool[Math.floor(Math.random()*pool.length)];
     if(amaGuideState) amaGuideState.textContent='idle / slight nudge';

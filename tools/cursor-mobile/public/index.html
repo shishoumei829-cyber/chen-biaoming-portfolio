@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#111318" />
+  <title>Cursor 手机指令</title>
+  <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+  <div id="gate" class="gate hidden">
+    <div class="gate-card">
+      <h1>访问口令</h1>
+      <p>只输入 <code>ACCESS_TOKEN=</code> <strong>后面那一段</strong>，不要带变量名。</p>
+      <p class="hint">例如应输入：<code>shikimori-phone-cursor-2026</code></p>
+      <input id="gateToken" type="password" autocomplete="current-password" placeholder="shikimori-phone-cursor-2026" />
+      <button id="gateSubmit" type="button">进入</button>
+      <p id="gateError" class="error hidden"></p>
+    </div>
+  </div>
+
+  <main id="app" class="app hidden">
+    <header class="top">
+      <div>
+        <p class="eyebrow">全中文界面</p>
+        <h1>Cursor 手机助手</h1>
+      </div>
+      <button id="refreshAgents" type="button" class="ghost" aria-label="刷新">刷新</button>
+    </header>
+
+    <section class="status" id="statusBox">
+      <span id="statusDot" class="dot"></span>
+      <span id="statusText">检查连接中…</span>
+    </section>
+
+    <section class="panel info" id="modeInfo">
+      <p id="modeInfoText"></p>
+    </section>
+
+    <section class="panel">
+      <label class="label" for="modeSelect">发送模式</label>
+      <select id="modeSelect">
+        <option value="new">新建任务</option>
+        <option value="followup">跟进已有任务</option>
+      </select>
+    </section>
+
+    <section class="panel hidden" id="agentPanel">
+      <label class="label" for="agentSelect">选择任务</label>
+      <select id="agentSelect">
+        <option value="">加载中…</option>
+      </select>
+      <a id="openAgentLink" class="link" href="#" target="_blank" rel="noopener">在 Cursor 网页查看</a>
+    </section>
+
+    <section class="panel">
+      <label class="label" for="promptInput">指令</label>
+      <textarea
+        id="promptInput"
+        rows="6"
+        enterkeyhint="send"
+        inputmode="text"
+        placeholder="例如：修复首页移动端导航错位，改完自测并说明改了哪些文件"
+      ></textarea>
+    </section>
+
+    <section class="actions">
+      <button id="sendBtn" type="button" class="send">发送指令</button>
+      <button id="clearBtn" type="button" class="ghost">清空</button>
+    </section>
+
+    <section class="panel">
+      <h2 class="label">最近任务</h2>
+      <ul id="agentList" class="agent-list"></ul>
+    </section>
+
+    <section class="panel">
+      <h2 class="label">结果</h2>
+      <pre id="resultBox" class="result">等待发送…</pre>
+    </section>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

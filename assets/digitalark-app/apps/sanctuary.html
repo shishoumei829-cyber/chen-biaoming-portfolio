@@ -2,24 +2,37 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>数字方舟</title>
+<script>
+(function () {
+  var embed = /embed=portfolio/.test(location.search);
+  if (!embed) {
+    try {
+      embed = !!window.frameElement?.closest?.('.da2-product-frame');
+    } catch (_) {}
+  }
+  if (embed) document.documentElement.classList.add('da-portfolio-embed');
+  if (window.matchMedia('(max-width: 640px), (hover: none) and (pointer: coarse)').matches) {
+    document.documentElement.classList.add('da-native');
+  }
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../css/sanctuary-shell.css"/>
 <link rel="stylesheet" href="../js/app-shell.css"/>
 <link rel="stylesheet" href="../css/digital-ark-ui.css"/>
+<link rel="stylesheet" href="../css/training-flow-v2.css"/>
 <link rel="stylesheet" href="../css/portfolio-embed.css"/>
-<script>if(/embed=portfolio/.test(location.search))document.documentElement.classList.add('da-portfolio-embed');</script>
 </head>
 <body>
 <div class="phone">
 
 <!-- ─────────── TOP BAR ─────────── -->
 <header class="topbar">
-  <div class="topbar-avatar">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9CoAWFz6hMRGOhuFmcuf1GHNeVfSH2zLbrtfNdU4txcJclXi6DkYCaPiabLusTHGedU3EHqjNSzSLKEL7CYSvE--n7Mt2-j-72cPi20p5hgWyEUmPgSTsqL_yxGXTSVHpLeSbTwzdqnfEW_gSoUQEg4hv4m8Z2TnmzBebpctdchgCJdYZ-w_h2AcVbzcHPYnotKWOWnaUIaICREgPnS9Og-kq70jW_pn5KNvZkCMymFge4kmsKNRh_Tj3xpG87Qkbno4Tmguh-I7i"
-      style="width:100%;height:100%;object-fit:cover;" alt=""/>
+  <div class="topbar-avatar da-stick-avatar-slot da-stick-avatar-slot--sm">
+    <img class="da-stick-avatar da-avatar-solo da-stick-avatar--f" src="../assets/avatars/avatar-f.png" alt=""/>
   </div>
   <span class="topbar-title">数字方舟</span>
   <span class="mi topbar-apps" title="切换应用">apps</span>
@@ -28,312 +41,161 @@
 <!-- ═══════════════════════════
   PAGE 1 · 伴侣
 ═══════════════════════════ -->
-<div id="p0" class="page on da-home-page">
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:24px 24px 32px;">
-    <!-- Avatar orb -->
-    <div style="position:relative;margin-bottom:28px;">
-      <div class="breathing" style="position:absolute;inset:-28px;background:rgba(193,201,191,0.22);border-radius:50%;filter:blur(32px);z-index:0;"></div>
-      <div style="width:210px;height:210px;border-radius:50%;overflow:hidden;position:relative;z-index:1;box-shadow:0 20px 60px rgba(0,0,0,0.13);">
-        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL"
-          style="width:100%;height:100%;object-fit:cover;opacity:0.88;" alt=""/>
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,#f7f3ed,transparent 55%);"></div>
-      </div>
-    </div>
-    <!-- Message -->
-    <div style="text-align:center;margin-bottom:28px;">
-      <p class="t-title" style="margin-bottom:14px;">我在听，今天想聊点什么？</p>
-      <div style="display:flex;gap:8px;justify-content:center;">
-        <span class="chip chip-g">内心平静</span>
-        <span class="chip chip-o">静心沉思</span>
-      </div>
-    </div>
-    <!-- Input -->
-    <div style="width:100%;">
-      <div style="position:relative;margin-bottom:18px;">
-        <input type="text" placeholder="输入您的消息…"
-          style="width:100%;background:#fff;border:1px solid #e6e2dc;border-radius:99px;padding:14px 52px 14px 22px;font-size:15px;color:#1c1c18;outline:none;font-family:'Noto Sans SC',sans-serif;"/>
-        <span class="mi mi-f" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#596059;font-size:20px;">send</span>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-        <span class="t-label">点击说话</span>
-        <button style="width:70px;height:70px;border-radius:50%;background:#596059;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 28px rgba(89,96,89,0.32);">
-          <span class="mi mi-f" style="font-size:28px;color:#fff;">mic</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="p0" class="page on da-home-page" aria-busy="true"></div>
 
 <!-- ═══════════════════════════
   PAGE 2 · 训练总览
 ═══════════════════════════ -->
 <div id="p1" class="page da-training-page">
-  <div class="pc">
-    <div class="da-p1-static-hero" style="display:flex;flex-direction:column;align-items:center;padding:22px 0 18px;">
-      <div style="position:relative;margin-bottom:18px;">
-        <div class="breathing" style="position:absolute;inset:-22px;background:rgba(193,201,191,0.2);border-radius:50%;filter:blur(28px);z-index:0;"></div>
-        <div style="width:142px;height:142px;border-radius:50%;overflow:hidden;position:relative;z-index:1;box-shadow:0 16px 48px rgba(0,0,0,0.12);">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL" style="width:100%;height:100%;object-fit:cover;opacity:0.9;" alt=""/>
-        </div>
-      </div>
-      <span class="t-label" style="margin-bottom:6px;">训练试聊</span>
-      <p class="t-title" style="text-align:center;margin-bottom:10px;">和我的数字人聊聊</p>
-      <p class="t-body-sm" style="text-align:center;max-width:280px;">用真实对话检查它是否像你：语气、判断、主动关心和关系边界都会被记录进训练反馈。</p>
-    </div>
-
-    <div class="card" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
-      <div class="chat-bubble ai">你昨晚说项目卡住了，我猜你今天会有点烦。要不要先把最难的一块拆出来？</div>
-      <div class="chat-bubble me">这句话像我吗？我平时可能会更直接一点。</div>
-      <div class="chat-bubble ai">收到。我会把“先共情，再给方法”的权重调低一点，更接近你平时的表达。</div>
-    </div>
-
-    <div style="position:relative;margin-bottom:14px;">
-      <input type="text" placeholder="输入一句话，测试数字人会怎么回应" style="width:100%;background:#fff;border:1px solid #e6e2dc;border-radius:99px;padding:14px 52px 14px 22px;font-size:14px;color:#1c1c18;outline:none;font-family:'Noto Sans SC',sans-serif;"/>
-      <span class="mi mi-f" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#596059;font-size:20px;">send</span>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
-      <button class="btn-o" style="padding:10px 8px;font-size:12px;">不像我</button>
-      <button class="btn-o" style="padding:10px 8px;font-size:12px;">有点像</button>
-      <button class="btn-p" style="padding:10px 8px;font-size:12px;">很像我</button>
-    </div>
-
-    <div class="card-w" style="margin-bottom:14px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span class="t-label">人格拟合度</span>
-        <span style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:600;color:#596059;">68%</span>
-      </div>
-      <div class="pbar-wrap" style="max-width:none;margin-bottom:12px;"><div class="pbar-fill" style="width:68%"></div></div>
-      <div class="da-layer-chips" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <span class="chip chip-o da-layer-chip" data-layer="core" style="justify-content:center;">核心层 0%</span>
-        <span class="chip chip-o da-layer-chip" data-layer="emotion" style="justify-content:center;">情绪层 0%</span>
-        <span class="chip chip-o da-layer-chip" data-layer="memory" style="justify-content:center;">记忆层 0%</span>
-        <span class="chip chip-o da-layer-chip" data-layer="relationship" style="justify-content:center;">关系层 0%</span>
-        <span class="chip chip-o da-layer-chip" data-layer="expression" style="justify-content:center;">表达层 0%</span>
-      </div>
-    </div>
-
-    <section class="da-module-list">
-      <div class="da-module-list-head">
-        <span class="da-module-list-title">专项深化</span>
-        <span class="da-module-list-sub">与主页引导同步 · 同一套题目</span>
-      </div>
-      <button class="module-row da-mod-voice" data-module="voice" onclick="go(2)"><div class="icon-pill"><span class="mi mi-sm">settings_voice</span></div><div class="da-mod-text"><strong>音色训练</strong><small>声音、语速、停顿和语气</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">0%</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
-      <button class="module-row da-mod-memory" data-module="memory" onclick="go(3)"><div class="icon-pill"><span class="mi mi-sm">history_edu</span></div><div class="da-mod-text"><strong>记忆训练</strong><small>人生片段、照片、文件和经历</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">0%</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
-      <button class="module-row da-mod-relationship" data-module="relationship" onclick="go(4)"><div class="icon-pill"><span class="mi mi-sm">diversity_3</span></div><div class="da-mod-text"><strong>关系训练</strong><small>朋友、家人、伴侣的回应方式</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">0%</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
-      <button class="module-row da-mod-emotion" data-module="emotion" onclick="go(5)"><div class="icon-pill"><span class="mi mi-sm">favorite</span></div><div class="da-mod-text"><strong>情感训练</strong><small>情绪反应、安慰方式和压力处理</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">0%</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
-      <button class="module-row da-mod-cognition" data-module="cognition" onclick="go(6)"><div class="icon-pill"><span class="mi mi-sm">bolt</span></div><div class="da-mod-text"><strong>认知训练</strong><small>价值排序、冲突选择和决策习惯</small><span class="da-mod-bar"><i></i></span></div><span class="da-mod-pct">0%</span><span class="mi mi-sm da-mod-chevron">chevron_right</span></button>
-    </section>
+  <div class="pc da-training-hub-host" aria-live="polite">
+    <div class="da-empty-card da-hub-loading"><span class="mi">hourglass_empty</span><p>加载训练总览…</p></div>
   </div>
 </div>
 
 <!-- PAGE 3 · 音色训练 -->
-<div id="p2" class="page da-module-page">
+<div id="p2" class="page da-module-page da-module-v2" data-module="voice">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-label">音色训练进度</span>
-      <span class="t-pct da-pct-pending">—</span>
-      <div class="pbar-wrap"><div class="pbar-fill" style="width:0%"></div></div>
-      <p class="t-body-sm da-mod-prog-hint">等待加载今日题目…</p>
+    <p class="da-mod-v2-meta">音色训练</p>
+    <h2 class="da-mod-v2-q da-voice-text">加载题目中…</h2>
+    <blockquote class="da-mod-v2-quote da-voice-literary" hidden></blockquote>
+    <textarea class="da-mod-v2-input da-mod-v2-voice-fallback" rows="3" placeholder="没麦克风？把要读的话贴在这里"></textarea>
+    <div class="da-mod-v2-actions">
+      <button type="button" class="btn-p da-mod-submit">提交</button>
+      <button type="button" class="btn-o da-mod-vague">有印象</button>
+      <button type="button" class="btn-o da-mod-skip">跳过</button>
     </div>
-
-    <div class="card-w da-voice-literary" style="margin-bottom:12px;">
-      <div class="da-voice-literary-head">
-        <span class="mi">menu_book</span>
-        <span class="t-section">朗读练习</span>
+    <details class="da-mod-v2-extra">
+      <summary>录音（可选）</summary>
+      <div class="da-mod-v2-extra-body">
+        <button type="button" class="btn-o mic-record" style="display:flex;align-items:center;justify-content:center;gap:8px;"><span class="mi">mic</span>按住录音</button>
+        <p class="t-body-sm" style="color:#767872;">录完仍需点「提交」</p>
       </div>
-      <p class="t-body da-voice-text">加载题目中…</p>
-    </div>
-
-    <div class="card da-voice-record">
-      <span class="t-label" style="display:block;margin-bottom:12px;">按住麦克风朗读</span>
-      <button type="button" class="mic-record" aria-label="录音">
-        <span class="mi mi-f" style="font-size:34px;color:#fff;">mic</span>
-      </button>
-      <p class="t-body-sm">松开后点击「提交语音样本」</p>
-    </div>
-
-    <div class="da-callout" style="margin-top:12px;">
-      <span class="mi">record_voice_over</span>
-      <div>
-        <span class="t-label da-callout-label">朗读提示</span>
-        <p class="t-body-sm da-voice-hint">按上方引导自然朗读即可；无麦克风时可提交文字样本。</p>
-      </div>
-    </div>
+    </details>
   </div>
 </div>
 
 <!-- ═══════════════════════════
   PAGE 4 · 记忆训练
 ═══════════════════════════ -->
-<div id="p3" class="page da-module-page">
+<div id="p3" class="page da-module-page da-module-v2" data-module="memory">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-label">记忆训练进度</span>
-      <span class="t-pct da-pct-pending">—</span>
-      <div class="pbar-wrap"><div class="pbar-fill" style="width:0%"></div></div>
-      <span class="t-label" style="color:#596059;">等待加载</span>
+    <p class="da-mod-v2-meta">记忆训练</p>
+    <h2 class="da-mod-v2-q da-mem-prompt">加载题目中…</h2>
+    <textarea class="da-mod-v2-input da-mem-input" rows="5" placeholder="随便写，碎片、关键词、感受都可以"></textarea>
+    <div class="da-mod-v2-actions">
+      <button type="button" class="btn-p da-mod-submit">提交</button>
+      <button type="button" class="btn-o da-mod-vague">有印象</button>
+      <button type="button" class="btn-o da-mod-skip">跳过</button>
     </div>
-
-    <div class="da-mem-prompt-wrap">
-      <div class="da-mem-icon"><span class="mi">auto_awesome</span></div>
-      <p class="t-body da-mem-prompt">加载题目中…</p>
-      <p class="t-body-sm">细节越具体，数字人越像你。</p>
-    </div>
-
-    <div class="da-mem-upload-row">
-      <button type="button" class="da-mem-upload-btn" aria-label="上传照片">
-        <span class="mi" style="font-size:20px;color:#767872;">add_photo_alternate</span>
-        <span class="t-label">上传照片</span>
-      </button>
-    </div>
-
-    <div class="da-mem-input-wrap">
-      <textarea class="da-mem-input" placeholder="写下这段记忆…"></textarea>
-      <div class="da-mem-input-actions">
-        <button type="button" class="da-mem-voice-btn" aria-label="语音输入"><span class="mi mi-f" style="color:#fff;font-size:16px;">mic</span>语音</button>
-        <button type="button" class="da-mem-send-btn" aria-label="提交"><span class="mi">send</span></button>
+    <details class="da-mod-v2-extra">
+      <summary>补充细节（可选）</summary>
+      <div class="da-mod-v2-extra-body">
+        <input type="text" id="daMemTime" placeholder="时间（可选）"/>
+        <input type="text" id="daMemPlace" placeholder="地点（可选）"/>
+        <input type="text" id="daMemPeople" placeholder="相关的人（可选）"/>
+        <input type="text" id="daMemEmotion" placeholder="感受（可选）"/>
+        <button type="button" class="btn-o da-mem-upload-btn">附加照片（可选）</button>
       </div>
+    </details>
+    <div class="da-mod-v2-queue" hidden>
+      <span>已记 <strong class="da-mod-queue-n">0</strong> 条 · <button type="button" class="btn-o da-mod-add-another" style="padding:4px 10px;font-size:12px;">再记一条</button></span>
+      <ul class="da-mod-queue-list"></ul>
+      <button type="button" class="btn-p da-mod-next" style="width:100%;margin-top:8px;">下一题</button>
     </div>
-
-    <div class="da-mem-tags">
-      <span class="chip chip-o chip-add">+ 添加标签</span>
-    </div>
-    <button type="button" class="btn-p" style="margin-top:14px;">提交这段记忆</button>
+    <input type="file" id="daMemPhotoInput" accept="image/*" hidden/>
+    <div class="da-mem-tags" hidden><span class="chip chip-o chip-add">+ 标签</span></div>
   </div>
 </div>
 
 <!-- ═══════════════════════════
   PAGE 5 · 关系训练
 ═══════════════════════════ -->
-<div id="p4" class="page da-module-page">
+<div id="p4" class="page da-module-page da-module-v2" data-module="relationship">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-label">关系训练进度</span>
-      <span class="t-pct da-pct-pending">—</span>
-      <div class="pbar-wrap"><div class="pbar-fill" style="width:0%"></div></div>
-      <p class="t-body-sm da-mod-prog-hint">选择或写下真实回应方式。</p>
+    <p class="da-mod-v2-meta">关系训练</p>
+    <h2 class="da-mod-v2-q da-rel-title">加载中…</h2>
+    <textarea class="da-mod-v2-input da-rel-input" rows="4" placeholder="你会怎么回应？口语化即可"></textarea>
+    <div class="da-mod-v2-actions">
+      <button type="button" class="btn-p da-mod-submit">提交</button>
+      <button type="button" class="btn-o da-mod-vague">有印象</button>
+      <button type="button" class="btn-o da-mod-skip">跳过</button>
     </div>
-
-    <div class="card-w da-rel-scene">
-      <span class="t-label da-rel-label">当前场景</span>
-      <p class="t-section da-rel-title">加载中…</p>
-      <p class="t-body-sm da-rel-detail">完成身份设定后，这里会出现关系场景。</p>
-    </div>
-
-    <div class="da-rel-choices">
-      <span class="t-label">你的回应</span>
-      <div class="da-dynamic-choices"></div>
-      <textarea class="da-rel-input" rows="3" placeholder="写下你会怎么回应…"></textarea>
-    </div>
-
-    <div class="da-callout">
-      <span class="mi mi-f" style="font-size:16px;color:#685d4c;">auto_awesome</span>
-      <div>
-        <span class="t-label da-callout-label">提交后分析</span>
-        <p class="t-body-sm">系统会提取你的关系边界、安慰方式和亲密表达习惯。</p>
-      </div>
-    </div>
-    <button type="button" class="btn-p" style="margin-top:12px;">提交本次关系回应</button>
+    <details class="da-mod-v2-extra">
+      <summary>快捷回应（可选）</summary>
+      <div class="da-mod-v2-extra-body da-mod-v2-choices da-rel-dynamic-choices"></div>
+    </details>
   </div>
 </div>
 
 <!-- ═══════════════════════════
   PAGE 6 · 情感共鸣
 ═══════════════════════════ -->
-<div id="p5" class="page da-module-page">
+<div id="p5" class="page da-module-page da-module-v2" data-module="emotion">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-label">情感训练进度</span>
-      <span class="t-pct da-pct-pending">—</span>
-      <div class="pbar-wrap"><div class="pbar-fill" style="width:0%"></div></div>
-      <p class="t-body-sm da-mod-prog-hint">写下真实情绪回应，让分身学会你的共情方式。</p>
+    <p class="da-mod-v2-meta">情感训练</p>
+    <h2 class="da-mod-v2-q da-emo-scene">加载中…</h2>
+    <textarea class="da-mod-v2-input da-emo-input" rows="4" placeholder="当时你会说什么、做什么？"></textarea>
+    <div class="da-mod-v2-actions">
+      <button type="button" class="btn-p da-mod-submit">提交</button>
+      <button type="button" class="btn-o da-mod-vague">有印象</button>
+      <button type="button" class="btn-o da-mod-skip">跳过</button>
     </div>
-
-    <div class="card-w da-emo-train">
-      <span class="t-label da-emo-label">当前场景：加载中…</span>
-      <p class="t-body-sm da-emo-scene">完成身份设定后，这里会出现情绪场景。</p>
-      <textarea class="da-emo-input" placeholder="写下真实会怎么回应…"></textarea>
-    </div>
-
-    <button type="button" class="btn-p">
-      <span class="mi mi-f" style="color:#fff;">favorite</span>提交情绪回应
-    </button>
   </div>
 </div>
 
 <!-- ═══════════════════════════
   PAGE 7 · 认知训练
 ═══════════════════════════ -->
-<div id="p6" class="page da-module-page">
+<div id="p6" class="page da-module-page da-module-v2" data-module="cognition">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-label">认知训练进度</span>
-      <span class="t-pct da-pct-pending">—</span>
-      <div class="pbar-wrap"><div class="pbar-fill" style="width:0%"></div></div>
-      <p class="t-body-sm da-mod-prog-hint">拖动排序你的价值观，或回答冲突决策题。</p>
+    <p class="da-mod-v2-meta">认知训练</p>
+    <h2 class="da-mod-v2-q da-cog-question">加载中…</h2>
+    <div class="da-mod-v2-choices da-cog-options"></div>
+    <textarea class="da-mod-v2-input da-cog-note" rows="3" placeholder="可选：补充一句你的想法" hidden></textarea>
+    <div class="da-mod-v2-actions">
+      <button type="button" class="btn-p da-mod-submit" hidden>提交排序</button>
+      <button type="button" class="btn-o da-mod-vague" hidden>有印象</button>
+      <button type="button" class="btn-o da-mod-skip">跳过</button>
     </div>
-
-    <div class="da-cog-static">
-      <div class="da-section-head">
-        <span class="t-section">价值观优先级</span>
+    <details class="da-mod-v2-extra da-cog-rank-extra">
+      <summary>价值观排序（可选）</summary>
+      <div class="da-mod-v2-extra-body da-cog-drag-host">
+        <div class="drag-row"><span class="mi">drag_indicator</span><span class="t-body">家庭</span></div>
+        <div class="drag-row"><span class="mi">drag_indicator</span><span class="t-body">荣誉</span></div>
+        <div class="drag-row"><span class="mi">drag_indicator</span><span class="t-body">真理</span></div>
+        <div class="drag-row"><span class="mi">drag_indicator</span><span class="t-body">平和</span></div>
+        <button type="button" class="btn-o da-cog-rank-submit">提交价值排序</button>
       </div>
-      <p class="t-label" style="text-align:center;display:block;margin-bottom:14px;color:#596059;">长按并拖动排序</p>
-      <div class="da-cog-drag-host">
-        <div class="drag-row"><span class="mi" style="color:#c6c7c0;font-size:18px;">drag_indicator</span><span class="t-body">家庭</span><span class="mi" style="margin-left:auto;color:rgba(89,96,89,0.3);font-size:18px;">home</span></div>
-        <div class="drag-row"><span class="mi" style="color:#c6c7c0;font-size:18px;">drag_indicator</span><span class="t-body">荣誉</span><span class="mi" style="margin-left:auto;color:rgba(89,96,89,0.3);font-size:18px;">military_tech</span></div>
-        <div class="drag-row"><span class="mi" style="color:#c6c7c0;font-size:18px;">drag_indicator</span><span class="t-body">真理</span><span class="mi" style="margin-left:auto;color:rgba(89,96,89,0.3);font-size:18px;">auto_stories</span></div>
-        <div class="drag-row"><span class="mi" style="color:#c6c7c0;font-size:18px;">drag_indicator</span><span class="t-body">平和</span><span class="mi" style="margin-left:auto;color:rgba(89,96,89,0.3);font-size:18px;">self_improvement</span></div>
-      </div>
-    </div>
-
-    <button type="button" class="btn-p">提交价值排序</button>
-    <span class="t-label da-mod-footnote">冲突决策题会出现在上方引导条中</span>
+    </details>
   </div>
 </div>
 
-<!-- PAGE 8 · 我的 -->
+<!-- PAGE 8 · 我的（内容由 profile-center.js 渲染） -->
 <div id="p7" class="page da-profile-page">
   <div class="pc">
-    <div class="prog-section">
-      <span class="t-section">我的训练档案</span>
-      <p class="t-body-sm" style="text-align:center;max-width:250px;">管理资料授权、训练目标和数字人发布状态。</p>
-    </div>
-    <div class="card-w" style="margin-bottom:14px;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:54px;height:54px;border-radius:50%;overflow:hidden;flex-shrink:0;">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9CoAWFz6hMRGOhuFmcuf1GHNeVfSH2zLbrtfNdU4txcJclXi6DkYCaPiabLusTHGedU3EHqjNSzSLKEL7CYSvE--n7Mt2-j-72cPi20p5hgWyEUmPgSTsqL_yxGXTSVHpLeSbTwzdqnfEW_gSoUQEg4hv4m8Z2TnmzBebpctdchgCJdYZ-w_h2AcVbzcHPYnotKWOWnaUIaICREgPnS9Og-kq70jW_pn5KNvZkCMymFge4kmsKNRh_Tj3xpG87Qkbno4Tmguh-I7i" style="width:100%;height:100%;object-fit:cover;" alt=""/>
-        </div>
-        <div>
-          <p class="t-body" style="font-weight:600;">训练者本人</p>
-          <p class="t-body-sm">数字人版本 v0.68 · 未发布</p>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:9px;">
-      <button class="module-row" type="button"><div class="icon-pill" style="background:#dae2d8;"><span class="mi mi-sm" style="color:#596059;">verified_user</span></div><div style="flex:1;"><strong>授权对象</strong><small>谁可以在陪护端与你的数字人对话</small></div><span class="mi mi-sm">chevron_right</span></button>
-      <button class="module-row" type="button"><div class="icon-pill" style="background:#f0e0cb;"><span class="mi mi-sm" style="color:#685d4c;">inventory_2</span></div><div style="flex:1;"><strong>资料库</strong><small>上传记录、聊天样本、照片与文件</small></div><span class="mi mi-sm">chevron_right</span></button>
-      <button class="module-row" type="button"><div class="icon-pill" style="background:#e6e2dc;"><span class="mi mi-sm" style="color:#5e5e5c;">settings</span></div><div style="flex:1;"><strong>训练设置</strong><small>主动频率、边界提示和发布条件</small></div><span class="mi mi-sm">chevron_right</span></button>
-    </div>
+    <div class="da-profile-host"></div>
   </div>
 </div>
 
 <!-- ─────────── BOTTOM NAV ─────────── -->
-<nav class="bottom-nav">
-  <button class="nav-btn on" id="n0" onclick="go(0)">
+<nav class="bottom-nav" id="daBottomNav">
+  <button type="button" class="nav-btn on" id="n0" data-nav-page="0">
     <span class="mi">auto_awesome</span><span class="nav-lbl">陪伴</span>
   </button>
-  <button class="nav-btn" id="n1" onclick="go(1)">
+  <button type="button" class="nav-btn" id="n1" data-nav-page="1">
     <span class="mi">psychology</span><span class="nav-lbl">训练</span>
   </button>
-  <button class="nav-btn" id="n2" onclick="go(7)">
+  <button type="button" class="nav-btn" id="n2" data-nav-page="7">
     <span class="mi">account_circle</span><span class="nav-lbl">我的</span>
   </button>
 </nav>
 
 </div><!-- /phone -->
 <div id="toast" class="toast"></div>
-<script src="../js/api-core.js"></script>
+<script src="../js/api-core.js?v=ark-sync-3"></script>
+<script src="../js/layer-explain.js?v=ark-sync-3"></script>
+<script src="../js/avatar-preset.js?v=ark-sync-3"></script>
+<script src="../js/profile-center.js?v=ark-sync-3"></script>
 <script>
   let cur = 0;
   const navMap = { 0: 0, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 2 };
@@ -345,7 +207,14 @@
     document.getElementById('n'+navMap[cur]).classList.add('on');
     document.getElementById('p'+cur).scrollTop = 0;
   }
+  window.go = go;
+  document.querySelectorAll('[data-nav-page]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      go(Number(btn.dataset.navPage));
+    });
+  });
 </script>
-<script src="../js/apps-bridge.js"></script>
+<script src="../js/apps-bridge.js?v=ark-sync-3"></script>
 </body>
 </html>

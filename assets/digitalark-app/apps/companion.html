@@ -42,12 +42,12 @@ body { font-family: 'Noto Sans SC', sans-serif; background:#e8e4dc; min-height:1
 .chat-bubble.me { align-self:flex-end; background:#596059; color:#fff; border-top-right-radius:6px; }
 body.da-desktop .phone::before { display: none; }
 </style>
-<link rel="stylesheet" href="../js/app-shell.css"/>
+<link rel="stylesheet" href="/js/app-shell.css"/>
 </head>
 <body>
 <div class="phone">
   <header class="topbar">
-    <div class="avatar-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9CoAWFz6hMRGOhuFmcuf1GHNeVfSH2zLbrtfNdU4txcJclXi6DkYCaPiabLusTHGedU3EHqjNSzSLKEL7CYSvE--n7Mt2-j-72cPi20p5hgWyEUmPgSTsqL_yxGXTSVHpLeSbTwzdqnfEW_gSoUQEg4hv4m8Z2TnmzBebpctdchgCJdYZ-w_h2AcVbzcHPYnotKWOWnaUIaICREgPnS9Og-kq70jW_pn5KNvZkCMymFge4kmsKNRh_Tj3xpG87Qkbno4Tmguh-I7i" style="width:100%;height:100%;object-fit:cover;" alt=""/></div>
+    <div class="avatar-sm"><img src="../assets/avatars/avatar-m.png" style="width:100%;height:100%;object-fit:contain;padding:3px;background:#f3efe8;" alt=""/></div>
     <span class="topbar-title">陪护端<span class="da-avatar-badge" id="daAvatarBadge">数字分身</span></span>
     <span class="mi" style="cursor:pointer;" title="切换应用">apps</span>
   </header>
@@ -57,7 +57,7 @@ body.da-desktop .phone::before { display: none; }
       <div style="position:relative;margin-bottom:28px;">
         <div class="breathing" style="position:absolute;inset:-28px;background:rgba(193,201,191,.22);border-radius:50%;filter:blur(32px);"></div>
         <div style="width:210px;height:210px;border-radius:50%;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.13);">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL" style="width:100%;height:100%;object-fit:cover;opacity:.88;" alt=""/>
+          <img src="../assets/avatars/avatar-f.png" style="width:100%;height:100%;object-fit:contain;padding:14%;background:#f3efe8;" alt="数字分身"/>
         </div>
       </div>
       <div style="text-align:center;margin-bottom:28px;">
@@ -98,7 +98,10 @@ body.da-desktop .phone::before { display: none; }
 </div>
 <div id="daConsentOverlay" class="da-consent-overlay" style="display:none;"></div>
 <div id="toast" class="toast"></div>
-<script src="../js/api-core.js"></script>
+<script src="/js/layer-explain.js"></script>
+<script src="/js/api-core.js"></script>
+<script src="/js/avatar-preset.js"></script>
+<script src="/js/profile-center.js"></script>
 <script>
 let cur = 0;
 function go(i) {
@@ -109,6 +112,6 @@ function go(i) {
   document.getElementById('n'+cur).classList.add('on');
 }
 </script>
-<script src="../js/apps-bridge.js"></script>
+<script src="/js/apps-bridge.js"></script>
 </body>
 </html>

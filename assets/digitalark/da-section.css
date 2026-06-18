@@ -1,0 +1,455 @@
+/* ═══ 数字方舟 · 封面 / 衔接 / 尾声 ═══ */
+
+#digitalark{
+  --ds-ink:#17110d;
+  --ds-muted:rgba(23,17,13,.62);
+  --ds-dim:rgba(23,17,13,.48);
+  --ds-line:rgba(23,17,13,.12);
+  --ds-red:#9b0000;
+  --ds-red-soft:#b81818;
+  --ds-paper:#fffbf2;
+  --ds-warm:rgba(166,56,50,.55);
+  --ds-hud:"Barlow Condensed",monospace;
+  --ds-serif:"Noto Serif SC",Georgia,serif;
+  padding:0!important;
+  overflow-x:visible;
+  color:var(--ds-ink);
+  background:var(--ds-paper);
+  position:relative;
+  z-index:4;
+}
+
+#digitalark.is-da-red-live{
+  background:var(--ds-red);
+}
+
+#digitalark:not(.is-da-red-live) .da-ds-wrap{
+  background:var(--ds-paper);
+}
+
+#digitalark:not(.is-da-red-live) .da2-experience-archive{
+  opacity:0;
+  visibility:hidden;
+}
+
+.da2-chapter-seam{
+  min-height:72svh;
+  background:#fffbf2;
+  pointer-events:none;
+  position:relative;
+  z-index:3;
+}
+
+#digitalark::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:clamp(22px,5vw,64px);
+  right:clamp(22px,5vw,64px);
+  height:1px;
+  z-index:8;
+  background:linear-gradient(90deg,transparent,rgba(23,17,13,.16) 18%,rgba(23,17,13,.16) 82%,transparent);
+  pointer-events:none;
+}
+
+body.is-da-red-section #digitalark .da2-experience-archive,
+body.is-da-hscroll-active #digitalark .da2-experience-archive{
+  --ds-ink:#f4f1ec;
+  --ds-muted:rgba(244,241,236,.78);
+  --ds-dim:rgba(244,241,236,.5);
+  --ds-line:rgba(255,255,255,.12);
+}
+
+.da-ds-wrap{
+  position:relative;
+  isolation:isolate;
+  background:var(--ds-red);
+}
+
+.da-ds-body{
+  position:relative;
+  z-index:1;
+}
+
+/* 封面 + 横滑：同一 pin 视口 */
+.da2-experience{
+  position:relative;
+  z-index:2;
+}
+
+.da2-experience-viewport{
+  position:relative;
+  height:100svh;
+  overflow:hidden;
+}
+
+.da2-experience-archive{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  transform-origin:50% 50%;
+  will-change:transform;
+}
+
+#digitalark.is-handoff-exit .da2-experience-viewport{
+  z-index:1!important;
+}
+
+#digitalark.is-handoff-exit .da2-experience-archive{
+  box-shadow:0 24px 80px rgba(0,0,0,.32);
+}
+
+body.is-da-tw-handoff #da2Experience,
+body.is-da-tw-handoff #digitalark.is-handoff-exit{
+  z-index:2!important;
+}
+
+#timewalker{
+  --da-handoff-overlap:100svh;
+  position:relative;
+  z-index:6;
+  margin-top:calc(-1 * var(--da-handoff-overlap));
+  background-color:var(--tw-paper,#f3efe4);
+}
+
+body.is-da-tw-handoff #timewalker{
+  z-index:12!important;
+}
+
+#digitalark.is-da-experience-done + #timewalker{
+  z-index:12;
+}
+
+@media (max-width:820px){
+  #timewalker{
+    margin-top:0;
+  }
+}
+
+/* ─── 白底封面（叠在档案层上，随滚动淡出） ─── */
+.da2-cover{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:var(--ds-paper);
+  color:var(--ds-ink);
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.da2-cover.is-cover-done{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+.da2-cover-grain{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.da2-hud{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:clamp(80px,10vh,120px) clamp(22px,5vw,64px) 0;
+  pointer-events:none;
+}
+
+.da2-hud-l,
+.da2-hud-r{
+  font-family:var(--ds-hud);
+  font-size:10px;
+  letter-spacing:.36em;
+  text-transform:uppercase;
+  color:rgba(23,17,13,.62);
+}
+
+.da2-hud-r{
+  letter-spacing:.28em;
+  color:rgba(23,17,13,.88);
+  font-weight:500;
+}
+
+.da2-cover-body{
+  position:relative;
+  z-index:3;
+  width:100%;
+  max-width:min(100%,920px);
+  margin:0 auto;
+  padding:clamp(96px,12vh,140px) clamp(16px,4vw,48px) clamp(88px,12vh,128px);
+  text-align:center;
+}
+
+.da2-eyebrow{
+  font-family:var(--ds-hud);
+  font-size:9px;
+  letter-spacing:.44em;
+  text-transform:uppercase;
+  color:#a63832;
+  margin-bottom:clamp(24px,4.5vh,40px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+}
+
+.da2-eyebrow::before,
+.da2-eyebrow::after{
+  content:"";
+  flex:1;
+  max-width:64px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(166,56,50,.28));
+}
+
+.da2-eyebrow::after{transform:scaleX(-1)}
+
+.da2-title-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:clamp(10px,1.8vh,18px);
+  margin:0 0 clamp(22px,3.5vh,32px);
+}
+
+.da2-title-en{
+  font-family:var(--ds-hud);
+  font-size:clamp(2.8rem,9.5vw,6.4rem);
+  font-weight:500;
+  letter-spacing:.24em;
+  text-indent:.24em;
+  line-height:.92;
+  color:#17110d;
+  text-transform:uppercase;
+}
+
+.da2-title-rule{
+  display:block;
+  width:clamp(48px,8vw,88px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(23,17,13,.42),transparent);
+}
+
+.da2-title-cn{
+  font-family:var(--ds-serif);
+  font-size:clamp(1.35rem,3.2vw,2.4rem);
+  font-weight:600;
+  letter-spacing:.48em;
+  text-indent:.48em;
+  color:#17110d;
+}
+
+#digitalark .da2-cover .project-status{
+  color:rgba(23,17,13,.62);
+}
+
+#digitalark .da2-cover .project-status span{
+  color:rgba(23,17,13,.86);
+  border-color:rgba(23,17,13,.22);
+  background:rgba(255,255,255,.9);
+}
+
+.da2-tagline{
+  max-width:min(100%,34rem);
+  margin:0 auto;
+  font-family:var(--ds-serif);
+  font-size:clamp(13px,1.35vw,15px);
+  font-weight:400;
+  line-height:2.05;
+  letter-spacing:.12em;
+  color:rgba(23,17,13,.72);
+}
+
+.da2-cover-index{
+  position:absolute;
+  right:clamp(22px,5vw,64px);
+  bottom:clamp(18px,3vh,28px);
+  z-index:4;
+  font-family:var(--ds-hud);
+  font-size:clamp(3rem,8vw,5rem);
+  font-weight:300;
+  line-height:1;
+  letter-spacing:-.04em;
+  color:rgba(23,17,13,.08);
+  user-select:none;
+  pointer-events:none;
+}
+
+.da2-scroll-hint{
+  position:absolute;
+  bottom:clamp(24px,4vh,40px);
+  left:50%;
+  transform:translateX(-50%);
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  pointer-events:none;
+}
+
+.da2-scroll-hint span{
+  font-family:var(--ds-hud);
+  font-size:9px;
+  letter-spacing:.38em;
+  text-transform:uppercase;
+  color:rgba(23,17,13,.52);
+}
+
+.da2-scroll-line{
+  width:1px;
+  height:36px;
+  background:linear-gradient(180deg,rgba(23,17,13,.48),transparent);
+  animation:da2ScrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes da2ScrollPulse{
+  0%,100%{transform:scaleY(1);opacity:.6}
+  50%{transform:scaleY(.5);opacity:.2}
+}
+
+/* 红色档案区 */
+.da-is-red{
+  position:relative;
+  background:var(--ds-red);
+  color:#f4f1ec;
+}
+
+/* 尾声：横滑轨道最后一屏 */
+.da2-hscroll-panel--finale .da2-finale{
+  position:relative;
+  padding:0 clamp(22px,5vw,64px);
+  width:100%;
+  max-width:none;
+}
+
+.da2-finale-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);
+  gap:clamp(24px,4vw,56px);
+  align-items:end;
+  min-height:min(72vh,720px);
+  width:100%;
+}
+
+.da2-finale-statement{
+  align-self:end;
+  position:relative;
+  z-index:2;
+}
+
+.da2-finale-visual{
+  margin:0;
+  align-self:end;
+  overflow:hidden;
+  transform:scale(.8);
+  transform-origin:center bottom;
+  will-change:transform;
+}
+
+.da2-finale-visual img{
+  display:block;
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  filter:saturate(.9) contrast(.96);
+}
+
+.da2-finale-cols{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(16px,2.5vw,32px);
+  max-width:min(100%,52rem);
+}
+
+.da2-finale-kicker{
+  font-family:var(--ds-hud,"Barlow Condensed",monospace);
+  font-size:clamp(10px,1vw,11px);
+  font-weight:600;
+  letter-spacing:.38em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+  margin:0 0 clamp(20px,3vw,32px);
+}
+
+.da2-finale-h{
+  font-family:var(--ds-serif,"Noto Serif SC",serif);
+  font-weight:700;
+  font-size:clamp(32px,4vw,56px);
+  line-height:1.06;
+  color:#fff;
+  max-width:min(100%,11em);
+  margin:0 0 clamp(28px,4vh,40px);
+}
+
+.da2-finale-sub{
+  font-family:var(--ds-serif,"Noto Serif SC",serif);
+  font-size:clamp(14px,1.45vw,17px);
+  font-weight:500;
+  line-height:1.72;
+  color:rgba(255,255,255,.94);
+  margin:0;
+}
+
+.da2-line-inner--em{
+  font-family:var(--ds-hud,"Barlow Condensed",sans-serif);
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
+.da2-hscroll-panel--finale .da2-product-foot{
+  position:relative;
+  top:auto;
+  left:auto;
+  right:auto;
+  padding:clamp(28px,4vh,40px) 0 0;
+}
+
+.da2-hscroll-panel--finale .da2-product-foot a{
+  font-family:var(--ds-hud,"Barlow Condensed",monospace);
+  font-size:clamp(10px,1vw,11px);
+  font-weight:600;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:#fff;
+  border-bottom-color:rgba(255,255,255,.55);
+}
+
+.da2-line-mask{display:block;overflow:hidden;padding-bottom:.06em}
+.da2-line-inner{
+  display:block;
+  will-change:transform;
+}
+
+@media (max-width:1100px){
+  .da2-finale-grid{
+    grid-template-columns:1fr;
+    min-height:auto;
+  }
+  .da2-finale-visual{max-width:min(100%,420px)}
+  .da2-finale-cols{grid-template-columns:1fr}
+}
+
+@media (max-width:768px){
+  #digitalark{scroll-margin-top:72px}
+  .da2-title-en{font-size:clamp(2.2rem,12vw,3.6rem)}
+  .da2-title-cn{letter-spacing:.32em;text-indent:.32em}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .da2-scroll-line{animation:none!important}
+}

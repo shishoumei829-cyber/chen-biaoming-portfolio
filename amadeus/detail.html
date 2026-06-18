@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMADEUS | Project Detail</title>
+  <link rel="stylesheet" href="project.css">
+</head>
+<body class="ana-detail">
+  <header class="site-header">
+    <a href="project.html" class="brand">AMADEUS</a>
+    <nav aria-label="项目导航">
+      <a href="project.html">Cover</a>
+      <a href="../index.html">Portfolio</a>
+    </nav>
+  </header>
+
+  <main class="detail-main" data-page="detail">
+    <div class="detail-shell">
+      <section class="detail-title" aria-label="项目标题">
+        <div class="detail-title__wrap">
+          <h1>AMADEUS</h1>
+          <span class="detail-meta">Digital Persona Engine</span>
+        </div>
+      </section>
+
+      <div class="detail-layout">
+        <aside class="detail-sidebar" aria-label="项目说明">
+          <div class="detail-sidebar__inner">
+            <section class="detail-block">
+              <div class="title">项目信息</div>
+              <p>类型 / AI 人格系统</p>
+              <p>角色 / 产品设计、系统设计、前端原型</p>
+              <p>状态 / 已实现、GitHub 开源、论文公开</p>
+              <p>入口 / <a href="amadeus_work.html">运行 Demo</a></p>
+            </section>
+
+            <section class="detail-block">
+              <div class="title">设计说明</div>
+              <p>AMADEUS 是一个在开口前完成记忆、情绪与行为判断的人格系统。长期记忆、PAD 情绪矩阵、行为仲裁与主动机制共同构成表达前的内部加工。</p>
+              <p>项目重点放在生成之前：记忆怎样参与判断，情绪怎样改变表达，行为倾向怎样形成边界。</p>
+            </section>
+
+            <section class="detail-block">
+              <div class="title">竞品分析</div>
+              <ul>
+                <li>Character.AI 强在角色数量与社区传播。</li>
+                <li>星野类产品强在视觉包装与低门槛陪伴。</li>
+                <li>通用智能体强在任务处理与工具调用。</li>
+                <li>AMADEUS 的重点是状态可见、关系持续、开口前决策与可复现实验。</li>
+              </ul>
+            </section>
+          </div>
+        </aside>
+
+        <section class="detail-modules" aria-label="项目详情内容">
+          <article class="detail-module detail-statement">
+            <div>
+              <h2>让数字人格拥有开口前的内心</h2>
+              <p>人格连续性、情绪状态、记忆调用和行为倾向在生成之前完成整合，每一次表达都来自持续运行的内部状态。</p>
+            </div>
+          </article>
+
+          <figure class="detail-module detail-media">
+            <div>
+              <img src="../assets/amadeus/art/ama-art-soul.png" alt="AMADEUS 人格系统主视觉">
+              <figcaption class="media-caption">主视觉用于表达人格系统的整体性：记忆、情绪、行为与自我连续性汇入同一个数字人格。</figcaption>
+            </div>
+          </figure>
+
+          <figure class="detail-module detail-media">
+            <div class="media-pair">
+              <img src="../assets/amadeus/art/ama-art-palace.png" alt="记忆宫殿模块视觉">
+              <img src="../assets/amadeus/art/ama-art-matrix.png" alt="情绪矩阵模块视觉">
+            </div>
+          </figure>
+
+          <article class="detail-module">
+            <div class="detail-copy">
+              <span class="detail-module__label">Product Highlights</span>
+              <h3>四个模块构成开口前的内部加工</h3>
+            </div>
+            <div class="highlight-grid">
+              <article>
+                <span class="detail-module__label">Memory Palace</span>
+                <h4>记忆宫殿</h4>
+                <p>按语义房间检索长期记忆，让过去参与当下判断，并减少关系叙事断裂。</p>
+                <button class="code-button" type="button" data-code="memory">查看代码</button>
+              </article>
+              <article>
+                <span class="detail-module__label">PAD Matrix</span>
+                <h4>情绪矩阵</h4>
+                <p>P / A / D / S 持续更新，情绪成为表达前的内部状态。</p>
+                <button class="code-button" type="button" data-code="emotion">查看代码</button>
+              </article>
+              <article>
+                <span class="detail-module__label">Behavior Arbitration</span>
+                <h4>行为仲裁</h4>
+                <p>候选行为先竞争，再决定回复倾向、语气强度和表达边界。</p>
+                <button class="code-button" type="button" data-code="behavior">查看代码</button>
+              </article>
+              <article>
+                <span class="detail-module__label">Autonomous Drive</span>
+                <h4>主动机制</h4>
+                <p>基于关系、空闲、轮次和内在驱力决定主动开口。</p>
+                <button class="code-button" type="button" data-code="autonomy">查看代码</button>
+              </article>
+            </div>
+          </article>
+
+          <figure class="detail-module detail-media">
+            <div>
+              <img src="../assets/amadeus/art/scene-ui.png" alt="AMADEUS 系统界面结构图">
+              <figcaption class="media-caption">界面图用于说明系统如何把对话轨、PAD 状态、记忆宫殿与关系状态收进同一层操作界面。</figcaption>
+            </div>
+          </figure>
+
+          <article class="detail-module detail-outro">
+            <div>
+              <h2>从原型走向可验证的人格系统</h2>
+              <p>更新日志、论文与可运行 Demo 分别对应迭代过程、实验依据和真实体验入口。</p>
+              <div class="outro-links">
+                <a href="../assets/amadeus/changelog/index.html">更新日志</a>
+                <a href="../paper/index.html">论文与实验</a>
+                <a href="amadeus_work.html">运行 Demo</a>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <section class="other-projects">
+        <h3>其他项目</h3>
+        <div>
+          <a class="other-row" href="../index.html#timewalker" data-color="#c6d960">
+            <span>墨舟</span><em>Travel Footprint Product</em>
+          </a>
+          <a class="other-row" href="../index.html#digitalark" data-color="#fcebec">
+            <span>数字方舟</span><em>Digital Self Archive</em>
+          </a>
+          <a class="other-row" href="../index.html#self" data-color="#a6cec5">
+            <span>个人页</span><em>Author Archive</em>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span>AMADEUS © 2026</span>
+    <a href="project.html">返回封面</a>
+  </footer>
+
+  <aside class="code-drawer" id="codeDrawer" aria-hidden="true">
+    <button class="drawer-close" id="drawerClose" type="button">关闭</button>
+    <p id="codePath">amadeus/lib/memory.js</p>
+    <h3 id="codeTitle">记忆宫殿</h3>
+    <pre><code id="codeBlock"></code></pre>
+  </aside>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="project.js"></script>
+</body>
+</html>

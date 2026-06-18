@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" fill="none" role="img" aria-label="Warmth editorial illustration">
+  <defs>
+    <linearGradient id="wbg" x1="0" y1="0" x2="800" y2="900">
+      <stop offset="0%" stop-color="#f7f7f7"/>
+      <stop offset="100%" stop-color="#eceef2"/>
+    </linearGradient>
+    <radialGradient id="warm" cx="65%" cy="38%" r="45%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".85"/>
+      <stop offset="70%" stop-color="#e4e8f0" stop-opacity=".25"/>
+      <stop offset="100%" stop-color="#dfe3ea" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="900" fill="url(#wbg)"/>
+  <rect width="800" height="900" fill="url(#warm)"/>
+  <path d="M520 180 Q680 320 620 520 Q560 720 420 780 Q280 840 180 680 Q80 520 220 360 Q360 200 520 180Z" fill="#fff" fill-opacity=".55" stroke="#0a0a0a" stroke-opacity=".05"/>
+  <g stroke="#0a0a0a" stroke-opacity=".07" stroke-width=".7">
+    <path d="M240 640 Q400 560 560 640"/>
+    <path d="M280 700 Q400 620 520 700"/>
+  </g>
+  <circle cx="520" cy="340" r="6" fill="#0a0a0a" fill-opacity=".08"/>
+  <circle cx="520" cy="340" r="28" stroke="#0a0a0a" stroke-opacity=".06" fill="none"/>
+  <circle cx="520" cy="340" r="52" stroke="#0a0a0a" stroke-opacity=".03" fill="none"/>
+</svg>

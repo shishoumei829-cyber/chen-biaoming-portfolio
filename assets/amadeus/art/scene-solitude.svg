@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" fill="none" role="img" aria-label="Solitude editorial illustration">
+  <defs>
+    <linearGradient id="sbg" x1="0" y1="0" x2="800" y2="900">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eef0f4"/>
+    </linearGradient>
+    <radialGradient id="slight" cx="35%" cy="25%" r="50%">
+      <stop offset="0%" stop-color="#fff" stop-opacity=".9"/>
+      <stop offset="100%" stop-color="#eef0f4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="900" fill="url(#sbg)"/>
+  <rect width="800" height="900" fill="url(#slight)"/>
+  <rect x="280" y="120" width="240" height="620" rx="2" fill="#f4f5f7" stroke="#0a0a0a" stroke-opacity=".06"/>
+  <rect x="300" y="160" width="200" height="12" rx="1" fill="#0a0a0a" fill-opacity=".04"/>
+  <rect x="300" y="190" width="160" height="8" rx="1" fill="#0a0a0a" fill-opacity=".03"/>
+  <rect x="300" y="210" width="180" height="8" rx="1" fill="#0a0a0a" fill-opacity=".03"/>
+  <circle cx="400" cy="520" r="48" stroke="#0a0a0a" stroke-opacity=".08" stroke-width="1" fill="none"/>
+  <circle cx="400" cy="520" r="72" stroke="#0a0a0a" stroke-opacity=".04" stroke-width=".8" fill="none"/>
+  <path d="M160 820 Q400 680 640 820" stroke="#0a0a0a" stroke-opacity=".05" stroke-width="1" fill="none"/>
+</svg>

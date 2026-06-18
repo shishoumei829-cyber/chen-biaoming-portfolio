@@ -112,16 +112,17 @@
   }
 
   function initPanel(root) {
+    const scope = root.closest('.ama-editorial__spread') || root.closest('.ama-editorial__poster') || root.parentElement || root;
     const svg = root.querySelector('.ama-emotion-panel__svg');
     const curvePath = root.querySelector('.ama-emotion-curve-path');
     const cursor = root.querySelector('.ama-emotion-cursor');
-    const scoreEl = root.querySelector('[data-ama-emotion-score]');
-    const turnEl = root.querySelector('[data-ama-emotion-turn]');
+    const scoreEl = scope.querySelector('[data-ama-emotion-score]');
+    const turnEl = scope.querySelector('[data-ama-emotion-turn]');
     const padEls = {
-      P: root.querySelector('[data-ama-pad="P"]'),
-      A: root.querySelector('[data-ama-pad="A"]'),
-      D: root.querySelector('[data-ama-pad="D"]'),
-      S: root.querySelector('[data-ama-pad="S"]'),
+      P: scope.querySelector('[data-ama-pad="P"]'),
+      A: scope.querySelector('[data-ama-pad="A"]'),
+      D: scope.querySelector('[data-ama-pad="D"]'),
+      S: scope.querySelector('[data-ama-pad="S"]'),
     };
     if (!svg || !curvePath) return null;
 
@@ -165,12 +166,12 @@
       cursor.setAttribute('cx', cx);
       cursor.setAttribute('cy', cy);
 
-      scoreEl.textContent = fmt(last, 3);
-      turnEl.textContent = String(Math.min(turn, DEMO_INPUTS.length));
-      padEls.P.textContent = fmt(state.P, 2);
-      padEls.A.textContent = fmt(state.A, 2);
-      padEls.D.textContent = fmt(state.D, 2);
-      padEls.S.textContent = state.S.toFixed(2);
+      if (scoreEl) scoreEl.textContent = fmt(last, 3);
+      if (turnEl) turnEl.textContent = String(Math.min(turn, DEMO_INPUTS.length));
+      if (padEls.P) padEls.P.textContent = fmt(state.P, 2);
+      if (padEls.A) padEls.A.textContent = fmt(state.A, 2);
+      if (padEls.D) padEls.D.textContent = fmt(state.D, 2);
+      if (padEls.S) padEls.S.textContent = state.S.toFixed(2);
     }
 
     function reset() {
@@ -192,7 +193,7 @@
       if (history.length > 24) history.shift();
       turn += 1;
       if (turnEl) turnEl.textContent = String(turn);
-      const cap = root.querySelector('[data-ama-emotion-caption]');
+      const cap = scope.querySelector('[data-ama-emotion-caption]');
       if (cap) cap.textContent = input.length > 42 ? input.slice(0, 42) + '…' : input;
       render();
     }

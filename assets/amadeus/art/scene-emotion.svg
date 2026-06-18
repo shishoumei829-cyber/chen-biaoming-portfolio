@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" role="img" aria-label="Emotion curve editorial illustration">
+  <defs>
+    <linearGradient id="embg" x1="0" y1="0" x2="0" y2="900">
+      <stop offset="0%" stop-color="#0c0c10"/>
+      <stop offset="100%" stop-color="#141820"/>
+    </linearGradient>
+    <linearGradient id="curve" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff" stop-opacity=".15"/>
+      <stop offset="50%" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity=".2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#embg)"/>
+  <g stroke="#fff" stroke-opacity=".04" stroke-width="1">
+    <line x1="0" y1="450" x2="1600" y2="450"/>
+    <line x1="80" y1="0" x2="80" y2="900"/>
+    <line x1="400" y1="0" x2="400" y2="900"/>
+    <line x1="800" y1="0" x2="800" y2="900"/>
+    <line x1="1200" y1="0" x2="1200" y2="900"/>
+  </g>
+  <path d="M80 450 C280 180 520 720 760 380 S1200 620 1520 320" stroke="url(#curve)" stroke-width="2.5" fill="none"/>
+  <path d="M80 480 C320 620 560 260 820 520 S1180 340 1520 480" stroke="#fff" stroke-opacity=".12" stroke-width="1.2" fill="none"/>
+  <circle cx="820" cy="520" r="6" fill="#fff" fill-opacity=".35"/>
+  <circle cx="820" cy="520" r="18" stroke="#fff" stroke-opacity=".15" fill="none"/>
+</svg>

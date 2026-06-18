@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMADEUS 迭代日志 · 多立绘视觉体系</title>
+<meta name="description" content="AMADEUS 视觉迭代：从静态立绘到 Galgame 多立绘状态机的设计思考与落地验证。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a1f;
+  --muted: #5c5c66;
+  --rule: #ddd8cf;
+  --paper: #faf8f4;
+  --accent: #c45a00;
+  --accent-soft: #fff4e8;
+  --done-bg: #e8f0fa;
+  --done-border: #3d6fa8;
+  --done-ink: #1a4a7a;
+  --old-bg: #eceae4;
+  --old-ink: #5c574f;
+  --warn-bg: #fff6e8;
+  --warn-border: #d48806;
+  --gap-bg: #fdeeee;
+  --gap-border: #c45a5a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Noto Serif SC", serif; font-size: 17px; line-height: 1.85; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+.topbar { font-family: Inter, sans-serif; font-size: 0.82rem; color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; align-items: center; }
+.topbar a { color: var(--accent); text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.meta { font-family: Inter, sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+article h1 { font-size: 1.75rem; line-height: 1.35; margin: 0 0 0.5rem; }
+article .version { font-family: Inter, sans-serif; font-size: 0.88rem; color: var(--muted); margin-bottom: 1.25rem; }
+article h2 { font-size: 1.3rem; margin: 2.25rem 0 0.75rem; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+article h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+article p { margin: 0.75rem 0; }
+article ul { padding-left: 1.4rem; margin: 0.75rem 0; }
+article li { margin: 0.35rem 0; }
+.lede { font-size: 1.05rem; color: #333; padding: 1rem 1.15rem; background: var(--accent-soft); border-left: 3px solid var(--accent); margin: 1.25rem 0 1.75rem; }
+.insight { margin: 1.25rem 0; padding: 1rem 1.15rem; border: 1px solid var(--rule); background: #fff; border-radius: 4px; }
+code { font-family: ui-monospace, monospace; font-size: 0.88em; background: #eee9df; padding: 0.1em 0.35em; border-radius: 3px; }
+blockquote { margin: 1.25rem 0; padding: 0.75rem 1rem; border-left: 3px solid var(--done-border); color: #333; background: var(--done-bg); }
+
+.upgrade-block { margin: 2rem 0; padding: 1.5rem 1.35rem; border: 2px solid var(--done-border); border-radius: 10px; background: linear-gradient(180deg, #f0f5fb 0%, #fff 50%); box-shadow: 0 4px 20px rgba(61, 111, 168, 0.1); }
+.upgrade-block > .upgrade-label { font-family: Inter, sans-serif; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--done-ink); margin: 0 0 0.35rem; }
+.upgrade-block > h2 { border: none; padding: 0; margin: 0 0 0.5rem; font-size: 1.35rem; }
+.upgrade-block > .upgrade-intro { margin: 0 0 1.25rem; font-size: 0.95rem; color: #3d3d42; }
+.conclusion-bar { background: var(--done-bg); border: 1px solid var(--done-border); border-radius: 6px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; font-size: 0.95rem; }
+.conclusion-bar strong { color: var(--done-ink); }
+
+.cmp { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.88rem; margin: 1rem 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); }
+.cmp thead th { font-family: Inter, sans-serif; font-size: 0.7rem; letter-spacing: 0.08em; font-weight: 700; padding: 0.55rem 0.75rem; text-align: left; }
+.cmp thead th.col-judge { background: var(--accent-soft); color: var(--accent); width: 38%; }
+.cmp thead th.col-fact { background: var(--done-bg); color: var(--done-ink); width: 62%; }
+.cmp thead th.col-design { background: var(--old-bg); color: var(--old-ink); width: 40%; }
+.cmp thead th.col-status { background: #faf8f4; color: var(--muted); width: 60%; }
+.cmp tbody td { padding: 0.6rem 0.75rem; vertical-align: top; line-height: 1.55; border-top: 1px solid var(--rule); }
+.cmp tbody td.cell-judge { background: #fffcf8; }
+.cmp tbody td.cell-fact { background: #f8fafd; }
+.cmp tbody td.cell-fact em { font-style: normal; color: var(--done-ink); font-weight: 700; }
+.cmp tbody td.cell-gap { background: var(--gap-bg); color: #6b3030; }
+
+.tag { display: inline-block; font-family: Inter, sans-serif; font-size: 0.62rem; font-weight: 700; padding: 0.2rem 0.45rem; border-radius: 3px; letter-spacing: 0.04em; }
+.tag-done { background: var(--done-bg); color: var(--done-ink); border: 1px solid var(--done-border); }
+.tag-gap { background: var(--gap-bg); color: #9d1a1a; border: 1px solid var(--gap-border); }
+.tag-warn { background: var(--warn-bg); color: var(--warn-border); border: 1px solid var(--warn-border); }
+
+.delta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin: 1rem 0; }
+.delta-card { padding: 0.8rem 0.95rem; border-radius: 6px; border: 1px solid var(--done-border); background: var(--done-bg); }
+.delta-card b { display: block; font-family: Inter, sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--done-ink); margin-bottom: 0.2rem; }
+.delta-card strong { display: block; font-size: 0.95rem; line-height: 1.35; margin-bottom: 0.15rem; }
+.delta-card span { font-size: 0.84rem; color: #3d3d42; line-height: 1.5; }
+
+.pipe-flow { font-size: 0.88rem; line-height: 1.65; padding: 0.85rem 1rem; background: #1a1a1f; color: #e8e6e3; border-radius: 6px; border-left: 4px solid var(--done-border); margin: 1rem 0; font-family: ui-monospace, monospace; }
+.upgrade-list { margin: 0.75rem 0 0; padding: 0; list-style: none; }
+.upgrade-list li { padding: 0.5rem 0 0.5rem 1rem; border-bottom: 1px solid rgba(61, 111, 168, 0.15); font-size: 0.9rem; position: relative; }
+.upgrade-list li:last-child { border-bottom: none; }
+.upgrade-list li::before { content: ""; position: absolute; left: 0; top: 0.85rem; width: 5px; height: 5px; border-radius: 50%; background: var(--done-border); }
+.upgrade-list li strong { color: var(--done-ink); }
+
+.layer-check { margin: 1rem 0; padding: 0; list-style: none; }
+.layer-check li { padding: 0.45rem 0 0.45rem 1.6rem; position: relative; font-size: 0.92rem; }
+.layer-check li.ok::before { content: "✓"; position: absolute; left: 0; color: var(--done-ink); font-weight: 700; }
+.layer-check li.no::before { content: "✗"; position: absolute; left: 0; color: #9d1a1a; font-weight: 700; }
+
+.ooc-box { background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 6px; padding: 0.85rem 1rem; margin: 1rem 0; font-size: 0.9rem; }
+.ooc-box h4 { font-family: Inter, sans-serif; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warn-border); margin: 0 0 0.5rem; }
+.ooc-box ul { margin: 0; padding-left: 1.1rem; }
+
+.next-list { counter-reset: step; list-style: none; padding: 0; margin: 0.75rem 0; }
+.next-list li { counter-increment: step; padding: 0.55rem 0 0.55rem 2rem; position: relative; border-bottom: 1px solid var(--rule); font-size: 0.92rem; }
+.next-list li:last-child { border-bottom: none; }
+.next-list li::before { content: counter(step); position: absolute; left: 0; top: 0.55rem; width: 1.35rem; height: 1.35rem; background: var(--done-border); color: #fff; font-family: Inter, sans-serif; font-size: 0.72rem; font-weight: 700; border-radius: 50%; display: grid; place-items: center; }
+
+@media (max-width: 640px) { .delta-grid { grid-template-columns: 1fr; } article { font-size: 16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topbar">
+    <a href="../../../index.html#amadeus">← 返回作品集</a>
+    <a href="index.html">迭代时间线</a>
+    <span>视觉 · 多立绘</span>
+  </nav>
+
+  <article>
+    <p class="meta">Iteration Log · 视觉在场</p>
+    <h1>多立绘 · 她不能永远只穿一张脸</h1>
+    <p class="version">2026 年 5 月 · Galgame 式多立绘状态机（程序骨架 + 生图管线探索）</p>
+
+    <div class="lede">
+      v1.1 补上了「内心」——但界面上，她仍然只有一张静态立绘。真实的人是生动的、多样的、有观赏性的；<strong>不同状态、不同装扮、不同表情，这种多样性本身就是吸引力的一部分。</strong>虚拟和现实在这一点上差距太大。
+    </div>
+
+    <h2>发现了什么</h2>
+    <p>对话侧已有六维 feeling 与场景标签，程序上「该用什么情绪」已经能算出来——但视觉上用户看到的，运行时仍大多回退到 <code>assets/Live2d/kurisu/0.png</code> 那一张图。manifest 里注册了 16 条路径，PNG 大多不存在，<strong>选了也换不出图</strong>。</p>
+    <p>问题本质不是「缺切换算法」，而是<strong>素材维度、数量、身份约束三层同时不够</strong>——算法先跑在空 manifest 上，用户仍觉得她是「死的」。</p>
+
+    <h2>思考：Live2D、实时数字人，还是多立绘？</h2>
+    <p>要缩小视觉差距，就必须让她在画面上也是多样的、会变化的、带一点不可预测的。Live2D 是一个方向，但预设动作离散，做不好像玩具，情感表达天花板也低。实时数字人技术现在还不成熟。</p>
+    <p>因此转向 <strong>Galgame 式多立绘</strong>：与 Live2D 并存，缺图时回退 Live2D——不推倒已有资产，另起一条可渐进补齐的线。</p>
+
+    <h2>设计方向</h2>
+    <p>用 AI 生图配合角色 LoRA 批量生成，风格统一，低成本产出大量素材。按<strong>服装 × 情绪类型 × 情绪强度</strong>三维分类打标签。切换逻辑分两层：</p>
+    <ul>
+      <li><strong>状态驱动</strong> — 六维 feeling + 场景 tag + behavior 决定大方向（穿什么、什么情绪、哪档强度）</li>
+      <li><strong>随机扰动</strong> — 在同一状态桶内，具体调用哪一张（同一情绪每次略有差别）</li>
+    </ul>
+    <p>目标是：她每天看起来略不一样，同一情绪每次也有细微差别，由自动化驱动，而不是人工每张手换。</p>
+
+    <!-- ═══ 升级突出块 ═══ -->
+    <div class="upgrade-block">
+      <p class="upgrade-label">本次迭代 · 实际验证</p>
+      <h2>设计判断 vs 落地现状</h2>
+      <p class="upgrade-intro">程序骨架已跑通；素材库与生图管线尚未闭环——下面是对照表，避免「只有想法没有代码」或「只有代码看不见图」两种误解。</p>
+
+      <div class="conclusion-bar">
+        <strong>迭代结论：</strong>确认「多立绘 + 状态机」比 Live2D / 实时数字人更适合当前阶段；切换应慢变、可解释（sustain / hold 方向正确）；下一跳不是再加 prompt，而是 <em>outfit × emotion × intensity × variant</em> 矩阵入库。
+      </div>
+
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th class="col-judge">你的判断</th>
+            <th class="col-fact">本次实际验证</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-judge">只有一张静态图，人显得「死」</td>
+            <td class="cell-fact">默认仍回退 <code>0.png</code>；manifest 16 槽多数无 PNG → <em>视觉上仍≈一张</em></td>
+          </tr>
+          <tr>
+            <td class="cell-judge">需要视觉上的多样、变化</td>
+            <td class="cell-fact">feeling + 场景 tag 能选 <code>expressionKey</code>，但<em>素材撑不起来</em>，换图失败</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">Live2D 离散、天花板低</td>
+            <td class="cell-fact"><em>未改 Live2D</em>；另起多立绘线，缺图回退</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">实时数字人不成熟</td>
+            <td class="cell-fact"><em>未走实时</em>；走预生成 + 状态机切图</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>程序骨架（已做）</h3>
+      <div class="pipe-flow">用户消息 → scene / feeling / behavior
+       → spriteController.tick()
+       → sprite_map 规则打分
+       → expressionKey（如 thinking_stand）
+       → manifest 查 path → 前端 _applySprite 淡入淡出</div>
+
+      <div class="delta-grid">
+        <div class="delta-card">
+          <b>已落地</b>
+          <strong>状态驱动切图链路</strong>
+          <span>16 条 sprite_map 规则 ↔ feeling / 场景 / behavior</span>
+        </div>
+        <div class="delta-card">
+          <b>已落地</b>
+          <strong>防乱跳</strong>
+          <span>持续 2 轮才换；高 priority 可打断；约 4 轮 calm 回 neutral</span>
+        </div>
+        <div class="delta-card">
+          <b>已落地</b>
+          <strong>前后端贯通</strong>
+          <span><code>/sprite-state</code>、SSE 首包；work 页淡入淡出换图</span>
+        </div>
+        <div class="delta-card">
+          <b>已落地</b>
+          <strong>生图约束文档</strong>
+          <span><code>kurisu_sprite_identity.txt</code> + prompt JSON + rembg 脚本；preview 9 张透明 PNG</span>
+        </div>
+      </div>
+
+      <ul class="upgrade-list">
+        <li><code>lib/spriteController.js</code> — 状态驱动；服装 ≥30 轮才换</li>
+        <li><code>config/kurisu_sprite_map.json</code> — 16 条规则</li>
+        <li><code>config/kurisu_sprite_manifest.json</code> — 16 槽 lab_coat / hair_down</li>
+        <li><code>spriteController.test.js</code> 等 — 单测通过</li>
+        <li>ComfyUI 脚本 — <code>run_sprite_batch.py</code>、<code>post_rembg.py</code>（本机 ComfyUI / LoRA 未跑通）</li>
+      </ul>
+
+      <h3>设计目标 vs 现状</h3>
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th class="col-design">你的设计</th>
+            <th class="col-status">现状</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-judge">LoRA + 批量生图</td>
+            <td class="cell-gap">仅 Flux img2img 模板；无 LoRA；ComfyUI 未本机跑通</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">服装 × 类型 × 强度 三维</td>
+            <td class="cell-gap">仅 服装 + expressionKey；无 weak / medium / strong 档</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">随机扰动（同状态多张里抽一张）</td>
+            <td class="cell-gap">每个 key 唯一 path；同 annoyed_stand 永远同一张</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">大量素材 + 标签库</td>
+            <td class="cell-gap">manifest 16 槽空多实少；preview 9 张未入库</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">同一情绪每次细微差别</td>
+            <td class="cell-gap">需 variant_id + randomPick → 未写</td>
+          </tr>
+          <tr>
+            <td class="cell-judge">自动化无人干预</td>
+            <td class="cell-fact">切换逻辑自动；<em>生图 / 审稿 / 入库仍人工</em></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>切换逻辑：两层设计 vs 现在「一层半」</h3>
+      <ul class="layer-check">
+        <li class="ok"><strong>大方向</strong> — feeling 六维 + sceneTags + behavior → sprite_map → expressionKey</li>
+        <li class="ok"><strong>稳定性</strong> — sustain、min_hold、calm → neutral（慢变、可解释）</li>
+        <li class="no"><strong>随机扰动</strong> — 同 key 下多 path 随机 / 轮询 → 完全没有</li>
+        <li class="no"><strong>强度档</strong> — boundary 0.62 vs 0.78 映射不同 key，但不是「同 key 下多强度素材」</li>
+      </ul>
+      <p style="font-size:0.9rem;color:var(--muted);margin:0.5rem 0 0;">骨架有了「不同情绪间换脸」；还没有「同一情绪每次略不同、每天略不同」。</p>
+
+      <div class="ooc-box">
+        <h4>生图阶段额外暴露的问题</h4>
+        <ul>
+          <li><strong>身份 OOC</strong> — 只写 makise kurisu + 泛用表情词，未接 voice / 官方设定 → 像「任意红发少女」</li>
+          <li><strong>姿势 OOC</strong> — 侧身插袋参考做 img2img → 全员侧身、比例畸形</li>
+          <li><strong>行为 OOC</strong> — 未写正面站姿、脚并拢等肢体规则</li>
+          <li><strong>锁死 vs 多样</strong> — 同 pose 只改脸 + 低 denoise → 与「同情绪也要不一样」矛盾</li>
+          <li><strong>透明底</strong> — 已补 rembg，preview 9 张已透明，<em>未挂进 manifest</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>下一迭代最小闭环</h2>
+    <ol class="next-list">
+      <li>主套 lab_coat 16 张透明 PNG 入库 manifest（或先挂 6 张 preview 验证切换）</li>
+      <li><code>spriteController</code> 增加 <code>_pickVariant(expressionKey)</code>：同 key 多 path 随机 / 轮询</li>
+      <li>manifest 增加 <code>intensity</code> 或 <code>variant</code> 字段；feeling 数值区间映射强度档</li>
+      <li>ComfyUI + LoRA 跑矩阵脚本；参考图只锁脸 / 气质，pose 按 sprite_identity 逐张写</li>
+    </ol>
+
+    <blockquote>
+      多样性的下一跳不是再加 prompt，而是矩阵结构：<strong>outfit × emotion × intensity × variant_index</strong> → manifest 多条指向不同 PNG → controller 在桶内 randomPick。生图必须人设锚定 + 肢体规则 + 透明底，否则多样只会放大 OOC。
+    </blockquote>
+
+    <p>与 <a href="v1.1-feeling.html">v1.1 感受体系</a> 的关系：内心状态机决定「该用什么情绪」；本迭代补「该用哪张脸」——两条线都已有了程序骨架，下一版要把素材库填实，视觉才跟得上内心。</p>
+  </article>
+</div>
+</body>
+</html>

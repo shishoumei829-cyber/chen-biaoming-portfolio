@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" fill="none" role="img" aria-label="Affective matrix editorial illustration">
+  <defs>
+    <linearGradient id="mxbg" x1="0" y1="0" x2="1600" y2="1200">
+      <stop offset="0%" stop-color="#fafafa"/>
+      <stop offset="100%" stop-color="#e4e8ef"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#mxbg)"/>
+  <g transform="translate(800 600)">
+    <line x1="-420" y1="0" x2="420" y2="0" stroke="#0a0a0a" stroke-opacity=".12" stroke-width="1.2"/>
+    <line x1="0" y1="-380" x2="0" y2="380" stroke="#0a0a0a" stroke-opacity=".12" stroke-width="1.2"/>
+    <line x1="-300" y1="-300" x2="300" y2="300" stroke="#0a0a0a" stroke-opacity=".08" stroke-width="1"/>
+    <line x1="300" y1="-300" x2="-300" y2="300" stroke="#0a0a0a" stroke-opacity=".08" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="280" ry="180" stroke="#0a0a0a" stroke-opacity=".06" fill="none"/>
+    <ellipse cx="0" cy="0" rx="180" ry="280" stroke="#0a0a0a" stroke-opacity=".06" fill="none" transform="rotate(35)"/>
+    <circle cx="120" cy="-80" r="8" fill="#0a0a0a" fill-opacity=".15"/>
+    <circle cx="-140" cy="60" r="6" fill="#0a0a0a" fill-opacity=".12"/>
+    <circle cx="40" cy="140" r="7" fill="#0a0a0a" fill-opacity=".13"/>
+  </g>
+  <g font-family="ui-monospace,monospace" font-size="13" fill="#0a0a0a" fill-opacity=".4" letter-spacing=".15em">
+    <text x="980" y="340">P</text>
+    <text x="620" y="860">A</text>
+    <text x="1180" y="680">D</text>
+    <text x="760" y="280">S</text>
+  </g>
+  <path d="M120 980 Q480 820 800 760 T1480 620" stroke="#0a0a0a" stroke-opacity=".05" stroke-width="1" fill="none"/>
+</svg>

@@ -1,0 +1,253 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1116;
+  --panel: #171a22;
+  --line: #2a3040;
+  --text: #f3f5fa;
+  --muted: #9aa3b8;
+  --accent: #6ea8ff;
+  --accent-press: #4f8ef0;
+  --danger: #ff7b7b;
+  --ok: #63d68f;
+  --radius: 16px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at top, #1a2233 0%, var(--bg) 55%);
+  color: var(--text);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.hidden { display: none !important; }
+
+.gate {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.gate-card {
+  width: min(420px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.gate-card h1 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+
+.gate-card p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.gate-card .hint {
+  margin: -8px 0 12px;
+  font-size: 0.9rem;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px calc(28px + var(--safe-bottom));
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.top h1 {
+  margin: 4px 0 0;
+  font-size: 1.6rem;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  margin-bottom: 16px;
+  font-size: 0.92rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+  flex-shrink: 0;
+}
+
+.dot.ok { background: var(--ok); }
+.dot.bad { background: var(--danger); }
+
+.panel {
+  margin-bottom: 14px;
+}
+
+.panel.info {
+  background: rgba(110, 168, 255, 0.08);
+  border: 1px solid rgba(110, 168, 255, 0.25);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.panel.info p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font: inherit;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.5;
+}
+
+button {
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.send {
+  min-height: 54px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-press));
+  color: #081018;
+  font-size: 1.05rem;
+  font-weight: 700;
+  touch-action: manipulation;
+}
+
+.send:disabled {
+  opacity: 0.55;
+}
+
+.ghost, #gateSubmit {
+  min-height: 48px;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 0 16px;
+}
+
+#gateSubmit {
+  width: 100%;
+  margin-top: 8px;
+  background: var(--accent);
+  color: #081018;
+  border: none;
+  font-weight: 700;
+}
+
+.link {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.agent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.agent-list li {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.agent-list button {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.agent-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.agent-meta {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.result {
+  margin: 0;
+  min-height: 120px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #0b0d12;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.error {
+  color: var(--danger);
+  margin-top: 10px;
+}

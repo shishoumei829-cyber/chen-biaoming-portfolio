@@ -63,6 +63,69 @@
   box-shadow: var(--da-shadow-lg);
   border: 3px solid rgba(255, 255, 255, 0.85);
 }
+.da-home-hero-orb img.da-stick-avatar {
+  background: #f0ede8;
+  object-fit: cover;
+}
+.da-stick-avatar--m { object-position: 22% center; transform: scale(1.55); }
+.da-stick-avatar--f { object-position: 78% center; transform: scale(1.55); }
+.da-stick-avatar-slot--sm {
+  display: block;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 8px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--da-shadow);
+  background: #f0ede8;
+}
+.da-stick-avatar-slot--sm img {
+  width: 100%;
+  height: 100%;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.da-avatar-pick-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.da-avatar-pick {
+  border: 2px solid var(--da-border);
+  background: #fff;
+  border-radius: var(--da-radius-sm);
+  padding: 14px 10px 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.da-avatar-pick.on {
+  border-color: var(--da-sage);
+  box-shadow: 0 0 0 3px rgba(89, 96, 89, 0.12);
+}
+.da-avatar-pick-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--da-ink);
+}
+.da-home-hero-orb.da-hero-tappable {
+  cursor: pointer;
+}
+.da-home-hero-orb.da-hero-tappable:focus-visible {
+  outline: 2px solid var(--da-sage);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+.msg-avatar.da-stick-avatar {
+  background: #f0ede8;
+  transform: scale(1.35);
+}
+.da-profile-avatar-img.da-stick-avatar {
+  background: #f0ede8;
+}
 .da-home-hero-ring {
   position: absolute;
   inset: -6px;
@@ -94,10 +157,10 @@
   margin-top: 12px;
 }
 
-/* ── 模式切换 ── */
+/* ── 模式切换（三模式单行） ── */
 .da-segment {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 4px;
   padding: 4px;
   background: var(--da-sand);
@@ -108,10 +171,10 @@
 .da-segment-btn {
   border: none;
   background: transparent;
-  padding: 11px 12px;
+  padding: 10px 6px;
   border-radius: 99px;
   font-family: 'Noto Sans SC', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--da-muted);
   cursor: pointer;
@@ -119,9 +182,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
+  min-width: 0;
+  white-space: nowrap;
 }
-.da-segment-btn .mi { font-size: 18px; }
+.da-segment-btn .mi {
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.da-segment-btn .da-segment-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .da-segment-btn.on {
   background: #fff;
   color: var(--da-sage);
@@ -1018,9 +1090,160 @@ body.da-desktop .da-setup-sheet {
   margin-top: 14px;
 }
 
+/* ── 顶栏「我的」入口 ── */
+.da-topbar-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  padding: 4px 8px 4px 4px;
+  margin: -4px 0 -4px -4px;
+  border-radius: 99px;
+  cursor: pointer;
+  flex-shrink: 0;
+  max-width: 42%;
+}
+.da-topbar-profile:hover {
+  background: rgba(89, 96, 89, 0.08);
+}
+.da-topbar-me-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--da-ink);
+  white-space: nowrap;
+}
+.topbar {
+  gap: 8px;
+}
+.topbar-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topbar-apps {
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+}
+
 /* ── 我的页面 ── */
 .da-profile-page {
   background: linear-gradient(180deg, #faf8f4 0%, var(--da-cream) 100%);
+}
+.da-profile-host {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+}
+.da-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 16px !important;
+}
+.da-profile-avatar-btn {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: #ece7e2;
+}
+.da-profile-avatar-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.da-profile-avatar-edit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4px;
+  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.45));
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.da-profile-avatar-btn:hover .da-profile-avatar-edit {
+  opacity: 1;
+}
+.da-profile-head-text {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.da-profile-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--da-muted);
+  margin: 14px 4px 8px;
+}
+.da-profile-group {
+  margin-bottom: 4px;
+}
+.da-profile-row {
+  margin-bottom: 8px;
+}
+.da-profile-page .da-ethics-panel {
+  margin-top: 8px;
+}
+.da-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(28, 28, 24, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+}
+.da-sheet {
+  width: 100%;
+  max-width: 390px;
+  max-height: 78vh;
+  background: #fff;
+  border-radius: 20px 20px 16px 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
+}
+.da-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--da-border);
+}
+.da-sheet-close {
+  border: none;
+  background: #f7f3ed;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.da-sheet-body {
+  padding: 16px 18px 24px;
+  overflow-y: auto;
+  line-height: 1.65;
+  color: #454742;
 }
 .da-profile-page .card-w {
   border: 1px solid var(--da-border);
@@ -1030,6 +1253,9 @@ body.da-desktop .da-setup-sheet {
   border: 1px solid var(--da-border);
   box-shadow: 0 4px 16px rgba(28, 28, 24, 0.04);
   transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 .da-profile-page .module-row:hover {
   transform: translateY(-1px);

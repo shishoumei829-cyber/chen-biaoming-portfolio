@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>训练数据审查 · 数字方舟</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="/js/app-shell.css"/>
+<link rel="stylesheet" href="../js/app-shell.css"/>
 <style>
   body { font-family: 'Noto Sans SC', sans-serif; background: #e8e4dc; margin: 0; padding: 24px; }
   .wrap { max-width: 960px; margin: 0 auto; }
@@ -33,13 +33,13 @@
   <div class="actions">
     <button class="btn" type="button" id="btnReingest" style="display:none;">强制重新导入预置 Persona</button>
     <button class="btn btn-o" type="button" id="btnExport">导出 LoRA 语料</button>
-    <a class="btn btn-o" id="btnBack" href="/apps/training.html" style="text-decoration:none;display:inline-block;">返回训练端</a>
+    <a class="btn btn-o" id="btnBack" href="training.html" style="text-decoration:none;display:inline-block;">返回训练端</a>
   </div>
   <div id="stats"></div>
   <div class="tabs" id="tabs"></div>
   <div id="panels"></div>
 </div>
-<script src="/js/api-core.js"></script>
+<script src="../js/api-core.js"></script>
 <script>
 let data = null;
 let personaId = 'alisa-kujo';

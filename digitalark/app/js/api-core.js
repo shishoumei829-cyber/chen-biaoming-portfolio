@@ -2,15 +2,10 @@
 
 window.DA = (function () {
   const API = window.location.origin;
-  const appBase = (function () {
-    const p = location.pathname;
-    if (p.includes('/apps/')) return p.replace(/\/apps\/[^/]*$/, '');
-    return p.replace(/\/?$/, '');
-  })();
   const APPS = {
-    sanctuary: appBase + '/apps/sanctuary.html',
-    training: appBase + '/apps/training.html',
-    companion: appBase + '/apps/companion.html'
+    sanctuary: '/apps/sanctuary.html',
+    training: '/apps/training.html',
+    companion: '/apps/companion.html'
   };
 
   let chatHistory = [];
@@ -190,8 +185,9 @@ window.DA = (function () {
   function renderChat(boxEl, withFeedback, opts = {}) {
     if (!boxEl) return;
     const useCards = opts.messageCards || boxEl.classList.contains('da-msg-cards');
-    const avatarAi = opts.avatarAi || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL';
+    const avatarAi = opts.avatarAi || twinAvatarSrc() || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCFH_lF4HwOYfS98wthpleQfHkcwXD5jCj6VQCj006Mba1WsAQ81R3bKHvwxvYe0SKnFgkaVp4_es4aEAX505X4trOUr1xw9gZrDeX7ZdvrLcm8v3fOoTfKh_hfhYGu-TeTjlpBUYFxEqH-NghOXfx4Sde_lq93QLQ7cBZFAulgbU0fYgVHrJ1PM7TvJeXN0ZEWxoSLLxX6Hf_2mA2uvs_t0Rwd1X5TjHR60K7pgrrXV8f_PW9e7yEFycjt4l07E4WF5LfhnxszQwAL';
     const aiName = opts.aiName || '数字分身';
+    const useStick = !opts.avatarAi && !!twinAvatarSrc();
 
     boxEl.innerHTML = chatHistory.map(m => {
       let fb = '';
@@ -204,7 +200,7 @@ window.DA = (function () {
       if (useCards) {
         const isMe = m.role === 'user';
         return `<div class="msg-card ${isMe ? 'me' : ''}" data-msg-id="${m.id}">
-          ${isMe ? '' : `<img class="msg-avatar" src="${avatarAi}" alt=""/>`}
+          ${isMe ? '' : (useStick ? twinAvatarHtml() : `<img class="msg-avatar" src="${avatarAi}" alt=""/>`)}
           <div class="msg-body">
             <div class="msg-name">${isMe ? '我' : aiName}</div>
             <div class="msg-text" data-archive="${m.content}">${esc(m.content)}</div>
@@ -215,6 +211,13 @@ window.DA = (function () {
       const cls = m.role === 'user' ? 'me' : 'ai';
       return `<div class="chat-bubble ${cls}">${esc(m.content)}</div>${fb}`;
     }).join('');
+
+    if (useStick) {
+      boxEl.querySelectorAll('.msg-avatar.da-stick-avatar').forEach(img => {
+        window.DAAvatar?.applyImg(img, twinAvatarPresetId());
+        img.style.transform = 'scale(1.35)';
+      });
+    }
 
     boxEl.querySelectorAll('[data-like]').forEach(btn => {
       btn.onclick = () => {
@@ -236,10 +239,31 @@ window.DA = (function () {
     boxEl.scrollTop = boxEl.scrollHeight;
   }
 
+  let twinSetupCache = null;
+
   async function refreshTrainingSetupState() {
     const r = await api('GET', '/training/setup');
-    if (r.success) trainingSetupComplete = !!r.data?.setup_complete;
+    if (r.success) {
+      trainingSetupComplete = !!r.data?.setup_complete;
+      twinSetupCache = r.data;
+    }
     return r;
+  }
+
+  function twinAvatarSrc() {
+    return window.DAAvatar?.SOURCE || '';
+  }
+
+  function twinAvatarPresetId() {
+    return window.DAAvatar?.resolveId(twinSetupCache) || 'm';
+  }
+
+  function twinAvatarHtml(extraClass = '') {
+    const src = twinAvatarSrc();
+    const id = twinAvatarPresetId();
+    if (!src) return '';
+    const cls = ['msg-avatar', 'da-stick-avatar', `da-stick-avatar--${id}`, extraClass].filter(Boolean).join(' ');
+    return `<img class="${cls}" src="${src}" alt=""/>`;
   }
 
   function isTrainingSetupComplete() {
@@ -558,12 +582,14 @@ window.DA = (function () {
       chip.classList.toggle('chip-o', p < 70);
     });
 
-    const heroChip = root.querySelector('.da-hero-pct-chip');
-    if (heroChip) {
-      heroChip.textContent = data.stage?.name
-        ? data.stage.name + ' · 拟合 ' + overall + '%'
-        : '拟合 ' + overall + '%';
-    }
+    root.querySelectorAll('.da-home-tagline').forEach(tag => {
+      const cur = (tag.textContent || '').trim();
+      if (/训练进行中|内心平静|心情愉悦|心情略低|静心沉思/.test(cur)) {
+        tag.textContent = overall > 0 ? `拟合 ${overall}%` : '按题库答题、试聊或随手记';
+      } else if (overall > 0 && !cur.includes('拟合')) {
+        tag.textContent = `拟合 ${overall}% · ${cur}`;
+      }
+    });
     root.querySelectorAll('.da-home-hero-ring').forEach(ring => {
       ring.style.setProperty('--pct', overall);
     });
@@ -866,7 +892,7 @@ window.DA = (function () {
   }
 
   return {
-    API, APPS, openApp, toast, api, injectAppMenu,
+    API, APPS, openApp, toast, api, injectAppMenu, toggleAppMenu,
     chatHistory, get lastMsgId() { return lastMsgId; },
     renderChat, renderCapsPanel, sendChat, sendFeedback, sendPartialFeedback, promptFeedbackCorrection,
     get lastCapsSnapshot() { return lastCapsSnapshot; },

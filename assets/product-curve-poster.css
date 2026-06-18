@@ -1,0 +1,149 @@
+/* 产品封面 · 居中红字 + 双曲线说明（参考 editorial poster） */
+
+.curve-poster{
+  position:relative;
+  min-height:min(100svh,920px);
+  display:grid;
+  place-items:center;
+  padding:clamp(96px,12vh,140px) clamp(18px,4vw,48px) clamp(88px,10vh,120px);
+  overflow:hidden;
+  text-align:center;
+}
+
+.curve-poster__svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+  pointer-events:none;
+  overflow:visible;
+}
+
+.curve-poster__arc{
+  fill:currentColor;
+  font-family:"Noto Serif SC",Georgia,serif;
+  font-size:clamp(11px,1.15vw,14px);
+  font-weight:400;
+  letter-spacing:.06em;
+}
+
+.curve-poster__arc--top{
+  color:rgba(10,10,10,.68);
+}
+
+.curve-poster__arc--bottom{
+  color:rgba(10,10,10,.68);
+}
+
+.curve-poster__center{
+  position:relative;
+  z-index:2;
+  width:min(100%,920px);
+  margin:0 auto;
+}
+
+.curve-poster__title{
+  margin:0;
+  font-family:var(--eva-matisse,"Playfair Display","Bodoni Moda",serif);
+  font-variation-settings:"opsz" 96;
+  font-weight:800;
+  font-size:clamp(3.2rem,11.5vw,8.2rem);
+  line-height:.76;
+  letter-spacing:-.045em;
+  transform:scaleY(1.16);
+  transform-origin:center center;
+  color:var(--eva-crimson-lit,#b30000)!important;
+  text-shadow:none;
+}
+
+.curve-poster__title--cn{
+  font-family:"Noto Serif SC",Georgia,serif;
+  font-variation-settings:normal;
+  font-weight:700;
+  font-size:clamp(2.6rem,9vw,5.8rem);
+  letter-spacing:.12em;
+  text-indent:.12em;
+  transform:scaleY(1.12);
+}
+
+.curve-poster__en{
+  margin:clamp(10px,1.6vh,16px) 0 0;
+  font-family:var(--eva-wall,"Barlow Condensed",sans-serif);
+  font-size:10px;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:rgba(10,10,10,.42);
+}
+
+/* 数字方舟 · 暗色章节上的曲线字 */
+.da2-cover.curve-poster .curve-poster__arc--top,
+.da2-cover.curve-poster .curve-poster__arc--bottom{
+  color:rgba(244,241,236,.7);
+}
+
+.da2-cover.curve-poster .curve-poster__en{
+  color:rgba(244,241,236,.45);
+}
+
+.da2-cover.curve-poster .curve-poster__title--cn{
+  color:var(--ds-red,rgba(192,22,18,.95))!important;
+  text-shadow:0 2px 40px rgba(0,0,0,.35);
+}
+
+/* AMADEUS 特报 · 红字主标题 */
+body.eva-skin .ama-poster.curve-poster .ama-poster-title,
+body.eva-skin .ama-poster.curve-poster .curve-poster__title{
+  color:var(--eva-crimson-lit,#b30000)!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.4);
+}
+
+body.eva-skin .ama-poster.curve-poster .curve-poster__arc--top,
+body.eva-skin .ama-poster.curve-poster .curve-poster__arc--bottom{
+  color:rgba(10,10,10,.62);
+}
+
+body.eva-skin .ama-poster.curve-poster .ama-poster-mid{
+  padding:0;
+  align-self:center;
+}
+
+body.eva-skin .ama-poster.curve-poster .ama-poster-en,
+body.eva-skin .ama-poster.curve-poster .ama-poster-sub,
+body.eva-skin .ama-poster.curve-poster .ama-poster-tag{
+  display:none;
+}
+
+.da2-cover.curve-poster .da2-cover-body{
+  display:contents;
+}
+
+.da2-cover.curve-poster .da2-eyebrow,
+.da2-cover.curve-poster .da2-title-art,
+.da2-cover.curve-poster .da2-title-cn,
+.da2-cover.curve-poster .da2-tagline{
+  display:none;
+}
+
+.da2-cover.curve-poster{
+  justify-content:center;
+  align-items:center;
+}
+
+@media (max-width:768px){
+  .curve-poster__arc{
+    font-size:10px;
+    letter-spacing:.04em;
+  }
+  .curve-poster__title--cn{
+    font-size:clamp(2rem,14vw,3.2rem);
+    letter-spacing:.08em;
+    text-indent:.08em;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .curve-poster__svg text{
+    transition:none;
+  }
+}

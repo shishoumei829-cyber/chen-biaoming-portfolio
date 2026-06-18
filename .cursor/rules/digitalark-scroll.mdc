@@ -1,0 +1,60 @@
+---
+description: 数字方舟 #digitalark：红色档案展厅横滑体验宪法与禁止项
+globs: index.html,assets/motion/digitalark-motion.js,assets/digitalark/**,assets/motion/smooth-scroll.js
+alwaysApply: false
+---
+
+# 数字方舟 · 体验宪法
+
+## 产品图景（不可改）
+
+一条连续章节，**不能多出任何「像新页面」的空白层**：
+
+1. **白底封面** `#da2Cover` = 数字方舟首页（海报/标题/状态标签）
+2. 继续滚 → **进入红色档案区** `.da-is-red`（不是长时间空白纯红屏）
+3. **6 屏横滑** `.da2-intro-hscroll`：滚轮 = **离散翻页**，一屏一屏
+4. **06/06** 轻滑向下 → **吸附**到尾声 `#da2FinaleStage`（「遗忘才是终点…」），中间不能自由糊滚
+5. 尾声向上轻滑 → 可回到第 6 屏末尾
+
+叙事：第02話 / 档案展厅。不要塞与档案无关的氛围图、海岸图、假 HUD 层。
+
+## 「一屏」的定义
+
+- 横滑区：viewport 内 **只完整呈现一个** `.da2-hscroll-panel`；不得停在两屏之间。
+- 单位是 **板块**，不是 scroll progress 连续值。
+
+## 禁止出现（违反即回滚思路）
+
+| 禁止 | 原因 |
+|------|------|
+| 封面 `pin` 后内容淡出只剩纯红空屏 | 用户视为「多了一页」 |
+| 封面 pin + 横滑 pin 双 pin 无 handoff | 卡死、空白、进度错乱 |
+| `da2-cover-atmo` / burst 单独占一整屏 | 破坏「封面→档案」一条线 |
+| 每帧 `lenis.scrollTo` 磁吸 + ST `snap` 同时开 | 滚动打架、卡死 |
+| 只加 burst/bridge/hold 不删旧逻辑 | 补丁叠补丁 |
+| 未读当前 HTML/JS 就按旧会话改 | 版本与结构漂移 |
+
+## 允许的技术取向
+
+- 横滑区：**一个** ScrollTrigger pin + 横向 `track` transform
+- 翻页：轻滑阈值步进（wheel 累计）或 **单一** snap 实现（二选一，不叠）
+- 06→尾声：轻滑吸附到 `da-finale-marker` / `#da2FinaleStage` 的 `start`
+- 变红：在封面 **滚出视口** 或档案区 **进入** 时完成；不要长时间无内容的纯红停留
+
+## 关键文件（改前必读）
+
+- `index.html` — `#digitalark` 结构
+- `assets/motion/digitalark-motion.js` — pin / 步进 / 尾声吸附
+- `assets/digitalark/da-section.css` — 封面、红场、尾声
+- `assets/digitalark/da-motion.css` — 横滑面板
+- `assets/motion/smooth-scroll.js` — Lenis + scrollerProxy
+
+## 改完必做
+
+1. bump `?v=`（CSS + `digitalark-motion.js`）
+2. **四步验收**（未做不得声称完成）：
+   - 封面完整可见，无多余红空页
+   - 横滑 1→6：轻滑即整屏切换，不停在两屏之间
+   - 06 轻滑向下：直接吸附尾声，无自由过渡带
+   - 尾声向上：可回到第 6 屏
+3. 若仍不对：先问用户卡在 **封面 / 横滑第几屏 / 06与尾声之间**，再改
