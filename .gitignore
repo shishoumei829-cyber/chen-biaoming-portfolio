@@ -7,6 +7,8 @@ Thumbs.db
 __pycache__/
 *.pyc
 .env
+node_modules/
+amadeus/.env
 tools/cursor-mobile/.env
 tools/cursor-mobile/.mobile-relay.pid
 tools/cursor-mobile/logs/
