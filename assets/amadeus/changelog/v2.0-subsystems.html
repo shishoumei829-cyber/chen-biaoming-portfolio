@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMADEUS 迭代日志 · v2.0 五模块子系统</title>
+<meta name="description" content="AMADEUS v2.0：数字生命五模块（自主、进化、理解、具身、元认知）深度落地与 DigitalLifeOrchestrator 统一编排。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a1f;
+  --muted: #5c5c66;
+  --rule: #ddd8cf;
+  --paper: #faf8f4;
+  --accent: #c45a00;
+  --new-bg: #e8f7ef;
+  --new-border: #1a9d5c;
+  --new-ink: #0a5c36;
+  --sys-bg: #eee8f7;
+  --sys-border: #5c3d9d;
+  --sys-ink: #3a2870;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Noto Serif SC", serif;
+  font-size: 17px;
+  line-height: 1.85;
+}
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+.topbar {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.82rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+.topbar a { color: var(--accent); text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.meta {
+  font-family: Inter, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+article h1 { font-size: 1.75rem; line-height: 1.35; margin: 0 0 0.5rem; }
+article .version {
+  font-family: Inter, sans-serif;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+article h2 {
+  font-size: 1.3rem;
+  margin: 2.25rem 0 0.75rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+}
+article h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+article p { margin: 0.75rem 0; }
+article ul { padding-left: 1.4rem; margin: 0.75rem 0; }
+article li { margin: 0.35rem 0; }
+.lede {
+  font-size: 1.05rem;
+  color: #333;
+  padding: 1rem 1.15rem;
+  background: #fff4e8;
+  border-left: 3px solid var(--accent);
+  margin: 1.25rem 0 1.75rem;
+}
+.mod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.mod-card {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--sys-border);
+  background: var(--sys-bg);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.mod-card b {
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sys-ink);
+  margin-bottom: 0.25rem;
+}
+.mod-card strong { color: var(--sys-ink); }
+.pipe {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.pipe-box {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  background: var(--new-bg);
+  border: 1px solid var(--new-border);
+}
+.pipe-box .pipe-label {
+  font-family: Inter, sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--new-ink);
+  margin-bottom: 0.4rem;
+}
+pre {
+  background: #1e1e24;
+  color: #e8e6e3;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  font-family: ui-monospace, monospace;
+  border-left: 4px solid var(--sys-border);
+  margin: 1rem 0;
+}
+.upgrade-block {
+  margin: 2rem 0;
+  padding: 1.5rem 1.35rem;
+  border: 2px solid var(--new-border);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f4fbf7 0%, #fff 48%);
+}
+.upgrade-block > .upgrade-label {
+  font-family: Inter, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--new-ink);
+  margin: 0 0 0.35rem;
+}
+@media (max-width: 640px) {
+  .mod-grid { grid-template-columns: 1fr; }
+  article { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topbar">
+    <a href="../../../index.html#amadeus">← 返回作品集</a>
+    <a href="index.html">迭代时间线</a>
+    <span>v2.0 · 五模块子系统</span>
+  </nav>
+
+  <article>
+    <p class="meta">Iteration Log · 架构落地</p>
+    <h1>v2.0 · 五模块子系统深度落地</h1>
+    <p class="version">2026 年 6 月 · digital_life_upgrade 路线图第一阶段工程化 · 分支 cursor/module-01-autonomy-3e20 · npm test 50/50</p>
+
+    <div class="lede">
+      v1.1 补上了<strong>每一轮的内心</strong>——六维感受、印记、当轮约束。v2.0 补上<strong>跨时间的内心生活</strong>：自主、进化、理解、具身、元认知五条子系统，由 <code>DigitalLifeOrchestrator</code> 统一编排，各自独立持久化、可观测、可测试。
+    </div>
+
+    <h2>这次大更新在解决什么</h2>
+    <p><code>digital_life_upgrade.md</code> 写了数字生命五阶段路线图，仓库里却长期只有模块名、没有完整行为闭环。模块一已是深度子系统，模块二～五仍停在根目录浅层文件；编排时序错位、冲动无法可靠接入行为打分、梦境残念断在生成处、INTERNAL STATE 最初只露自主性一条线。</p>
+    <p>v2.0 按<strong>模块一的同一标准</strong>，把五条线全部做成独立子目录 + 独立 JSON 持久化 + <code>getPublicState()</code> + <code>buildPromptBlock()</code> + 行为闭环单测。</p>
+
+    <h2>编排器三阶段</h2>
+    <div class="pipe">
+      <div class="pipe-box">
+        <div class="pipe-label">DigitalLifeOrchestrator</div>
+        <strong>onUserTurn()</strong> — 用户轮：自主 / 理解 / 具身 + 进化 RL 记上一轮<br>
+        <strong>afterBehaviorDecision()</strong> — 行为后：元认知反思与洞察注入目标<br>
+        <strong>runIdleCycle()</strong> — 空闲轮：自主环 + 记忆整理 + 梦境<br>
+        <strong>onVision()</strong> — 视觉：环境感知<br>
+        <strong>buildPromptContext()</strong> — 汇聚五模块内心碎片进 digitalLifeCtx
+      </div>
+    </div>
+
+    <h2>五模块一览</h2>
+    <div class="mod-grid">
+      <div class="mod-card">
+        <b>模块一 · 自主性</b>
+        <strong>digital_life/autonomy/</strong>
+        十种内驱力动力学、交叉抑制、冲动生命周期、SPEAK/WAIT/REFLECT 自主环；冲动经英文 intentKey 接入行为打分。
+      </div>
+      <div class="mod-card">
+        <b>模块二 · 自我进化</b>
+        <strong>digital_life/evolution/</strong>
+        情节分段与关联图、浅睡/深睡/REM 梦境与 carryover、人格轨迹、RL 桥接在正确时序更新 Q 值与行为偏置。
+      </div>
+      <div class="mod-card">
+        <b>模块三 · 用户理解</b>
+        <strong>digital_life/understanding/</strong>
+        共情调节模式、心智模型（BDI 融合）、言外之意检测 → pendingNeed 注入 Prompt。
+      </div>
+      <div class="mod-card">
+        <b>模块四 · 具身化</b>
+        <strong>digital_life/embodiment/</strong>
+        环境/时间感知、PAD→表情预设→Live2D sprite、TTS 情绪 hint。
+      </div>
+      <div class="mod-card">
+        <b>模块五 · 元认知</b>
+        <strong>digital_life/metacognition/</strong>
+        四域信念与证据链、反思环与偏见检测、洞察 → goalSystem 内生目标。
+      </div>
+      <div class="mod-card">
+        <b>统一标准</b>
+        <strong>每模块相同</strong>
+        constants + 领域引擎 + XxxSubsystem；<code>{name}_subsystem.json</code> 防抖写入；deprecated re-export 保持旧导入可用。
+      </div>
+    </div>
+
+    <div class="upgrade-block">
+      <p class="upgrade-label">v2.0 · 与 v1.1 如何叠在一起</p>
+      <h3 style="margin-top:0;font-size:1.15rem">两条内心线同时跑</h3>
+      <p style="margin:0 0 0.75rem;font-size:0.95rem;color:#3d3d42">
+        <strong>每一轮：</strong>六维更新 → 印记 → 约束 → 行为仲裁 → Mind Turn → 模型（v1.1 感受层）<br>
+        <strong>跨轮 / 空闲：</strong>五模块子系统在编排器里接续——内驱力、梦境残念、言外之意、表情立绘、元认知洞察同时写入 INTERNAL STATE 与 Prompt。
+      </p>
+      <pre>用户输入
+  → 六维 + 印记（v1.1）
+  → onUserTurn：理解 / 自主 / 具身 / 进化(RL)
+  → 行为仲裁 + 约束
+  → afterBehaviorDecision：元认知反思
+  → 模型
+  → runIdleCycle：自主环 + 整理 + 梦境 carryover</pre>
+    </div>
+
+    <h2>模块一 · 自主性（要点）</h2>
+    <ul>
+      <li>十种内驱力：好奇心、创造性、探索欲、掌控欲、连接欲、自主欲、意义欲、玩心、保护欲、创造欲</li>
+      <li>交叉抑制矩阵：如 CONNECTION ↔ AUTONOMY、PROTECTION ↔ CONNECTION</li>
+      <li>Urge 冲动对象：生命周期、过期衰减、满足/过期；对接 <code>INTENT_BEHAVIOR_MAP</code></li>
+      <li>好奇心引擎：话题图谱、信息增益、未解问题；创造性模块：联想与隐喻</li>
+      <li>自主行为环综合 DND、社交余量、能量、空闲时长；<code>dreamCarryover</code> 可触发 SPEAK</li>
+    </ul>
+
+    <h2>模块二 · 自我进化（要点）</h2>
+    <ul>
+      <li>记忆按时间 gap 切成 episode，科学/亲密类加权建关联图</li>
+      <li>梦境分浅睡/深睡/REM，高强度写 carryover 供主动轮开口</li>
+      <li>人格轨迹记录五特质漂移与里程碑，与 PersonalityEvolution 双向同步</li>
+      <li>RL 桥接在上一轮 behaviorId 已知后更新 Q 值与 behaviorBias EMA</li>
+    </ul>
+
+    <h2>模块三 · 用户理解（要点）</h2>
+    <ul>
+      <li>共情：识别 → 调节模式（shield / validate_first / warm_match 等）→ PAD 镜像</li>
+      <li>心智模型：文本 + BDI 推断信念/欲望/意图，维护偏好图谱</li>
+      <li>言外之意：掩饰、试探、撤回、求关注 → <code>pendingNeed</code></li>
+    </ul>
+
+    <h2>模块四 · 具身化（要点）</h2>
+    <ul>
+      <li>环境：场景标签、用户可用性 busy/away/distracted、情境压力</li>
+      <li>时间感知：学习活跃节律、特殊日期与非常规时段</li>
+      <li>表情映射：PAD 最近邻 → 7 种表情预设、6 档 Live2D sprite + CSS 滤镜</li>
+    </ul>
+
+    <h2>模块五 · 元认知（要点）</h2>
+    <ul>
+      <li>信念四域 self / user / world / relationship，证据驱动修正</li>
+      <li>反思环：习惯/回避/套话偏见检测，周期性洞察</li>
+      <li>洞察经 <code>insightToGoalInjection</code> 写入 goalSystem（METACOG_INSIGHT）</li>
+      <li>后置到 <code>afterBehaviorDecision</code>，与行为结果时序对齐</li>
+    </ul>
+
+    <h2>前端与可观测</h2>
+    <p><code>amadeus_work.html</code> INTERNAL STATE 展开五模块公开状态：内驱力条、冲动队列、梦境残念、人格漂移、记忆联想、言外之意、心智模型、共情模式、信念冲突、环境、时间感、表情/sprite。<code>/internal-state</code> 返回五模块 <code>getPublicState()</code> + expression。</p>
+
+    <h2>测试与交付</h2>
+    <ul>
+      <li><code>autonomy.test.js</code> · <code>evolution.test.js</code> · <code>understanding.test.js</code> · <code>embodiment.test.js</code> · <code>metacognition.test.js</code> · <code>digital_life.test.js</code></li>
+      <li>合计 <strong>50/50</strong> 通过</li>
+      <li>旧 <code>digital_life_state.json</code> 首次启动自动迁入各子系统文件</li>
+    </ul>
+
+    <h2>PR 对应</h2>
+    <ul>
+      <li><strong>PR #2</strong> — 数字生命骨架 + 主循环初接 + digital_life.test.js</li>
+      <li><strong>PR #3</strong> — 模块一深度重做 + 模块二～五深度实现 + 编排器统一 + 50 项测试</li>
+    </ul>
+
+    <h2>在整体路径中的位置</h2>
+    <p>v1.1 回答「每一轮内心如何约束行为」；v2.0 回答「她作为生命体在时间里如何自主、进化、理解、具身、反思」。灵魂档案、记忆宫、六维感受层继续运转；变的是跨轮认知中间层从骨架变成可跑、可测、可观测的五条子系统。</p>
+  </article>
+</div>
+</body>
+</html>
