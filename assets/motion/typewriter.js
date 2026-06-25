@@ -1,117 +1,55 @@
 (function initSiteTypewriter() {
-  const EXCLUDE_CLOSEST =
+  const EXCLUDE =
     '#ama-intro, #digitalark, #self, .hz-about, nav, footer, .dock-nav, .project-jump-nav, .ama-gallery-rail, [aria-hidden="true"], .ama-dnote-ellipsis, .ama-editorial__stats, .ama-editorial__formula, .ama-editorial__live, .ama-editorial__glyph, pre.ama-editorial__mono, svg';
 
-  const SITE_ROOTS = ['#amadeus', '#timewalker', '#mirage'];
+  const ROOTS = ['#amadeus', '#timewalker', '#mirage'];
 
-  const AUTO_SELECTOR = [
-    '.thought-kicker',
-    '.thought-sub',
-    '.thought-aside',
-    '.thought-line',
-    '.ama-dnote-h',
-    '.ama-scene__kicker',
-    '.ama-scene__title',
-    '.ama-scene__lead',
-    '.ama-scene__frame-label',
-    '.ama-stack-flow__tag',
-    '.ama-stack-flow__file',
-    '.ama-stack-flow__desc',
-    '.ama-stack-flow__foot',
-    '.ama-chapter-break__kicker',
-    '.ama-chapter-break__title',
-    '.ama-chapter-break__sub',
-    '.ama-editorial__tag',
-    '.ama-editorial__title',
-    '.ama-editorial__lead',
-    '.ama-editorial__list li',
-    '.ama-editorial__mono-tag',
-    '.ama-editorial__mono code',
-    '.ama-ui-poster__kicker',
-    '.ama-ui-poster__headline',
-    '.ama-ui-poster__lead',
-    '.ama-changelog-cta__kicker',
-    '.ama-changelog-cta__title',
-    '.ama-changelog-cta__lead',
-    '.ama-changelog-cta__more',
-    '.ama-paper-cta__kicker',
-    '.ama-paper-cta__title',
-    '.ama-paper-cta__lead',
-    '.tw-kicker',
-    '.tw-lede',
-    '.tw-brush-title',
-    '.tw-dnote-label',
-    '.tw-dnote-sub',
-    '.tw-vision-sub',
-    '.section-title',
-    '.section-desc',
-    '.case-index',
-    '.case-copy h3',
-    '.case-lead',
-    '.case-list div',
-    '.spec-copy h3',
-    '.spec-row',
-    '.eva-caption.mirage-quote',
-    '.project-status span',
-    '.num',
-    '.tw-value strong',
-    '.tw-value p',
-    '.tw-feature-num',
-    '.tw-feature h4',
-    '.tw-feature p',
-    '.tw-design-head h4',
-    '.tw-design-desc',
-    '.tw-mock-spotlight-title',
-    '.tw-mock-spotlight-poem',
-    '.tw-mock-status',
-    '.tw-mock-discover-title',
-    '.tw-mock-discover-sub',
-    '.tw-mock-rank-name',
-    '.tw-mock-rank-desc',
-    '.tw-proof-copy p',
-    '.tw-proof-card h3',
-    '.tw-proof-card p',
-    'figcaption'
+  const AUTO = [
+    '.thought-kicker', '.thought-sub', '.thought-aside', '.thought-line',
+    '.ama-dnote-h', '.ama-scene__kicker', '.ama-scene__title', '.ama-scene__lead', '.ama-scene__frame-label',
+    '.ama-stack-flow__tag', '.ama-stack-flow__file', '.ama-stack-flow__desc', '.ama-stack-flow__foot',
+    '.ama-chapter-break__kicker', '.ama-chapter-break__title', '.ama-chapter-break__sub',
+    '.ama-editorial__tag', '.ama-editorial__title', '.ama-editorial__lead', '.ama-editorial__list li',
+    '.ama-editorial__mono-tag', '.ama-editorial__mono code',
+    '.ama-ui-poster__kicker', '.ama-ui-poster__headline', '.ama-ui-poster__lead',
+    '.ama-changelog-cta__kicker', '.ama-changelog-cta__title', '.ama-changelog-cta__lead', '.ama-changelog-cta__more',
+    '.ama-paper-cta__kicker', '.ama-paper-cta__title', '.ama-paper-cta__lead',
+    '.tw-kicker', '.tw-lede', '.tw-brush-title', '.tw-dnote-label', '.tw-dnote-sub', '.tw-vision-sub',
+    '.section-title', '.section-desc', '.case-index', '.case-copy h3', '.case-lead', '.case-list div',
+    '.spec-copy h3', '.spec-row', '.eva-caption.mirage-quote', '.project-status span', '.num',
+    '.tw-value strong', '.tw-value p', '.tw-feature-num', '.tw-feature h4', '.tw-feature p',
+    '.tw-design-head h4', '.tw-design-desc',
+    '.tw-mock-spotlight-title', '.tw-mock-spotlight-poem', '.tw-mock-status',
+    '.tw-mock-discover-title', '.tw-mock-discover-sub', '.tw-mock-rank-name', '.tw-mock-rank-desc',
+    '.tw-proof-copy p', '.tw-proof-card h3', '.tw-proof-card p', 'figcaption'
   ].join(',');
 
-  const SEQUENCE_ROOTS =
-    '.thought-copy, .ama-dnote-cell, .ama-scene__copy, .ama-scene__frame, .ama-chapter-break__inner, .ama-editorial__side, .ama-ui-poster__center, .tw-dnote-row, .tw-vision-inner, .case-copy, .ama-changelog-cta__card, .ama-paper-cta__card, .tw-hero-copy, .tw-intro, .tw-proof-copy, .tw-proof-card, .tw-value, .tw-feature, .tw-design-head, .mirage-open-foot, .spec-copy';
-
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let scanQueued = false;
+  let gsapApi = null;
+  let installed = false;
 
-  function decodeAttr(text) {
-    return String(text || '')
-      .replace(/&#10;/g, '\n')
-      .replace(/\\n/g, '\n');
+  function decode(text) {
+    return String(text || '').replace(/&#10;/g, '\n').replace(/\\n/g, '\n');
   }
 
-  function shouldSkip(el) {
-    if (!el || el.dataset.twSkip === 'true') return true;
-    if (el.matches('a, button, input, select, textarea, script, style, label')) return true;
-    if (el.closest(EXCLUDE_CLOSEST)) return true;
+  function skip(el) {
+    if (!el || el.matches('a, button, input, select, textarea, script, style, label')) return true;
+    if (el.closest(EXCLUDE)) return true;
     if (el.closest('.hz-line')) return true;
-    if (el.dataset.amaPad !== undefined) return true;
-    if (el.dataset.amaEmotionScore !== undefined) return true;
-    if (el.dataset.amaEmotionTurn !== undefined) return true;
-    if (el.dataset.amaEmotionCaption !== undefined) return true;
+    if (el.dataset.amaPad != null || el.dataset.amaEmotionScore != null) return true;
+    if (el.dataset.amaEmotionTurn != null || el.dataset.amaEmotionCaption != null) return true;
     if (el.querySelector('img, video, svg, canvas, iframe')) return true;
     return false;
   }
 
-  function extractText(el) {
+  function extract(el) {
     const clone = el.cloneNode(true);
-    clone.querySelectorAll('[aria-hidden="true"], .ama-poster-block__dots').forEach((node) => node.remove());
+    clone.querySelectorAll('[aria-hidden="true"], .ama-poster-block__dots').forEach((n) => n.remove());
     clone.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
-    return clone.textContent
-      .replace(/\u00a0/g, ' ')
-      .replace(/[ \t]+\n/g, '\n')
-      .replace(/\n[ \t]+/g, '\n')
-      .replace(/[ \t]{2,}/g, ' ')
-      .trim();
+    return clone.textContent.replace(/\u00a0/g, ' ').replace(/\s+\n/g, '\n').replace(/\n\s+/g, '\n').trim();
   }
 
-  function defaultSpeed(el) {
+  function charMs(el) {
     if (el.matches('.ama-editorial__mono code')) return 14;
     if (el.matches('.thought-line, .ama-chapter-break__title, .ama-dnote-line, .section-title')) return 38;
     if (el.matches('.thought-sub, .ama-dnote-sub, .ama-chapter-break__sub, .ama-scene__lead, .ama-editorial__lead, .tw-dnote-sub, .tw-vision-sub, .section-desc, .case-lead')) return 26;
@@ -119,178 +57,197 @@
     return 42;
   }
 
-  function prepareElement(el) {
-    if (shouldSkip(el) || el.dataset.twPrepared === 'true') return;
-
-    const text = el.hasAttribute('data-typewriter') ? decodeAttr(el.dataset.typewriter) : extractText(el);
+  function prepare(el) {
+    if (skip(el) || el.dataset.twReady === '1') return;
+    const text = el.hasAttribute('data-typewriter') ? decode(el.dataset.typewriter) : extract(el);
     if (!text) return;
-
     el.dataset.typewriter = text;
-    el.dataset.twPrepared = 'true';
-    if (!el.dataset.speed) el.dataset.speed = String(defaultSpeed(el));
-    el.classList.add('tw-ready');
+    el.dataset.twReady = '1';
+    el.dataset.ms = String(charMs(el));
+    el.textContent = text;
+  }
 
-    // 仅 data-typewriter 占位标题预先留空；其余文案保持可见，直到真正开始打字
-    if (el.hasAttribute('data-typewriter') && !el.textContent.trim()) {
-      el.classList.add('tw-pending');
+  function prepareAll() {
+    document.querySelectorAll('[data-typewriter]').forEach(prepare);
+    ROOTS.forEach((sel) => {
+      const root = document.querySelector(sel);
+      if (root) root.querySelectorAll(AUTO).forEach(prepare);
+    });
+  }
+
+  function pageOf(el) {
+    return el.closest('.thought-page, .ama-dnote-cell, .tw-dnote-row, .tw-vision-inner');
+  }
+
+  function sliceByProgress(text, ms, progress) {
+    if (progress >= 1) return text;
+    let budget = 0;
+    let total = 0;
+    for (let i = 0; i < text.length; i += 1) total += text[i] === '\n' ? ms * 5 : ms;
+    const target = total * progress;
+    let out = '';
+    for (let i = 0; i < text.length; i += 1) {
+      budget += text[i] === '\n' ? ms * 5 : ms;
+      out += text[i];
+      if (budget >= target) break;
     }
+    return out;
+  }
+
+  function typeDuration(text, ms) {
+    let total = 0;
+    for (let i = 0; i < text.length; i += 1) total += text[i] === '\n' ? ms * 5 : ms;
+    return Math.max(0.2, total / 1000);
+  }
+
+  function finishEl(el, text) {
+    el.textContent = text;
+    el.classList.remove('type-caret', 'tw-typing');
+    el.classList.add('tw-done');
+    el.dataset.typed = 'true';
   }
 
   function showInstant(el) {
     if (!el || el.dataset.typed === 'true') return;
-    el.dataset.typed = 'true';
-    el.textContent = decodeAttr(el.dataset.typewriter || '');
-    el.classList.remove('tw-pending', 'tw-ready', 'type-caret');
-    el.classList.add('tw-done');
-    const page = el.closest('.thought-page');
-    if (page) page.classList.add('typed');
+    finishEl(el, decode(el.dataset.typewriter));
+    pageOf(el)?.classList.add('typed');
   }
 
-  function chainNext(el) {
-    const root = el.closest(SEQUENCE_ROOTS);
-    if (!root) return;
-    const next = [...root.querySelectorAll('[data-tw-prepared]')].find((node) => node.dataset.typed !== 'true');
-    if (next) typeThought(next);
-  }
+  function playElement(el, tl) {
+    const text = decode(el.dataset.typewriter);
+    const ms = Number(el.dataset.ms || 42);
+    const state = { p: 0 };
 
-  function typeThought(el) {
-    if (!el || el.dataset.typed === 'true') return;
-    el.dataset.typed = 'true';
-    el.classList.remove('tw-pending', 'tw-ready');
-
-    const text = decodeAttr(el.dataset.typewriter || '');
-    const speed = Number(el.dataset.speed || 42);
-    el.textContent = '';
-    el.classList.add('type-caret');
-    if (el.matches('.thought-sub, .ama-dnote-sub, .tw-dnote-sub, .tw-vision-sub')) {
-      el.classList.add('tw-typing');
-    }
-
-    let i = 0;
-    function tick() {
-      el.textContent = text.slice(0, i);
-      i += 1;
-      if (i <= text.length) {
-        setTimeout(tick, text[i - 2] === '\n' ? speed * 5 : speed);
-        return;
-      }
-      el.classList.remove('type-caret', 'tw-typing');
-      el.classList.add('tw-done');
-      const page = el.closest('.thought-page');
-      if (page && el.matches('.thought-line, .thought-sub, .tw-dnote-sub, .tw-vision-sub')) {
-        page.classList.add('typed');
-      }
-      chainNext(el);
-      queueScan();
-    }
-    tick();
-  }
-
-  function collectHitRoots() {
-    const hitRoots = new Set();
-    const xs = [
-      Math.round(window.innerWidth * 0.28),
-      Math.round(window.innerWidth * 0.5),
-      Math.round(window.innerWidth * 0.72)
-    ];
-    const yStart = Math.round(window.innerHeight * 0.1);
-    const yEnd = Math.round(window.innerHeight * 0.9);
-    const yStep = Math.max(40, Math.round(window.innerHeight * 0.09));
-
-    xs.forEach((x) => {
-      for (let y = yStart; y <= yEnd; y += yStep) {
-        document.elementsFromPoint(x, y).forEach((node) => {
-          const seqRoot = node.closest?.(SEQUENCE_ROOTS);
-          if (seqRoot) hitRoots.add(seqRoot);
-        });
-      }
+    tl.call(() => {
+      el.textContent = '';
+      el.classList.add('type-caret');
+      if (el.matches('.thought-sub, .ama-dnote-sub, .tw-dnote-sub, .tw-vision-sub')) el.classList.add('tw-typing');
     });
 
-    return hitRoots;
-  }
-
-  function scanVisible() {
-    scanQueued = false;
-    if (reduceMotion.matches) return;
-
-    const hitRoots = collectHitRoots();
-
-    hitRoots.forEach((root) => {
-      const next = [...root.querySelectorAll('[data-tw-prepared]')].find((node) => node.dataset.typed !== 'true');
-      if (next) typeThought(next);
+    tl.to(state, {
+      p: 1,
+      duration: typeDuration(text, ms),
+      ease: 'none',
+      onUpdate: () => {
+        el.textContent = sliceByProgress(text, ms, state.p);
+      },
+      onComplete: () => finishEl(el, text)
     });
   }
 
-  function flushStuckPending() {
-    const hitRoots = collectHitRoots();
-    document.querySelectorAll('[data-tw-prepared]').forEach((el) => {
-      if (el.dataset.typed === 'true') return;
-      if (!el.classList.contains('tw-pending')) return;
-      const root = el.closest(SEQUENCE_ROOTS);
-      if (root && hitRoots.has(root)) {
-        const next = [...root.querySelectorAll('[data-tw-prepared]')].find((node) => node.dataset.typed !== 'true');
-        if (next) typeThought(next);
-        return;
+  function playGroup(host) {
+    if (!gsapApi || host.dataset.twPlaying === '1') return;
+    const items = [...host.querySelectorAll('[data-tw-ready]')].filter((el) => el.dataset.typed !== 'true');
+    if (!items.length) return;
+
+    host.dataset.twPlaying = '1';
+    const tl = gsapApi.timeline({
+      onComplete: () => {
+        host.dataset.twDone = '1';
+        pageOf(items[items.length - 1])?.classList.add('typed');
       }
-      showInstant(el);
+    });
+    items.forEach((el) => playElement(el, tl));
+  }
+
+  function killTwTriggers(ST) {
+    ST.getAll().forEach((st) => {
+      if (String(st.vars?.id || '').startsWith('tw-')) st.kill();
     });
   }
 
-  function queueScan() {
-    if (scanQueued) return;
-    scanQueued = true;
-    requestAnimationFrame(scanVisible);
-  }
+  function bindScrollTriggers(gsap, ST) {
+    killTwTriggers(ST);
+    ST.defaults({ scroller: document.documentElement });
 
-  function bindScrollScan() {
-    window.addEventListener('scroll', queueScan, { passive: true });
-    window.addEventListener('resize', queueScan, { passive: true });
-    window.addEventListener('load', queueScan, { passive: true });
+    const hosts = gsap.utils.toArray('[data-tw-group]');
+    if (!hosts.length) return;
 
-    const hookLenis = () => {
-      window.__lenis?.on('scroll', queueScan);
-      queueScan();
-    };
-    if (window.__lenis) hookLenis();
-    else window.addEventListener('lenis-ready', hookLenis, { once: true });
-
-    if (window.ScrollTrigger) {
-      window.ScrollTrigger.addEventListener('refresh', queueScan);
-    }
-  }
-
-  function init() {
-    document.querySelectorAll('[data-typewriter]').forEach(prepareElement);
-
-    SITE_ROOTS.forEach((rootSel) => {
-      const root = document.querySelector(rootSel);
-      if (!root) return;
-      root.querySelectorAll(AUTO_SELECTOR).forEach(prepareElement);
+    ScrollTrigger.batch(hosts, {
+      id: 'tw-batch',
+      start: 'top 85%',
+      once: true,
+      onEnter: (batch) => {
+        batch.forEach((host) => playGroup(host));
+      }
     });
+
+    ST.refresh();
+  }
+
+  function markGroups() {
+    const GROUPSel =
+      '.thought-copy, .ama-dnote-cell, .ama-scene__copy, .ama-scene__frame, .ama-chapter-break__inner, .ama-editorial__side, .ama-ui-poster__center, .tw-dnote-row, .tw-vision-inner, .case-copy, .ama-changelog-cta__card, .ama-paper-cta__card, .tw-hero-copy, .tw-intro, .tw-proof-copy, .tw-proof-card, .tw-value, .tw-feature, .tw-design-head, .mirage-open-foot, .spec-copy';
+
+    document.querySelectorAll(GROUPSel).forEach((host) => {
+      if (!host.querySelector('[data-tw-ready]')) return;
+      host.dataset.twGroup = '1';
+    });
+
+    document.querySelectorAll('[data-tw-ready]').forEach((el) => {
+      if (el.closest('[data-tw-group]') || el.dataset.typed === 'true') return;
+      el.dataset.twGroup = '1';
+    });
+  }
+
+  function flushInView(ST) {
+    document.querySelectorAll('[data-tw-group]').forEach((host) => {
+      if (host.dataset.twDone === '1' || host.dataset.twPlaying === '1') return;
+      if (ST.isInViewport(host, 0.12, true)) playGroup(host);
+    });
+  }
+
+  function install() {
+    const gsap = window.gsap;
+    const ST = window.ScrollTrigger;
+    if (!gsap || !ST) return false;
+
+    gsapApi = gsap;
+    gsap.registerPlugin(ST);
+    prepareAll();
+    markGroups();
+    bindScrollTriggers(gsap, ST);
+    requestAnimationFrame(() => flushInView(ST));
+    return true;
+  }
+
+  function boot() {
+    prepareAll();
 
     if (reduceMotion.matches) {
-      document.querySelectorAll('[data-tw-prepared]').forEach(showInstant);
+      document.querySelectorAll('[data-tw-ready]').forEach(showInstant);
       return;
     }
 
-    bindScrollScan();
-    queueScan();
-    window.setTimeout(flushStuckPending, 12000);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-  } else {
-    init();
-  }
-
-  reduceMotion.addEventListener('change', () => {
-    if (reduceMotion.matches) {
-      document.querySelectorAll('[data-tw-prepared]').forEach(showInstant);
-    } else {
-      queueScan();
+    if (!install()) {
+      document.querySelectorAll('[data-tw-ready]').forEach(showInstant);
+      return;
     }
-  });
 
-  window.__siteTypewriter = { typeThought, prepareElement, queueScan, showInstant };
+    if (installed) return;
+    installed = true;
+
+    const ST = window.ScrollTrigger;
+    const rescan = () => requestAnimationFrame(() => flushInView(ST));
+    ST.addEventListener('refresh', rescan);
+    window.addEventListener('scroll', rescan, { passive: true });
+    window.__lenis?.on('scroll', rescan);
+  }
+
+  prepareAll();
+
+  function scheduleBoot() {
+    window.setTimeout(() => {
+      boot();
+      window.ScrollTrigger?.refresh(true);
+      requestAnimationFrame(() => {
+        document.querySelectorAll('[data-tw-group]').forEach((host) => {
+          if (window.ScrollTrigger?.isInViewport(host, 0.12, true)) playGroup(host);
+        });
+      });
+    }, 380);
+  }
+
+  if (document.readyState === 'complete') scheduleBoot();
+  else window.addEventListener('load', scheduleBoot, { once: true });
 })();

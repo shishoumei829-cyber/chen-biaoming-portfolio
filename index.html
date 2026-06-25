@@ -314,9 +314,10 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 .thought-page.light .thought-kicker{color:var(--thought-soft)}
 .type-caret::after{content:"";display:inline-block;width:.08em;height:.82em;margin-left:.08em;background:currentColor;animation:blink .9s steps(2,start) infinite;vertical-align:-.08em}
 @keyframes blink{50%{opacity:0}}
-[data-tw-prepared],.tw-done,.type-caret{white-space:pre-line}
+.ama-dnote-cell.typed .thought-sub,.tw-dnote-row.typed .tw-dnote-sub,.tw-vision-inner.typed .tw-vision-sub{opacity:1!important;transform:none!important}
 .thought-sub.tw-typing,.ama-dnote-sub.tw-typing,.tw-dnote-sub.tw-typing,.tw-vision-sub.tw-typing{opacity:1!important;transform:none!important}
-body.eva-skin .ama-editorial__mono code.type-caret{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace;white-space:pre-wrap;word-break:break-word}
+[data-tw-ready].type-caret,[data-tw-ready].tw-done{white-space:pre-line}
+body.eva-skin .ama-editorial__mono code.type-caret{white-space:pre-wrap;word-break:break-word}
 
 .spec-showcase{margin-top:90px;display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
 .spec-img{border-radius:30px;overflow:hidden;background:#fff;min-height:520px;box-shadow:0 28px 90px rgba(0,0,0,.38)}
@@ -4279,9 +4280,9 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
 <script src="assets/motion/smooth-scroll.js?v=smooth-4" defer></script>
 <script src="assets/hero/hero-zine.js?v=about-me-31" defer></script>
 <script src="assets/motion/site-motion.js?v=ama-poster-38" defer></script>
-<script src="assets/motion/typewriter.js?v=tw-5" defer></script>
 <script src="assets/motion/wv-motion.js?v=wv-travel-11" defer></script>
 <script src="assets/motion/digitalark-motion.js?v=ark-handoff-75" defer></script>
+<script src="assets/motion/typewriter.js?v=tw-9" defer></script>
 <script>
 const dot=document.getElementById('cursorDot');
 const ring=document.getElementById('cursorRing');
