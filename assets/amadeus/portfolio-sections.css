@@ -41,15 +41,15 @@ body.eva-skin .ama-soul-cell__lead{
 }
 body.eva-skin .ama-soul-cell--stack{display:flex;align-items:center;justify-content:center;padding:clamp(28px,5vw,52px);background:#fff}
 body.eva-skin .ama-soul-cell--stack::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-body.eva-skin .ama-stack-flow{position:relative;z-index:1;width:100%;max-width:min(440px,94%);display:flex;flex-direction:column}
-body.eva-skin .ama-stack-flow__item{padding:clamp(14px,2.4vw,22px) 0;border-top:1px solid rgba(10,10,10,.1)}
+body.eva-skin .ama-stack-flow{position:relative;z-index:1;width:100%;max-width:min(500px,96%);display:flex;flex-direction:column}
+body.eva-skin .ama-stack-flow__item{padding:clamp(16px,2.6vw,24px) 0;border-top:1px solid rgba(10,10,10,.1)}
 body.eva-skin .ama-stack-flow__item:first-child{border-top:0;padding-top:0}
-body.eva-skin .ama-stack-flow__item--voice{padding-left:clamp(14px,2.2vw,20px);border-left:3px solid #0a0a0a}
-body.eva-skin .ama-stack-flow__tag{margin:0 0 6px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(10,10,10,.42)!important}
-body.eva-skin .ama-stack-flow__file{margin:0 0 8px;font-family:"Share Tech Mono",monospace;font-size:clamp(12px,1.25vw,14px);color:#0a0a0a}
-body.eva-skin .ama-stack-flow__desc{margin:0;font-family:"Noto Serif SC",serif;font-size:clamp(12px,1.15vw,14px);line-height:1.88;color:rgba(10,10,10,.62)}
+body.eva-skin .ama-stack-flow__item--voice{padding-left:clamp(16px,2.4vw,22px);border-left:3px solid #0a0a0a}
+body.eva-skin .ama-stack-flow__tag{margin:0 0 8px;font-size:clamp(10px,1.05vw,12px);letter-spacing:.28em;text-transform:uppercase;color:rgba(10,10,10,.48)!important}
+body.eva-skin .ama-stack-flow__file{margin:0 0 10px;font-family:"Share Tech Mono",monospace;font-size:clamp(14px,1.5vw,18px);line-height:1.45;color:#0a0a0a;word-break:break-word}
+body.eva-skin .ama-stack-flow__desc{margin:0;font-family:"Noto Serif SC",serif;font-size:clamp(13px,1.38vw,16px);line-height:1.92;color:rgba(10,10,10,.68)}
 body.eva-skin .ama-stack-flow__desc strong{color:#0a0a0a;font-weight:600}
-body.eva-skin .ama-stack-flow__foot{margin:clamp(16px,2.8vw,24px) 0 0;padding-top:clamp(14px,2.2vw,20px);border-top:1px solid rgba(10,10,10,.08);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(10,10,10,.42);text-align:center}
+body.eva-skin .ama-stack-flow__foot{margin:clamp(16px,2.8vw,24px) 0 0;padding-top:clamp(14px,2.2vw,20px);border-top:1px solid rgba(10,10,10,.08);font-size:clamp(10px,1vw,11px);letter-spacing:.22em;text-transform:uppercase;color:rgba(10,10,10,.48);text-align:center}
 
 /* 02–03 右栏 · 与 01 同款流式排版（无卡片） */
 body.eva-skin .ama-tech-cell--stack{

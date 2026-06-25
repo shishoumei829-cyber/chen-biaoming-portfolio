@@ -99,9 +99,9 @@ body.eva-skin .ama-editorial__side--r .ama-editorial__title--stack{margin-left:a
 
 body.eva-skin .ama-editorial__lead{
   margin:0 0 clamp(12px,1.6vw,16px);
-  max-width:min(100%,22em);
+  max-width:min(100%,24em);
   font-family:"Noto Serif SC",Georgia,serif;
-  font-size:clamp(11px,1.05vw,13px);font-weight:400;
+  font-size:clamp(13px,1.22vw,15px);font-weight:400;
   line-height:1.88;letter-spacing:.02em;
   text-transform:none;color:var(--ama-edit-muted);
 }
@@ -110,7 +110,7 @@ body.eva-skin .ama-editorial__side--r .ama-editorial__lead{margin-left:auto}
 body.eva-skin .ama-editorial__stats{
   margin:0 0 8px;
   font-family:"Share Tech Mono",ui-monospace,monospace;
-  font-size:clamp(9px,.82vw,10px);letter-spacing:.06em;
+  font-size:clamp(10px,.95vw,12px);letter-spacing:.06em;
   text-transform:none;color:var(--ama-edit-faint);
 }
 body.eva-skin .ama-editorial__stats b{color:var(--ama-edit-ink);font-weight:500}
@@ -118,35 +118,35 @@ body.eva-skin .ama-editorial__stats b{color:var(--ama-edit-ink);font-weight:500}
 body.eva-skin .ama-editorial__formula{
   margin:0 0 10px;
   font-family:"Share Tech Mono",ui-monospace,monospace;
-  font-size:clamp(8px,.75vw,9px);letter-spacing:.04em;
+  font-size:clamp(10px,.95vw,12px);letter-spacing:.04em;
   line-height:1.7;text-transform:none;color:var(--ama-edit-faint);
 }
 
 body.eva-skin .ama-editorial__live{
   margin:0;
   font-family:Inter,sans-serif;
-  font-size:clamp(8px,.72vw,9px);letter-spacing:.08em;
+  font-size:clamp(10px,.92vw,11px);letter-spacing:.06em;
   line-height:1.65;text-transform:none;color:var(--ama-edit-faint);
-  max-width:min(100%,20em);
+  max-width:min(100%,22em);
 }
 body.eva-skin .ama-editorial__side--r .ama-editorial__live{margin-left:auto}
 
 body.eva-skin .ama-editorial__mono-tag{
   margin:0 0 8px;
   font-family:Inter,sans-serif;
-  font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  font-size:clamp(10px,.95vw,11px);letter-spacing:.16em;text-transform:uppercase;
   color:var(--ama-edit-faint);
 }
 
 body.eva-skin .ama-editorial__mono{
-  margin:0;padding:clamp(10px,1.2vw,14px) clamp(10px,1.4vw,16px);
-  max-width:min(100%,20em);
+  margin:0;padding:clamp(12px,1.4vw,16px) clamp(12px,1.6vw,18px);
+  max-width:min(100%,24em);
   background:rgba(10,10,10,.04);
   border:1px solid rgba(10,10,10,.08);
   border-radius:2px;
   font-family:"Share Tech Mono",ui-monospace,monospace;
-  font-size:clamp(8px,.72vw,9px);line-height:1.65;
-  letter-spacing:0;text-transform:none;color:rgba(10,10,10,.72);
+  font-size:clamp(11px,1.05vw,13px);line-height:1.72;
+  letter-spacing:0;text-transform:none;color:rgba(10,10,10,.78);
   white-space:pre-wrap;overflow-x:auto;
 }
 body.eva-skin .ama-editorial__side--r .ama-editorial__mono{margin-left:auto;text-align:left}

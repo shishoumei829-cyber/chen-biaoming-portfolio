@@ -46,10 +46,12 @@ body.eva-skin .ama-dnote-edge--r{left:auto;right:0}
 
 body.eva-skin .ama-dnote-cell--problem .ama-dnote-h,
 body.eva-skin .ama-dnote-cell--think .ama-dnote-h--think{
-  position:absolute;z-index:3;
-  top:clamp(20px,3.6vw,36px);left:clamp(20px,3.6vw,36px);margin:0;
-  font-family:var(--eva-wall,monospace);font-size:9px;letter-spacing:.4em;
-  text-transform:uppercase;color:rgba(255,255,255,.68)!important;
+  position:relative;z-index:3;
+  top:auto;left:auto;right:auto;
+  width:100%;margin:0 0 clamp(12px,2vw,18px);
+  text-align:center!important;
+  font-family:var(--eva-wall,monospace);font-size:clamp(10px,1.05vw,12px);letter-spacing:.38em;
+  text-transform:uppercase;color:rgba(255,255,255,.72)!important;
 }
 
 /* 居中主文案 · 参考左方块 */

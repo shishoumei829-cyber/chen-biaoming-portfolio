@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;600;700;800&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,500&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/amadeus/portfolio-sections.css">
+<link rel="stylesheet" href="assets/amadeus/portfolio-sections.css?v=ama-copy-2">
 <link rel="stylesheet" href="assets/digitalark/da-section.css?v=ark-handoff-75">
 <link rel="stylesheet" href="assets/digitalark/da-motion.css?v=ark-handoff-30">
 <style>
@@ -314,6 +314,9 @@ body.dark-cursor .cursor-ring{border-color:rgba(248,243,232,.35)}
 .thought-page.light .thought-kicker{color:var(--thought-soft)}
 .type-caret::after{content:"";display:inline-block;width:.08em;height:.82em;margin-left:.08em;background:currentColor;animation:blink .9s steps(2,start) infinite;vertical-align:-.08em}
 @keyframes blink{50%{opacity:0}}
+[data-tw-prepared],.tw-done,.type-caret{white-space:pre-line}
+.thought-sub.tw-typing,.ama-dnote-sub.tw-typing,.tw-dnote-sub.tw-typing,.tw-vision-sub.tw-typing{opacity:1!important;transform:none!important}
+body.eva-skin .ama-editorial__mono code.type-caret{font-family:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace;white-space:pre-wrap;word-break:break-word}
 
 .spec-showcase{margin-top:90px;display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
 .spec-img{border-radius:30px;overflow:hidden;background:#fff;min-height:520px;box-shadow:0 28px 90px rgba(0,0,0,.38)}
@@ -1811,6 +1814,24 @@ body.eva-skin .ama-poster-grain{
   position:absolute;inset:0;opacity:.22;pointer-events:none;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+body.eva-skin .ama-poster-scanlines{
+  position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 1px,transparent 4px);
+  mix-blend-mode:overlay;
+}
+body.eva-skin .ama-poster--booting .ama-poster-scanlines{
+  animation:amaScanDrift .85s linear infinite;
+}
+@keyframes amaScanDrift{
+  from{transform:translateY(0)}
+  to{transform:translateY(7px)}
+}
+body.eva-skin .ama-poster-mid.is-glitching .ama-poster-title{
+  text-shadow:2px 0 rgba(255,20,80,.55),-2px 0 rgba(0,160,255,.45),0 8px 48px rgba(0,0,0,.35);
+}
+@media (prefers-reduced-motion:reduce){
+  body.eva-skin .ama-poster--booting .ama-poster-scanlines{animation:none!important}
+}
 body.eva-skin .ama-poster-vtext{
   position:absolute;z-index:3;top:clamp(96px,14vh,160px);bottom:clamp(120px,18vh,200px);
   writing-mode:vertical-rl;font-family:var(--eva-matisse);font-variation-settings:"opsz" 48;
@@ -1849,13 +1870,8 @@ body.eva-skin .ama-poster-tag{
 }
 
 body.eva-skin .ama-poster-foot{
-  position:relative;z-index:4;display:flex;align-items:flex-end;justify-content:space-between;
+  position:relative;z-index:4;display:flex;align-items:flex-end;justify-content:flex-end;
   padding:0 clamp(16px,4vw,56px) clamp(28px,5vw,48px);gap:20px;
-}
-body.eva-skin .ama-poster-kanji{
-  font-family:var(--eva-matisse);font-variation-settings:"opsz" 96;font-weight:900;
-  font-size:clamp(4rem,18vw,10rem);line-height:.8;color:#fff!important;
-  transform:scaleY(1.15);opacity:.95;
 }
 body.eva-skin .ama-poster-foot-en{
   font-family:var(--eva-wall);font-size:9px;line-height:1.65;letter-spacing:.28em;
@@ -2709,6 +2725,89 @@ body.eva-skin .ama-chapter-break__title{
 
 /* 数字方舟样式 → assets/digitalark/da-section.css + da-motion.css */
 /* ═══ 移动端 · 桌面样式不变 ═══ */
+/* HR fast-read layer: exhibition index + product evidence theatre */
+.home-project-index{
+  position:absolute;left:50%;top:62%;bottom:auto;z-index:24;
+  width:min(720px,calc(100% - 48px));
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2.2vw,28px);
+  border-top:1px solid rgba(18,16,13,.16);padding-top:2px;
+  color:#15110c;opacity:0;pointer-events:none;
+}
+.home-project-index a{
+  position:relative;min-height:104px;padding:18px clamp(8px,1.4vw,16px) 0;
+  display:grid;justify-items:center;align-content:start;gap:7px;overflow:hidden;text-align:center;
+  border-radius:2px;
+  transition:transform .35s var(--ease),background .35s var(--ease),color .35s var(--ease);
+}
+.home-project-index a::before{
+  content:"";position:absolute;left:50%;top:-1px;width:54px;height:1px;margin-left:-27px;
+  background:#9b0000;transform-origin:center center;transform:scaleX(.35);
+  transition:transform .35s var(--ease),width .35s var(--ease),margin .35s var(--ease);
+}
+.home-project-index a:hover::before,
+.home-project-index a:focus-visible::before{
+  transform:scaleX(1);width:72%;margin-left:-36%;
+}
+.home-project-index a:hover,
+.home-project-index a:focus-visible{
+  transform:translateY(-5px);
+  background:rgba(155,0,0,.05);
+}
+.home-project-index span{font-family:"Barlow Condensed",monospace;font-size:11px;letter-spacing:.26em;color:#9b0000}
+.home-project-index strong{
+  font-family:"Barlow Condensed","Noto Sans SC",sans-serif;font-size:clamp(20px,2.5vw,34px);
+  line-height:.9;letter-spacing:.18em;font-weight:400;color:#15110c;
+  transition:color .35s var(--ease);
+}
+.home-project-index a:hover strong,
+.home-project-index a:focus-visible strong{color:#9b0000}
+.home-project-index em{
+  max-width:200px;font-family:"Noto Serif SC",serif;font-size:12px;line-height:1.75;
+  color:rgba(18,16,13,.68);font-style:normal;
+  transition:color .35s var(--ease);
+}
+.home-project-index a:hover em,
+.home-project-index a:focus-visible em{color:rgba(18,16,13,.78)}
+.hero-zine.is-static .home-project-index,
+body.home-index-ready .home-project-index{pointer-events:auto}
+.project-jump-nav{
+  position:fixed;z-index:7900;top:24px;right:clamp(22px,4vw,58px);display:flex;align-items:center;gap:2px;padding:4px;
+  border:1px solid rgba(18,16,13,.08);background:rgba(255,251,242,.34);backdrop-filter:blur(16px);box-shadow:none;
+  opacity:0;transform:translateY(-12px);pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease);
+}
+body.project-nav-visible .project-jump-nav{opacity:1;transform:translateY(0);pointer-events:auto}
+body.dark-cursor .project-jump-nav{color:#f8f3e8;border-color:rgba(248,243,232,.12);background:rgba(8,8,7,.22)}
+.project-jump-nav a{position:relative;display:flex;align-items:center;gap:7px;padding:8px 10px;font-family:"Barlow Condensed","Noto Sans SC",sans-serif;font-size:11px;letter-spacing:.16em;color:rgba(18,16,13,.46);transition:color .3s var(--ease),background .3s var(--ease)}
+body.dark-cursor .project-jump-nav a{color:rgba(248,243,232,.58)}
+.project-jump-nav span{font-size:10px;opacity:.64}
+.project-jump-nav a.is-here,.project-jump-nav a:hover{color:#9b0000;background:rgba(155,0,0,.06)}
+body.dark-cursor .project-jump-nav a.is-here,body.dark-cursor .project-jump-nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.proof-stage{position:relative;min-height:180svh;overflow:hidden;isolation:isolate}
+.proof-pin{position:relative;min-height:100svh;display:grid;place-items:center;padding:clamp(70px,8vw,110px) clamp(22px,5vw,72px)}
+.proof-kicker{font-family:"Barlow Condensed",monospace;font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:#9b0000}
+.proof-title{font-family:"Noto Serif SC","Playfair Display",serif;font-size:clamp(30px,4.8vw,72px);line-height:1.06;font-weight:600;letter-spacing:-.04em}
+.proof-stage--tw{min-height:190svh;background:#f3efe4;color:#18120d}
+.tw-proof-scene{position:relative;width:min(100%,1180px);min-height:min(76svh,720px);overflow:hidden;border:1px solid rgba(24,18,13,.13);background:#ebe4d3;box-shadow:0 36px 110px rgba(40,34,25,.15)}
+.tw-proof-card span{display:block;margin-bottom:8px;font-family:"Barlow Condensed",monospace;font-size:11px;letter-spacing:.22em;color:#9b0000}
+.tw-proof-bg{position:absolute;inset:-8%;opacity:.34;filter:saturate(.72) contrast(1.05)}.tw-proof-bg img{width:100%;height:100%;object-fit:cover}
+.tw-proof-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(243,239,228,.94),rgba(243,239,228,.28) 48%,rgba(243,239,228,.86));pointer-events:none}
+.tw-proof-copy{position:absolute;z-index:3;left:clamp(24px,5vw,70px);top:clamp(28px,6vw,76px);max-width:520px}
+.tw-proof-phone{position:absolute;z-index:4;left:52%;top:50%;width:clamp(220px,22vw,330px);transform:translate(-50%,-50%);filter:drop-shadow(0 28px 48px rgba(0,0,0,.2))}
+.tw-proof-card{position:absolute;z-index:5;right:clamp(28px,5vw,76px);top:28%;width:clamp(230px,24vw,340px);padding:24px;border:1px solid rgba(24,18,13,.14);background:rgba(255,251,242,.88);backdrop-filter:blur(10px);box-shadow:0 24px 70px rgba(40,34,25,.16)}
+.tw-proof-card h4{font-family:"Noto Serif SC",serif;font-size:clamp(26px,3vw,42px);line-height:1;margin-bottom:14px}
+.tw-proof-card p{font-family:"Noto Serif SC",serif;font-size:13px;line-height:1.9;color:rgba(24,18,13,.66)}
+.tw-proof-route{position:absolute;z-index:6;left:clamp(24px,5vw,70px);right:clamp(24px,5vw,70px);bottom:clamp(24px,5vw,60px);display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid rgba(24,18,13,.18)}
+.tw-proof-route span{position:relative;padding-top:16px;font-family:"Barlow Condensed","Noto Sans SC",sans-serif;font-size:13px;letter-spacing:.2em;color:rgba(24,18,13,.46)}
+.tw-proof-route span::before{content:"";position:absolute;top:-4px;left:0;width:8px;height:8px;border-radius:50%;background:rgba(24,18,13,.24)}
+.tw-proof-route span.is-active{color:#9b0000}.tw-proof-route span.is-active::before{background:#9b0000}
+@media (max-width:900px){
+  .home-project-index{width:min(100%,calc(100% - 36px));gap:10px;top:58%}
+  .home-project-index a{min-height:auto;padding:12px 8px}
+  .home-project-index em{display:none}.project-jump-nav{display:none}
+  .proof-stage{min-height:auto}.proof-pin{min-height:auto;padding:68px 18px}.tw-proof-scene{min-height:620px}
+  .tw-proof-copy{max-width:calc(100% - 36px)}.tw-proof-phone{left:50%;top:55%;width:230px}.tw-proof-card{left:24px;right:24px;top:auto;bottom:104px;width:auto}
+}
+
 .dock-nav{display:none}
 @media (max-width:768px){
   html,body{overflow-x:clip}
@@ -2807,9 +2906,8 @@ body.eva-skin .ama-chapter-break__title{
   body.eva-skin .ama-poster{min-height:min(100svh,720px)}
   body.eva-skin .ama-poster-vtext{display:none}
   body.eva-skin .ama-poster-title{font-size:clamp(2rem,11vw,3.2rem)}
-  body.eva-skin .ama-poster-kanji{font-size:clamp(2.4rem,18vw,4.2rem)}
-  body.eva-skin .ama-poster-foot{flex-direction:column;align-items:flex-start;gap:12px}
-  body.eva-skin .ama-poster-foot-en{text-align:left;padding-bottom:0}
+  body.eva-skin .ama-poster-foot{flex-direction:column;align-items:flex-end;gap:12px}
+  body.eva-skin .ama-poster-foot-en{text-align:right;padding-bottom:0}
   body.eva-skin .ama-dnote-vrule{display:none}
   body.eva-skin .ama-dnote-row--problem{
     padding:0 0 40px 0!important;
@@ -3013,13 +3111,13 @@ body.eva-skin #mirage .project-status span{
 }
 </style>
 <link rel="stylesheet" href="assets/amadeus/ama-design-system.css">
-<link rel="stylesheet" href="assets/amadeus/ama-gallery.css">
-<link rel="stylesheet" href="assets/amadeus/ama-editorial.css">
+<link rel="stylesheet" href="assets/amadeus/ama-gallery.css?v=ama-copy-2">
+<link rel="stylesheet" href="assets/amadeus/ama-editorial.css?v=ama-copy-2">
 <link rel="stylesheet" href="assets/product-curve-poster.css">
 <link rel="stylesheet" href="assets/self/worldview.css?v=wv-motion-10">
-<link rel="stylesheet" href="assets/hero/hero-zine.css?v=about-sept-27">
-<link rel="stylesheet" href="assets/motion/site-motion.css?v=scroll-reveal-3">
-<link rel="stylesheet" href="assets/amadeus/dnote-split.css?v=mood-2">
+<link rel="stylesheet" href="assets/hero/hero-zine.css?v=about-me-30">
+<link rel="stylesheet" href="assets/motion/site-motion.css?v=ama-poster-38">
+<link rel="stylesheet" href="assets/amadeus/dnote-split.css?v=ama-copy-1">
 </head>
 <body class="eva-skin">
 <div id="progress"></div>
@@ -3041,27 +3139,45 @@ body.eva-skin #mirage .project-status span{
   <div class="hz-pin">
     <div class="hz-ambient" aria-hidden="true"></div>
 
-    <div class="hz-name-stage" aria-label="陈彪明个人作品集">
-      <p class="hz-kicker">Portfolio 2026</p>
-      <h1 class="hz-title"><span>陈彪明</span></h1>
-      <p class="hz-role">用户体验设计师 · 产品设计师 · 产品经理（PM）</p>
-    </div>
-
-    <div class="hz-photo-canvas" aria-hidden="true">
-      <figure class="hz-photo hz-photo--main"><img src="assets/hero/home-mood.png" alt=""></figure>
-      <figure class="hz-photo hz-photo--brief"><img src="assets/hero/home-brief-collage.jpg" alt=""></figure>
-      <figure class="hz-photo hz-photo--ama"><img src="assets/amadeus/art/bg/amadeus-hero-garden.png" alt=""></figure>
-      <figure class="hz-photo hz-photo--ark"><img src="assets/digitalark/ds-hero-poster.png" alt=""></figure>
-      <figure class="hz-photo hz-photo--travel"><img src="assets/timewalker/ink-night-boat.png" alt=""></figure>
+    <div class="hz-hero-cluster">
+      <div class="hz-photo-canvas" aria-hidden="true">
+        <figure class="hz-photo hz-photo--main"><img src="assets/hero/home-mood.png" alt=""></figure>
+        <figure class="hz-photo hz-photo--brief"><img src="assets/hero/home-brief-collage.jpg" alt=""></figure>
+        <figure class="hz-photo hz-photo--ama"><img src="assets/amadeus/art/bg/amadeus-hero-garden.png" alt=""></figure>
+        <figure class="hz-photo hz-photo--ark"><img src="assets/digitalark/ds-hero-poster.png" alt=""></figure>
+        <figure class="hz-photo hz-photo--travel"><img src="assets/timewalker/ink-night-boat.png" alt=""></figure>
+      </div>
+      <div class="hz-name-stage" aria-label="陈彪明个人作品集">
+        <p class="hz-kicker">Portfolio 2026</p>
+        <h1 class="hz-title"><span>陈彪明</span></h1>
+        <p class="hz-role">用户体验设计师 · 产品设计师 · 产品经理（PM）</p>
+      </div>
     </div>
 
     <p class="hz-scroll-cue" aria-hidden="true">Scroll</p>
+    <nav class="home-project-index" aria-label="作品导览">
+      <a href="#amadeus" data-project-preview="ama">
+        <span>01</span>
+        <strong>AMADEUS</strong>
+        <em>数字人格运行系统</em>
+      </a>
+      <a href="#digitalark" data-project-preview="ark">
+        <span>02</span>
+        <strong>DIGITAL ARK</strong>
+        <em>面向离别与留存的数字化自己</em>
+      </a>
+      <a href="#timewalker" data-project-preview="tw">
+        <span>03</span>
+        <strong>墨舟</strong>
+        <em>旅行足迹与城市记忆产品</em>
+      </a>
+    </nav>
   </div>
 </header>
 
 <div class="hz-about-stage" id="brief">
   <section class="hz-about" aria-label="设计理念">
-    <p class="hz-about-kicker">about us</p>
+    <p class="hz-about-kicker">about me</p>
     <div class="hz-about-inner">
       <p class="hz-about-body" data-split-phrases>
         当未来的数据足够全面，技术足够精湛，我们仍需要一颗柔软而敏锐的心。而设计的思维，正是那份灵光闪烁的创造力，它不靠堆砌功能，而在于唤醒人与生活之间的美的对话。
@@ -3219,9 +3335,10 @@ body.eva-skin #mirage .project-status span{
       <div class="ama-atmo__veil"></div>
     </div>
 
-    <header class="ama-poster reveal" data-ama-section="intro" id="ama-intro">
+    <header class="ama-poster" data-ama-section="intro" id="ama-intro">
       <div class="ama-poster-bg"></div>
       <div class="ama-poster-grain" aria-hidden="true"></div>
+      <div class="ama-poster-scanlines" aria-hidden="true"></div>
       <div class="ama-poster-vtext ama-poster-vtext--l" aria-hidden="true">数字生命实验系统</div>
       <div class="ama-poster-vtext ama-poster-vtext--r" aria-hidden="true">本地运行 · 长期在场</div>
       <div class="ama-poster-top eva-caption">第01話 / AMADEUS</div>
@@ -3238,7 +3355,6 @@ body.eva-skin #mirage .project-status span{
         <p class="ama-poster-tag">人与数字之间，一条正在被命名的线。</p>
       </div>
       <div class="ama-poster-foot">
-        <div class="ama-poster-kanji">特報</div>
         <div class="ama-poster-foot-en">SPECIAL REPORT<br>CHEN BIAOMING · 2026</div>
       </div>
     </header>
@@ -3249,15 +3365,15 @@ body.eva-skin #mirage .project-status span{
           <span class="ama-dnote-edge" aria-hidden="true"></span>
           <p class="ama-dnote-h">我发现的问题</p>
           <p class="ama-dnote-ellipsis" aria-hidden="true">···</p>
-          <h3 class="thought-line ama-dnote-line ama-dnote-line--l" data-typewriter="人越来越独处，&#10;更需要被接住的温度。"></h3>
-          <p class="thought-sub ama-dnote-sub">话有了去处，仍需要被记住的温度。伴侣会应答，豆包会解惑，夜里也需要持续在场的陪伴。</p>
+          <h3 class="thought-line ama-dnote-line ama-dnote-line--l" data-typewriter="人们并不缺对话，&#10;缺的是被填满的精神。"></h3>
+          <p class="thought-sub ama-dnote-sub">信息越来越多，内心却越来越空——热闹过后，仍少一个能长期在场、真正接得住你的存在。</p>
         </div>
         <div class="ama-dnote-cell ama-dnote-cell--think">
           <span class="ama-dnote-edge ama-dnote-edge--r" aria-hidden="true"></span>
-          <p class="ama-dnote-h ama-dnote-h--think">我的思考</p>
+          <p class="ama-dnote-h ama-dnote-h--think">我的设计初衷</p>
           <p class="ama-dnote-ellipsis" aria-hidden="true">···</p>
-          <h3 class="thought-line ama-dnote-line ama-dnote-line--r" data-typewriter="慰藉可以很轻，&#10;也能一直&#10;留在身边"></h3>
-          <p class="thought-sub ama-dnote-sub ama-dnote-sub--r">人与数字之间，能守住陪伴、能留在生活里、能给予稳定的温度——像一缕持续在场的光。</p>
+          <h3 class="thought-line ama-dnote-line ama-dnote-line--r" data-typewriter="我想做的，&#10;是一个能陪伴人的数字生命。"></h3>
+          <p class="thought-sub ama-dnote-sub ama-dnote-sub--r">不是一轮轮问答，而是持续在场：有记忆、有情绪、有判断——像一个人留在生活里，而不是关掉窗口就消失。</p>
         </div>
       </div>
     </section>
@@ -3289,8 +3405,8 @@ body.eva-skin #mirage .project-status span{
             </svg>
             <div class="ama-ui-poster__center">
               <p class="ama-ui-poster__kicker">08 / Product Interface · High-Fidelity Companion</p>
-              <h3 class="ama-ui-poster__headline" id="ama-ui-title">高度拟真 AI 伴侣</h3>
-              <p class="ama-ui-poster__lead">Amadeus 是一个有情感连续性的本地 AI 伴侣——要把「像一个人在场」做成可运行系统，靠跨轮策略、六种行为仲裁与心智轮次撑起每次开口前的判断。PAD 与关系 S 会延续，记忆按语义分室检索，空闲时可主动开口且必须承接上一轮线程。界面同屏露出对话、情绪曲线、记忆宫殿与内部状态——拟真正在可观测、可延续、开口前有判断的在场感。</p>
+              <h3 class="ama-ui-poster__headline" id="ama-ui-title">数字人格运行系统</h3>
+              <p class="ama-ui-poster__lead">本地运行的数字伴侣界面：对话在前，机制可见。每次开口前，系统已更新 PAD、检索记忆、完成行为仲裁与心智加工——你在同屏看见曲线、记忆宫与关系状态，确认她为什么这样回应，而不是盲猜 prompt。</p>
             </div>
           </div>
         </div>
@@ -3320,31 +3436,31 @@ body.eva-skin #mirage .project-status span{
               <span class="ama-poster-block__dots" aria-hidden="true">···</span>
               人格是<br>一套可执行的<br>档案栈
             </h3>
-            <p class="ama-scene__lead">评审看到的是三层文件分工：传记定身份底色，核心锚点划边界，口吻文件每轮优先——决定她怎么开口，塑造她的表达方式。</p>
+            <p class="ama-scene__lead">她不是一句写死的 prompt。系统把人格拆成三层可编辑文件，每轮注入对话上下文：口吻层决定怎么开口；核心锚点守住「她是本人」的身份边界；长传记只作记忆与情绪底色——支撑表达，不当台词表朗读。</p>
           </div>
           <figure class="ama-scene__photo">
             <img src="assets/amadeus/art/ama-art-soul.png" alt="01 Soul · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
           </figure>
         </div>
         <div class="ama-scene__frame">
-          <p class="ama-scene__frame-label">档案栈 · 运行证据</p>
+          <p class="ama-scene__frame-label">三层文件 · 实际分工</p>
           <div class="ama-stack-flow" aria-label="身份档案栈示意">
             <article class="ama-stack-flow__item ama-stack-flow__item--voice">
               <p class="ama-stack-flow__tag">每轮优先 · 口吻层</p>
               <p class="ama-stack-flow__file">kurisu_voice.txt</p>
-              <p class="ama-stack-flow__desc">语气、断句、吐槽习惯——<strong>对外怎么说话</strong>只看这一层。</p>
+              <p class="ama-stack-flow__desc">短句、拌嘴节奏、先接情绪再讲道理——<strong>决定她对外怎么说话</strong>，每轮优先于传记。</p>
             </article>
             <article class="ama-stack-flow__item">
               <p class="ama-stack-flow__tag">不可突破 · 边界层</p>
               <p class="ama-stack-flow__file">kurisu_core_prompt.txt</p>
-              <p class="ama-stack-flow__desc">身份断言与红线：「你就是牧濑红莉栖本人」——以本人的姿态在场。</p>
+              <p class="ama-stack-flow__desc">身份断言与红线：「你就是牧濑红莉栖本人」——禁止出戏成 AI 或客服，以本人的姿态在场。</p>
             </article>
             <article class="ama-stack-flow__item">
               <p class="ama-stack-flow__tag">底色 · 传记层</p>
               <p class="ama-stack-flow__file">kurisu_soul.txt</p>
-              <p class="ama-stack-flow__desc">长传记只供记忆与情绪底色，<strong>作为深层依据</strong>支撑表达。</p>
+              <p class="ama-stack-flow__desc">赴美读脑科学、与父亲/世界线的情感重量——<strong>只供记忆与情绪对齐</strong>，普通聊天不复述剧情。</p>
             </article>
-            <p class="ama-stack-flow__foot">运行时合并进上下文 · 口吻 &gt; 边界 &gt; 传记</p>
+            <p class="ama-stack-flow__foot">每轮注入顺序 · 口吻 &gt; 边界 &gt; 传记</p>
           </div>
         </div>
       </div>
@@ -3353,8 +3469,8 @@ body.eva-skin #mirage .project-status span{
     <section class="ama-chapter-break reveal" data-ama-section="solution">
       <div class="ama-chapter-break__inner">
         <p class="ama-chapter-break__kicker">我的解决</p>
-        <h3 class="ama-chapter-break__title" data-typewriter="让她像一个人在场，&#10;延续对话里的温度。"></h3>
-        <p class="ama-chapter-break__sub">连续人格、分层记忆、情绪矩阵、主动编排——把在场感拆成可运行的系统。</p>
+        <h3 class="ama-chapter-break__title" data-typewriter="把「数字生命」&#10;拆成可运行的系统。"></h3>
+        <p class="ama-chapter-break__sub">精神层面的空，需要的不是更快的应答——而是记住你、感受你、有时先开口。下面是本地 Ollama 上那套完整链路：人格文件、分室记忆、PAD 情绪、行为仲裁、心智加工与主动层。</p>
       </div>
     </section>
 
@@ -3363,35 +3479,35 @@ body.eva-skin #mirage .project-status span{
         <div class="ama-scene__canvas ama-scene__canvas--split">
           <div class="ama-scene__copy">
             <p class="ama-scene__kicker">02 / Layered Memory Routing</p>
-            <h3 class="ama-scene__title">记忆宫殿：按语义分房间检索</h3>
-            <p class="ama-scene__lead">RAG 默认带 Hall，再按输入命中 Lab / Cafe / Forbidden。新信息先压成短标签入库，检索时只拉相关房间——避免所有记忆搅在一个池子里。</p>
+            <h3 class="ama-scene__title">她记得你说过什么，<br>且不会记混。</h3>
+            <p class="ama-scene__lead">记忆按语义分室存放，检索时不会把实验室、日常闲聊和重量级情节搅在一个池子里。每次对话先带 Hall 打底，再按你这句话命中 Lab、Cafe 或 Forbidden——相关的才进上下文，无关的不打断这一轮的语气。</p>
           </div>
           <figure class="ama-scene__photo">
             <img src="assets/amadeus/art/ama-art-palace.png" alt="02 Memory · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
           </figure>
         </div>
         <div class="ama-scene__frame">
-          <p class="ama-scene__frame-label">房间路由 · 证据</p>
+          <p class="ama-scene__frame-label">四间记忆 · 分工</p>
           <div class="ama-stack-flow" aria-label="记忆房间示意">
             <article class="ama-stack-flow__item ama-stack-flow__item--voice">
-              <p class="ama-stack-flow__tag">base context · 每次检索</p>
+              <p class="ama-stack-flow__tag">每次检索 · 基础层</p>
               <p class="ama-stack-flow__file">Hall</p>
-              <p class="ama-stack-flow__desc">日常事实与通用背景，每次检索都可作为基础上下文。</p>
+              <p class="ama-stack-flow__desc">日常事实与通用背景——<strong>像长期相处的底噪</strong>，每次对话都会带上。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">knowledge lane</p>
+              <p class="ama-stack-flow__tag">知识线 · 命中时拉取</p>
               <p class="ama-stack-flow__file">Lab</p>
-              <p class="ama-stack-flow__desc">科学、论文、编程、算法等高密度知识线索。</p>
+              <p class="ama-stack-flow__desc">科学、论文、编程、逻辑链——聊专业话题时才进上下文，避免日常被讲课腔占满。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">daily intimacy</p>
+              <p class="ama-stack-flow__tag">生活线 · 关系节奏</p>
               <p class="ama-stack-flow__file">Cafe</p>
-              <p class="ama-stack-flow__desc">吃饭、疲惫、天气、无聊、关系节奏等生活层记忆。</p>
+              <p class="ama-stack-flow__desc">吃饭、疲惫、天气、无聊、在干嘛——<strong>承接日常陪伴</strong>的那一层记忆。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">emotional weight</p>
+              <p class="ama-stack-flow__tag">高权重 · 慎用</p>
               <p class="ama-stack-flow__file">Forbidden</p>
-              <p class="ama-stack-flow__desc">爱、牺牲、命运、矛盾等高权重情节与冲突线索。</p>
+              <p class="ama-stack-flow__desc">爱、牺牲、命运、冲突——情节重量高，只在相关时进入，避免每轮都变成戏剧复述。</p>
             </article>
           </div>
         </div>
@@ -3403,36 +3519,36 @@ body.eva-skin #mirage .project-status span{
         <div class="ama-scene__canvas ama-scene__canvas--split">
           <div class="ama-scene__copy">
             <p class="ama-scene__kicker">03 / Affective Matrix</p>
-            <h3 class="ama-scene__title">她以情绪向量在场，持续变化。</h3>
-            <p class="ama-scene__lead">PAD 是持续变化的内部动力学。事件重要性决定刺激强度，关系强度会钝化负面冲击，长期记忆还会反过来形成 PAD 偏置。</p>
+            <h3 class="ama-scene__title">她的语气会变，<br>因为情绪在跨轮延续。</h3>
+            <p class="ama-scene__lead">PAD 不是贴上去的心情标签，而是每轮对话都会更新的内部状态。重要事件留下更深刺激，关系越近、负面一句越不容易把她打回冷漠——这些都会进入下一句话的靠近、防御或收短。</p>
           </div>
           <figure class="ama-scene__photo">
             <img src="assets/amadeus/art/ama-art-matrix.png" alt="03 Matrix · 艺术插图" width="800" height="800" loading="lazy" decoding="async">
           </figure>
         </div>
         <div class="ama-scene__frame">
-          <p class="ama-scene__frame-label">PAD 动力学 · 证据</p>
+          <p class="ama-scene__frame-label">PAD 四维 · 更新逻辑</p>
           <div class="ama-stack-flow" aria-label="PAD 更新与四维量">
             <article class="ama-stack-flow__item ama-stack-flow__item--voice">
-              <p class="ama-stack-flow__tag">cognitive/pad.js · nonlinear update</p>
+              <p class="ama-stack-flow__tag">cognitive/pad.js · 非线性更新</p>
               <p class="ama-stack-flow__file">next = tanh(α·current + β·stimulus + γ·base + ε)</p>
-              <p class="ama-stack-flow__desc">α=0.86 情绪惯性，β=0.2+importance×0.6 刺激评价，γ=0.18 性格底色，ε 为微扰噪声；负面刺激还会被关系强度 S 钝化。</p>
+              <p class="ama-stack-flow__desc">α=0.86 保留情绪惯性；β 随事件重要性放大刺激；γ 拉回性格底色；ε 为微扰。关系强度 S 会<strong>钝化负面冲击</strong>。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">P / Pleasure</p>
-              <p class="ama-stack-flow__desc">愉悦或不悦，决定靠近还是收缩的底色。</p>
+              <p class="ama-stack-flow__tag">P · 愉悦度</p>
+              <p class="ama-stack-flow__desc">靠近还是收缩的底色——聊得顺时更愿意多留一句，不顺时会收短。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">A / Arousal</p>
-              <p class="ama-stack-flow__desc">活跃度，影响她是否被点燃、是否深入展开。</p>
+              <p class="ama-stack-flow__tag">A · 唤醒度</p>
+              <p class="ama-stack-flow__desc">是否被点燃、是否愿意展开——科学话题被点到时会明显升高。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">D / Dominance</p>
-              <p class="ama-stack-flow__desc">掌控感，影响边界、自信与防御倾向。</p>
+              <p class="ama-stack-flow__tag">D · 掌控感</p>
+              <p class="ama-stack-flow__desc">边界与自信——被冒犯时防御会上来，熟悉时会放松。</p>
             </article>
             <article class="ama-stack-flow__item">
-              <p class="ama-stack-flow__tag">S / Bond</p>
-              <p class="ama-stack-flow__desc">关系强度，既是亲近度，也是情绪缓冲层。</p>
+              <p class="ama-stack-flow__tag">S · 关系强度</p>
+              <p class="ama-stack-flow__desc">亲近度，也是情绪缓冲——越熟，越不容易因一句话关系归零。</p>
             </article>
           </div>
         </div>
@@ -3445,8 +3561,8 @@ body.eva-skin #mirage .project-status span{
         <section class="ama-editorial__spread" id="ama-formula" data-ama-section="formula">
           <div class="ama-editorial__side ama-editorial__side--l">
             <p class="ama-editorial__tag">Observable Emotion Curve</p>
-            <h3 class="ama-editorial__title">情绪曲线<br>把内部状态压成可观察信号。</h3>
-            <p class="ama-editorial__lead">页面里的情绪把 P/A/D/S 映射成综合分数。它既能展示她当下状态，也能让评审看见「关系、唤醒度和掌控感」如何共同塑造表达。</p>
+            <h3 class="ama-editorial__title">情绪曲线<br>把内心状态变成可见信号。</h3>
+            <p class="ama-editorial__lead">你不只能感到「她今天 mood 不对」——界面把 P/A/D/S 合成一条曲线。关系、唤醒与掌控感如何共同改变下一句话，在这里能直接看见，而不是猜 prompt 有没有 drift。</p>
             <p class="ama-editorial__stats">
               P <b data-ama-pad="P">+0.10</b>
               A <b data-ama-pad="A">+0.00</b>
@@ -3455,7 +3571,7 @@ body.eva-skin #mirage .project-status span{
               · emotion <b data-ama-emotion-score>+0.000</b>
             </p>
             <p class="ama-editorial__formula">score = 0.40·P + 0.25·A + 0.20·D + 0.15·(2S−1) · turn <span data-ama-emotion-turn>0</span>/14</p>
-            <p class="ama-editorial__live" data-ama-emotion-caption>滚动到此面板后，按实验栈同款 update_pad 逐句推演</p>
+            <p class="ama-editorial__live" data-ama-emotion-caption>滚到此处后，按 cognitive/pad.js 同款逻辑逐句推演曲线</p>
           </div>
           <div class="ama-editorial__panel" data-ama-emotion-panel aria-label="AMADEUS 情绪曲线">
             <figure class="ama-editorial__plate">
@@ -3475,9 +3591,9 @@ body.eva-skin #mirage .project-status span{
           </div>
           <div class="ama-editorial__side ama-editorial__side--r" id="ama-behavior" data-ama-section="behavior">
             <p class="ama-editorial__tag">Behavior Arbitration</p>
-            <h3 class="ama-editorial__title">回复前先选择行为倾向。</h3>
-            <p class="ama-editorial__lead">系统先把用户输入送进行为仲裁：让靠近、日常、防御、转移、智识投入、收缩六种候选互相竞争，再把胜出的倾向注入 prompt，形成稳定但不僵硬的性格。</p>
-            <p class="ama-editorial__mono-tag">amadeus/behavior.py · candidate scoring</p>
+            <h3 class="ama-editorial__title">同一句话，<br>亲近时和低落时不一样。</h3>
+            <p class="ama-editorial__lead">开口前先选行为倾向：靠近、投入、防御、转移、日常或收缩。六种候选根据 PAD、关系 S 和你的原话打分竞争——胜出的姿态写进本轮 prompt，再生成对白，所以性格稳定但不僵硬。</p>
+            <p class="ama-editorial__mono-tag">cognitive/behavior.js · 候选打分</p>
             <pre class="ama-editorial__mono"><code><span class="kw">if</span> P &gt; 0.35:
   scores[<span class="st">"APPROACH"</span>] += 0.35
 <span class="kw">elif</span> P &lt; -0.35:
@@ -3499,12 +3615,12 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
         <section class="ama-editorial__spread ama-editorial__spread--b">
           <div class="ama-editorial__side ama-editorial__side--l" id="ama-autonomy" data-ama-section="autonomy">
             <p class="ama-editorial__tag">Autonomous Drive</p>
-            <h3 class="ama-editorial__title ama-editorial__title--stack">主动来自内生目标，<br>回应关系与状态。</h3>
-            <p class="ama-editorial__lead">主动层跑在 PAD、记忆宫与行为仲裁之后：用轮次计数与空闲时长决定是否开口，用关系 S 与在场状态判断何时开口。</p>
+            <h3 class="ama-editorial__title ama-editorial__title--stack">她也会先开口，<br>且必须接回上一句。</h3>
+            <p class="ama-editorial__lead">主动层跑在情绪、记忆与行为都算完之后：空闲时可能发来一句「在干嘛」，但只能引用记忆宫里已有的标签，且你仍在场。若她先抛了线，下一轮必须把这条线接回去——不会主动一句后又装陌生人。</p>
             <ul class="ama-editorial__list">
-              <li><strong>轮次审计（每满 3 轮）：</strong>对照 PAD、关系 S 与记忆宫命中，看四类内生目标里是否还有值得推进的一项；全部成立则本轮开口。</li>
-              <li><strong>空闲触发门槛：</strong>只有 presence 为真且上一句用户原话仍相关时，才允许发主动句；引用内容只能来自记忆宫已写入的标签。</li>
-              <li><strong>主动后的承接义务：</strong>若本轮是她先抛线，下一轮必须把这条线接回去；禁止主动一句后立刻切回无关寒暄。</li>
+              <li><strong>轮次审计：</strong>每满数轮对照 PAD、关系 S 与内生目标，判断是否有值得推进的话题。</li>
+              <li><strong>空闲门槛：</strong>确认用户在场、上一句仍相关，才允许主动开口。</li>
+              <li><strong>承接义务：</strong>主动发言后的下一轮必须延续同一线程，禁止硬切寒暄。</li>
             </ul>
           </div>
           <figure class="ama-editorial__plate ama-editorial__plate--shift">
@@ -3512,16 +3628,16 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
           </figure>
           <div class="ama-editorial__side ama-editorial__side--r" id="ama-mind" data-ama-section="mind">
             <p class="ama-editorial__tag">Mind Turn</p>
-            <h3 class="ama-editorial__title">每轮先走逻辑、共情、智识。</h3>
-            <p class="ama-editorial__lead">在真正生成对白前，系统会把当前输入压成三条内部读数：逻辑上锁定的议题、情绪上接住的姿态、智识上可展开的深度。它不展示给用户，却决定她的下一句话贴着本轮焦点。</p>
-            <p class="ama-editorial__mono-tag">amadeus/mind_turn.py · inner reasoning</p>
-            <pre class="ama-editorial__mono"><code>【心智加工 · 逻辑→共情→智识】
+            <h3 class="ama-editorial__title">开口前，<br>先想清楚三个问题。</h3>
+            <p class="ama-editorial__lead">Mind Turn 是对内加工：这句话在问什么、对方需要被怎样接住、有没有必要展开。用户只看到自然对白，但这一层锁住「贴着本轮焦点说话」，减少跑题、客服腔和百科全书式答复。</p>
+            <p class="ama-editorial__mono-tag">cognitive/mindTurn.js · 对内加工</p>
+            <pre class="ama-editorial__mono"><code>【心智加工 · 逻辑 → 共情 → 智识】
 行为倾向：{behavior}
-逻辑：先锁定对方问的是什么，正面答命题
-共情：他在泄压或求接住，先承认感受
-智识：可以说清因果，但别讲课腔
+逻辑：锁定对方问的是什么，正面答命题
+共情：读语气——泄压、求接住，还是先承认感受
+智识：能说清因果，但不讲课腔
 
-对外只输出自然中文口语对白，80～180字。</code></pre>
+对外只输出自然口语对白。</code></pre>
           </div>
         </section>
 
@@ -3815,6 +3931,49 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
       </svg>
     </header>
 
+    <section class="proof-stage proof-stage--tw" data-proof="timewalker" aria-label="墨舟现场触发剧场">
+      <div class="proof-pin">
+        <div class="tw-proof-scene">
+          <div class="tw-proof-bg" aria-hidden="true">
+            <img src="assets/timewalker/ink-mountains.png" alt="" loading="lazy" decoding="async">
+          </div>
+          <div class="tw-proof-copy">
+            <p class="proof-kicker">ARRIVE / READ / ARCHIVE</p>
+            <h3 class="proof-title">抵达一处，读懂一处，再把它沉淀成自己的旅行记忆。</h3>
+          </div>
+          <div class="tw-proof-phone" aria-label="墨舟探索界面">
+            <div class="tw-mock-phone">
+              <div class="tw-mock-screen">
+                <header class="tw-mock-header">
+                  <span class="tw-mock-header-spacer"></span>
+                  <h1>墨舟</h1>
+                  <span class="tw-mock-header-city">桂林 ▾</span>
+                </header>
+                <div class="tw-mock-explore-bg" aria-hidden="true">
+                  <img src="assets/timewalker/ink-mountains.png" alt="" loading="lazy" decoding="async" width="390" height="844">
+                </div>
+                <main class="tw-mock-explore-main" aria-hidden="true">
+                  <div class="tw-mock-blob"><span>已抵达</span></div>
+                  <p class="tw-mock-status">象鼻山 · 120m</p>
+                </main>
+              </div>
+            </div>
+          </div>
+          <article class="tw-proof-card">
+            <span>现场文化卡</span>
+            <h4>象鼻山</h4>
+            <p>名称、来历、民俗与此刻值得留意的细节，在抵达瞬间浮出。</p>
+          </article>
+          <div class="tw-proof-route" aria-hidden="true">
+            <span class="is-active">抵达</span>
+            <span>读懂</span>
+            <span>归档</span>
+            <span>回看</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="tw-dnote reveal">
       <div class="tw-dnote-v tw-dnote-v--l" aria-hidden="true">問</div>
       <div class="tw-dnote-v tw-dnote-v--r" aria-hidden="true">思</div>
@@ -4102,6 +4261,12 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
   <a href="#self"><span class="dock-num">—</span><span class="dock-label">关于</span></a>
 </nav>
 
+<nav class="project-jump-nav" aria-label="项目快速跳转">
+  <a href="#amadeus"><span>01</span>AMADEUS</a>
+  <a href="#digitalark"><span>02</span>ARK</a>
+  <a href="#timewalker"><span>03</span>墨舟</a>
+</nav>
+
 <footer>
   <div>© 2026 Chen Biaoming</div>
   <div>AMADEUS · 墨舟 · 数字方舟</div>
@@ -4111,9 +4276,10 @@ winner = <span class="fn">max</span>(scores, key=scores.get)</code></pre>
 <script src="assets/vendor/lenis/lenis.min.js" defer></script>
 <script src="assets/vendor/gsap/gsap.min.js" defer></script>
 <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
-<script src="assets/motion/smooth-scroll.js?v=smooth-3" defer></script>
-<script src="assets/hero/hero-zine.js?v=about-sept-27" defer></script>
-<script src="assets/motion/site-motion.js?v=wv-travel-3" defer></script>
+<script src="assets/motion/smooth-scroll.js?v=smooth-4" defer></script>
+<script src="assets/hero/hero-zine.js?v=about-me-31" defer></script>
+<script src="assets/motion/site-motion.js?v=ama-poster-38" defer></script>
+<script src="assets/motion/typewriter.js?v=tw-5" defer></script>
 <script src="assets/motion/wv-motion.js?v=wv-travel-11" defer></script>
 <script src="assets/motion/digitalark-motion.js?v=ark-handoff-75" defer></script>
 <script>
@@ -4247,36 +4413,8 @@ if(mirageLensPoster){
   mirageReduceMotion.addEventListener('change',queueMiragePosterParallax);
 }
 
-function typeThought(el){
-  if(el.dataset.typed==='true') return;
-  el.dataset.typed='true';
-  const text=el.dataset.typewriter||'';
-  const page=el.closest('.thought-page');
-  el.textContent='';
-  el.classList.add('type-caret');
-  let i=0;
-  const speed=Number(el.dataset.speed||42);
-  function tick(){
-    el.textContent=text.slice(0,i);
-    i+=1;
-    if(i<=text.length){
-      setTimeout(tick,text[i-2]==='\n'?speed*5:speed);
-    }else{
-      el.classList.remove('type-caret');
-      if(page) page.classList.add('typed');
-    }
-  }
-  tick();
-}
-const typeObs=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting) typeThought(entry.target);
-  });
-},{threshold:.42,rootMargin:'0px 0px -12% 0px'});
-document.querySelectorAll('[data-typewriter]').forEach(el=>typeObs.observe(el));
-
 const darkSections=[...document.querySelectorAll('.hero,.dark')];
-const sectionNavLinks=[...document.querySelectorAll('.dock-nav a[href^="#"],.nav a[href^="#"]')];
+const sectionNavLinks=[...document.querySelectorAll('.dock-nav a[href^="#"],.nav a[href^="#"],.project-jump-nav a[href^="#"]')];
 const briefSectionIds=['#brief','#amadeus','#digitalark','#timewalker','#self'];
 function updateBriefAnchors(){
   if(!sectionNavLinks.length) return;
@@ -4337,25 +4475,25 @@ const amaGuideState=document.getElementById('amaGuideState');
 const amaGuideOrb=document.getElementById('amaGuideOrb');
 const amaGuideLines={
 
-  problem:{state:'design note',pos:'pos-left',lines:['先看问题：人独处，需要被接住。','从缺口讲起，再落到功能。']},
-  thinking:{state:'design note',pos:'pos-right',lines:['思考：陪伴可以很轻，也能一直留在身边。','人与数字，可以持续在场。']},
-  solution:{state:'design note',pos:'pos-left',lines:['解决：像一个人在场，延续对话温度。','下面才是系统拆解，按顺序看。']},
+  problem:{state:'design note',pos:'pos-left',lines:['人们并不缺对话，缺的是被填满的精神。','热闹过后，仍少一个能长期在场、接得住你的存在。']},
+  thinking:{state:'design note',pos:'pos-right',lines:['我想做的，是一个能陪伴人的数字生命。','有记忆、有情绪、有判断——关掉窗口也不消失。']},
+  solution:{state:'system map',pos:'pos-left',lines:['下面是把数字生命拆成可运行模块的做法。','人格文件、分室记忆、PAD、行为仲裁、心智与主动层。']},
   intro:{
     state:'why now',
     pos:'pos-hero',
     lines:[
-      '往下是两页设计说明，再往下才是系统拆解。',
-      '市面伴侣偏工具：应答快、记忆浅、关系薄。豆包能解惑，陪伴需要另一套结构。',
-      '我要做的是人与数字生命之间，那条正在被加厚的线。'
+      '本地运行的数字伴侣——不是云端问答壳。',
+      '市面产品应答快、记忆浅、关系薄；陪伴需要另一套结构。',
+      '人与数字之间，一条正在被加厚的线。'
     ]
   },
   why:{
     state:'thesis loaded',
     pos:'pos-left',
     lines:[
-      '她能守住陪伴、能留在生活里、能给予稳定温度——可以一直在你的生活里。',
-      '这是灵魂档案、记忆、情绪与主动编排叠出来的连续人格。',
-      '读下去，你会看到系统怎么证明“像一个人在场”。'
+      '她能记住你、感受你、有时先开口——可以一直在你的生活里。',
+      '档案栈、分室记忆、情绪矩阵与主动层叠出连续人格。',
+      '读下去，看每一层具体在做什么。'
     ]
   },
   vision:{
@@ -4364,25 +4502,25 @@ const amaGuideLines={
     lines:[
       '愿景：从对话到场，走向家居、投影与多终端。',
       '现在先做对话里的在场感。路要一步一步走，但方向别讲窄了。',
-      '评审如果只看到聊天窗，会误会这只是又一个 AI 应用。'
+      '如果只看聊天窗，会误以为这只是又一个问答应用。'
     ]
   },
   soul:{
     state:'identity stack',
     pos:'pos-left',
     lines:[
-      '灵魂档案是底色，口吻锚点才决定我怎么开口。传记支撑表达，台词表只是表层。',
-      '人设靠档案栈撑起，每层各管一部分，才不容易穿帮。',
-      '长传记、核心边界、口吻文件，分工清楚。'
+      '口吻文件每轮优先，决定我怎么开口；传记只作底色，不当台词念。',
+      '三层文件各管一部分：怎么说、是谁、为何这样反应。',
+      '档案栈让人格可编辑、可迭代，而不是一条写死的 prompt。'
     ]
   },
   palace:{
     state:'semantic routing',
     pos:'pos-right',
     lines:[
-      '记忆按房间路由：Hall 打底，命中哪间拉哪间，池子分开才安静。',
-      'Hall 是底层，Lab 是知识线，Cafe 是日常关系，Forbidden 收高权重情节。',
-      '记忆分室检索，命中更准，表达更稳。'
+      '她记得你说过什么，且不会把实验室和日常闲聊搅在一起。',
+      'Hall 打底，Lab / Cafe / Forbidden 按语义命中——相关的才进上下文。',
+      '分室检索，表达更稳，也更像长期相处。'
     ]
   },
   matrix:{
@@ -4391,52 +4529,52 @@ const amaGuideLines={
     lines:[
       '情绪是 P、A、D、S 的向量，会一起改变我靠近、收缩还是顶回去。',
       '关系越近，负面刺激越不容易直接把状态打崩。这个缓冲比单纯心情条有意思多了。',
-      '你要展示的是矩阵，把“情绪会改变回复”说清楚。'
+      'PAD 矩阵让「情绪会改变回复」落到机制层，而不只是文案表演。'
     ]
   },
   formula:{
     state:'observable curve',
     pos:'pos-right',
     lines:[
-      '这条曲线把内部状态压成可观察信号，方便你讲清楚我是情绪向量。',
-      '公式写出来，比说“我有情绪”可信得多。评审能直接看见状态变化。',
-      'P、A、D、S 各有权重。把“心情变化”讲到机制层。'
+      '这条曲线把内部状态压成可观察信号，方便看见情绪向量怎样变化。',
+      '公式比空口说「有情绪」更具体：P、A、D、S 各有权重，合成一条连续曲线。',
+      '界面同屏露出状态，陪伴感才不是黑箱。'
     ]
   },
   behavior:{
     state:'behavior arbitration',
     pos:'pos-low',
     lines:[
-      '我先决定姿态：靠近、防御、转移、投入，还是收住，再生成一句话。',
-      '同一句输入，在不同 PAD 和关系状态下会走不同候选。这比固定语料池像人多了。',
-      '行为候选有随机扰动和重复惩罚，表情会随状态变化。'
+      '同一句话，亲近时和低落时走不同候选——先选姿态，再生成对白。',
+      '靠近、防御、转移、投入……由 PAD 和关系 S 共同打分。',
+      '性格稳定，但不靠固定语料池硬背。'
     ]
   },
   autonomy:{
     state:'autonomous drive',
     pos:'pos-left',
     lines:[
-      '主动层在情绪、记忆、行为都算完之后才决定开口——回应关系与状态。',
-      '每满几轮先审计内生目标；空闲还要看人还在不在场、上一句还相不相关。',
-      'core 里写死：按关系开口、引用记忆宫已写入的标签；她先抛的线，下一轮必须接回去。'
+      '她也会先开口——但只能引用记忆里有的，且你仍在场。',
+      '主动一句之后，下一轮必须把线接回去。',
+      '不是客服式「在吗您好」，而是熟人微信的节奏。'
     ]
   },
   mind:{
     state:'logic / eq / iq',
     pos:'pos-right',
     lines:[
-      '开口前先走逻辑、共情、智识。逻辑抓问题，共情读语气，智识决定要不要展开。',
-      '最后对外只剩自然对白，贴着本轮焦点。',
-      '这层做得好，角色会稳定在“像一个人在场”的表达里。'
+      '开口前先想清楚：问的是什么、该怎么接住、要不要展开。',
+      '用户只看到对白，但这一层锁住本轮焦点。',
+      '减少跑题、客服腔和百科全书式答复。'
     ]
   },
   ui:{
     state:'product surface',
     pos:'pos-center',
     lines:[
-      '最后才放 UI。前面证明系统存在，后面再让它看起来像产品。',
-      '用户界面应该克制。复杂留给后台，不然陪伴感会变成监控面板。',
-      '这个部分可以高级一点：聊天、记忆、状态、开发者视角，各占一层。'
+      '对话在前，机制可见——曲线、记忆宫、关系状态同屏。',
+      '陪伴不是黑箱，连续性可以观察和调试。',
+      '复杂留给后台，界面克制。'
     ]
   }
 };

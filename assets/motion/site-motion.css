@@ -81,6 +81,29 @@ body.motion-choice-cinema #ama-intro.motion-handoff-cover{
   z-index:1;
 }
 
+.ama-poster-handoff-veil{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 0%,rgba(5,5,5,.28) 38%,rgba(5,5,5,.88) 72%,#050505 100%);
+  transform:translate3d(0,0,0);
+  will-change:transform,opacity;
+}
+
+body.eva-skin #amadeus.is-ama-handoff-active{
+  overflow:visible!important;
+}
+
+body.eva-skin #amadeus .ama-dnote--handoff.is-handoff-receiving{
+  position:relative;
+  z-index:1;
+}
+
+body.eva-skin #ama-intro.is-pin-active{
+  z-index:12;
+}
+
 body.motion-choice-cinema #da2Cover.motion-handoff-cover{
   z-index:1;
   background:

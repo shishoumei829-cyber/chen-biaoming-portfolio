@@ -3,7 +3,10 @@
   if (!hero) return;
 
   const pin = hero.querySelector('.hz-pin');
+  const cluster = hero.querySelector('.hz-hero-cluster');
   const canvas = hero.querySelector('.hz-photo-canvas');
+  const nameRole = hero.querySelector('.hz-role');
+  const projectIndex = hero.querySelector('.home-project-index');
   const scrollCue = hero.querySelector('.hz-scroll-cue');
   const gsapApi = window.gsap;
   const ST = window.ScrollTrigger;
@@ -15,13 +18,13 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const SCRUB = reduceMotion ? 0.28 : 0.42;
-  const SCRUB_DAMP = reduceMotion ? 0.38 : 0.82;
-  const HERO_SCROLL_VH = 5.1;
-  const TEXT_SCROLL_VH = 2.85;
-  const EXIT_SCROLL_VH = 1.15;
+  const SCRUB_DAMP = reduceMotion ? 0.38 : 0.62;
+  const HERO_SCROLL_VH = 2.35;
+  const TEXT_SCROLL_VH = 1.35;
+  const EXIT_SCROLL_VH = 0.55;
 
   const lineMuted = { color: 'rgba(155, 0, 0, 0.16)' };
-  const SPLIT_V = 'sept-27';
+  const SPLIT_V = 'about-me-30';
 
   function splitAboutLines() {
     if (!aboutBody) return [];
@@ -32,7 +35,7 @@
       '我们仍需要一颗柔软而敏锐的心',
       '而设计的思维，正是那份灵光闪烁的',
       '创造力，它不靠堆砌功能，而在于唤醒',
-      '人与生活之间的美的对话。'
+      '人与生活之间的美的对话'
     ];
     aboutBody.innerHTML = lines.map((text) => `<span class="hz-line">${text}</span>`).join('');
     aboutBody.dataset.splitV = SPLIT_V;
@@ -54,7 +57,7 @@
       const t = gsapApi.utils.clamp(0, 1, (progress - start) / (end - start));
       gsapApi.set(line, {
         color: gsapApi.utils.interpolate('rgba(155, 0, 0, 0.16)', 'rgb(155, 0, 0)', t),
-        fontWeight: index === 0 && t > 0.55 ? 700 : 400
+        fontWeight: 400
       });
       line.classList.toggle('is-lit', t >= 0.98);
     });
@@ -69,7 +72,8 @@
   }
 
   if (!gsapApi || !ST) {
-    hero.classList.add('is-static', 'is-awake');
+    hero.classList.add('is-static', 'is-awake', 'is-index-reveal');
+    document.body.classList.add('home-index-ready');
     splitAboutLines().forEach((line) => line.classList.add('is-lit'));
     if (aboutStage) aboutStage.classList.add('is-visible');
     return;
@@ -83,8 +87,6 @@
 
   gsapApi.set(canvas, {
     autoAlpha: 0,
-    y: 132 * motionScale,
-    scale: 0.94,
     filter: 'none',
     force3D: false
   });
@@ -97,6 +99,26 @@
     filter: 'none',
     force3D: false
   });
+  if (cluster) {
+    gsapApi.set(cluster, {
+      xPercent: -50,
+      yPercent: -50,
+      left: '50%',
+      top: '52%',
+      scale: 0.92,
+      y: 88 * motionScale,
+      force3D: false
+    });
+  }
+  if (projectIndex) {
+    gsapApi.set(projectIndex, {
+      xPercent: -50,
+      left: '50%',
+      top: '62%',
+      autoAlpha: 0,
+      y: 40 * motionScale
+    });
+  }
   if (aboutInner) gsapApi.set(aboutInner, { yPercent: 100, y: 0, autoAlpha: 1 });
   if (about) gsapApi.set(about, { yPercent: 0, y: 0, autoAlpha: 1 });
 
@@ -118,26 +140,50 @@
         onUpdate: (self) => {
           const p = self.progress;
           hero.classList.toggle('is-awake', p > 0.02);
+          hero.classList.toggle('is-index-reveal', p > 0.34);
           if (!aboutStage) return;
-          aboutStage.classList.toggle('is-covering', p > 0.58);
+          aboutStage.classList.toggle('is-covering', p > 0.62);
           aboutStage.classList.toggle('is-visible', p > 0.72);
         }
       }
     });
 
+    const markIndexReady = () => {
+      document.body.classList.add('home-index-ready');
+      hero.classList.add('is-index-reveal');
+    };
+    const unmarkIndexReady = () => {
+      document.body.classList.remove('home-index-ready');
+      hero.classList.remove('is-index-reveal');
+    };
+
     heroTl
-      .to(canvas, { y: 0, autoAlpha: 1, scale: 1, duration: 0.28 }, 0)
+      /* 第一幕：拼贴图入场 */
+      .to(cluster, { y: 0, scale: 1, duration: 0.18 }, 0)
+      .to(canvas, { autoAlpha: 1, duration: 0.12 }, 0)
       .to(photos, {
         y: 0,
         autoAlpha: 1,
         scale: 1,
         rotation: (i) => [-8, 7, -4, 5, -2][i] || 0,
-        duration: 0.34,
-        stagger: { each: 0.022, from: 'start' }
-      }, 0.05)
-      .to(scrollCue, { autoAlpha: 0, duration: 0.08 }, 0.36)
-      .to({}, { duration: 0.3 }, 0.36)
-      .to(aboutInner, { yPercent: 0, y: 0, duration: 0.38, ease: 'power2.out' }, 0.66);
+        duration: 0.22,
+        stagger: { each: 0.018, from: 'start' }
+      }, 0.02)
+      /* 第二幕：整组上移缩小，三项目同步出现 */
+      .to(scrollCue, { autoAlpha: 0, duration: 0.04 }, 0.2)
+      .to(cluster, { top: '22%', scale: 0.5, duration: 0.24 }, 0.22);
+    if (nameRole) heroTl.to(nameRole, { autoAlpha: 0, duration: 0.08 }, 0.22);
+    heroTl
+      .to(projectIndex, {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.16,
+        onStart: markIndexReady,
+        onReverseComplete: unmarkIndexReady
+      }, 0.24)
+      .to({}, { duration: 0.08 }, 0.56)
+      /* 第三幕：进入 about */
+      .to(aboutInner, { yPercent: 0, y: 0, duration: 0.22, ease: 'power2.out' }, 0.62);
 
     if (aboutStage && lines.length) {
       gsapApi.timeline({
@@ -148,7 +194,7 @@
           end: () => `+=${Math.round(TEXT_SCROLL_VH * 100)}%`,
           pin: aboutStage,
           pinSpacing: true,
-          scrub: 0.58,
+          scrub: 0.42,
           anticipatePin: 0,
           invalidateOnRefresh: true,
           refreshPriority: 22,
@@ -210,14 +256,18 @@
     return () => {
       document.body.classList.remove('hz-about-active');
       aboutStage?.classList.remove('is-visible', 'is-covering', 'is-text-pin');
-      hero.classList.remove('is-awake');
+      hero.classList.remove('is-awake', 'is-index-reveal');
+      document.body.classList.remove('home-index-ready');
     };
   });
 
   mm.add('(max-width: 820px)', () => {
-    gsapApi.set(canvas, { autoAlpha: 1, y: 0, scale: 1 });
+    gsapApi.set(canvas, { autoAlpha: 1 });
     gsapApi.set(photos, { autoAlpha: 1, y: 0, scale: 1 });
-    hero.classList.add('is-awake');
+    if (cluster) gsapApi.set(cluster, { y: 0, scale: 1, top: '50%' });
+    if (projectIndex) gsapApi.set(projectIndex, { autoAlpha: 1, y: 0, top: '62%' });
+    hero.classList.add('is-awake', 'is-index-reveal');
+    document.body.classList.add('home-index-ready');
     if (about) gsapApi.set(about, { yPercent: 0, y: 0 });
     if (aboutInner) gsapApi.set(aboutInner, { yPercent: 0, y: 0 });
     lines.forEach((line) => line.classList.add('is-lit'));

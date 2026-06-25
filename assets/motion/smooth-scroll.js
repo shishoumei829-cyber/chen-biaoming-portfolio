@@ -14,6 +14,7 @@
   }
 
   gsap.registerPlugin(ST);
+  ST.defaults({ scroller: document.documentElement });
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) {
