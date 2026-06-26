@@ -5,6 +5,7 @@
 <title>陈彪明 · 设计作品集 2026</title>
 <link rel="stylesheet" href="fonts.css" />
 <style>
+  @page { size: 1280px 800px; margin: 0; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -20,168 +21,184 @@
     --han:     'Noto Serif CJK SC', serif;
   }
 
-  html, body { width: 1240px; }
   body {
-    font-family: var(--han);
-    color: var(--ink);
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    font-family: var(--han); color: var(--ink); background: #b8b09c;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
     text-rendering: geometricPrecision;
   }
 
-  /* 每段 = 一条按内容自适应高度的色块，无强制空白 */
-  .sec { padding: 120px 130px; position: relative; }
-  .t-olive    { background: var(--olive);    color: var(--cream); }
-  .t-espresso { background: var(--espresso);  color: var(--cream); }
-  .t-cream    { background: var(--cream);     color: var(--ink); }
-
-  .eyebrow {
-    font-family: var(--label); font-size: 12px; font-weight: 600;
-    letter-spacing: 0.42em; text-transform: uppercase; color: var(--orange);
-    margin-bottom: 30px;
+  .page {
+    position: relative; width: 1280px; height: 800px; overflow: hidden;
+    padding: 78px 96px; page-break-after: always; break-after: page;
   }
+  .page:last-child { page-break-after: auto; }
+  .t-olive    { background: var(--olive);    color: var(--cream); }
+  .t-espresso { background: var(--espresso); color: var(--cream); }
+  .t-cream    { background: var(--cream);    color: var(--ink); }
+
+  /* 运行信息：克制的页眉页脚 */
+  .runhead { position: absolute; top: 40px; left: 96px; right: 96px;
+             display: flex; justify-content: space-between;
+             font-family: var(--label); font-size: 10px; letter-spacing: 0.32em;
+             text-transform: uppercase; opacity: 0.55; }
+  .pageno { position: absolute; bottom: 40px; right: 96px;
+            font-family: var(--label); font-size: 10px; letter-spacing: 0.3em; opacity: 0.5; }
+  .footline { position: absolute; bottom: 40px; left: 96px;
+              font-family: var(--label); font-size: 10px; letter-spacing: 0.3em;
+              text-transform: uppercase; opacity: 0.5; }
+
   .accent { color: var(--orange); }
   .script { font-family: var(--script); font-weight: 400; line-height: 0.8; }
   .display { font-family: var(--display); font-weight: 800; line-height: 0.92; letter-spacing: -0.01em; }
-  .han-h { font-family: var(--han); font-weight: 600; }
+  .eyebrow { font-family: var(--label); font-size: 11px; font-weight: 600;
+             letter-spacing: 0.4em; text-transform: uppercase; color: var(--orange); }
 
-  /* ---------- 封面 ---------- */
-  .cover { padding-top: 150px; padding-bottom: 150px; }
-  .cover .label { font-family: var(--label); font-size: 12px; letter-spacing: 0.4em;
-                  text-transform: uppercase; opacity: 0.7; margin-bottom: 90px; }
-  .cover .big { position: relative; display: inline-block; }
-  .cover .big .word { font-size: 150px; }
-  .cover .big .scr { position: absolute; font-size: 150px; color: var(--orange);
-                     right: -34px; bottom: 8px; transform: rotate(-7deg); }
-  .cover .meta { margin-top: 110px; display: flex; align-items: flex-end; justify-content: space-between; }
-  .cover .meta .nm { font-family: var(--display); font-weight: 700; font-size: 56px; }
-  .cover .meta .en { font-family: var(--label); font-size: 13px; letter-spacing: 0.4em;
-                     text-transform: uppercase; opacity: 0.7; margin-top: 14px; }
-  .cover .meta .right { text-align: right; }
-  .cover .meta .slg { font-family: var(--han); font-weight: 500; font-size: 26px; letter-spacing: 0.08em; }
-  .cover .meta .role { font-family: var(--label); font-size: 13px; letter-spacing: 0.14em;
-                       margin-top: 16px; opacity: 0.82; }
+  /* ---- 封面 ---- */
+  .cover .stack { position: absolute; left: 96px; top: 250px; }
+  .cover .stack .l { font-size: 116px; }
+  .cover .stack .scr { position: absolute; font-size: 110px; color: var(--orange);
+                       left: 250px; top: -52px; transform: rotate(-7deg); }
+  .cover .side { position: absolute; right: 96px; top: 250px; width: 360px; text-align: right; }
+  .cover .side .cn { font-family: var(--han); font-weight: 600; font-size: 21px; letter-spacing: 0.42em; }
+  .cover .name { position: absolute; left: 96px; bottom: 150px; }
+  .cover .name .nm { font-family: var(--display); font-weight: 700; font-size: 40px; }
+  .cover .name .en { font-family: var(--label); font-size: 11px; letter-spacing: 0.4em;
+                     text-transform: uppercase; opacity: 0.72; margin-top: 10px; }
+  .cover .slg { position: absolute; right: 96px; bottom: 150px; text-align: right; }
+  .cover .slg .s { font-family: var(--han); font-weight: 500; font-size: 19px; letter-spacing: 0.08em; }
+  .cover .slg .r { font-family: var(--label); font-size: 10.5px; letter-spacing: 0.14em; margin-top: 12px; opacity: 0.8; }
 
-  /* ---------- 关于我 ---------- */
-  .about .head { position: relative; display: inline-block; margin-bottom: 70px; }
-  .about .head .word { font-size: 130px; }
-  .about .head .scr { position: absolute; font-size: 120px; color: var(--orange);
-                      right: -150px; bottom: 16px; transform: rotate(-6deg); }
-  .about .head .cn { font-family: var(--han); font-weight: 600; font-size: 26px;
-                     letter-spacing: 0.5em; margin-top: 12px; }
-  .about .quote { font-family: var(--han); font-weight: 600; font-size: 40px; line-height: 1.45;
-                  letter-spacing: 0.03em; max-width: 760px; margin-bottom: 56px; }
-  .about .body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: start; }
-  .about p { font-family: var(--han); font-weight: 400; font-size: 15px; line-height: 2.05; }
-  .about p + p { margin-top: 22px; }
-  .about .facts { font-family: var(--label); font-size: 13px; letter-spacing: 0.1em; line-height: 2.6; }
+  /* ---- 关于 ---- */
+  .about .head { position: relative; }
+  .about .head .w { font-size: 104px; }
+  .about .head .scr { position: absolute; font-size: 92px; color: var(--orange); left: 360px; top: -6px; transform: rotate(-6deg); }
+  .about .head .cn { font-family: var(--han); font-weight: 600; font-size: 20px; letter-spacing: 0.5em; margin-top: 8px; }
+  .about .body { position: absolute; left: 96px; right: 96px; top: 340px; display: grid;
+                 grid-template-columns: 1.5fr 1fr; gap: 90px; }
+  .about p { font-family: var(--han); font-weight: 400; font-size: 14.5px; line-height: 2.1; max-width: 540px; }
+  .about p + p { margin-top: 20px; }
+  .about .facts { font-family: var(--label); font-size: 12.5px; letter-spacing: 0.1em; line-height: 2.7; }
   .about .facts b { color: var(--orange); font-weight: 600; margin-right: 14px; }
 
-  /* ---------- 目录 ---------- */
-  .contents .head { position: relative; display: inline-block; margin-bottom: 70px; }
-  .contents .head .word { font-size: 124px; }
-  .contents .head .scr { position: absolute; font-size: 110px; color: var(--orange);
-                         right: -120px; bottom: 18px; transform: rotate(-6deg); }
-  .toc-row { display: grid; grid-template-columns: 110px 1.5fr 2fr 130px; align-items: baseline;
-             gap: 50px; padding: 40px 0; border-top: 1px solid rgba(236,228,211,0.22); }
+  /* ---- 目录 ---- */
+  .contents .head { position: relative; }
+  .contents .head .w { font-size: 100px; }
+  .contents .head .scr { position: absolute; font-size: 88px; color: var(--orange); left: 300px; top: -4px; transform: rotate(-6deg); }
+  .toc { position: absolute; left: 96px; right: 96px; top: 320px; }
+  .toc-row { display: grid; grid-template-columns: 90px 1.4fr 2fr 90px; align-items: baseline; gap: 44px;
+             padding: 34px 0; border-top: 1px solid rgba(236,228,211,0.22); }
   .toc-row:last-child { border-bottom: 1px solid rgba(236,228,211,0.22); }
-  .toc-row .n { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 56px; color: var(--orange); }
-  .toc-row .en { font-family: var(--display); font-weight: 700; font-size: 34px; }
-  .toc-row .cn { font-family: var(--han); font-weight: 600; font-size: 16px; margin-top: 8px; opacity: 0.78; }
-  .toc-row .desc { font-family: var(--han); font-weight: 400; font-size: 15px; line-height: 1.7; opacity: 0.82; }
-  .toc-row .yr { font-family: var(--label); font-size: 12px; letter-spacing: 0.16em; text-align: right; opacity: 0.6; }
+  .toc-row .n { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 46px; color: var(--orange); }
+  .toc-row .en { font-family: var(--display); font-weight: 700; font-size: 30px; }
+  .toc-row .cn { font-family: var(--han); font-weight: 600; font-size: 14px; margin-top: 7px; opacity: 0.78; }
+  .toc-row .desc { font-family: var(--han); font-weight: 400; font-size: 13.5px; line-height: 1.7; opacity: 0.82; }
+  .toc-row .pg { font-family: var(--label); font-size: 11px; letter-spacing: 0.18em; text-align: right; opacity: 0.6; }
 
-  /* ---------- 项目 ---------- */
-  .proj .eyebrow { margin-bottom: 24px; }
-  .proj .title { position: relative; display: inline-block; }
-  .proj .title .word { font-size: 120px; }
-  .proj .title .word.cjk { font-family: var(--han); font-weight: 700; font-size: 110px; letter-spacing: 0.06em; }
-  .proj .title .scr { position: absolute; font-size: 88px; color: var(--orange);
-                      right: -170px; bottom: 22px; transform: rotate(-6deg); }
-  .proj .title .cn { font-family: var(--han); font-weight: 500; font-size: 18px;
-                     letter-spacing: 0.34em; margin-top: 12px; opacity: 0.82; }
-  .proj .quote { font-family: var(--han); font-weight: 600; font-size: 30px; line-height: 1.5;
-                 margin: 56px 0 64px; max-width: 900px; }
-  .proj .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 70px; }
-  .proj .col h4 { font-family: var(--label); font-size: 12px; letter-spacing: 0.22em;
-                  text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
-  .proj .col .ct { font-family: var(--han); font-weight: 600; font-size: 19px; line-height: 1.45; margin-bottom: 16px; }
-  .proj .col p { font-family: var(--han); font-weight: 400; font-size: 14.5px; line-height: 1.9; opacity: 0.9; }
-  .proj .meta { margin-top: 66px; font-family: var(--label); font-size: 12px;
-                letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.62; }
+  /* ---- 项目首页 ---- */
+  .intro .head { position: relative; }
+  .intro .head .w { font-size: 100px; }
+  .intro .head .w.cjk { font-family: var(--han); font-weight: 700; font-size: 92px; letter-spacing: 0.06em; }
+  .intro .head .scr { position: absolute; font-size: 76px; color: var(--orange); top: -2px; transform: rotate(-6deg); }
+  .intro .head .cn { font-family: var(--han); font-weight: 500; font-size: 16px; letter-spacing: 0.32em; margin-top: 8px; opacity: 0.82; }
+  .intro .quote { position: absolute; left: 96px; top: 300px; font-family: var(--han); font-weight: 600;
+                  font-size: 30px; line-height: 1.5; max-width: 760px; }
+  .intro .quote .accent { }
+  .intro .rows { position: absolute; left: 96px; right: 96px; top: 430px; }
+  .intro .row { display: grid; grid-template-columns: 120px 1fr; gap: 36px; align-items: baseline;
+                padding: 22px 0; border-top: 1px solid currentColor; }
+  .intro .row:first-child { border-top-color: rgba(127,127,127,0.28); }
+  .intro .row { border-top-color: rgba(127,127,127,0.22); }
+  .intro .row .k { font-family: var(--label); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--orange); }
+  .intro .row .v { font-family: var(--han); font-weight: 500; font-size: 18px; line-height: 1.5; }
+  .intro .tags { position: absolute; left: 96px; bottom: 84px; font-family: var(--label);
+                 font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; }
 
-  /* 五层架构 */
-  .layers { margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 90px; }
-  .layer { display: grid; grid-template-columns: 64px 1fr; gap: 22px; align-items: baseline;
-           padding: 22px 0; border-top: 1px solid rgba(43,38,29,0.14); }
-  .layer .ln { font-family: var(--display); font-style: italic; font-size: 32px; color: var(--orange); }
-  .layer .lt b { font-family: var(--han); font-weight: 600; font-size: 16px; }
-  .layer .lt span { display: block; font-family: var(--han); font-weight: 400; font-size: 13px;
-                    opacity: 0.78; margin-top: 6px; line-height: 1.6; }
+  /* ---- 项目详情页（竖排侧标题 + 索引内容） ---- */
+  .detail .vtitle { position: absolute; left: 70px; top: 0; bottom: 0; display: flex; align-items: center; }
+  .detail .vtitle span { font-family: var(--display); font-weight: 800; font-size: 132px; line-height: 1;
+                         transform: rotate(180deg); writing-mode: vertical-rl; letter-spacing: 0.04em;
+                         opacity: 0.1; white-space: nowrap; }
+  .detail .vtitle.cjk span { font-family: var(--han); font-weight: 700; font-size: 150px;
+                             transform: none; writing-mode: vertical-rl; text-orientation: upright;
+                             letter-spacing: 0.12em; }
+  .detail .inner { position: absolute; left: 250px; right: 96px; top: 78px; bottom: 78px; }
+  .detail .dh { font-family: var(--display); font-weight: 700; font-size: 34px; margin-top: 6px; }
+  .detail .dh .cn { font-family: var(--han); font-weight: 600; font-size: 15px; letter-spacing: 0.2em; margin-top: 8px; opacity: 0.8; }
+  .detail .idx { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 70px; }
+  .detail .it { display: grid; grid-template-columns: 50px 1fr; gap: 18px; align-items: baseline;
+                padding: 16px 0; border-top: 1px solid currentColor; border-top-color: rgba(127,127,127,0.2); }
+  .detail .it .n { font-family: var(--display); font-style: italic; font-size: 26px; color: var(--orange); }
+  .detail .it b { font-family: var(--han); font-weight: 600; font-size: 15px; }
+  .detail .it b em { font-family: var(--label); font-style: normal; font-size: 10px; letter-spacing: 0.18em;
+                     text-transform: uppercase; opacity: 0.6; margin-left: 8px; }
+  .detail .it span { display: block; font-family: var(--han); font-weight: 400; font-size: 12px;
+                     line-height: 1.66; opacity: 0.82; margin-top: 5px; }
+  .detail .note { position: absolute; left: 250px; right: 96px; bottom: 78px;
+                  font-family: var(--han); font-weight: 400; font-size: 12.5px; line-height: 1.8; opacity: 0.85; }
+  .detail .note b { color: var(--orange); font-weight: 600; letter-spacing: 0.16em; }
 
-  /* ---------- 能力 ---------- */
-  .cap .head { position: relative; display: inline-block; margin-bottom: 70px; }
-  .cap .head .word { font-size: 116px; }
-  .cap .head .scr { position: absolute; font-size: 104px; color: var(--orange);
-                    right: -130px; bottom: 16px; transform: rotate(-6deg); }
-  .cap .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; }
-  .cap h4 { font-family: var(--label); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--orange); padding-bottom: 16px; border-bottom: 1px solid rgba(43,38,29,0.2); margin-bottom: 20px; }
+  /* 单栏索引（用于五层、流程等） */
+  .detail .idx.one { grid-template-columns: 1fr; }
+  .detail .flow { margin-top: 28px; font-family: var(--display); font-style: italic; font-size: 26px;
+                  letter-spacing: 0.04em; color: var(--orange); }
+
+  /* ---- 能力 ---- */
+  .cap .head { position: relative; }
+  .cap .head .w { font-size: 96px; }
+  .cap .head .scr { position: absolute; font-size: 84px; color: var(--orange); left: 380px; top: -4px; transform: rotate(-6deg); }
+  .cap .grid { position: absolute; left: 96px; right: 96px; top: 320px; display: grid; grid-template-columns: repeat(3,1fr); gap: 70px; }
+  .cap h4 { font-family: var(--label); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--orange); padding-bottom: 14px; border-bottom: 1px solid rgba(43,38,29,0.2); margin-bottom: 18px; }
   .cap ul { list-style: none; }
-  .cap li { font-family: var(--han); font-weight: 500; font-size: 17px; line-height: 2.3; }
-  .cap .statement { margin-top: 90px; font-family: var(--display); font-style: italic;
-                    font-weight: 600; font-size: 44px; }
+  .cap li { font-family: var(--han); font-weight: 500; font-size: 15.5px; line-height: 2.2; }
+  .cap .statement { position: absolute; left: 96px; bottom: 96px; font-family: var(--display);
+                    font-style: italic; font-weight: 600; font-size: 38px; }
   .cap .statement .accent { font-family: var(--han); font-style: normal; }
 
-  /* ---------- 结尾 ---------- */
-  .end { padding-top: 150px; padding-bottom: 150px; }
-  .end .top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .end .big { position: relative; display: inline-block; }
-  .end .big .word { font-size: 170px; }
-  .end .big .scr { position: absolute; font-size: 124px; color: var(--orange);
-                   right: 30px; top: -34px; transform: rotate(-7deg); }
-  .end .cn { font-family: var(--han); font-weight: 600; font-size: 30px; letter-spacing: 0.3em; margin-top: 50px; }
-  .end .contact { text-align: right; }
-  .end .contact .row { font-family: var(--label); font-size: 15px; letter-spacing: 0.12em; line-height: 2.7; }
-  .end .contact .row b { color: var(--orange); font-weight: 600; margin-right: 14px; }
-  .end .foot { margin-top: 120px; font-family: var(--label); font-size: 12px;
-               letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6;
-               display: flex; justify-content: space-between; }
+  /* ---- 结尾 ---- */
+  .end .big { position: absolute; left: 96px; top: 300px; }
+  .end .big .w { font-size: 150px; }
+  .end .big .scr { position: absolute; font-size: 112px; color: var(--orange); left: 300px; top: -104px; transform: rotate(-7deg); }
+  .end .cn { position: absolute; left: 96px; top: 500px; font-family: var(--han); font-weight: 600; font-size: 26px; letter-spacing: 0.3em; }
+  .end .contact { position: absolute; right: 96px; top: 300px; text-align: right; }
+  .end .contact .row { font-family: var(--label); font-size: 14px; letter-spacing: 0.12em; line-height: 2.7; }
+  .end .contact .row b { color: var(--orange); font-weight: 600; margin-right: 12px; }
 </style>
 </head>
 <body>
 
-<!-- 封面 -->
-<section class="sec t-olive cover">
-  <div class="label">陈彪明 · Chen Biaoming · Portfolio 2026</div>
-  <div class="big">
-    <span class="display word">PORTFOLIO</span>
-    <span class="script scr">design</span>
+<!-- 1 封面 -->
+<section class="page t-olive cover">
+  <div class="runhead"><span>陈彪明 · Chen Biaoming</span><span>Portfolio 2026</span></div>
+  <div class="stack">
+    <div class="display l">DESIGN</div>
+    <div class="display l">PORTFOLIO</div>
+    <div class="script scr">about me</div>
   </div>
-  <div class="meta">
-    <div class="left">
-      <div class="nm">陈彪明</div>
-      <div class="en">Chen Biaoming</div>
-    </div>
-    <div class="right">
-      <div class="slg">把感知做成产品</div>
-      <div class="role">用户体验设计师 · 产品设计师 · 产品经理（PM）</div>
-    </div>
+  <div class="side"><div class="cn">关于我的<br>设计作品集</div></div>
+  <div class="name">
+    <div class="nm">陈彪明</div>
+    <div class="en">Chen Biaoming</div>
+  </div>
+  <div class="slg">
+    <div class="s">把感知做成产品</div>
+    <div class="r">用户体验设计师 · 产品设计师 · 产品经理（PM）</div>
   </div>
 </section>
 
-<!-- 关于我 -->
-<section class="sec t-cream about">
-  <div class="eyebrow">About Me</div>
-  <div class="head">
-    <span class="display word">ABOUT</span>
+<!-- 2 关于 -->
+<section class="page t-cream about">
+  <div class="runhead" style="color:var(--ink)"><span>About Me · 关于我</span><span>Chen Biaoming</span></div>
+  <div class="eyebrow" style="position:absolute;left:96px;top:160px">About Me</div>
+  <div class="head" style="position:absolute;left:96px;top:188px">
+    <span class="display w">ABOUT</span>
     <span class="script scr">me</span>
     <div class="cn">关于我</div>
   </div>
   <div class="body">
     <div>
       <p>当未来的数据足够全面、技术足够精湛，我们仍需要一颗柔软而敏锐的心。设计的思维，正是那份灵光闪烁的创造力——它不靠堆砌功能，而在于唤醒人与生活之间，那场关于美的对话。</p>
-      <p>设计从真实的移动与现场里长出来。我习惯在持续的移动中收集对现实的判断：天气的转变、社群的节奏、陌生人说话的方式，以及一块光落在特定材质上的角度——这些只活在身体记忆里的信息，最终决定了一个数字产品在现实中沉淀下来的体验。</p>
+      <p>设计从真实的移动与现场里长出来。我习惯在持续的移动中收集对现实的判断：天气的转变、社群的节奏、陌生人说话的方式，以及一块光落在材质上的角度——这些只活在身体记忆里的信息，最终决定了一个数字产品沉淀下来的体验。</p>
     </div>
     <div class="facts">
       <div><b>院校</b>桂林电子科技大学</div>
@@ -189,13 +206,16 @@
       <div><b>方法</b>需求定义 · 交互设计 · 高保真交付</div>
     </div>
   </div>
+  <div class="footline">Design Portfolio</div>
+  <div class="pageno">P.02</div>
 </section>
 
-<!-- 目录 -->
-<section class="sec t-espresso contents">
-  <div class="eyebrow">Selected Works</div>
-  <div class="head">
-    <span class="display word">CONTENTS</span>
+<!-- 3 目录 -->
+<section class="page t-espresso contents">
+  <div class="runhead"><span>Contents · 作品目录</span><span>2026</span></div>
+  <div class="eyebrow" style="position:absolute;left:96px;top:160px">Selected Works</div>
+  <div class="head" style="position:absolute;left:96px;top:188px">
+    <span class="display w">CONTENTS</span>
     <span class="script scr">works</span>
   </div>
   <div class="toc">
@@ -203,118 +223,146 @@
       <div class="n">01</div>
       <div><div class="en">AMADEUS</div><div class="cn">数字生命实验系统</div></div>
       <div class="desc">人与数字之间，一条正在被命名的线——本地运行、有记忆与情绪的数字人格系统。</div>
-      <div class="yr">2026</div>
+      <div class="pg">P.04</div>
     </div>
     <div class="toc-row">
       <div class="n">02</div>
       <div><div class="en">DIGITAL ARK</div><div class="cn">数字方舟</div></div>
       <div class="desc">用五层人格架构，尽可能还原一个真实的人——可训练、可解释、可陪护。</div>
-      <div class="yr">2026</div>
+      <div class="pg">P.06</div>
     </div>
     <div class="toc-row">
       <div class="n">03</div>
       <div><div class="en">墨舟</div><div class="cn">时空文化导游</div></div>
       <div class="desc">抵达即读懂：在你放慢脚步的几秒钟里，递上一页刚好够用的现场文化卡。</div>
-      <div class="yr">2026</div>
+      <div class="pg">P.08</div>
     </div>
   </div>
+  <div class="pageno">P.03</div>
 </section>
 
-<!-- 01 AMADEUS -->
-<section class="sec t-cream proj">
-  <div class="eyebrow">01 — Digital Life · Experimental System</div>
-  <div class="title">
-    <span class="display word">AMADEUS</span>
-    <span class="script scr">soul</span>
-    <div class="cn">数字生命实验系统</div>
+<!-- 4 AMADEUS 首页 -->
+<section class="page t-cream intro">
+  <div class="runhead" style="color:var(--ink)"><span>01 · AMADEUS</span><span>Digital Life · Experimental System</span></div>
+  <div class="eyebrow" style="position:absolute;left:96px;top:150px">01 — 数字生命实验系统</div>
+  <div class="head" style="position:absolute;left:96px;top:178px">
+    <span class="display w">AMADEUS</span>
+    <span class="script scr" style="left:610px">soul</span>
+    <div class="cn">数字生命实验系统 · 本地运行 · 长期在场</div>
   </div>
   <div class="quote">人与数字之间，<span class="accent">一条正在被命名的线。</span></div>
-  <div class="cols">
-    <div class="col">
-      <h4>我发现的问题</h4>
-      <div class="ct">人们并不缺对话，缺的是被填满的精神。</div>
-      <p>信息越来越多，内心却越来越空——热闹过后，仍少一个能长期在场、真正接得住你的存在。</p>
-    </div>
-    <div class="col">
-      <h4>我的设计初衷</h4>
-      <div class="ct">做一个能陪伴人的数字生命。</div>
-      <p>不是一轮轮问答，而是持续在场：有记忆、有情绪、有判断——像一个人留在生活里，而不是关掉窗口就消失。</p>
-    </div>
-    <div class="col">
-      <h4>我的解决</h4>
-      <div class="ct">把「数字生命」拆成可运行的系统。</div>
-      <p>在本地 Ollama 上跑通完整链路：人格档案、分室记忆、PAD 情绪、行为仲裁、心智加工与主动层——开口前状态已更新，对话可见、可解释。</p>
-    </div>
+  <div class="rows">
+    <div class="row"><div class="k">问题</div><div class="v">人们并不缺对话，缺的是被填满的精神。</div></div>
+    <div class="row"><div class="k">初衷</div><div class="v">做一个能长期在场、有记忆与情绪的数字生命。</div></div>
+    <div class="row"><div class="k">解决</div><div class="v">把「数字生命」拆成可运行的系统：记忆、情绪、行为、心智、主动。</div></div>
   </div>
-  <div class="meta">本地运行 · 长期在场 · GitHub 开源 · AI 人格系统 — 愿景：从对话里的在场，走向生活里的在场。</div>
+  <div class="tags">GitHub 开源 · AI 人格系统 · 前端原型 · 独立完成</div>
+  <div class="pageno" style="color:var(--ink)">P.04</div>
 </section>
 
-<!-- 02 数字方舟 -->
-<section class="sec t-olive proj">
-  <div class="eyebrow">02 — 本地运行 · 人格还原 · 档案系统</div>
-  <div class="title">
-    <span class="display word">DIGITAL ARK</span>
-    <span class="script scr">archive</span>
-    <div class="cn">数字方舟 · 尽可能还原一个人</div>
+<!-- 5 AMADEUS 详情 -->
+<section class="page t-olive detail">
+  <div class="runhead"><span>01 · AMADEUS</span><span>System Architecture</span></div>
+  <div class="vtitle"><span>AMADEUS</span></div>
+  <div class="inner">
+    <div class="eyebrow">系统架构 · How She Works</div>
+    <div class="dh">开口之前，系统已经想好怎么相处<div class="cn">八个模块，在每一句话之前依次运行</div></div>
+    <div class="idx">
+      <div class="it"><div class="n">01</div><div><b>人格档案 <em>Soul</em></b><span>口吻 / 边界 / 传记三层文件，每轮按序注入上下文。</span></div></div>
+      <div class="it"><div class="n">02</div><div><b>分室记忆 <em>Memory</em></b><span>Hall / Lab / Cafe / Forbidden 按语义分室检索，不混池。</span></div></div>
+      <div class="it"><div class="n">03</div><div><b>情绪矩阵 <em>PAD</em></b><span>愉悦 / 唤醒 / 支配 + 关系强度，跨轮延续不重置。</span></div></div>
+      <div class="it"><div class="n">04</div><div><b>情绪曲线 <em>Curve</em></b><span>把内部状态合成一条可见信号，不靠猜测 prompt。</span></div></div>
+      <div class="it"><div class="n">05</div><div><b>行为仲裁 <em>Behavior</em></b><span>开口前在靠近 / 防御 / 收缩之间打分竞争。</span></div></div>
+      <div class="it"><div class="n">06</div><div><b>主动层 <em>Drive</em></b><span>空闲时先开口，且下一轮必须接回上一句。</span></div></div>
+      <div class="it"><div class="n">07</div><div><b>心智加工 <em>Mind</em></b><span>逻辑 → 共情 → 智识，贴着本轮焦点说话。</span></div></div>
+      <div class="it"><div class="n">08</div><div><b>产品界面 <em>UI</em></b><span>对话在前、机制可见，确认她为何这样回应。</span></div></div>
+    </div>
+    <div class="note"><b>愿景</b> 从对话里的在场，走向生活里的在场——接入家居联动、实体投影与 AR，先把长期陪伴做实。</div>
+  </div>
+  <div class="pageno">P.05</div>
+</section>
+
+<!-- 6 数字方舟 首页 -->
+<section class="page t-espresso intro">
+  <div class="runhead"><span>02 · DIGITAL ARK</span><span>Local Persona · Archive System</span></div>
+  <div class="eyebrow" style="position:absolute;left:96px;top:150px">02 — 数字方舟</div>
+  <div class="head" style="position:absolute;left:96px;top:178px">
+    <span class="display w" style="font-size:82px">DIGITAL ARK</span>
+    <span class="script scr" style="left:720px">archive</span>
+    <div class="cn">本地运行 · 人格还原 · 尽可能还原一个人</div>
   </div>
   <div class="quote">遗忘才是终点，<span class="accent">方舟负责记住。</span></div>
-  <div class="cols">
-    <div class="col">
-      <h4>我发现的问题</h4>
-      <p>离开往往毫无预兆，来不及说的话最后都变成别人记不清的细节。我们真正怕的，是记忆变淡——数字人忙着学语气，却少有人保存她怎么判断、怎么变成现在的样子。</p>
-    </div>
-    <div class="col">
-      <h4>我的设计初衷</h4>
-      <p>不是学语气，而是用五层人格架构尽可能还原一个真实的人：怎么判断、怎么感受、怎么记住、怎么待人、怎么说，训练成可运行系统，留在本机。</p>
-    </div>
-    <div class="col">
-      <h4>设计原则</h4>
-      <p>还原人的在场感，而非模拟一段对话。状态先于生成——关系、记忆、情绪在本机先跑完，再调用 LLM 开口；可解释、可校准。</p>
-    </div>
+  <div class="rows">
+    <div class="row"><div class="k">问题</div><div class="v">离开往往毫无预兆，记忆会一点点变淡。</div></div>
+    <div class="row"><div class="k">初衷</div><div class="v">不学语气，而是还原一个人怎么判断、怎么感受、怎么待人。</div></div>
+    <div class="row"><div class="k">方式</div><div class="v">五层人格架构 + CAPS 情境加工，状态先于生成，留在本机。</div></div>
   </div>
-  <div class="layers">
-    <div class="layer"><div class="ln">05</div><div class="lt"><b>表达</b><span>句式、语气与语言习惯，由底层状态实时塑造</span></div></div>
-    <div class="layer"><div class="ln">04</div><div class="lt"><b>关系</b><span>亲密程度、信任历史与关系中的自我</span></div></div>
-    <div class="layer"><div class="ln">03</div><div class="lt"><b>记忆</b><span>经历被激活时提取情绪残留，内化后修正判断</span></div></div>
-    <div class="layer"><div class="ln">02</div><div class="lt"><b>情绪</b><span>PAD 模型：愉悦、唤醒、支配加关系强度</span></div></div>
-    <div class="layer"><div class="ln">01</div><div class="lt"><b>核心</b><span>价值、边界、道德——冲突时先过这一关</span></div></div>
-  </div>
+  <div class="tags">本地人格产品 · 可解释 · 可校准 · 独立完成</div>
+  <div class="pageno">P.06</div>
 </section>
 
-<!-- 03 墨舟 -->
-<section class="sec t-cream proj">
-  <div class="eyebrow">03 — Travel / Culture · 文旅产品</div>
-  <div class="title">
-    <span class="display word cjk">墨舟</span>
-    <span class="script scr" style="right:-200px">mozhou</span>
-    <div class="cn">时空文化导游 · 抵达即读懂</div>
+<!-- 7 数字方舟 详情 -->
+<section class="page t-cream detail">
+  <div class="runhead" style="color:var(--ink)"><span>02 · DIGITAL ARK</span><span>Five-Layer Persona</span></div>
+  <div class="vtitle"><span>ARK</span></div>
+  <div class="inner">
+    <div class="eyebrow">五层人格架构 · Five-Layer Persona</div>
+    <div class="dh">不复制外壳，复制一个人的反应方式<div class="cn">五层同时运作，由 CAPS 在情境中做加工</div></div>
+    <div class="idx">
+      <div class="it"><div class="n">05</div><div><b>表达 <em>Expression</em></b><span>句式、语气与语言习惯，由底层状态实时塑造。</span></div></div>
+      <div class="it"><div class="n">04</div><div><b>关系 <em>Relation</em></b><span>亲密程度、信任历史与关系中的自我。</span></div></div>
+      <div class="it"><div class="n">03</div><div><b>记忆 <em>Memory</em></b><span>经历被激活时提取情绪残留，内化后修正判断。</span></div></div>
+      <div class="it"><div class="n">02</div><div><b>情绪 <em>Affect</em></b><span>PAD 模型：愉悦、唤醒、支配加关系强度。</span></div></div>
+      <div class="it"><div class="n">01</div><div><b>核心 <em>Core</em></b><span>价值、边界、道德——冲突时先过这一关。</span></div></div>
+      <div class="it"><div class="n">＋</div><div><b>核心 8 维 <em>Dimensions</em></b><span>价值 20 · 规范 15 · 边界 15 · 待人 15 · 眼光 10 · 道德 10 · 品质 10 · 内心 5。</span></div></div>
+    </div>
+    <div class="note"><b>设计原则</b> 还原人的在场感，而非模拟一段对话；状态先于生成，先在本机跑完关系、记忆与情绪，再调用 LLM 开口。</div>
+  </div>
+  <div class="pageno" style="color:var(--ink)">P.07</div>
+</section>
+
+<!-- 8 墨舟 首页 -->
+<section class="page t-olive intro">
+  <div class="runhead"><span>03 · 墨舟 Mozhou</span><span>Travel · Culture Guide</span></div>
+  <div class="eyebrow" style="position:absolute;left:96px;top:150px">03 — 时空文化导游</div>
+  <div class="head" style="position:absolute;left:96px;top:178px">
+    <span class="display w cjk">墨舟</span>
+    <span class="script scr" style="left:330px">mozhou</span>
+    <div class="cn">文旅产品 · 抵达即读懂</div>
   </div>
   <div class="quote">让行走本身，<span class="accent">成为阅读世界的方式。</span></div>
-  <div class="cols">
-    <div class="col">
-      <h4>我发现的问题</h4>
-      <div class="ct">走得越远，越想读懂脚下的故事。</div>
-      <p>我们习惯在景点前举起手机，也渴望当场读懂这一墙、一塔、一巷。照片进了相册，地方本身仍等待被说清。</p>
-    </div>
-    <div class="col">
-      <h4>我的思考</h4>
-      <div class="ct">缺的，是一册随身的现场读本。</div>
-      <p>深度体验可以就在现场发生。在你放慢脚步的几秒钟里，递上一页刚好够用的文化摘要——读懂即可继续走。</p>
-    </div>
-    <div class="col">
-      <h4>我的解决</h4>
-      <div class="ct">到达瞬间，递上一张文化卡。</div>
-      <p>基于地理位置瞬间触发轻量文化卡：名称、来历与当下值得留意的内容，三句读懂；足迹自动归档，日后回看有迹可循。</p>
-    </div>
+  <div class="rows">
+    <div class="row"><div class="k">问题</div><div class="v">走得越远，越想读懂脚下的故事。</div></div>
+    <div class="row"><div class="k">思考</div><div class="v">缺的，是一册随身、刚好够用的现场读本。</div></div>
+    <div class="row"><div class="k">解决</div><div class="v">到达瞬间触发，递上一张轻量文化卡，读懂即走。</div></div>
   </div>
-  <div class="meta">到达即触发 · 文化摘要 · 足迹归档 · LBS — 水墨界面：以留白、淡墨、朱砂，让文化内容本身成为主角。</div>
+  <div class="tags">文旅产品 · 可交互原型 · LBS · 独立完成</div>
+  <div class="pageno">P.08</div>
 </section>
 
-<!-- 能力 -->
-<section class="sec t-cream cap">
-  <div class="eyebrow">Capability</div>
-  <div class="head">
-    <span class="display word">CAPABILITY</span>
+<!-- 9 墨舟 详情 -->
+<section class="page t-espresso detail">
+  <div class="runhead"><span>03 · 墨舟 Mozhou</span><span>Arrive · Read · Archive</span></div>
+  <div class="vtitle cjk"><span>墨舟</span></div>
+  <div class="inner">
+    <div class="eyebrow">产品机制 · Arrive · Read · Archive</div>
+    <div class="dh">在你放慢脚步的几秒钟里发生<div class="cn">抵达 · 读懂 · 归档 · 回看</div></div>
+    <div class="idx one">
+      <div class="it"><div class="n">01</div><div><b>到达瞬间触发 <em>Proximity</em></b><span>进入景点范围即弹出，随到达展开，顺着脚步阅读。</span></div></div>
+      <div class="it"><div class="n">02</div><div><b>文化摘要而非百科 <em>Brief</em></b><span>历史、民俗与当下信息分层呈现，三句读懂，随关随走。</span></div></div>
+      <div class="it"><div class="n">03</div><div><b>足迹自动归档 <em>Archive</em></b><span>路过与到访自动收纳，日后在雅藏与城市足迹里找回叙事。</span></div></div>
+    </div>
+    <div class="note"><b>水墨界面</b> 以留白、淡墨、朱砂点缀，让文化内容本身成为主角，给理解留出呼吸的空间。</div>
+  </div>
+  <div class="pageno">P.09</div>
+</section>
+
+<!-- 10 能力 -->
+<section class="page t-cream cap">
+  <div class="runhead" style="color:var(--ink)"><span>Capability · 能力与方法</span><span>Chen Biaoming</span></div>
+  <div class="eyebrow" style="position:absolute;left:96px;top:160px">Capability</div>
+  <div class="head" style="position:absolute;left:96px;top:188px">
+    <span class="display w">CAPABILITY</span>
     <span class="script scr">skills</span>
   </div>
   <div class="grid">
@@ -332,40 +380,26 @@
     </div>
   </div>
   <div class="statement">把感知，<span class="accent">做成产品。</span></div>
+  <div class="pageno" style="color:var(--ink)">P.10</div>
 </section>
 
-<!-- 结尾 -->
-<section class="sec t-olive end">
-  <div class="top">
-    <div class="big">
-      <span class="display word">THANKS</span>
-      <span class="script scr">thank you</span>
-      <div class="cn">再会 · 期待合作</div>
-    </div>
-    <div class="contact">
-      <div class="row"><b>TEL</b>180 7819 3563</div>
-      <div class="row"><b>MAIL</b>1310258735@qq.com</div>
-      <div class="row"><b>BASE</b>桂林 · 广西</div>
-      <div class="row"><b>WEB</b>shishoumei829-cyber.github.io</div>
-    </div>
+<!-- 11 结尾 -->
+<section class="page t-olive end">
+  <div class="runhead"><span>Thank You · 再会</span><span>Chen Biaoming · 2026</span></div>
+  <div class="big">
+    <span class="display w">THANKS</span>
+    <span class="script scr">thank you</span>
   </div>
-  <div class="foot">
-    <span>© 2026 Chen Biaoming</span>
-    <span>AMADEUS · 数字方舟 · 墨舟</span>
+  <div class="cn">再会 · 期待合作</div>
+  <div class="contact">
+    <div class="row"><b>TEL</b>180 7819 3563</div>
+    <div class="row"><b>MAIL</b>1310258735@qq.com</div>
+    <div class="row"><b>BASE</b>桂林 · 广西</div>
+    <div class="row"><b>WEB</b>shishoumei829-cyber.github.io</div>
   </div>
+  <div class="footline">© 2026 Chen Biaoming</div>
+  <div class="pageno">AMADEUS · 数字方舟 · 墨舟</div>
 </section>
 
-<script>
-  /* 单页连续 PDF：把纸张高度设为整页内容高度，消除多余空白 */
-  function setPageSize() {
-    var h = Math.ceil(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)) + 4;
-    var s = document.getElementById('pagesize') || document.createElement('style');
-    s.id = 'pagesize';
-    s.textContent = '@page { size: 1240px ' + h + 'px; margin: 0; }';
-    document.head.appendChild(s);
-  }
-  document.fonts.ready.then(setPageSize);
-  window.addEventListener('load', setPageSize);
-</script>
 </body>
 </html>
