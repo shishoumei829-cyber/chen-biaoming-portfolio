@@ -1,6 +1,6 @@
 # 陈彪明 · 设计作品集（PDF 版）
 
-莫兰迪「咖绿撞色」杂志风格的作品集，**以文字与排版为主、不使用图片**，最终输出为横向 A4 PDF。
+莫兰迪「咖绿撞色」杂志风格的作品集，**以文字与排版为主、不使用图片**，输出为**单页连续**的极简 PDF（页面高度按内容自适应，无多余留白）。
 
 ## 文件
 
@@ -11,7 +11,7 @@
 
 ## 重新生成 PDF
 
-需要 Chrome / Chromium 与中文衬线字体（`fonts-noto-cjk`）：
+需要 Chrome / Chromium 与中文衬线字体（`fonts-noto-cjk`）。页面内联脚本会把纸张高度设为整页内容高度，导出单页连续 PDF：
 
 ```bash
 google-chrome --headless --no-sandbox --disable-gpu \
@@ -24,4 +24,4 @@ google-chrome --headless --no-sandbox --disable-gpu \
 
 - 配色：橄榄咖绿 `#75785b` · 深咖 `#2c2820` · 米杏 `#ece4d3` · 橙色撞色 `#cf7d3c`
 - 字体：Playfair Display（高对比衬线）+ Allura（手写花体）+ Jost（标签）+ Noto Serif CJK SC（中文衬线）
-- 版式：杂志编辑式，大留白、编号目录、双语小标签肌理、超大淡色关键词做底纹。
+- 版式：杂志编辑式，极简、克制留白、编号目录、双语小标签、整段色块分章；单页连续、高度随内容自适应。
