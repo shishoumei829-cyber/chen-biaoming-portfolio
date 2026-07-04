@@ -361,12 +361,9 @@ body.is-da-tw-handoff #timewalker{
   will-change:transform;
 }
 
-.da2-finale-visual img{
+.da2-finale-visual .da-poster-art-mount{
   display:block;
   width:100%;
-  aspect-ratio:4/3;
-  object-fit:cover;
-  filter:saturate(.9) contrast(.96);
 }
 
 .da2-finale-cols{
